@@ -58,7 +58,7 @@ Ihr Feedback würde helfen, den Kurs zu verbessern.
 
 Dieses Buch und der Kurs sind unter der Attribution-NonCommercial-ShareAlike 4.0 International Lizenz veröffentlicht (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), siehe [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/).
 
-Wir haben das Programm [pdfsizeopt](https://github.com/pts/pdfsizeopt) statisch in den Buildprozess unserer Materialien eingefügt.
+Wir haben das Programm [pdfsizeopt](https://github.com/pts/pdfsizeopt) statisch in den Buildprozess unserer Materialien über das [bookbase Repository](https://github.com/thomasWeise/bookbase) eingefügt.
 Dieses Werkzeug ist natürlich von der Lizenz oben ausgenommen.
 Es steht unter der GNU GENERAL PUBLIC LICENSE Version 2, June 1991 und sein Copyright liegt bei seinen Autoren.
 
