@@ -1,0 +1,26 @@
+%%
+%% Render the intro slides
+\protected\gdef\introSlide{%
+%
+\begin{frame}[t]%
+\frametitle{Databases}%
+\locate{}{%
+\parbox{\paperwidth}{%
+\vspace{0.035\paperheight}%
+\strut\hfill\strut%
+\includegraphics[width=0.085\paperwidth]{\bookbaseDir/graphics/logos/hfuu_logo_round}%
+\strut\hspace{0.05\paperwidth}\strut%
+}}{0}{0}%
+\locateGraphic{}{width=0.2\paperwidth}{\sharedDir/graphics/qr/courseUrl}{0.775}{0.61}%
+%
+\locate{}{%
+\parbox{0.85\paperwidth}{%
+Dies ist ein Kurs über Datenbanken an der Universität Hefei~(合肥大学).\\[9pt]%
+%
+Die Webseite mit dem Lehrmaterial dieses Kurses ist  \expandafter\href{\databasesUrl}{\databasesUrl} (siehe auch den QR\nobreakdashes-Kode unten rechts).
+Dort können Sie das Kursbuch (in Englisch) und diese Slides finden.
+Das Repository mit den Beispielen finden Sie unter~\expandafter\href{\databasesCodeRepo}{\databasesCodeRepo}.%
+}}{0.06}{0.225}%
+\end{frame}%
+}%
+%
