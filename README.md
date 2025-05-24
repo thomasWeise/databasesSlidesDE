@@ -1,4 +1,4 @@
-﻿# Databases -- Datenbanken
+﻿# Databases &mdash; Datenbanken
 
 ## 1. Introduction
 
