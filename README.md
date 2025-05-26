@@ -31,6 +31,7 @@ Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.gith
 
 1. [Organisation](https://thomasweise.github.io/databasesSlidesDE/01_organisation.pdf)
 2. [Einleitung](https://thomasweise.github.io/databasesSlidesDE/02_einleitung.pdf)
+3. [Anforderungen](https://thomasweise.github.io/databasesSlidesDE/03_anforderungen.pdf)
 
 
 ### 2.3. Die Beispiele
