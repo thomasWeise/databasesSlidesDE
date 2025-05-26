@@ -29,7 +29,8 @@ Das Kursbuch, in englischer Sprache geschrieben, findet such unter <https://thom
 ### 2.2. Die Slides in Deutsch
 Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.github.io/databasesSlidesDE> gefunden werden und sind hier aufgelistet:
 
-1. [Einleitung](https://thomasweise.github.io/databasesSlidesDE/01_einleitung.pdf)
+1. [Organisation](https://thomasweise.github.io/databasesSlidesDE/01_organisation.pdf)
+2. [Einleitung](https://thomasweise.github.io/databasesSlidesDE/02_einleitung.pdf)
 
 
 ### 2.3. Die Beispiele

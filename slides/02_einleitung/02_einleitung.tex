@@ -1,0 +1,256 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{1. Einleitung}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}[t]%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item Dieser Kurs lehrt die Verwendung von Datenbanken.%
+\item<2-> Unser Fokus liegt auf einem praxisorientierten Ansatz.%
+\item<3-> Das bedeutet, dass alle Konzepte, die wir diskutieren, immer von einer reichen Auswahl von praktischen Beispielen begleitet werden.%
+\item<4-> In diesem Kurs werden wir daher auch viele Werkzeuge und echte Datenbanken verwenden.\only<5-9>{\begin{itemize}%
+\item das \postgresql\ Datenbankmanagementsystem~\cite{TA2024DDAMWPAM,FP2023LP,OH2017PUAR,B2024PELUYDW},%
+\item<6-> \yEd, ein Graph-Editor mit dem konzeptuelle Schemata erarbeitet werden können~\cite{SG2015MDAWY,Y2011YGEM},%
+\item<7-> \libreofficeBase, das als bequeme Oberfläche verwendet werden kann, um mit Datenbanken über Formulare und Berichten zu interagieren~\cite{FNFHWSKLSSGLFRSRPLJG2022BG7R1BOL7C,S2022L7PFEUU},%
+\item<8-> \python~\cite{programmingWithPython}, eine Programmiersprache, für die das \psycopg-Modul~\cite{VDGE2010P} zum Verbinden mit \postgresql\ zur Verfügung steht, bis hin zum%
+\item<9-> \pgmodeler, einem Werkzeug, mit dem bequem logische Schemata für \postgresql-Datenbanken entwickelt werden können~\cite{AES2006PPDM}.%
+\end{itemize}}\only<10->{%
+%
+\item<10-> Nach dem Abschluss des Kurses sollten Sie in der Lage sein, produktiv mit Datenbanken zu arbeiten.%
+\item<11-> Sie sollten in der Lage sein, einfache Datenbankapplikationen zu entwickeln.%
+\item<12-> Sie sollten in der Lage sein, das gewaltige Ökosystem verschiedener Datenbankmanagementsystem, Werkzeuge, und Paradigmen dieses Gebiets zu navigieren und die richtigen Lösungen für die richtigen Probleme auszuwählen.}%
+\end{itemize}%
+\end{frame}%
+%
+\section{Daten}%
+%
+\begin{frame}
+\frametitle{Daten}%
+\begin{itemize}%
+\item Daten sind überall.%
+\item<2-> Names, Adressen, Bankkonten und -transaktionen,  Onlineeinkäufe, Zugtickets, Mobiltelefonnummern, \pgls{wechat}-Chats, Webseiten, Bücker, Gebrauchsanleitungen, Programmquelltexte, Karten, Schulnoten, Untersuchungsergebnisse und medizinische Historien, Steuerdaten, berufliche Werdegänge, Spielergebnisse{\dots}\uncover<3->{ Alles sind Daten.}%
+\item<4-> Data sing vielleicht die wichtigste Ressource unseres digitalen Zeitalters.%
+\item<5-> Daten müssen gespeichert werden, sortiert, wiedergefunden, gesichert, zusammengefasst, erneuert, und verwaltet werden.%
+\item<6-> Es gibt ganz verschiedene Arten von Daten.
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Unstrukturierte Daten}%
+\begin{itemize}%
+\item Unstrukturierte Daten wie z.B. Bücher, Bachelor- und Masterarbeiten, Berichte, Bugetpläne, und Forschungsanträge werden oft als einzelne Dokumente gespeichert.%
+\item<3-> Oft gibt es Vorlagen für die Struktur solcher Dokumente, aber darüber hinaus können diese sehr unterschiedlich sein.%
+\item<4-> Sie können in Katalogen organisiert werden, in dem man Metainformationen wie Autoren, Jahrgang, und Stichworte getrennt abspeichert.%
+\item<5-> Viel mehr kann man aber nicht tun.%
+\end{itemize}%
+%
+\locateGraphic[programmingWithPython]{2}{width=0.6\paperwidth}{graphics/typesOfData/documentDataProgrammingWithPython}{0.2}{0.26}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Tabellarische Daten}%
+\begin{itemize}%
+\item Für tabellarische Daten gibe es einfache Textformate wie \glsreset{CSV}\pgls{CSV}~\cite{RFC4180} und Programme wie \microsoftExcel~\cite{B2023DMWME,G2024ECRFMME} und \libreofficeCalc~\cite{S2022L7PFEUU,DF2024LTDF}.%
+\end{itemize}%
+%
+\locateGraphicTB{2}{width=0.6\paperwidth}{graphics/typesOfData/libreOfficeCalc}{0.2}{0.29}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Hierarchische Daten}%
+\begin{itemize}%
+\item Dann gibt es hierarchische Datenstrukturen.%
+\item<2-> Dafür gibt es Formate wie \glsreset{XML}\pgls{XML}~\cite{BPSMM2008EMLX1FE,K2019ITXJY,CH2013XFCAMLTMC}\uncover<4->{, \glsreset{JSON}\pgls{JSON}~\cite{E2017SE4TJDIS,RFC8259}\uncover<5->{, und \glsreset{YAML}\pgls{YAML}~\cite{DNMAASBE2021YAMLYV1,K2019ITXJY,CGTYB2022YFFDCAIE}.}}%
+\end{itemize}%
+%
+\locateGraphicTB{3}{width=0.9\paperwidth}{graphics/typesOfData/xmlexample}{0.05}{0.26}%
+%
+\locateGraphicTB{4}{width=0.2\paperwidth}{graphics/typesOfData/xmlexample}{0.07}{0.37}%
+\locateGraphicTB{4}{width=0.6\paperwidth}{graphics/typesOfData/jsonexample}{0.35}{0.32}%
+%
+\locateGraphicTB{5}{width=0.2\paperwidth}{graphics/typesOfData/xmlexample}{0.07}{0.37}%
+\locateGraphicTB{5}{width=0.2\paperwidth}{graphics/typesOfData/jsonexample}{0.07}{0.67}%
+\locateGraphicTB{5}{width=0.6\paperwidth}{graphics/typesOfData/yamlexample}{0.35}{0.32}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Strukturierte Daten}%
+\begin{itemize}%
+\item Diese tabellarische und hierarchische Datenformate haben gemeinsam, dass sie Informationen in einzelnen Dokumenten speichern.%
+\item<2-> Sie bieten klare und strenge Regeln, wie Daten definiert, strukturiert, gespeichert, und geladen werden kann.%
+\item<3-> Die Formate sind oft offen und nicht an einzelne Anbieter gebunden.%
+\item<4-> Aber sie sind eben nur nützlich, wenn wir die Daten in einzelnen Dateien speichern können.%
+\item<5-> Sie sind ungeignet, um sehr große Datenmengen zu speichern.%
+\item<6-> Sie sind auch nicht geeignet, um kompleze Zusammenhänge zwischen verschiedenen Arten von Daten zu modellieren.%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Relationale Daten}%
+\begin{itemize}%
+\item Sagen wir, Sie wollen Daten über das Personal unserer Universität speichern, über die einzelnen Fakultäten, die Studenten, und die Geräte.%
+\item<3-> Ein einzelnes Dokument müsste nicht nur die Informationen speichern, sondern auch wie diese zusammenhängen.%
+\item<4-> Welcher Student besucht welchen Kurs? Welcher Student wird von welchem Lehrer betreut? Welcher Mitarbeiter gehört zu welcher Fakultät?%
+\item<5-> Das kann man durchaus mit \pgls{XML}, \pgls{YAML}, oder \pgls{JSON} machen.%
+\item<6-> Aber das Dokument wäre riesig.%
+\item<7-> Wie findet man etwas in so einem Dokument?%
+\item<8-> Ein Fehler, irgendwo, und das Dokument ist kaput.%
+\item<9-> Sobald mehrere Leute gleichzeitig mit den Daten arbeiten müssen, fällt alles zusammen.%
+\item<10-> Wir brauchen eine andere Lösung.%
+\end{itemize}%
+\locateGraphic{2}{width=0.9\paperwidth}{graphics/typesOfData/relationalData}{0.05}{0.26}%
+\end{frame}%
+%
+\section{Datenbanken}%
+%
+\begin{frame}%
+\frametitle{Datenbanken}
+\begin{itemize}%
+\item Wilkommen zum Kurs \emph{Datenbanken}\cite{databases}.%
+\item<2-> Hier lernen wir über genau so eine Methode\uncover<3->{, eine Methode, um strukturierte Daten zu speichern\uncover<4->{, so daß mehrere Nutzer gleichzeitig damit arbeiten können.}}%
+\item<5-> Beginnine wir mit ein paar Definitionen.%
+\end{itemize}%
+%
+\uncover<6->{\begin{definition*}[Datenbank]%
+Eine \emph{Datenbank}~(DB) ist eine Kollektion von  in gegenseiter Beziehung stehenden Daten, die in einem Computer gespeichert sind, potentiell viele verschiedene Typen haben können, und auf die viele Nutzern und Applikationen gleichzeitig zugreifen können.%
+\end{definition*}}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Datenbanken}
+\begin{itemize}%
+\item Es gibt viele verschiedene Datenbanken.%
+\item<2-> Datenbanken für Dokumente\uncover<3->{, für geographische Daten\uncover<4->{, für komplexe Objecte, usw.}}%
+\item<5-> Wir fokussieren uns auf Daten, die in (mehreren) Tabellen gespeichert werden, die in festen logischen Beziehungen (Relationen) zu einander stehen.
+\end{itemize}%
+%
+\uncover<6->{\begin{definition*}[Relationale Datenbank]%
+Eine relationale Datenbank~(RDB) ist eine Datenbank, die Daten in Zeilen~(Rows, Tupel, Datensätze, Records) und Spalten~(Columns, Attribute) organisiert, die zusammen Tabellen~(Relationen) bilden wobei die Datenpunkte zu einander in Beziehungen stehen\cite{I2021WIARDB,C1970ARMODFLSDB,SC1975OTPOARADI,T2018ISARD}.%
+\end{definition*}%
+%
+\uncover<7->{\begin{definition*}[Datensatz]%
+Ein Datensatz~(Record) ist eine Gruppe von zusammenhängenden Datenelementen die von einer Anwendung als Einheit behandelt werden.%
+\end{definition*}}}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Relational Data}%
+\begin{itemize}%
+\item Ein Studenten-Datensatz könnte z.B.\ den Namen des Studenten/in speichern, seinen/ihren Geburtstag, die Ausweisnummer, und die Mobiltelefonnummer.%
+\item<2-> Datensätze sind die grundlegende Einheit von Daten, die in einer Datenbank gespeichert werden.%
+\item<3-> Das zweite Kernelement sind die Beziehungen der Datensätze untereinander.%
+\item<4-> Diese Beziehungen schützen die Korrektheit und Integrität der Daten.%
+\item<5-> Ein Studenten-Datensatz könnte z.B.\ mit einem Lehrer-Datensatz verbinden sein.%
+\item<6-> Vielleicht speichert unsere Datenbank ja auch, welcher Student von welchem Lehrer betreut wird.%
+\item<7-> Solche miteinander in Beziehung stehenden Daten, das ist womit wir arbeiten werden.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Datenbankmanagementsysteme}%
+\begin{itemize}%
+\item Natürlich brauchen wir eine Art Software, um mit solchen Daten umzugehen.%
+\end{itemize}%
+\uncover<2->{%%
+\begin{definition*}[Datenbankmanagementsystem]%
+Ein Datenbankmanagementsystem~(DBMS) ist ein Softwaresystem um mit Daten arbeiten zu können.
+Es bietet die Möglichkeit, Datenbanken, Tabellen, und Datensätze zu erstellen, zu speichern, zu verändern, und zu löschen.
+Es verwaltet auch die Zugriffsrechte auf die Datenbanken und Tabellen.%
+\end{definition*}%
+\uncover<3->{%
+\begin{itemize}%
+\item DBMSes können beliebig komplexe Softwareprogramme sein.%
+\item<4-> Wenn Sie über die Anforderungen an solche Software nachdenken, wird Ihnen sofort klar, warum.%
+\end{itemize}%
+}}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Anforderung: Effizienter Zugriff}%
+\begin{itemize}%
+\item Ein DBMS muss uns schnellen Zugriff auf große Datenmengen bieten.%
+\item<2-> Sie kennen ja effiziente Datenstrukuren wie Hashes, Suchbäume, sortierte Listen, usw.%
+\item<3-> Hier arbeiten wir jedoch mit Datenstructure, die auf der Festplatte gespeichert werden müssen\dots%
+\item<4-> {\dots}und das macht alles schwieriger.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Anforderung: Datenintegrität}%
+\begin{itemize}%
+\item Ein DBMS muss es uns erlauben, Einschränkungen und Beziehungen für Daten zu spezifizieren.%
+\item<2-> Vielleicht erlauben wir nur Geburtsdaten zwischen dem 1.~1.~1900 und dem 31.~12.~2020 für alle Studenten und Universitätsmitarbeiter.%
+\item<3-> Vielleicht wollen wir erzwingen, das jeder Universitätsmitarbeiter immer genau einer Fakultät zugeordnet ist.%
+\item<4-> Das DMBS muss es uns ermöglichen, solche Einschränkungen und Beziehungen zu definieren und muss dann dafür sorgen, dass diese immer eingehalten werden.
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Anforderung: Zugriffkontrolle}%
+\begin{itemize}%
+\item Ein DBMS muss es uns auch erlauben, Regeln für den Datenzugriff zu formulieren.%
+\item<2-> Vielleicht speichert unsere Datenbank alle Informationen über unsere Universität und darf von allen Studenten und Mitarbeitern genutzt werden.%
+\item<3-> Das bedeutet aber nicht, dass alle auch auf alle Daten zugreifen können.%
+\item<4-> Und nur weil jemand bestimmte Daten auslesen darf, bedeutet das noch nicht, dass sie diese Daten auch verändern darf.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Anforderung: Gleichzeitiger Zugriff}%
+\begin{itemize}%
+\item Ein DBMS muss es mehreren Personen und Applikationen ermöglichen, gleichzeitig auf die Daten zuzugreifen.%
+\item<2-> Es muss verhindern, dass die Datenintegrität verletzt wird, wenn gleichzeitig mehrere Personen die Daten verändern.%
+\item<3-> Manche Datenbanken sind so große, dass sie über mehrere Computer in einem Cluster verteilt werden müssen.%
+\item<4-> Das DBMS muss dann die Datenintegrität über alle Datenbankteile hinweg sicherstellen.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{DBA}%
+\begin{itemize}%
+\item Weil Datenbanken also zwangsweise schon etwas kompliziert sind, gibt es in vielen Organisationen eine Person, die/der sich damit beschäftigt:%
+\end{itemize}%
+\uncover<2->{%
+\begin{definition*}[Datenbankadministrator]%
+Datenbankadministratoren~(DBAs) sind die Person oder Gruppe von Personen, die für die effektive Nutzung von Datenbanktechnologien in einer Organisation oder einem Unternehmen zuständig ist.%
+\end{definition*}%
+\uncover<3->{%
+\begin{itemize}%
+\item Datebanken werden in vielen Organisationen und Abteilungen verwendet.%
+\item<4-> Daher gibe es auch viele DBAs.%
+\end{itemize}}}%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Nun haben wir also eine grobe Idee, was Datenbanken sind.%
+\item<2-> In den nächsten Vorlesungen, schauen wir uns an, welche Anforderungen wir genau an Datenbanken haben.%
+\item<3-> Wir schauen uns die Geschichte von Datenbanken an.%
+\item<4-> Wir schauen uns an, welche DBMSes es so gibt.%
+\item<5-> Und dann legen wir richtig los.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
