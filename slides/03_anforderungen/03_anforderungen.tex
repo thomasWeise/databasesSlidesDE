@@ -1,0 +1,60 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{3. Anforderungen}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}[t]%
+\frametitle{Anforderungen an ein DBMS}%
+\begin{itemize}%
+%
+\item Wir haben nun eine ungefähre Idee, was eine Datenbank~(DB) und was ein Datenbankmanagementsystem~(DBMS) sind.%
+\item<2-> Lassen Sie uns nun zusammen erforschen, welche Anforderungen Organisationen haben könnten, die mit DBs bzw.\ DBMSes arbeiten.%
+\item<3-> Stellen wir uns vor, dass wir eine Datenbank für eine Bank entwickeln wollen.%
+\item<4-> Datenbank soll die Informationen über die Kunden, ihre Konten, und Transaktionen speichern, sowie die Daten über die Angestellten der Bank.%
+\item<5-> Davon ausgehend bauen wir uns eine Wunschliste von Features und Anforderungen zusammen.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\section{Anforderungen}%
+%
+\begin{frame}%
+\frametitle{Daten Modellieren und Repräsentieren}%
+\begin{itemize}%
+\item Zuerst muss uns das DBMS Werkzeuge bieten, mit dem wir ein Modell unserer Daten ersellen und implementieren können.
+\item<2-> Wir fokussieren uns hier auf relationale Datenmodelle.%
+\item<3-> \emph{Modellieren} bedeutet also zu definieren, welche Tabellen es gibt, welche Spalten diese Tabellen haben und welche Datentypen die Spalten haben, sowie festzulegen, wie die Tabellen und deren Datensätze zueinander in Beziehung stehen.%
+\item<4-> Diese Definitionen nennt man das \emph{logische Modell} der Datenbank.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Daten Modellieren und Repräsentieren}%
+\begin{itemize}%
+\item Für unsere Bank bedeutet dies zum Beispiel\uncover<2->{:%
+\begin{itemize}%
+\item Wir wollen vielleicht eine Tabelle mit Kundeninformationen erstellen, eine Tabelle mit Informationen über Bankangestellte, eine Tabelle für Konten, und eine Tabelle mit Transaktionen.%
+\item<3-> Wir wollen definieren, welche Informationen wir über Kunden speichern, z.B. ihre Namen, Ausweisnummern, Mobiltelefonnummern, usw.%
+\item<4-> Wir müssen auch Einschränkungen für die Integrität der Daten defininieren, z.B. daß Ausweisnummern dem Standard für Chinesische Identifikationsnummern~(中国公民身份号码)\cite{GB116431999CIN} entsprechen müssen, usw.%
+\item<5-> Wir wollen auch Beziehungen zwischen den Tabellen spezifizieren, z.B. daß jeder Eintrag in der Tabelle für Bankkonten mit genau einem Eintrag in der Tabelle für Kunden verbunden ist, aber das jeder Kunde mehrere Bankkonten haben darf.
+\item<6-> Idealerweise sollte es dafür eine Programmiersprache geben.%
+\end{itemize}}%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
