@@ -31,7 +31,7 @@ Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.gith
 
 1. [Organisation](https://thomasweise.github.io/databasesSlidesDE/01_organisation.pdf)
 2. [Einleitung](https://thomasweise.github.io/databasesSlidesDE/02_einleitung.pdf)
-3. [Anforderungen](https://thomasweise.github.io/databasesSlidesDE/03_anforderungen.pdf)
+3. [Anforderungen an ein Datenbankmanagementsystem](https://thomasweise.github.io/databasesSlidesDE/03_anforderungen.pdf)
 
 
 ### 2.3. Die Beispiele
@@ -53,7 +53,7 @@ Sie können die Dateien frei teilen.
 Sie können auch den Text und Bilder kopieren, solange sie das Buch und die Originalquelle zitieren.
 Dazu können Sie zum Beispiel den folgenden BibTeX-Eintrag verwenden:
 
-<pre>@book{databases,<br/>&nbsp;author&nbsp;=&nbsp;{<a href="http://iao.hfuu.edu.cn/5">Thomas&nbsp;Weise</a>},<br/>&nbsp;title&nbsp;=&nbsp;{Databases},<br/>&nbsp;year&nbsp;=&nbsp;{2025},<br/>&nbsp;publisher&nbsp;=&nbsp;{<a href="http://iao.hfuu.edu.cn">Institute&nbsp;of&nbsp;Applied&nbsp;Optimization</a>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.hfuu.edu.cn/aibd">School&nbsp;of&nbsp;Artificial&nbsp;Intelligence&nbsp;and&nbsp;Big&nbsp;Data</a>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.hfuu.edu.cn/">Hefei&nbsp;University</a>},<br/>&nbsp;address&nbsp;=&nbsp;{Hefei,&nbsp;Anhui,&nbsp;China},<br/>&nbsp;url&nbsp;=&nbsp;{<a href="https://thomasweise.github.io/databases">https://thomasweise.github.io/databases</a>}<br/>}</pre>
+<pre>@book{databases,<br/>&nbsp;author&nbsp;=&nbsp;{Thomas&nbsp;Weise},<br/>&nbsp;title&nbsp;=&nbsp;{Databases},<br/>&nbsp;year&nbsp;=&nbsp;{2025},<br/>&nbsp;publisher&nbsp;=&nbsp;{<a href="http://iao.hfuu.edu.cn">Institute&nbsp;of&nbsp;Applied&nbsp;Optimization</a>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.hfuu.edu.cn/aibd">School&nbsp;of&nbsp;Artificial&nbsp;Intelligence&nbsp;and&nbsp;Big&nbsp;Data</a>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.hfuu.edu.cn/">Hefei&nbsp;University</a>},<br/>&nbsp;address&nbsp;=&nbsp;{Hefei,&nbsp;Anhui,&nbsp;China},<br/>&nbsp;url&nbsp;=&nbsp;{<a href="https://thomasweise.github.io/databases">https://thomasweise.github.io/databases</a>}<br/>}</pre>
 
 **Wenn Sie Kommentare oder Vorschläge zu diesem Buch oder dem Kurs haben, oder wenn Sie Fehler gefunden haben, bitte öffnen Sie einen Issue unter [issue here](https://github.com/thomasWeise/databases/issues).**
 Ihr Feedback würde helfen, den Kurs zu verbessern.
@@ -67,8 +67,8 @@ Es steht unter der GNU GENERAL PUBLIC LICENSE Version 2, June 1991 und sein Copy
 
 ## 4. Kontakt
 Wenn Sie weitere Fragen oder Vorschläge haben, kontaktieren Sie bitte
-Prof. Dr. [Thomas Weise](http://iao.hfuu.edu.cn/5) (汤卫思教授)
-vom Institute of Applied Optimization (应用优化研究所, [IAO](http://iao.hfuu.edu.cn))
+Prof. Dr. Thomas Weise (汤卫思教授)
+vom Institute of Applied Optimization (应用优化研究所, IAO)
 der School of Artificial Intelligence and Big Data ([人工智能与大数据学院](http://www.hfuu.edu.cn/aibd))
 der [Hefei University](http://www.hfuu.edu.cn/english/) ([合肥大学](http://www.hfuu.edu.cn/)),
 in Hefei, Anhui, China (中国安徽省合肥市)

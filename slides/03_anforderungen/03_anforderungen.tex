@@ -7,7 +7,7 @@
 \RequirePackage{\sharedDir/styles/styles}%
 \toggleToGerman%
 %
-\subtitle{3. Anforderungen}%
+\subtitle{3. Anforderungen an ein DBMS}%
 %
 \begin{document}%
 %
@@ -21,27 +21,37 @@
 %
 \item Wir haben nun eine ungefähre Idee, was eine Datenbank~(DB) und was ein Datenbankmanagementsystem~(DBMS) sind.%
 \item<2-> Lassen Sie uns nun zusammen erforschen, welche Anforderungen Organisationen haben könnten, die mit DBs bzw.\ DBMSes arbeiten.%
-\item<3-> Stellen wir uns vor, dass wir eine Datenbank für eine Bank entwickeln wollen.%
+\item<3-> Wir wollen jetzt also eine Vorstellung von den Features entwickeln, die ein DBMS haben soll und welche wir später nutzen werden.\bigskip%
+\item<3-> Stellen wir uns dafür vor, dass wir eine Datenbank für eine Bank entwickeln wollen.%
 \item<4-> Datenbank soll die Informationen über die Kunden, ihre Konten, und Transaktionen speichern, sowie die Daten über die Angestellten der Bank.%
 \item<5-> Davon ausgehend bauen wir uns eine Wunschliste von Features und Anforderungen zusammen.%
 %
 \end{itemize}%
 \end{frame}%
 %
-\section{Anforderungen}%
+\section{Daten Modellieren und Repräsentieren}%
 %
 \begin{frame}%
 \frametitle{Daten Modellieren und Repräsentieren}%
 \begin{itemize}%
-\item Zuerst muss uns das DBMS Werkzeuge bieten, mit dem wir ein Modell unserer Daten ersellen und implementieren können.
-\item<2-> Wir fokussieren uns hier auf relationale Datenmodelle.%
-\item<3-> \emph{Modellieren} bedeutet also zu definieren, welche Tabellen es gibt, welche Spalten diese Tabellen haben und welche Datentypen die Spalten haben, sowie festzulegen, wie die Tabellen und deren Datensätze zueinander in Beziehung stehen.%
-\item<4-> Diese Definitionen nennt man das \emph{logische Modell} der Datenbank.%
+\item Zuerst muss uns das DBMS Werkzeuge bieten, mit dem wir ein Modell unserer Daten erstellen und implementieren können.%
+\item<2-> Wenn wir mit einer Programmiersprache wie \python\ programmieren, dann können wir Datenstrukuteren erstellen.
+\item<3-> Wir können sagen:~\inQuotes{Das hier ist eine Liste mit Ganzzahlen.}\uncover<4->{ oder \inQuotes{Das hier ist eine Klasse, mit der Informationen über Studenten gespeichert werde. Jede Instanz davon speichert den Namen und die Ausweisnummer eines Studenten.}}%
+\item<4-> Also wir brauchen sowas auch für Datenbanken.%
 \end{itemize}%
 \end{frame}%
 %
 \begin{frame}%
-\frametitle{Daten Modellieren und Repräsentieren}%
+\frametitle{Relationales Datenmodell und Logisches Schema}%
+\begin{itemize}%
+\item Wir fokussieren uns hier auf relationale Datenmodelle.%
+\item<2-> \emph{Modellieren} bedeutet also zu definieren, welche Tabellen es gibt, welche Spalten diese Tabellen haben und welche Datentypen die Spalten haben, sowie festzulegen, wie die Tabellen und deren Datensätze zueinander in Beziehung stehen.%
+\item<3-> Diese Definitionen nennt man das \emph{logische Schema} (auch:~logisches Modell) der Datenbank.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Logisches Schema für die Bank}%
 \begin{itemize}%
 \item Für unsere Bank bedeutet dies zum Beispiel\uncover<2->{:%
 \begin{itemize}%
@@ -51,6 +61,154 @@
 \item<5-> Wir wollen auch Beziehungen zwischen den Tabellen spezifizieren, z.B. daß jeder Eintrag in der Tabelle für Bankkonten mit genau einem Eintrag in der Tabelle für Kunden verbunden ist, aber das jeder Kunde mehrere Bankkonten haben darf.
 \item<6-> Idealerweise sollte es dafür eine Programmiersprache geben.%
 \end{itemize}}%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Physisches Schema}%
+\begin{itemize}%
+\item Aber ein DBMS muss uns noch mehr Modellierungsmöglichkeiten bieten.%
+\item<2-> Das logische Schema sagt nicht, wie die Daten eigentlich gespeichert werden sollen.%
+\item<3-> Und das sollte es auch nicht.%
+\item<4-> Dafür gibt es darunterliegende \emph{phyische Schema}.%
+\item<5-> Ein DBMS soll es den Datenbankdesignern erlauben, Indices für Tabellen zu definieren, um den Zugriff auf Daten zu beschleunigen.%
+\item<6-> Aber es sollte sie nicht zwingen, das genaue Layout der Daten auf der Festplatte zu kennen.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\section{Unabhängikeiten}%
+%
+\begin{frame}%
+\frametitle{Unabhängikeiten}%
+\begin{itemize}%
+\item Das logische und das physische Schema sind zwei verschiedene Dinge.%
+\item<2-> Wenn wir Datenbankapplikationen entwerfen, gibt es mehrere Abstraktionsebenen, die zu einem gewissen Grad unabhängig von einander seien sollen.%
+%
+\item<3-> Das ist wie beim Programmieren mit einer Sprache wie \python\uncover<4->{:~Die Hochsprachenkonstrukte wie Schleifen, Klassen, und Exceptions existieren auf der Ebene von \python, aber letztendlich auf der Ebene der Hardware werden sie durch Maschinenkode repräsentiert, der völlig anders aussehen kann\uncover<5->{{\dots}was der Pythonprogrammierer aber nicht wissen muss.}}%
+%
+\item<6-> Die Programme, die auf der Datenbank \inQuotes{sitzen} greifen auf die Daten gemäß des logischen Schemas zu.%
+\item<7-> Das ist unabhängig vom phyischen Schema, davon, die die Daten auf der Festplatte organisiert sind.%
+\item<8-> Das physische Schema kann geändert werden, ohne die Programme, die auf dem logischen Schema \inQuotes{sitzen,} zu beeinflussen.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Drei-Schema-Architektur}%
+\uncover<-8>{%
+\begin{itemize}%
+\item Datenbanken sind oft groß und erfüllen mehrere Funktionen auf einmal.%
+\item<2-> Daher gibt es auch oft mehr als eine Anwendung, die auf die Datenbank zugreift.%
+\item<3-> Jede Anwendung kann eine eigene Sicht auf die Daten haben.%
+\item<4-> Diese Sichten liegen \inQuotes{oberhalb} des logischen Schemas.%
+\item<5-> Für unsere Bank bedeutet das zum Beispiel\uncover<6->{%
+\begin{itemize}%
+\item Eine Onlinebankinganwendung, wird nur die Kunden und deren Kontent sehen.%
+\item<7-> Das \pgls{HR}-Programm kann auf die Mitarbeiter-Daten unserer Bank und deren Performanz-Indikatoren zugreifen, aber nicht auf Kontostände der Kunden.%
+\end{itemize}%
+}%
+\item<8-> Ein DBMS muss uns erlauben, so eine Drei-Schema-Architektur\cite{AXSSGDMS1978FRODMS,TK1978TAXSDFROTSGODMS,BFJKMRGRT1985RMFDSDAFTGDOTAXSDSSG,SS2005EIDDDFDB:I} zu entwickeln, bei der jede Ebene möglichst unabhängig von der darunterliegenden seien soll.%
+\end{itemize}%
+}%
+%
+\locateGraphic[AXSSGDMS1978FRODMS,TK1978TAXSDFROTSGODMS,BFJKMRGRT1985RMFDSDAFTGDOTAXSDSSG,SS2005EIDDDFDB:I]{9}{width=0.98\paperwidth}{graphics/threeSchemas}{0.01}{0.26}%
+\end{frame}%
+%
+\section{Nutzbarkeit und Performanz}%
+%
+\begin{frame}%
+\frametitle{Nutzbarkeit und Performanz}%
+\begin{itemize}%
+\item Ein DBMS stellt den Nutzern und Anwendungen Daten in einem brauchbaren Format und einer akzeptablen Geschwindigkeit zur Verfügung.%
+\item<2-> Wir erwarten, dass die Lese- und Schreibgeschwindikeit hoch sind.%
+\item<3-> Wir erwarten, dass Daten schnell eingefügt, geändert, und gelöscht werden können.%
+\item<4-> Eine einfache Programmiersprache für den Datenzugriff sollte existieren.%
+\item<5-> Es sollte weitere Werkzeuge geben, mit denen die Datenmodellierung und der Zugriff weiter vereinfacht werden können.%
+\item<6-> Wir wollen Formulare zum Eingeben und Berichte zum Ausgeben der Daten erstellen können.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Integrität und Gleichzeitiger Zugriff}%
+%
+\begin{frame}%
+\frametitle{Integrität}%
+\begin{itemize}%
+\item Ein DBMS stellt die Korrektheit under Integrität der Daten sicher.%
+\item<2-> Dies beinhaltet mehrere Aspekte\uncover<3->{%
+\begin{itemize}%
+\item \alert{Konsistenz}:~Das DBMS stellt sicher, dass die modellierten Beziehungen und Einschränkungen für die Daten immer eingehalten werden.\uncover<3->{ Wenn wir festgelegt haben, dass ein Bankkonte immer einem Kunden gehört, dann darf das DBMS nie zulassen, das irgendwie ein Bankkonte entsteht, das nicht einem Kunden gehört.}%
+\item<4-> \alert{Transaktionen}:~Eine Änderung der Daten, die ggf.\ mehrere Schritte erfordert, kann in eine Transaktion gruppiert werden.%
+\item<5-> \alert{Atomizität}:~Eine Transaktion findet entweder vollständig statt~(alle Schritte werden erfolgreich ausgeführt) oder gar nicht~(kein Schritt wird ausgeführt).
+\item<7-> Das DBMS stellt sicher, dass Transaktionen nur ausgeführt werden, wenn die Konsistenz vor und nach der Transaktion eingehalten wird.\uncover<8->{ Wenn wir Geld von einem Bankkonto auf ein anderes transferriern, dann muss es zuerst vom ersten Konto abgezogen werden und dann zum zweiten dazuaddiert werden. Entweder beides wird gemacht oder keines von beiden.}%
+\end{itemize}}%
+\end{itemize}%
+\end{frame}%
+%%
+\begin{frame}%
+\frametitle{Gleichzeitigkeit und Isolierung}%
+\begin{itemize}%
+\item Ein DBMS muss es mehreren Nutzern und Anwendungen erlauben, gleichzeitig auf die Datenbank zuzugreifen.%
+\item<2-> Dabei müssen natürlich die Korrektheit und Integrität der Daten immer gewährleistet sein.%
+\item<3-> \alert{Isolation}:~Auch wenn mehrere Transaktionen aus jeweils mehreren Schritten gleichzeitig stattfinden, darf zu keiner Zeit die Integrität und Korrektheit der Daten verletzt werden.\uncover<4->{ Die Transaktionen werden voneinenader isoliert.}%
+\item<5-> Wenn in unserer Bankdatenbank Geld von Konto~$A$ zu Konto~$B$ transferriert wird und \emph{gleichzeitig} Geld von Konto~$B$ to Konto~$C$, dann darf keine der beiden Transaktionen die andere beeinflussen.%
+%
+\item<6-> Das muss selbst dann funktionieren, wenn eine Datenbank über mehrere Computer / im Netwerk verteilt aufgebaut ist.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Dauerhaftigkeit und Sicherheit~(Safety)}%
+\begin{frame}%
+\frametitle{Dauerhaftigkeit und Sicherheit~(Safety)}
+\begin{itemize}%
+\item \alert{Dauerhaftigkeit}:~Sobald eine Transaktion erfolgreich abgeschlossen~(committed) ist, sind die vorgenommenen Änderungen \emph{dauerhaft} gespeichert.%
+\item<2-> Darüberhinaus sollte ein DBMS auch sicherstellen, dass alle Daten auch in unvorhergesehenen Situationen gesichert sind.%
+\item<3-> Dauerhaftigkeit sollte auch bei Systemabstürzen und Hardwareausfällen -- soweit physisch möglich -- sichergestellt werden.%
+\item<4-> Dies beinhaltet die Möglichkeit, Checkpoints zu erstellen und Daten beim Neustart wiederherzustellen.%
+\item<5-> Natürlich hat das Grenzen\uncover<6->{:~Kein DBMS kann uns irgendwie schützen, wenn Datenträger physisch zerstört werden.}%
+\item<7-> Es sollte also möglich sein, regelmäßig Backups (Sicherheitskopien) der Daten zu erstellen und auch wieder einzuspielen.%
+\item<8-> Dies wäre für unsere Bank sehr sehr wichtig.%
+\end{itemize}%
+\end{frame}%
+
+\begin{frame}%
+\frametitle{ACID}
+\begin{itemize}%
+\item Damit kennen wir die vier sogenannten \alert{ACID properties}~\cite{GR1992TPCAT,WV2001TISTAATPOCCAR}\uncover<2->{%
+\begin{enumerate}%
+\item \alert{Atomizität} -- Atomicity
+\item \alert{Konsistenz} -- Consistency
+\item \alert{Isolation} -- Isolation
+\item \alert{Dauerhaftigkeit} -- Durability
+\end{enumerate}}%
+\end{itemize}%
+\end{frame}%
+%
+\section{Datenschutz und Datensicherheit~(Security)}%
+\begin{frame}%
+\frametitle{Datenschutz und Datensicherheit~(Security)}
+\begin{itemize}%
+\item Ein DBMS muss es uns erlauben, unsere Daten vor unautorisiertem Zugriff sowohl vom Inneren als auch vom Äußeren unserer Organisation zu schützen.\uncover<2->{%
+\begin{itemize}%
+\item Es muss uns erlauben, Rollen und Benutzerkonten zu spezifizieren und zu definieren, auf welche Daten diese Lesend und auf welche sie Schreibend zugreifen können.%
+\item<3-> Ein Bankkunde kann nur auf sein eigenes Konto zugreifen.%
+\item<4-> Ein Bankangestellter kann auf die Konten seiner Kunden zugreifen, nicht jedoch auf andere Konten und auch nicht auf die Daten anderer Mitarbeiter.%
+\item<5-> Ein Mitarbeiter unserer \pgls{HR}-Abteilung kann auf die Mitarbeiterdaten zugreifen, nicht jedoch auf Bankkonten.%
+\item<6-> Dies geht Hand-in-Hand mit der Drei-Schema-Architektur, die es uns erlaubt, verschiedene Sichten auf die Daten zu definieren.%
+\end{itemize}}%
+\item<7-> Weiterhin muss ein DBMS Dinge wie Passwort-Schutz und verschlüsselte Kommunikation implementieren.
+\item<8-> Es muss uns auch ermöglichen, später festzustellen, welcher Nutzer wann auf welche Daten zugegriffen und diese verändert hat.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Nun kennen wir einige der Anforderungen, die wir an ein DBMS stellen würden.%
+\item<2-> Es sind ziemlich viele.%
+\item<3-> Daher sind DBMSe sehr komplexe Systeme.%
+\item<4-> Es ist auch klar, warum wir diese Anforderungen nicht mit Programmen wie \microsoftExcel\ oder \libreofficeCalc\ erfüllen können.%
+\item<5-> Zum Glück gibt es viele spannende Dinge zu lernen.%
 \end{itemize}%
 \end{frame}%
 %
