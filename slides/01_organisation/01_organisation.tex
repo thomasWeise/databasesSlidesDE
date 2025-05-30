@@ -83,7 +83,7 @@ Das Ziel ist, dass Sie Freude beim Lernen und bei der Arbeit mit unserem Themeng
 \end{frame}%
 %
 \begin{frame}%
-\frametitle{Book}%
+\frametitle{Buch}%
 \begin{itemize}%
 \item Ich habe für diesen Kurs ein Buch geschrieben:~\citetitle{databases}\cite{databases}.%
 \item<2-> Das Buch ist in Englisch geschrieben.%
@@ -91,6 +91,19 @@ Das Ziel ist, dass Sie Freude beim Lernen und bei der Arbeit mit unserem Themeng
 \item<4-> Es wird noch aktiv weiterentwickelt.%
 \item<5-> \alert{Sie} können mir helfen, es weiterzuentwickeln, durch Fragen, Anregungen, das Finden von Fehlern, usw.%
 \item<6-> URL:~\expandafter\url{\databasesUrl/databases.pdf}%%
+\end{itemize}%%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Buch: Features}%
+\begin{itemize}%
+\item Das Buch ist explizit für Anfänger auf dem Gebiet geschrieben.%
+\item<2-> Es beinhaltet viele Beispiele, die Schritt-für-Schritt erklärt werden.%
+\item<3-> Fachbegriffe, die Sie vielleicht nicht kennen, werden in einem Glossary erklärt.%
+\item<4-> Das Glossary beinhaltet auch Abkürzungen, Programme, mathematische Notationen, usw.%
+\item<5-> Zum Beispiel~\pgls{stdin}, \pgls{UCS}, \pgls{UML}, \pgls{HTML}, \pgls{JSON}, \pgls{1NF}, \pgls{breakpoint}, \pgls{venv}, \pgls{clientServerArchitecture}, \realNumbers, \npHard, \psql, \pypi, \matplotlib\dots%
+\item<6-> Diese Terme sind jeweils im Text auf das Glossary verlinkt.%
+\item<7-> Und im Glossary gibt es dann immer weiterführende Literturhinweise.%
 \end{itemize}%%
 \end{frame}%
 %
@@ -119,6 +132,45 @@ Das Ziel ist, dass Sie Freude beim Lernen und bei der Arbeit mit unserem Themeng
 \end{frame}%
 %
 \begin{frame}%
+\frametitle{Beispiele}%
+\begin{itemize}%
+\item In diesem Kurs werden wir sehr viele Beispiele verwenden.\uncover<2->{%
+\begin{enumerate}%
+\item Wir verwenden zum Beispiel das \postgresql\ Datenbankmanagementsystem\cite{TA2024DDAMWPAM,FP2023LP,OH2017PUAR,B2024PELUYDW}.%
+\item<3-> Wir werden echte Datenbanken damit erstellen und mit der Datenbanksprache \sql\cite{C20245YOQ,MS2001S1URLC} darauf zugreifen.%
+\item<4-> Wir werden die Strukturen von Datenbanken mit den Werkzeugen \yEd\cite{SG2015MDAWY,Y2011YGEM} und \pgmodeler\cite{AES2006PPDM} modelieren.%
+\item<5-> Wir werden von der Programmiersprache \python\cite{programmingWithPython} aus mit dem \psycopg-Modul\cite{VDGE2010P} auf unsere \postgresql\ Datenbanken zugreifen.
+\item<6-> Wir werden \libreofficeBase\cite{FNFHWSKLSSGLFRSRPLJG2022BG7R1BOL7C,S2022L7PFEUU} verwenden, um Formulare und Berichte für unsere \postgresql\ Datenbanken zu erstellen.%
+\end{enumerate}}%
+\item<7-> Alle Beispiele sind in dem \github~Repository \expandafter\url{\databasesCodeRepo} bereitgestellt.%
+\item<8-> Sie können (und sollen!) also jeden Schritt jedes Beispiels genau nachvollziehen.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[fragile,t]
+\frametitle{Beispielprogramme und Output}%
+\begin{itemize}%
+\item Wir stellen viele Beispielprogramme direkt mit Ihrer Ausgabe zur Verfügung. %
+\item<2-> Hier ein Beispiel für ein \python-Programm.%
+\item<4-> Im Buch finden Sie jeweils im Titel des Programms gleich noch den Link zum Sourcekode auf \github.%
+\end{itemize}%
+%
+\gitPythonAndOutput{3-}{\programmingWithPythonCodeRepo}{veryFirstProject}{very_first_program.py}{--args format}{0.05}{0.5}{0.9}{0.8}%
+%
+\end{frame}
+%
+\begin{frame}%
+\frametitle{Komplexere Beispielprogramme}%
+\parbox{0.435\linewidth}{%
+\begin{itemize}%
+\item Für einige Beispiele mit komplexeren Kommandos werden der Programmkode, die Kommandozeile zu dessen Ausführung, der \pgls{stdout}, der Exit-Kode, und die Softwareversion mit angezeigt.%
+\item<2-> Natürlich mit einem Link zum Kode auf \github.%
+\end{itemize}%
+}%
+\locateGraphic[Source:~\bracketCite{databases}]{}{width=0.5\paperwidth}{graphics/listings}{0.45}{0.15}%
+\end{frame}%
+%
+\begin{frame}%
 \frametitle{Software}%
 \begin{itemize}%
 \item Wir nutzen viele verschiedene Werkzeuge.%
@@ -133,10 +185,11 @@ Das Ziel ist, dass Sie Freude beim Lernen und bei der Arbeit mit unserem Themeng
 \begin{itemize}%
 \item Haben Sie die kleinen roten Zahlen in dem Satz \emph{\inQuotes{Wir verwenden zum Beispiel das \postgresql\ Datenbankmanagementsystem\cite{TA2024DDAMWPAM,FP2023LP,OH2017PUAR,B2024PELUYDW}.}} bemerkt?%
 \item<2-> Dies sind Literaturhinweise, die am Ende der Slides gelistet werden.%
-\item<3-> Im Buch \citetitle{databases}\cite{databases} finden Sie ebenfalls viele Literaturhinweise, dort allerdings in eckigen Klammern, also eher so:~\makeatletter\csname @bib@oldcite\endcsname{databases}\makeatother.%
+\item<3-> Im Buch \citetitle{databases}\cite{databases} finden Sie ebenfalls viele Literaturhinweise, dort allerdings in eckigen Klammern, also eher so:~\bracketCite{databases}.%
 \item<4-> Wir haben für jeden Fakt, den wir lehren, für jedes Werkzeug, das verwendet wir, für jeden Befehl, den wir benutzen, und für jedes Datenformat, dass wir verwenden Literaturhinweise herausgesucht.%
 \item<5-> Wir beziehen uns auf normative Standards, auf wissenschaftliche Veröffentlichungen, auf Dokumentationen, auf Vorlesungen an anderen Universitäten, und selbst auf aktuelle Gesetzgebung.%
-\item<6-> Sie können \emph{alles} nachlesen.%
+\item<6-> Wo immer möglich, werden die entsprechenden Quellen im Literaturverzeichnis verlinkt und ich verwende, wo immer möglich, Quellen, die online verfügbar sind.%
+\item<7-> Sie können \emph{alles} nachlesen.%
 \end{itemize}%
 \end{frame}%
 %
@@ -149,6 +202,25 @@ Das Ziel ist, dass Sie Freude beim Lernen und bei der Arbeit mit unserem Themeng
 \item<4-> Und wir machen den Kurs so praktisch wie möglich.%
 \end{itemize}%
 \end{frame}%
+%
+\section{Ökosystem}%
+%
+\begin{frame}%
+\frametitle{Ökosystem}%
+\begin{itemize}%
+\item Wir versuchen, ein Ökosystem von Lehrmaterial aufzubauen.%
+\item<2-> Aktuell gibt es folgende beiden Kurse\uncover<3->{:%
+\begin{itemize}%
+\item \python, mit dem Textbuch \emph{\furtherReading{programmingWithPython}}\uncover<4->{ und}%
+\item<4-> Datenbanken, mit dem Textbuch \emph{\furtherReading{databases}}.%
+\end{itemize}%
+}%
+\item<5-> Diese Kurse sind miteinander verzahnt und vom Material her gleich strukturiert.%
+\item<6-> Sie sind eingeladen, sich die Materialien beider Kurse anzuschauen.%
+\item<7-> Beide werden aktiv weiterentwickelt.%
+\end{itemize}%
+\end{frame}%
+%
 %
 \section{Voraussetzungen}%
 %
