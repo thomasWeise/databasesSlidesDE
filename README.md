@@ -32,6 +32,7 @@ Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.gith
 1. [Organisation](https://thomasweise.github.io/databasesSlidesDE/01_organisation.pdf)
 2. [Einleitung](https://thomasweise.github.io/databasesSlidesDE/02_einleitung.pdf)
 3. [Anforderungen an ein Datenbankmanagementsystem](https://thomasweise.github.io/databasesSlidesDE/03_anforderungen.pdf)
+4. [Geschichte](https://thomasweise.github.io/databasesSlidesDE/04_geschichte.pdf)
 
 
 ### 2.3. Die Beispiele
@@ -46,8 +47,12 @@ Sie können diese unter der untenstehenden Lizenz nutzen.
 
 
 ## 3. Lizenz
-Alle Materialien zu diesem Kurs sind frei verfügbar.
-Sie können die neuesten Versionen unter <https://thomasweise.github.io/databases> finden.
+Alle von mir persönlich erstellte Materialien zu diesem Kurs sind frei verfügbar.
+Das Kursmaterial beinhaltet auch Bilder und Grafiken, die von Anderen erstellt wurden.
+Diese sind explizit markiert und stehen unter der Lizenz ihrer Autoren.
+Mit der Ausnahme solcher Materialien steht dieses Buch und der Kurs unter der Attribution-NonCommercial-ShareAlike 4.0 International Lizenz (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), siehe [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+Sie können die neuesten Versionen des Materials unter <https://thomasweise.github.io/databases> finden.
 Diese Versionen können sich ändern, da wir diesen Kurs aktiv weiterentwickeln.
 Sie können die Dateien frei teilen.
 Sie können auch den Text und Bilder kopieren, solange sie das Buch und die Originalquelle zitieren.
@@ -57,8 +62,6 @@ Dazu können Sie zum Beispiel den folgenden BibTeX-Eintrag verwenden:
 
 **Wenn Sie Kommentare oder Vorschläge zu diesem Buch oder dem Kurs haben, oder wenn Sie Fehler gefunden haben, bitte öffnen Sie einen Issue unter [issue here](https://github.com/thomasWeise/databases/issues).**
 Ihr Feedback würde helfen, den Kurs zu verbessern.
-
-Dieses Buch und der Kurs sind unter der Attribution-NonCommercial-ShareAlike 4.0 International Lizenz veröffentlicht (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), siehe [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 Wir haben das Programm [pdfsizeopt](https://github.com/pts/pdfsizeopt) statisch in den Buildprozess unserer Materialien über das [bookbase Repository](https://github.com/thomasWeise/bookbase) eingefügt.
 Dieses Werkzeug ist natürlich von der Lizenz oben ausgenommen.
