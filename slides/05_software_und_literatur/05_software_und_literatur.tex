@@ -1,0 +1,287 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{5.~Software und Literatur}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}[t]%
+\frametitle{Einleitung}%
+\begin{itemize}\only<-3>{%
+\item Heute gibt es eine große Auswahl an relationalen Datenbankmanagementsystemen.%
+\item<2-> \citetitle{RS2025DERORD}\cite{RS2025DERORD} listed 166 solche Produkte.%
+\item<3-> Im \citetitle{SE:SO:2024DS}\cite{SE:SO:2024DS} konnten Programmierer Feedback zu 35~Systemen geben.}%
+\item<4-> Eine Auswahl der Systeme der jährlichen Developer Surveys von StackOverflow seit 2017.%
+\end{itemize}%
+%
+\locateGraphic[\bracketCite{SE:SO:2024DS}]{4}{width=0.725\paperwidth}{graphics/soDevSurv}{0.1375}{0.22}%
+%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Open Source vs. Proprietäre Software}%
+\begin{itemize}
+\item Open Source Software~(OSS)\uncover<2->{%
+\begin{itemize}%
+\item OSS ist Software, deren Quellkode frei verfügbar ist.%
+\item<3-> Oftmals wird OSS von Freiwilligen entwickelt, manchmal mit finanzieller Unterstützung von Firmen oder Regierungen.%
+\item<4-> OSS kostet kein Geld.%
+\item<5-> OSS wird oft auf kollaborativen Plattformen wie \github\ gehosted und ihre Entwicklung wird durch \pglspl{VCS} wie \git\ gemanaged.%
+\item<6-> Nach \citeauthor{HNZ2024TVOOSS} war der Wert von OSS im Jahr~\citeyear{HNZ2024TVOOSS} mehr als 8 billionen dollar\cite{HNZ2024TVOOSS}.%
+\end{itemize}}%
+\item<7-> Proprietäre Software\uncover<8->{%
+\begin{itemize}%
+\item Proprietäre Software ist kommerzielle Software, die von einem Anbieter entwickelt wird und deren Quellkode normalerweise nicht frei zugänglich ist.%
+\item<9-> Solche Software muss gekauft oder gemietet werden.%
+\end{itemize}%
+}%
+\end{itemize}%
+\end{frame}%
+%
+\section{Open Source Relationale Datenbankmanagementsysteme}%
+%
+\begin{frame}%
+\frametitle{Open Source Relationale Datenbankmanagementsysteme}%
+\begin{itemize}%
+\item Ein großer Teil der relationalen Datenbanken wird von Open Source DBMS gemanaged.%
+\item<2-> Diese kosten kein Geld.%
+\item<3-> Große Gemeinschaften von Entwicklern existieren um sie herum, entwickeln sie gemeinsam, und können Hilfe leisten.%
+\item<4-> Einige dieser Systeme gibt es seit den 1990ern.%
+\item<5-> In den frühen 2000ern began ihr großer Aufstieg\cite{P2004OSDMITM}.%
+\item<6-> Nun sind sie weitverbreitete und gut getestete Produkte\cite{C20245YOQ}.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{MySQL}%
+\begin{itemize}%
+\item \mysql\ ist so ein Open Source DBMS für relationale Datenbanken\cite{WAM2002MRMDFTS,TA2024DDAMWPAM,BT2021HPM,RGS2021BTOTONAMDFPC,D2015LMAM}.%
+\item<2-> Es wurde ursprünglich von Michael Widenius und David Axmark in der schwedischen Forma \mysql~AB entwickelt und kam 1996 heraus\cite{C20245YOQ}.%
+\item<3-> Es wurd ein wichtiger Teil des weitverbreiteten \lampStack, also einem Systemsetup für Web-Application der auf dem \linux\ Betriebssystem, dem Apache webserver, der \mysql\ Datenbank, und der Server-seitigen Skriptsprache PHP basiert\cite{C2022HAFTLS,H2020ULU2E}.%
+\item<4-> Es stand bis ins Jahr 2022 an erster Stelle als beliebtestes DBMS in den Stack Overflow Developer Surveys\cite{SE:SO:2024DS}.
+\item<5-> In dem Survey\cite{PMPVEPWGSMB2025ATAODMSTTHOOSP} des Quellkodes von 371~\pgls{Java} Open Source  Projekten auf \github\ wurde \mysql\ auch am häufigsten als DBMS gefunden.%
+\item<6-> \mysql~AB wurde im Jahr 2000 von Sun Microsystems gekauft, die wiederum 2010 von Oracle gekauft wurden\cite{C20245YOQ}.%
+\item<7-> \mysql\ blieb jedoch OSS.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{MariaDB}%
+\begin{itemize}%
+\item Nach dem Aufkauf von Sun durch Oracle gründeten einige der ursprünglichen \mysql-Entwicklet, auch Michael Widenius, den \mysql-Fork \mariadb\cite{R2014MM,B2019LTMEELFFSAA,D2015LMAM,AA2018QAWMV1ITSQ,AA2018QAWMV2IDQ}.%
+\item<2-> Sie versprachen, dass \mariadb\ für immer OSS bleiben wird.%
+\item<3-> In der Studie\cite{PMPVEPWGSMB2025ATAODMSTTHOOSP} über Datenbanknutzung von Java OSS Programmen war \mariadb\ schon das fünft-populäre relationale DBMS.%
+\end{itemize}%
+%
+\locateGraphic{}{width=0.4\paperwidth}{graphics/mariadbLogo}{0.57}{0.15}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{PostgreSQL}%
+\begin{itemize}%
+\item \postgresql\cite{TA2024DDAMWPAM,FP2023LP,OH2017PUAR,B2024PELUYDW} ist ein Objekt-relationales DBMS, das auch Konzepte aus der Object-Orientierten Programmierung~(OOP) wie Vererbung unter Tabellen unterstützt.
+\item<2-> Es unterstützt auch zusätzliche Datentypen, wie \pgls{JSON}-Objekte und geometrische Daten.
+\item<3-> Es stammt aus dem POSTGRES-Projekt, dem Nachfolger des berühmten INGRES-Projekts an der University of Berkeley in Kalifornien\cite{C20245YOQ}.%
+\item<4-> Es ist vielleicht das OSS DBMS mit den meisten Features.%
+\item<5-> Im \citetitle{SE:SO:2024DS} war es das populärste \pgls{dbms}\cite{SE:SO:2024DS}.
+\item<6-> Im Open Source Quellkode-Survey\cite{PMPVEPWGSMB2025ATAODMSTTHOOSP} war es auf Rang~2.
+\end{itemize}%
+%
+\locateGraphic{}{width=0.225\paperwidth}{graphics/postgresqlLogo}{0.7}{0.58}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{PostgreSQL}%
+\begin{itemize}%
+\item die \pgls{SQL}-Datenbank mit der weitesten Verbreitung ist jedoch \sqlite\cite{WB2019RHSOOS,GPBHKP2022SPPAF,C20245YOQ,HWACIS:HO2023WKUOS}.%
+\item<2-> Anders als die vorher genannten System unterstützt es \emph{nicht} die \gls{clientServerArchitecture}.%
+\item<3-> Stattdessen wird es als Bibliothek direkt in den Prozess geladen, der es nutzt.%
+\item<4-> Heute ist es auf fast jedem Computer, Smartphone, Fernseher, und Automobil installiert und Teil von fast jedem Web Browser.%
+\item<5-> Es wurde ursprünglich im Jahr 2000 veröffentlicht und sein Kernentwickler Richard Hipp hat dafür den SIGMOD Systems Award 2017 bekommen\cite{C20245YOQ}.%
+\end{itemize}%
+%
+\locateGraphic{}{width=0.4\paperwidth}{graphics/sqliteLogo}{0.57}{0.61}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{LibreOffice Base}%
+\begin{itemize}%
+\item Ein DBMS welches mit einzelnen Dateien arbeitet ist auch in der Open Source Bürosoftware \libreoffice\cite{DF2024LTDF,GL2012LTSOOSSCBAFACSOL,S2022L7PFEUU} implementiert: Als \libreofficeBase\cite{FNFHWSKLSSGLFRSRPLJG2022BG7R1BOL7C,S2022L7PFEUU}.%
+\item<2-> \libreofficeBase\ ist allerdings mehr als ein DBMS.%
+\item<3-> Es bietet eine vielseitige graphische Benutzeroberfläche mit dem man sich auch auf Datenbanken wie \mysql, \mariadb\ und \postgresql\ verbinden kann.%
+\item<4-> Mit der Benutzeroberfläche kann man Tabellen, Sichte, Anfragen, Formulare, und Berichte für die Datenbanken erstellen.%
+\item<5-> \libreofficeBase\ ist eine freie Alternative zu dem kommerziellen Produkt\microsoftAccess\cite{SSI2023MA2BTA,B2020HOMA2,UC2021AFD}.%
+\end{itemize}%
+%
+\locateGraphic{}{width=0.6\paperwidth}{graphics/libreofficeLogo}{0.2}{0.675}%
+\end{frame}%
+%
+\section{Proprietäre Datenbankmanagementsysteme}%
+%
+\begin{frame}%
+\frametitle{Oracle Database}%
+\begin{itemize}%
+\item Die erste kommerzielle \sql-Datenbank war die \oracleDB\cite{C20245YOQ,O2007OTHTMIMIOHWCFTPWMIH}.%
+\item<2-> Sie ist noch heute eine der erfolgreichsten und weitverbreiteten kommerziellen Datenbanken, mit vielen hochentwickelten Features\cite{BBDDSY2011ADOODM,KK2021EODATASFHPAP}.%
+\item<3-> Im Juni 2025 war sie dasa populärste DMBS überhaupt im Survey\cite{RS2025DERORD}.
+\item<4-> In dem Java Quellkodesurvey\cite{PMPVEPWGSMB2025ATAODMSTTHOOSP} war sie auf Rang~4.%
+\item<5-> Die Migration von \oracleDB\ nach \postgresql\ ist in\cite{KO2023DMFOTP} diskutiert.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Microsoft SQL Server}%
+\begin{itemize}%
+\item Auf Rang~3 im Survey\cite{RS2025DERORD} stand der \microsoftSqlServer\cite{P2020MSS2ABG,A2024TSAFMSS2,W2018MSSDB}.%
+\item<2-> Dieses DBMS hat seine Wurzeln im Jahr 1988, als Microsoft, Ashton-Tate, und Sybase zusammen eine Variante des Sybase \sql\ Server für das Betriebssystem IBM~OS/2 entwickelten\cite{W2018MSSDB:TEOMSS}.%
+\item<3-> Die erste Version dieses DBMS kam dann 1989 heraus.%
+\item<4-> Spätere Versionen unterstützten \microsoftWindows~NT.%
+\item<5-> Heute läuft der \microsoftSqlServer\ auch auf \linux~(genau wie die \oracleDB).%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Microsoft Access}%
+\begin{itemize}%
+\item Mit \microsoftAccess\cite{LF2022MOSBSO2AM3} bietet Microsoft auch ein DBMS an, das hauptsächlich für einzelne Benutzer auf einem einzelnen Computer gedacht ist.%
+\item<2-> Es ist ein unglaublich nützliches und bequemes Werkzeug, das die Features eines relationlen DBMS mit Werkzeugen zum Entwicklen von Formularen und Berichten vereint\cite{SSI2023MA2BTA,B2020HOMA2,UC2021AFD,MM2014RDAMA}.%
+\item<3-> Es war sicherlich die Vorlage für \libreofficeBase.%
+\item<4-> Die meisten Dinge, die \libreofficeBase\ kann, kann man auch mit \microsoftAccess\ machen, nur oftmals bequemer {\dots} aber \libreofficeBase\ ist kostenfrei\dots%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{IBM DB2}%
+\begin{itemize}%
+\item IBM's \ibmDB\cite{CWDS2007UDLVWE,BBBCCDMMP2016SPTAFOIDFI} ist an weiteres frühes relationales DBMS\cite{HS2013THAGOID}.%
+\item<2-> Es enstand als Software für mächtige Mainframe-Computer, die IBM selbst hergestellt hat.%
+\item<3-> Mainframes sind Computer mit sehr viel Rechenleistung, die oft zentral in großen Organisationen oder Firmen genutzt werden.%
+\item<4-> Währen Oracle also Datenbanken für normale Computer hergestellt hat, hat sich IBM auf starke Server konzentriert.%
+\item<5-> 1989 hatte die Hälfte aller Mainframe-Kunden \ibmDB\ installiert\cite{HS2013THAGOID}.%
+\item<6-> Die \ibmDB\ ist auf Rang~6 im \citetitle{RS2025DERORD}\cite{RS2025DERORD} und auf Rang~23 im \citetitle{SE:SO:2024DS}\cite{SE:SO:2024DS}.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Literatur}%
+%
+\begin{frame}%
+\frametitle{Andere Vorlesungen}%
+\begin{itemize}%
+\item \furtherReading{S2024D},%
+\item \furtherReading{KC2024DS},%
+\item \furtherReading{P2024C6DS},%
+\item \furtherReading{T2025CDBMS},%
+\item \furtherReading{C2016CDMS},%
+\item \furtherReading{R2024CDS}.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Andere Vorlesungen}%
+\begin{itemize}%
+\item \furtherReading{G2011EW2ITDS},%
+\item \furtherReading{P2006CITRD},%
+\item \furtherReading{SS2005EIDDDFDB},%
+\item \furtherReading{V1999C5DMS}.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Generelle Bücher~(1)}%
+\begin{itemize}%
+\item \furtherReading{PW2022APITD},%
+\item \furtherReading{SKS2019DSC},%
+\item \furtherReading{HRT2021MDM},%
+\item \furtherReading{EN2015FODS},%
+\item \furtherReading{KE2015DEE},%
+\item \furtherReading{TATPC2009TMGTD},%
+\item \furtherReading{H2020DDFMM2AE},%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Generelle Bücher~(2)}%
+\begin{itemize}%
+\item \furtherReading{K2017SAATPODP},%
+\item \furtherReading{CM2018DSDIM},%
+\item \furtherReading{D2003AITDS},%
+\item \furtherReading{RG2002DMS},%
+\item \furtherReading{H2016RDDAI},%
+\item \furtherReading{GMUW2008DSTCB},%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Generelle Bücher~(3)}%
+\begin{itemize}%
+\item \furtherReading{GMUW2008DSTCB},%
+\item \furtherReading{HM2024IMARD},%
+\item \furtherReading{BHS2015RIDS},%
+\item \furtherReading{MS2001S1URLC},%
+\item \furtherReading{CM2000MDMAUDA},%
+\item \furtherReading{T2018ISARD},%
+\item \furtherReading{SPMP1998SI2TDDASVEI12T}.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Bücher zu Spezifischen Werkzeugen~(1)}%
+\begin{itemize}%
+\item \furtherReading{FP2023LP},%
+\item \furtherReading{TA2024DDAMWPAM},%
+\item \furtherReading{P2020MSS2ABG},%
+\item \furtherReading{A2024TSAFMSS2},%
+\item \furtherReading{KK2021EODATASFHPAP},%
+\item \furtherReading{MM2014RDAMA},%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Bücher zu Spezifischen Werkzeugen~(2)}%
+\begin{itemize}%
+\item \furtherReading{UC2021AFD},%
+\item \furtherReading{SSI2023MA2BTA},%
+\item \furtherReading{B2020HOMA2},%
+\item \furtherReading{CWDS2007UDLVWE},%
+\item \furtherReading{BBBCCDMMP2016SPTAFOIDFI}.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Webseiten}%
+\begin{itemize}%
+\item \furtherReading{PGDG:PD},%
+\item \furtherReading{SE:DA},%
+\item \furtherReading{B2025DS},%
+\item \furtherReading{D2022DN},%
+\item \furtherReading{W2018MSSDB}.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Es gibt eine Vielzahl an relationalen Datenbankmanagementsystemen.%
+\item<2-> Manche sind Open Source, was gut ist.%
+\item<3-> Andere sind proprietär und kosten Geld.%
+\item<4-> In diesem Kurs nutzen wir nur kostenfreie Produkte.%
+\item<5-> Es gibt viele Quellen, von denen Sie zusätzliche Informationen erhalten können.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%

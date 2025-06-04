@@ -1,4 +1,8 @@
+# internally used to execute postgres
 xc.sh
+
+# prevent slides from being checked-in
+[0-9]+[_a-zA-Z]/*.pdf
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
