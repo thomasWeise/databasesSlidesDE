@@ -1,0 +1,303 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{6.~Installation von PostgreSQL}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item In unserem Kurs werden wir das Open Source DBMS \postgresql\cite{TA2024DDAMWPAM,FP2023LP,OH2017PUAR,B2024PELUYDW} verwenden, um mit Datenbanken zu experimentieren.%
+\item<2-> Sie sollten es auf Ihren persönlichen Computer installieren.%
+\end{itemize}%
+\locateGraphic{}{width=0.225\paperwidth}{../05_software_und_literatur/graphics/postgresqlLogo}{0.7}{0.58}%
+\end{frame}%
+%
+\begin{frame}
+\frametitle{PostgreSQL}%
+\begin{itemize}%
+\item \postgresql\ basiert auf der Klient-Server-Architektur.%
+\item<2-> Das DBMS ist als Server-Programm implementiert.%
+\item<3-> Es managed die Datenbanken, speichert die Daten, und stellt sie auch zur Verfügung.%
+\item<4-> Andere Programme können sich~(als Klienten) mit dem Server verbinden, um auf die Datenbanken zuzugreifen.%
+\item<5-> \postgresql\ stellt auch bereits ein Klient-Programm zur Verfügung, nämlich \psql.%
+\item<6-> Mit \sql\ können  menschliche Benutzer mit dem DBMS-Server über das Terminal kommunizieren.%
+\item<7-> Wir installieren sowohl den Server als auch den Klienten.%
+\item<8-> Mehr dazu können Sie auf der \postgresql\ Downloadseite \url{https://www.postgresql.org/download} finden.%
+\item<9-> Hier bieten wir Schritt-für-Schritt Anleitungen für \ubuntu\ \linux\ und \microsoftWindows\ an.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Ubuntu Linux}%
+%
+\begin{frame}[t]%
+\frametitle{Installation von PostgreSQL unter Ubuntu Linux}%
+\begin{itemize}%
+%
+\only<-1>{\item Wir installieren \postgresql\ mit Hilfe des \bashil{apt-get install} Kommandos in einem Terminal das mit \ubuntuTerminal\ geöffnet wird.}%
+%
+\only<2>{\item Dieser Befehl benötigt das Super-User-Password. %
+Wir schreiben es und drücken~\keys{\enter}.}%
+%
+\only<3>{\item Wir werden gefragt, ob wie die benötigten Pakete wirklich installieren wollen.}%
+%
+\only<4>{\item Wir bejahen das mit~\keys{y+\enter}.}%
+%
+\only<5>{\item Die Installation läuft ab und endet erfolgreich.}%
+%
+\only<6>{\item Wir wollen nun den Status der frischen \postgresql\ Installation prüfen. %
+Das können wir durch das Kommando \bashil{systemctl status postgresql} tun, welches wir mit~\keys{\enter} ausführen.}%
+%
+\only<7>{\item Die Ausgabe zeigt uns, dass der \postgresql-Service nun läuft. %
+Er wird immer starten, wenn wir unser System booten.}%
+%
+\only<8>{\item Wir drücken~\keys{q+\enter} um das Kommande zu beenden.}%
+%
+\only<9>{\item \psql\ ist das Klientenprogramm, mit dem wir uns auf den \postgresql-Server verbinden können. %
+Es wurde ebenfalls installiert. %
+Wir können seine Version mit dem Kommando \bashil{psql --version} herausfinden, welches wir mit~\keys{\enter} ausführen.}%
+%
+\only<10>{\item Beim Erstellen dieser Slides war Version~16.6 aktuell.}%
+%
+\only<11>{\item Um ein Passwort für den \postgresql-Benutzer \textil{postgresql} zu setzen, müssen wir uns in \psql\ mit \bashil{sudo}-Privilegien einwählen, allerdings unter dem neu erstellten Systemnutzer \textil{postgres}. %
+Wir tuen dies durch \bashil{sudo -u postgresql psql} und drücken~\keys{\enter}.}%
+%
+\only<12>{\item Wir müssen das Passwort gegebenenfalls zweimal eintippen.}%
+%
+\only<13>{\item \psql\ verbindet sich nun zu unserem lokalen \postgresql-server.}%
+%
+\only<14>{\item Wir können nun mit dem DBMS über SQL kommunizieren. %
+Wir nutzen den Befehl \sqlil{ALTER USER postgres PASSWORD 'XXX';}, wobei wir \textil{XXX} natürlich mit einem sicheren Password ersetzen~(im Screenshot covered).}%
+%
+\only<15>{\item Wir drücken~\keys{\enter} und das System bestätigt die Änderung, in dem es das Kommando \sqlil{ALTER ROLE} nochmal ausgibt. %
+Von nun an hat das Hauptbenutzerkonto des Servers ein sicheres Passwort.}%
+%
+\only<16>{\item Wir verlassen \psql, in dem wir \keys{\textbackslash+q+\enter} schreiben.}%
+%
+\only<17->{\item Wir sind fertig.}%
+%
+\end{itemize}%
+%
+\locateGraphic{1}{width=0.64\paperwidth}{graphics/ubuntu/installingPostgresUbuntu01aptGet}{0.18}{0.33}%
+\locateGraphic{2}{width=0.64\paperwidth}{graphics/ubuntu/installingPostgresUbuntu02pass}{0.18}{0.33}%
+\locateGraphic{3}{width=0.64\paperwidth}{graphics/ubuntu/installingPostgresUbuntu03yn}{0.18}{0.33}%
+\locateGraphic{4}{width=0.64\paperwidth}{graphics/ubuntu/installingPostgresUbuntu04yny}{0.18}{0.33}%
+\locateGraphic{5}{width=0.64\paperwidth}{graphics/ubuntu/installingPostgresUbuntu05install}{0.18}{0.33}%
+\locateGraphic{6}{width=0.64\paperwidth}{graphics/ubuntu/installingPostgresUbuntu06systemctlCheckStatus}{0.18}{0.33}%
+\locateGraphic{7}{width=0.64\paperwidth}{graphics/ubuntu/installingPostgresUbuntu07systemctlCheckStatusRes}{0.18}{0.33}%
+\locateGraphic{8}{width=0.64\paperwidth}{graphics/ubuntu/installingPostgresUbuntu08systemctlCheckStatusQ}{0.18}{0.33}%
+\locateGraphic{9}{width=0.64\paperwidth}{graphics/ubuntu/installingPostgresUbuntu09psqlVersionA}{0.18}{0.33}%
+\locateGraphic{10}{width=0.64\paperwidth}{graphics/ubuntu/installingPostgresUbuntu10psqlVersionB}{0.18}{0.33}%
+\locateGraphic{11}{width=0.64\paperwidth}{graphics/ubuntu/installingPostgresUbuntu11sudoPsql}{0.18}{0.33}%
+\locateGraphic{12}{width=0.64\paperwidth}{graphics/ubuntu/installingPostgresUbuntu12sudoPsqlPw}{0.18}{0.33}%
+\locateGraphic{13}{width=0.64\paperwidth}{graphics/ubuntu/installingPostgresUbuntu13PsqlPrompt}{0.18}{0.33}%
+\locateGraphic{14}{width=0.64\paperwidth}{graphics/ubuntu/installingPostgresUbuntu14PsqlAlterUserPassword}{0.18}{0.33}%
+\locateGraphic{15}{width=0.64\paperwidth}{graphics/ubuntu/installingPostgresUbuntu15PsqlAlterUserPasswordDone}{0.18}{0.33}%
+\locateGraphic{16}{width=0.64\paperwidth}{graphics/ubuntu/installingPostgresUbuntu16PsqlQuit}{0.18}{0.33}%
+\locateGraphic{17}{width=0.64\paperwidth}{graphics/ubuntu/installingPostgresUbuntu17Done}{0.18}{0.33}%
+%
+\end{frame}%
+%
+\section{Microsoft Windows}%
+%
+\begin{frame}[t]%
+\frametitle{Installation von PostgreSQL unter Microsoft Windows}%
+\begin{itemize}%
+\only<-1>{\item Wir besuchen die Webseite \url{https://www.postgresql.org/download} und clicken auf~\menu{Windows}.}%
+%
+\only<2>{\item Wir klicken auf den Link \emph{download the installer}, der uns zu \url{https://www.enterprisedb.com/downloads/postgres-postgresql-downloads} bringt.}%
+%
+\only<3>{\item Hier gibt es eine große Auswahl verschiedener Betriebssysteme. %
+Wir suchen die neueste Version~(die oberste) für \microsoftWindows. %
+Als ich diese Slides gemacht habe, war das Version~17.2. %
+Wir klicken auf das download-Icon.}%
+%
+\only<4>{\item Der Download beginnt.}%
+%
+\only<5>{\item Nach dem der Download fertig ist, müssen wir die Datei finden\dots}%
+%
+\only<6>{\item {\dots}und dann ausführen, durch Klick auf~\menu{Open file}.}%
+%
+\only<7>{\item Wenn wir gefragt werden, ob wir es dem Download erlauben wollen, unsere Maschne zu verändern, dann klicken wir auf~\menu{Yes}.}%
+%
+\only<8>{\item Der Installer beginnt seine Arbeit.}%
+%
+\only<9>{\item Im Welcome-Bildschirm klicken wir auf~\menu{Next}.}%
+%
+\only<10>{\item Wir können nun den Ordner auswählen, in den \postgresql\ installiert werden soll. %
+Wir lassen die Standardeinstellungen unverändert und klicken auf~\menu{Next}.}%
+%
+\only<11>{\item Wir können auswählen, was installiert werden soll. %
+Wir lassen die Standardeinstellungen unverändert und klicken auf~\menu{Next}.}%
+%
+\only<12>{\item Wir können auswählen, wo die Datenbanken gespeichert werden sollen. %
+Wir lassen die Standardeinstellungen unverändert und klicken auf~\menu{Next}.}%
+%
+\only<13>{\item Nun müssen wir ein sicheres Passwort für \postgresql\ angeben. %
+Bitte wählen Sie bedachtsam ein Passwrt, merken Sie es sich gut, und geben es in die beiden Formularfelder ein. %
+Dann klicken wir~\menu{Next}.}%
+%
+\only<14>{\item Wir können einen Port auswählen, an dem der \postgresql-Server auf Verbindungen warten soll. %
+Wir lassen die Standardeinstellung~5432 unverändert und klicken auf~\menu{Next}.}%
+%
+\only<15>{\item Mit der \pgls{locale} können wir länder- und kulturspezifische Einstellungen laden, z.B. Nummern- und Währungsformate. %
+Wir lassen die Standardeinstellungen unverändert und klicken auf~\menu{Next}.}%
+%
+\only<16>{\item Wir werden über die Komponenten informiert, die nun installiert werden. %
+Wir klicken~\menu{Next}.}%
+%
+\only<17>{\item Wir werden gefragt, ob wir bereit für die Installation sind. %
+Wir klicken~\menu{Next}.}%
+%
+\only<18>{\item Die Installation beginnt.}%
+%
+\only<19>{\item Die Installation schreitet voran.}%
+%
+\only<20>{\item Nachdem die Installation fertig ist, werden wir gefragt, ob wir die \emph{Stack Builder}-Software benutzen wollen, um weitere Komponenten zu installieren. %
+Wir wollen nicht und un-markieren die entsprechende Box. %
+Wir klicken auf~\menu{Finish}. %
+\postgresql\ ist nun installiert.}%
+%
+\only<21>{\item Um die Installation zu testen, öffnen wir ein Terminal. %
+Dafür drücken wir die Tasten~\keys{\OSwin + R}.}%
+%
+\only<22>{\item Wir schreiben \textil{cmd} in die Eingabebox und drücken~\keys{\enter}.}%
+%
+\only<23>{\item Ein neues Terminalfenster öffnet sich.}%
+%
+\only<24>{\item Wir geben den Pfad zum \batil{bin}-Ordner in dem Ordner ein, in dem  wir \postgresql\ installiert haben. %
+Unter den Standardeinstellungen wäre das \batil{cd "C:\\Program Files\\PostgreSQL\\bin"}. %
+Wir drücken~\keys{\enter}.}%
+%
+\only<25>{\item Wir sind nun in diesem Ordner.}%
+%
+\only<26>{\item Nun wollen wir die Version des \psql-Klienten herausfinden. %
+Wir tuen dies in dem wir \batil{psql -V} schreiben und dann \keys{\enter}~drücken.}%
+%
+\only<27>{\item In meinem Fall zeigt die Ausgabe, dass Version~17.2 installiert wurde.}%
+%
+\only<28>{\item Wir wollen nun sehen welche Version des \postgresql-Servers installiert wurde. %
+Damit testen wir gleichzeitig, ob die Installation geklappt hat. %
+Darum schreiben wir nun \batil{psql -U postgres}, starten also \psql\ als Benutzer \textil{postgres}.}%
+%
+\only<29>{\item Bei Programmstart müssen wir nun das Passwort für den Benutzer \textil{postgres} eingeben. %
+Das ist das Passwort, das wir bei der Installation angegeben hatten. %
+Wir geben es ein und drücken~\keys{\enter}. %
+Wir sind nun in der \psql-Konsole und sehen den \textil{postgres=\#}-Prompt.}%
+%
+\only<30>{\item Wir geben das SQL-Kommando \sqlil{SELECT * FROM VERSION();} ein und drücken~\keys{\enter}.}%
+%
+\only<31>{\item Das Ergebnis zeigt in meinem Fall, das der \postgresql-Server auch Version~17.2 hat.%
+Nun schreiben Sie \keys{\textbackslash+q+\enter}, wodurch \psql\ verlassen wird.}%
+%
+\only<32>{\item Wir erforschen nun, wie der \postgresql-Server auf unserer \microsoftWindows\ läuft: %
+Er wird als \emph{Service}, i.e., als \emph{Dienst} gestartet. %
+Wir drücken~\keys{\OSwin}, schreiben \textil{services}, und klicken auf das \inQuotes{Zahnrad-Symbol} mit Namen \emph{Services} das erscheint.}%
+%
+\only<33>{\item Das \emph{Services} Systemfenster öffnet sich. %
+Wir suchen nach einem Service, dessen Name nach \postgresql\ klingt. %
+In meinem Fall ist das \textil{postgresql-x64-17}. %
+Wir rechsts-klicken auf ihn.}%
+%
+\only<34>{\item Im erscheinenden Pop-up-Menü klicken wir auf~\menu{Properties}.}%
+%
+\only<35>{\item Der Diensteigenschaften-Dialog erscheint.}%
+%
+\only<36>{\item Wir klicken auf die Drop-Down-Box~\menu{Startup type:}. %
+Sie steht auf~\menu{Automatic}, was bedeutet, das \postgresql\ immer gestartet wird, wenn Ihr System started.}%
+%
+\only<37>{\item \alert{Die folgenden Schritte sind optional}.%
+Wenn Sie nicht wollen, das \postgresql\ bei jedem Systemstart startet, dann können Sie das ausstellen. %
+Sie müssen dafür \menu{Manual} als \menu{Startup type:} auswählen und auf \menu{Apply} klicken.}%
+%
+\only<38>{\item Der \postgresql-Service läuft dann zwar aktuell noch, aber wird nicht bei Systemstart mit gestartet. %
+Sie können das wieder rückgängig machen, in dem Sie wieder \menu{Automatic} als \menu{Startup type:} auswählen. %
+Sie können den aktuell laufenden Service auch stoppen, in dem Sie auf \menu{Stop} klicken.}%
+%
+\only<39>{\item Dann wird der \postgresql\ service angehalten und der Server läuft nicht mehr.}%
+%
+\only<40>{\item Jetzt läuft der Service nicht mehr. %
+Wir starten ihn wieder, in dem wir auf den \menu{Start}-Button drücken.}%
+%
+\only<41>{\item Nun läuft der Service wieder.}%
+%
+\only<42>{\item Wir klicken auf \menu{OK} und verlassen den Dialog.}%
+%
+\only<43->{\item Wir sehen, dass der Service läuft (ist~\emph{Running}) und im Modus~\emph{Manual}~(wenn wir diesen Modus ausgewählt hatten). %
+Wenn wir herunterfahren, wird das DBMS angehalten. %
+Bei einem Neustart startet es nicht automatisch~(es sei denn, Sie haben \emph{Automatic} als \emph{Startup type} eingestellt). %
+Wenn Sie damit arbeiten wollen, dann müssten Sie wieder den \emph{Services} betreten und den Service manuell starten.}%
+\end{itemize}%
+%
+\locateGraphicTB{1}{width=0.64\paperwidth}{graphics/windows/installingPostgresWindows01website}{0.18}{0.33}%
+\locateGraphicTB{2}{width=0.64\paperwidth}{graphics/windows/installingPostgresWindows02downloadWindows}{0.18}{0.33}%
+\locateGraphicTB{3}{width=0.64\paperwidth}{graphics/windows/installingPostgresWindows03ebdWebsite}{0.18}{0.33}%
+\locateGraphicTB{4}{width=0.64\paperwidth}{graphics/windows/installingPostgresWindows04download}{0.18}{0.33}%
+\locateGraphicTB{5}{width=0.64\paperwidth}{graphics/windows/installingPostgresWindows05downloadsA}{0.18}{0.33}%
+\locateGraphicTB{6}{width=0.64\paperwidth}{graphics/windows/installingPostgresWindows06downloadsB}{0.18}{0.33}%
+\locateGraphicTB{7}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows07install}{0.25}{0.29}%
+\locateGraphicTB{8}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows08installerStarts}{0.25}{0.33}%
+\locateGraphicTB{9}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows09wizardWelcome}{0.25}{0.29}%
+\locateGraphicTB{10}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows10wizardDir}{0.25}{0.29}%
+\locateGraphicTB{11}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows11wizardWhat}{0.25}{0.29}%
+\locateGraphicTB{12}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows12wizardDataDir}{0.25}{0.29}%
+\locateGraphicTB{13}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows13pw}{0.25}{0.29}%
+\locateGraphicTB{14}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows14port}{0.25}{0.29}%
+\locateGraphicTB{15}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows15locale}{0.25}{0.29}%
+\locateGraphicTB{16}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows16preInstall}{0.25}{0.29}%
+\locateGraphicTB{17}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows17ready}{0.25}{0.29}%
+\locateGraphicTB{18}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows18installA}{0.25}{0.29}%
+\locateGraphicTB{19}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows19installB}{0.25}{0.29}%
+\locateGraphicTB{20}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows20finish}{0.25}{0.29}%
+\locateGraphicTB{21}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows21windowsR}{0.25}{0.33}%
+\locateGraphicTB{22}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows22cmd}{0.25}{0.33}%
+\locateGraphicTB{23}{width=0.64\paperwidth}{graphics/windows/installingPostgresWindows23terminal}{0.18}{0.33}%
+\locateGraphicTB{24}{width=0.64\paperwidth}{graphics/windows/installingPostgresWindows24cd}{0.18}{0.33}%
+\locateGraphicTB{25}{width=0.64\paperwidth}{graphics/windows/installingPostgresWindows25inDir}{0.18}{0.33}%
+\locateGraphicTB{26}{width=0.64\paperwidth}{graphics/windows/installingPostgresWindows26psqlV}{0.18}{0.33}%
+\locateGraphicTB{27}{width=0.64\paperwidth}{graphics/windows/installingPostgresWindows27psqlVres}{0.18}{0.33}%
+\locateGraphicTB{28}{width=0.64\paperwidth}{graphics/windows/installingPostgresWindows28psqlU}{0.18}{0.33}%
+\locateGraphicTB{29}{width=0.64\paperwidth}{graphics/windows/installingPostgresWindows29pw}{0.18}{0.33}%
+\locateGraphicTB{30}{width=0.64\paperwidth}{graphics/windows/installingPostgresWindows30selectVer}{0.18}{0.33}%
+\locateGraphicTB{31}{width=0.64\paperwidth}{graphics/windows/installingPostgresWindows31verResQ}{0.18}{0.33}%
+\locateGraphicTB{32}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows32services}{0.25}{0.33}%
+\locateGraphicTB{33}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows33servicesPostgres}{0.25}{0.3}%
+\locateGraphicTB{34}{width=0.5\paperwidth}{graphics/windows/installingPostgresWindows34servicesProperties}{0.25}{0.3}%
+\locateGraphicTB{35}{width=0.35\paperwidth}{graphics/windows/installingPostgresWindows35servicesPropertiesPostgres}{0.325}{0.27}%
+\locateGraphicTB{36}{width=0.35\paperwidth}{graphics/windows/installingPostgresWindows36servicesStartupType}{0.325}{0.27}%
+\locateGraphicTB{37}{width=0.35\paperwidth}{graphics/windows/installingPostgresWindows37servicesManual}{0.55}{0.27}%
+\locateGraphicTB{38}{width=0.32\paperwidth}{graphics/windows/installingPostgresWindows38servicesStop}{0.55}{0.31}%
+\locateGraphicTB{39}{width=0.35\paperwidth}{graphics/windows/installingPostgresWindows39servicesStopping}{0.325}{0.27}%
+\locateGraphicTB{40}{width=0.35\paperwidth}{graphics/windows/installingPostgresWindows40servicesStart}{0.325}{0.27}%
+\locateGraphicTB{41}{width=0.35\paperwidth}{graphics/windows/installingPostgresWindows41servicesStarting}{0.325}{0.27}%
+\locateGraphicTB{42}{width=0.35\paperwidth}{graphics/windows/installingPostgresWindows42servicesOK}{0.325}{0.27}%
+\locateGraphicTB{43}{width=0.45\paperwidth}{graphics/windows/installingPostgresWindows43services}{0.275}{0.41}%
+%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Nun haben Sie das \postgresql\ Datenbankmanagementsystem auf Ihrem Computer installiert.%
+\item<2-> Damit können wir nun mit \inQuotes{echten} Datenbanken arbeiten.%
+\item<3-> Cool.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
