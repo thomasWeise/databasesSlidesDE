@@ -48,42 +48,45 @@ Sie können diese unter der untenstehenden Lizenz nutzen.
 
 
 ## 3. Lizenz
-Alle von mir persönlich erstellte Materialien zu diesem Kurs sind frei verfügbar.
+Dieses Repository beinhaltet zwei Arten von Materialien:
+Materialien, die ich (Thomas Weise) selbst erstellt habe und solche, die von anderen erstellt wurden.
+
+Die große Mehrzahl des Materials wurde von mir persönlich erstellt.
+Dieses und ausschließlich dieses Material steht unter der Attribution-NonCommercial-ShareAlike 4.0 International Lizenz (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), siehe [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/).
+
 Das Kursmaterial beinhaltet auch Bilder und Grafiken, die von Anderen erstellt wurden.
 Diese sind explizit markiert und stehen unter der Lizenz ihrer Autoren.
-Mit der Ausnahme solcher Materialien steht dieses Buch und der Kurs unter der Attribution-NonCommercial-ShareAlike 4.0 International Lizenz (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), siehe [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/).
-
-Alle Materialien, die ich für diesen Kurs erstellt habe, sind frei verfügbar.
-Das Kursmaterial beinhaltet auch Bilder und Grafiken, die von anderen erstellt wurden.
-Diese wurden explizit markiert und stehen unter dem Copyright ihrer entsprechenden Autoren.
 Alle Logos und Trademarks stehen ebenfalls unter dem Copyright ihrer entsprechenden Autoren.
-Mit der Ausnahme dieser Materialien steht das Kursmaterial hier unter der Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), welche unter [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) zusammengefasst ist.
+Die Liste mit Dateien, die nicht unter der CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0 Lizenz, sondern unter dem Copyright ihrer Besitzer stehen beinhaltet, aber ist nicht beschränkt auf:
 
-Die Liste mit Dateien, die nicht unter der CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0 Lizenz sondern unter dem Copyright ihrer Besitzer stehen beinhaltet, aber ist nicht beschränkt auf:
-+ das LibreOffice Logo, z.B.,
++ das [LibreOffice](https://www.libreoffice.org) Logo, z.B.,
   - slides/05_software_und_literatur/graphics/libreofficeLogo.pdf
   - slides/05_software_und_literatur/graphics/libreofficeLogo.svg
-+ das MariaDB Logo, z.B.,
++ das [MariaDB](https://mariadb.org) Logo, z.B.,
   - slides/05_software_und_literatur/graphics/mariadbLogo.pdf
   - slides/05_software_und_literatur/graphics/mariadbLogo.svg
-+ das PostgreSQL Logo, z.B.,
++ das [PgModeler](https://pgmodeler.io) Logo: Copyright Raphael Araújo~e~Silva, z.B.,
+  - slides/05_software_und_literatur/graphics/pgmodelerLogo.pdf
+  - slides/05_software_und_literatur/graphics/pgmodelerLogo.svg
++ das [PostgreSQL](https://www.postgresql.org) Logo, z.B.,
   - slides/05_software_und_literatur/graphics/postgresqlLogo.pdf
   - slides/05_software_und_literatur/graphics/postgresqlLogo.svg
-+ das SQLite Logo, z.B.,
-  - slides/05_software_und_literatur/graphics/sqliteLogo.pdf
-  - slides/05_software_und_literatur/graphics/sqliteLogo.svg
-+ das Psycopg Logo, z.B.,
++ das [Psycopg](https://www.psycopg.org) Logo: Copyright (c) Gabriella Albano and the Psycopg team, z.B.,
   - slides/05_software_und_literatur/graphics/psycopgLogo.pdf
   - slides/05_software_und_literatur/graphics/psycopgLogo.svg
-+ das Python Logo, z.B.,
++ das [Python](https://www.python.org) Logo, z.B.,
   - slides/05_software_und_literatur/graphics/pythonLogo.pdf
   - slides/05_software_und_literatur/graphics/pythonLogo.svg
++ das [SQLite](https://sqlite.org) Logo, z.B.,
+  - slides/05_software_und_literatur/graphics/sqliteLogo.pdf
+  - slides/05_software_und_literatur/graphics/sqliteLogo.svg
++ das [yEd](https://www.yworks.com/products/yed) Logo: The yEd logo is protected by copyright. yEd is a registered trademark of [yWorks GmbH](https://www.yworks.com). Unauthorized use, reproduction, or distribution is strictly prohibited., e.g.,
+  - slides/05_software_und_literatur/graphics/yEdLogo.pdf
+  - slides/05_software_und_literatur/graphics/yEdLogo.svg
 
 Sie können die neuesten Versionen des Materials unter <https://thomasweise.github.io/databases> finden.
 Diese Versionen können sich ändern, da wir diesen Kurs aktiv weiterentwickeln.
-Sie können die Dateien frei teilen.
-Sie können auch den Text und Bilder kopieren, solange sie das Buch und die Originalquelle zitieren.
-Dazu können Sie zum Beispiel den folgenden BibTeX-Eintrag verwenden:
+Sie können das Buch wie folgt zitieren:
 
 <pre>@book{databases,<br/>&nbsp;author&nbsp;=&nbsp;{Thomas&nbsp;Weise},<br/>&nbsp;title&nbsp;=&nbsp;{Databases},<br/>&nbsp;year&nbsp;=&nbsp;{2025},<br/>&nbsp;publisher&nbsp;=&nbsp;{Institute&nbsp;of&nbsp;Applied&nbsp;Optimization,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.hfuu.edu.cn/aibd">School&nbsp;of&nbsp;Artificial&nbsp;Intelligence&nbsp;and&nbsp;Big&nbsp;Data</a>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.hfuu.edu.cn/">Hefei&nbsp;University</a>},<br/>&nbsp;address&nbsp;=&nbsp;{Hefei,&nbsp;Anhui,&nbsp;China},<br/>&nbsp;url&nbsp;=&nbsp;{<a href="https://thomasweise.github.io/databases">https://thomasweise.github.io/databases</a>}<br/>}</pre>
 

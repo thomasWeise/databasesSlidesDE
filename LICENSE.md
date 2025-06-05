@@ -1,26 +1,37 @@
-This repository also includes some images and figures created by others, which are marked explicitly and licensed under their author's terms.
-All logos and trademarks are under the copyright of their respective owners.
-The rest of the content is under the `Attribution-NonCommercial-ShareAlike 4.0 International` license.
+This repository contains two types of material:
+Materials that I (Thomas Weise) have created by myself and such that have been created by others.
 
+The vast majority of the material is teaching material created by me (Thomas Weise).
+This and only this material is released under the Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), see below and [http://creativecommons.org/licenses/by-nc-sa/4.0](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
+
+However, the repository also includes some images and figures created by others, which are marked explicitly and licensed under their author's terms.
+For example, all logos and trademarks are under the copyright of their respective owners.
 The list of files not under the CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0 license but under their individual owner's copyrights includes, but is not limited to:
-+ the LibreOffice Logo, e.g.,
+
++ das [LibreOffice](https://www.libreoffice.org) Logo, z.B.,
   - slides/05_software_und_literatur/graphics/libreofficeLogo.pdf
   - slides/05_software_und_literatur/graphics/libreofficeLogo.svg
-+ the MariaDB Logo, e.g.,
++ das [MariaDB](https://mariadb.org) Logo, z.B.,
   - slides/05_software_und_literatur/graphics/mariadbLogo.pdf
   - slides/05_software_und_literatur/graphics/mariadbLogo.svg
-+ the PostgreSQL Logo, e.g.,
++ the [PgModeler](https://pgmodeler.io) Logo: This logo is under the copyright of Raphael Araújo~e~Silva, e.g.,
+  - slides/05_software_und_literatur/graphics/pgmodelerLogo.pdf
+  - slides/05_software_und_literatur/graphics/pgmodelerLogo.svg
++ das [PostgreSQL](https://www.postgresql.org) Logo, z.B.,
   - slides/05_software_und_literatur/graphics/postgresqlLogo.pdf
   - slides/05_software_und_literatur/graphics/postgresqlLogo.svg
-+ the SQLite Logo, e.g.,
-  - slides/05_software_und_literatur/graphics/sqliteLogo.pdf
-  - slides/05_software_und_literatur/graphics/sqliteLogo.svg
-+ the Psycopg Logo, e.g.,
++ das [Psycopg](https://www.psycopg.org) Logo: Copyright (c) Gabriella Albano and the Psycopg team, z.B.,
   - slides/05_software_und_literatur/graphics/psycopgLogo.pdf
   - slides/05_software_und_literatur/graphics/psycopgLogo.svg
-+ the Python Logo, e.g.,
++ das [Python](https://www.python.org) Logo, z.B.,
   - slides/05_software_und_literatur/graphics/pythonLogo.pdf
   - slides/05_software_und_literatur/graphics/pythonLogo.svg
++ das [SQLite](https://sqlite.org) Logo, z.B.,
+  - slides/05_software_und_literatur/graphics/sqliteLogo.pdf
+  - slides/05_software_und_literatur/graphics/sqliteLogo.svg
++ the [yEd](https://www.yworks.com/products/yed) Logo: The yEd logo is protected by copyright. yEd is a registered trademark of [yWorks GmbH](https://www.yworks.com). Unauthorized use, reproduction, or distribution is strictly prohibited., e.g.,
+  - slides/05_software_und_literatur/graphics/yEdLogo.pdf
+  - slides/05_software_und_literatur/graphics/yEdLogo.svg
 
 
 ## creative commons

@@ -83,7 +83,7 @@
 \item<3-> In der Studie\cite{PMPVEPWGSMB2025ATAODMSTTHOOSP} über Datenbanknutzung von \pgls{Java} OSS Programmen war \mariadb\ schon das fünft-populäre relationale DBMS.%
 \end{itemize}%
 %
-\locateGraphic{}{width=0.4\paperwidth}{graphics/mariadbLogo}{0.57}{0.15}%
+\locateGraphic[The \href{https://mariadb.org}{\mariadb} logo is under the copyright of its owners.]{}{width=0.4\paperwidth}{graphics/mariadbLogo}{0.57}{0.137}%
 \end{frame}%
 %
 \begin{frame}[t]%
@@ -97,7 +97,7 @@
 \item<6-> Im Open Source Quellkode-Survey\cite{PMPVEPWGSMB2025ATAODMSTTHOOSP} war es auf Rang~2.
 \end{itemize}%
 %
-\locateGraphic{}{width=0.225\paperwidth}{graphics/postgresqlLogo}{0.7}{0.58}%
+\locateGraphic[The \href{https://www.postgresql.org}{\postgresql}~logo is under the copyright of its owners.]{}{width=0.225\paperwidth}{graphics/postgresqlLogo}{0.7}{0.56}%
 \end{frame}%
 %
 \begin{frame}[t]%
@@ -110,7 +110,7 @@
 \item<5-> Es wurde ursprünglich im Jahr~2000 veröffentlicht und sein Kernentwickler Richard Hipp hat dafür den SIGMOD Systems Award 2017 bekommen\cite{C20245YOQ}.%
 \end{itemize}%
 %
-\locateGraphic{}{width=0.4\paperwidth}{graphics/sqliteLogo}{0.57}{0.61}%
+\locateGraphic[The \href{https://sqlite.org}{\sqlite} logo is under the copyright of its owners.]{}{width=0.4\paperwidth}{graphics/sqliteLogo}{0.57}{0.61}%
 \end{frame}%
 %
 \begin{frame}[t]%
@@ -123,7 +123,7 @@
 \item<5-> \libreofficeBase\ ist eine freie Alternative zu dem kommerziellen Produkt\microsoftAccess\cite{SSI2023MA2BTA,B2020HOMA2,UC2021AFD}.%
 \end{itemize}%
 %
-\locateGraphic{}{width=0.6\paperwidth}{graphics/libreofficeLogo}{0.2}{0.675}%
+\locateGraphic[The \href{https://www.libreoffice.org}{\libreoffice} logo is under the copyright of its owners.]{}{width=0.6\paperwidth}{graphics/libreofficeLogo}{0.2}{0.675}%
 \end{frame}%
 %
 \section{Proprietäre Datenbankmanagementsysteme}%
@@ -193,7 +193,7 @@
 \item<3-> DBMSe sind normalerweise Server an die man SQL-Befehle mit Hilfe eines Clientprograms vom Terminal aus schicken kann.%
 \item<4-> Dafür nehmen wir den \psql-Klient, der zu \postgresql\ dazu gehört.%
 \end{itemize}%
-\locateGraphic{}{width=0.225\paperwidth}{graphics/postgresqlLogo}{0.7}{0.58}%
+\locateGraphic[The \href{https://www.postgresql.org}{\postgresql}~logo is under the copyright of its owners.]{}{width=0.225\paperwidth}{graphics/postgresqlLogo}{0.7}{0.54}%
 \locateGraphic{4}{width=0.5\paperwidth}{graphics/psqlExample}{0.08}{0.49}%
 \end{frame}%
 %
@@ -207,7 +207,7 @@
 \item<5-> Wir werden auch so ein Werkzeug ausprobieren: \libreofficeBase\cite{FNFHWSKLSSGLFRSRPLJG2022BG7R1BOL7C,S2022L7PFEUU}.%
 \end{itemize}%
 %
-\locateGraphic{}{width=0.6\paperwidth}{graphics/libreofficeLogo}{0.2}{0.675}%
+\locateGraphic[The \href{https://www.libreoffice.org}{\libreoffice} logo is under the copyright of its owners.]{}{width=0.6\paperwidth}{graphics/libreofficeLogo}{0.2}{0.675}%
 \end{frame}%
 %
 \begin{frame}[b]%
@@ -220,11 +220,11 @@
 \item<5-> Dafür werden wir die Programmiersprache \python\cite{K2018EIPFEUU,A2002PC,H2023ABGTP3P,LH2015DSAAWP,programmingWithPython} verwenden.%
 \item<6-> Dazu gibt es eine Bibliothek für den Zugriff auf \postgresql, nämlich \psycopg\cite{VDGE2010P}.%
 \end{itemize}%
-\locateGraphic{}{width=0.5\paperwidth}{graphics/pythonLogo}{0.1}{0.15}%
+\locateGraphic[The \href{https://www.python.org}{\python\ programming language} logo is under the copyright of its owners.]{}{width=0.5\paperwidth}{graphics/pythonLogo}{0.1}{0.15}%
 \locateGraphic[Copyright \textcopyright~Gabriella Albano and the Psycopg team]{}{width=0.15\paperwidth}{graphics/psycopgLogo}{0.675}{0.1}%
 \end{frame}%
 %
-\begin{frame}%
+\begin{frame}[b]%
 \frametitle{Konzeptuelle Modelle}%
 \begin{itemize}%
 \item Ein wichtiger Schritt im Datenbankentwicklungsprozess ist das Erstellen von abstrakten konzeptuellen Modelle der Problemdomäne.%
@@ -232,9 +232,15 @@
 \item<3-> Diese konzeptuellen Modelle sind unabhängig von der letztendlich verwendeten DBMS-Technologie.%
 \item<4-> Als Werkzeug um solche Diagramme zu zeichnen verwenden wir \yEd\cite{SG2015MDAWY,Y2011YGEM}.%
 \end{itemize}%
+\locateGraphic[%
+\parbox{0.6\paperwidth}{\strut\\[10pt]The logo of the \href{https://www.yworks.com/products/yed}{\yEd\ graph editor}. %
+The \yEd~logo is protected by copyright. %
+\yEd~is a registered trademark of \href{https://www.yworks.com}{yWorks~GmbH}. %
+Unauthorized use, reproduction, or distribution is strictly prohibited.}%
+]{}{width=0.2\paperwidth}{graphics/yEdLogo}{0.6}{0.06}%
 \end{frame}%
 %
-\begin{frame}%
+\begin{frame}[b]%
 \frametitle{Logische Modelle}%
 \begin{itemize}%
 \item Die konzeptuellen Modelle müssen letztendlich auch logische Schemas abgebildet werden, die auf einem spezifischen Datenmodell und einer spezifischen Datenbanktechnologie beruhen.%
@@ -243,6 +249,9 @@
 \item<4-> Sie können auch visuell mit Werkzeugen modelliert werden, als Diagramme die so ähnlich wie ERDs aussehen, die aber an eine bestimmte Datenbanktechnologie gebunden sind.%
 \item<5-> Wir verwenden den \pgmodeler\cite{AES2006PPDM}, mit dem solche logischen Modelle für \postgresql\ erstellt werden können.%
 \end{itemize}%
+\locateGraphic[%
+The \href{https://pgmodeler.io}{\pgmodeler\ logo} is under the copyright of Raphael Araújo~e~Silva.%
+]{}{width=0.2\paperwidth}{graphics/pgmodelerLogo}{0.6}{0.06}%
 \end{frame}%
 %
 \begin{frame}%
