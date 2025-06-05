@@ -53,13 +53,39 @@ Das Kursmaterial beinhaltet auch Bilder und Grafiken, die von Anderen erstellt w
 Diese sind explizit markiert und stehen unter der Lizenz ihrer Autoren.
 Mit der Ausnahme solcher Materialien steht dieses Buch und der Kurs unter der Attribution-NonCommercial-ShareAlike 4.0 International Lizenz (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), siehe [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/).
 
+Alle Materialien, die ich für diesen Kurs erstellt habe, sind frei verfügbar.
+Das Kursmaterial beinhaltet auch Bilder und Grafiken, die von anderen erstellt wurden.
+Diese wurden explizit markiert und stehen unter dem Copyright ihrer entsprechenden Autoren.
+Alle Logos und Trademarks stehen ebenfalls unter dem Copyright ihrer entsprechenden Autoren.
+Mit der Ausnahme dieser Materialien steht das Kursmaterial hier unter der Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), welche unter [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) zusammengefasst ist.
+
+Die Liste mit Dateien, die nicht unter der CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0 Lizenz sondern unter dem Copyright ihrer Besitzer stehen beinhaltet, aber ist nicht beschränkt auf:
++ das LibreOffice Logo, z.B.,
+  - slides/05_software_und_literatur/graphics/libreofficeLogo.pdf
+  - slides/05_software_und_literatur/graphics/libreofficeLogo.svg
++ das MariaDB Logo, z.B.,
+  - slides/05_software_und_literatur/graphics/mariadbLogo.pdf
+  - slides/05_software_und_literatur/graphics/mariadbLogo.svg
++ das PostgreSQL Logo, z.B.,
+  - slides/05_software_und_literatur/graphics/postgresqlLogo.pdf
+  - slides/05_software_und_literatur/graphics/postgresqlLogo.svg
++ das SQLite Logo, z.B.,
+  - slides/05_software_und_literatur/graphics/sqliteLogo.pdf
+  - slides/05_software_und_literatur/graphics/sqliteLogo.svg
++ das Psycopg Logo, z.B.,
+  - slides/05_software_und_literatur/graphics/psycopgLogo.pdf
+  - slides/05_software_und_literatur/graphics/psycopgLogo.svg
++ das Python Logo, z.B.,
+  - slides/05_software_und_literatur/graphics/pythonLogo.pdf
+  - slides/05_software_und_literatur/graphics/pythonLogo.svg
+
 Sie können die neuesten Versionen des Materials unter <https://thomasweise.github.io/databases> finden.
 Diese Versionen können sich ändern, da wir diesen Kurs aktiv weiterentwickeln.
 Sie können die Dateien frei teilen.
 Sie können auch den Text und Bilder kopieren, solange sie das Buch und die Originalquelle zitieren.
 Dazu können Sie zum Beispiel den folgenden BibTeX-Eintrag verwenden:
 
-<pre>@book{databases,<br/>&nbsp;author&nbsp;=&nbsp;{Thomas&nbsp;Weise},<br/>&nbsp;title&nbsp;=&nbsp;{Databases},<br/>&nbsp;year&nbsp;=&nbsp;{2025},<br/>&nbsp;publisher&nbsp;=&nbsp;{<a href="http://iao.hfuu.edu.cn">Institute&nbsp;of&nbsp;Applied&nbsp;Optimization</a>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.hfuu.edu.cn/aibd">School&nbsp;of&nbsp;Artificial&nbsp;Intelligence&nbsp;and&nbsp;Big&nbsp;Data</a>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.hfuu.edu.cn/">Hefei&nbsp;University</a>},<br/>&nbsp;address&nbsp;=&nbsp;{Hefei,&nbsp;Anhui,&nbsp;China},<br/>&nbsp;url&nbsp;=&nbsp;{<a href="https://thomasweise.github.io/databases">https://thomasweise.github.io/databases</a>}<br/>}</pre>
+<pre>@book{databases,<br/>&nbsp;author&nbsp;=&nbsp;{Thomas&nbsp;Weise},<br/>&nbsp;title&nbsp;=&nbsp;{Databases},<br/>&nbsp;year&nbsp;=&nbsp;{2025},<br/>&nbsp;publisher&nbsp;=&nbsp;{Institute&nbsp;of&nbsp;Applied&nbsp;Optimization,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.hfuu.edu.cn/aibd">School&nbsp;of&nbsp;Artificial&nbsp;Intelligence&nbsp;and&nbsp;Big&nbsp;Data</a>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.hfuu.edu.cn/">Hefei&nbsp;University</a>},<br/>&nbsp;address&nbsp;=&nbsp;{Hefei,&nbsp;Anhui,&nbsp;China},<br/>&nbsp;url&nbsp;=&nbsp;{<a href="https://thomasweise.github.io/databases">https://thomasweise.github.io/databases</a>}<br/>}</pre>
 
 **Wenn Sie Kommentare oder Vorschläge zu diesem Buch oder dem Kurs haben, oder wenn Sie Fehler gefunden haben, bitte öffnen Sie einen Issue unter [issue here](https://github.com/thomasWeise/databases/issues).**
 Ihr Feedback würde helfen, den Kurs zu verbessern.

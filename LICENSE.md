@@ -1,3 +1,28 @@
+This repository also includes some images and figures created by others, which are marked explicitly and licensed under their author's terms.
+All logos and trademarks are under the copyright of their respective owners.
+The rest of the content is under the `Attribution-NonCommercial-ShareAlike 4.0 International` license.
+
+The list of files not under the CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0 license but under their individual owner's copyrights includes, but is not limited to:
++ the LibreOffice Logo, e.g.,
+  - slides/05_software_und_literatur/graphics/libreofficeLogo.pdf
+  - slides/05_software_und_literatur/graphics/libreofficeLogo.svg
++ the MariaDB Logo, e.g.,
+  - slides/05_software_und_literatur/graphics/mariadbLogo.pdf
+  - slides/05_software_und_literatur/graphics/mariadbLogo.svg
++ the PostgreSQL Logo, e.g.,
+  - slides/05_software_und_literatur/graphics/postgresqlLogo.pdf
+  - slides/05_software_und_literatur/graphics/postgresqlLogo.svg
++ the SQLite Logo, e.g.,
+  - slides/05_software_und_literatur/graphics/sqliteLogo.pdf
+  - slides/05_software_und_literatur/graphics/sqliteLogo.svg
++ the Psycopg Logo, e.g.,
+  - slides/05_software_und_literatur/graphics/psycopgLogo.pdf
+  - slides/05_software_und_literatur/graphics/psycopgLogo.svg
++ the Python Logo, e.g.,
+  - slides/05_software_und_literatur/graphics/pythonLogo.pdf
+  - slides/05_software_und_literatur/graphics/pythonLogo.svg
+
+
 ## creative commons
 
 # Attribution-NonCommercial-ShareAlike 4.0 International

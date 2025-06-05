@@ -1,0 +1,78 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{7.~Fabrik-Datenbank~(Teil 1)}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item In vielen Kursen über \emph{Datenbanken} wird das Gebiet in einzelnen Stücken diskutiert.%
+\item<2-> Themen wie der Datenbank-Entwurfsprozess, Datenmodellierung, Entity-Relationship-Diagramme, $\sigma$\nobreakdashes-Algebra, SQL\nobreakdashes-Befehle, und Normalisation werden besprochen.%
+\item<3-> Praktische Beispiele werden die Übung verlagert.%
+\item<4-> Das ist OK.%
+\item<5-> Als ich Student war, habe ich alles, was ich über Datenbanken wissen musste aber anders gelernt.%
+\item<6-> Durch Ausprobieren und Herumspielen.%
+\item<7-> Und deshalb machen wir das jetzt auch.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Was sind Datenbanken und wie benutzt man sie?}%
+\begin{itemize}%
+\item Bisher sind \emph{Datenbanken} für Sie nur irgendwelche abstrakten Dinge zum Speichern von Daten, auf die irgendwie über ein Klienten-Programm zugegriffen wird.%
+\item<2-> Alles sehr eigenartig.%
+\item<3-> Relationale Datenbanken speichern Tabellen haben wir gesagt.%
+\item<4-> Aber irgendwie ganz anders als ein vernünftiges \microsoftExcel-Spreadsheet.%
+\item<5-> Wahrscheinlich ist Ihnen immer noch nicht klar, was Datenbanken eigentlich sind.%
+\item<6-> Und wie man die benutzt.%
+\item<7-> Lassen Sie uns das ändern.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Fabrik-Datenbank}%
+\begin{itemize}%
+\item Wir haben folgendes Fantasie-Szenario\uncover<2->{%
+\begin{itemize}%
+\item Sie arbeiten für eine kleine Fabrik, die Schuhe und Handtaschen herstellt.%
+\item<2-> Sie wurden als die IT\nobreakdashes-Abteilung dieser Fabrik angestellt.%
+\item<3-> An Ihrem ersten Arbeitstag kommt ihr Chef und sagt:~\emph{Mache bitte eine Datenbank, um alle unsere Produktvarianten, Kundendaten, und Bestellungen zu speichern.}%
+\end{itemize}%
+}%
+%
+\item<4-> Wir benutzen dazu \postgresql, weil es ein sehr weit verbreitetes DBMS ist.\uncover<5->{ Im es war auf Rang~1 im \citetitle{SE:SO:2024DS}\cite{SE:SO:2024DS} und auf Rang~2 in\cite{PMPVEPWGSMB2025ATAODMSTTHOOSP}.}%
+\end{itemize}%
+%
+\uncover<6->{%
+\usefulTool{postgresql}{%
+\postgresql\cite{TA2024DDAMWPAM,FP2023LP,OH2017PUAR,B2024PELUYDW} ist ein fortschrittliches relationales DBMS. %
+Es ist kostenfrei, Open Source, und die Grundlage für alle Beispieldatenbanken in diesem Kurse.%
+}}%
+\end{frame}%
+%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Fertig.
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
