@@ -60,29 +60,29 @@ Alle Logos und Trademarks stehen ebenfalls unter dem Copyright ihrer entsprechen
 Die Liste mit Dateien, die nicht unter der CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0 Lizenz, sondern unter dem Copyright ihrer Besitzer stehen beinhaltet, aber ist nicht beschränkt auf:
 
 + das [LibreOffice](https://www.libreoffice.org) Logo, z.B.,
-  - slides/05_software_und_literatur/graphics/libreofficeLogo.pdf
-  - slides/05_software_und_literatur/graphics/libreofficeLogo.svg
+    - slides/05_software_und_literatur/graphics/libreofficeLogo.pdf
+    - slides/05_software_und_literatur/graphics/libreofficeLogo.svg
 + das [MariaDB](https://mariadb.org) Logo, z.B.,
-  - slides/05_software_und_literatur/graphics/mariadbLogo.pdf
-  - slides/05_software_und_literatur/graphics/mariadbLogo.svg
+    - slides/05_software_und_literatur/graphics/mariadbLogo.pdf
+    - slides/05_software_und_literatur/graphics/mariadbLogo.svg
 + das [PgModeler](https://pgmodeler.io) Logo: Copyright Raphael Araújo~e~Silva, z.B.,
-  - slides/05_software_und_literatur/graphics/pgmodelerLogo.pdf
-  - slides/05_software_und_literatur/graphics/pgmodelerLogo.svg
+    - slides/05_software_und_literatur/graphics/pgmodelerLogo.pdf
+    - slides/05_software_und_literatur/graphics/pgmodelerLogo.svg
 + das [PostgreSQL](https://www.postgresql.org) Logo, z.B.,
-  - slides/05_software_und_literatur/graphics/postgresqlLogo.pdf
-  - slides/05_software_und_literatur/graphics/postgresqlLogo.svg
+    - slides/05_software_und_literatur/graphics/postgresqlLogo.pdf
+    - slides/05_software_und_literatur/graphics/postgresqlLogo.svg
 + das [Psycopg](https://www.psycopg.org) Logo: Copyright (c) Gabriella Albano and the Psycopg team, z.B.,
-  - slides/05_software_und_literatur/graphics/psycopgLogo.pdf
-  - slides/05_software_und_literatur/graphics/psycopgLogo.svg
+    - slides/05_software_und_literatur/graphics/psycopgLogo.pdf
+    - slides/05_software_und_literatur/graphics/psycopgLogo.svg
 + das [Python](https://www.python.org) Logo, z.B.,
-  - slides/05_software_und_literatur/graphics/pythonLogo.pdf
-  - slides/05_software_und_literatur/graphics/pythonLogo.svg
+    - slides/05_software_und_literatur/graphics/pythonLogo.pdf
+    - slides/05_software_und_literatur/graphics/pythonLogo.svg
 + das [SQLite](https://sqlite.org) Logo, z.B.,
-  - slides/05_software_und_literatur/graphics/sqliteLogo.pdf
-  - slides/05_software_und_literatur/graphics/sqliteLogo.svg
+    - slides/05_software_und_literatur/graphics/sqliteLogo.pdf
+    - slides/05_software_und_literatur/graphics/sqliteLogo.svg
 + das [yEd](https://www.yworks.com/products/yed) Logo: The yEd logo is protected by copyright. yEd is a registered trademark of [yWorks GmbH](https://www.yworks.com). Unauthorized use, reproduction, or distribution is strictly prohibited., e.g.,
-  - slides/05_software_und_literatur/graphics/yEdLogo.pdf
-  - slides/05_software_und_literatur/graphics/yEdLogo.svg
+    - slides/05_software_und_literatur/graphics/yEdLogo.pdf
+    - slides/05_software_und_literatur/graphics/yEdLogo.svg
 
 Sie können die neuesten Versionen des Materials unter <https://thomasweise.github.io/databases> finden.
 Diese Versionen können sich ändern, da wir diesen Kurs aktiv weiterentwickeln.

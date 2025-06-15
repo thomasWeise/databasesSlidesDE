@@ -62,6 +62,59 @@ Es ist kostenfrei, Open Source, und die Grundlage für alle Beispieldatenbanken 
 }}%
 \end{frame}%
 %
+\section{Nutzer und Datenbank Erstellen}%
+%
+\begin{frame}%
+\frametitle{Nutzer Erstellen}%
+\begin{itemize}%
+\item Der erste Schritt, diese Anforderung zu erstellen, wäre es, eine neue Datenbank anzulegen.%
+\item<2-> Wir haben ja \postgresql\ schon installiert, das wird sich also machen lassen.%
+\item<3-> Unser Chef möchte vollen Zugriff auf diese neue Datenbank haben.%
+\item<4-> Er ist aber kein Datenbankadministrator,
+\item<5-> Wir wollen ihm also Zugriff auf die neue Datenbank geben, aber lieber nicht die Kontrolle über das gesamte DBMS.%
+\item<6-> Deshalb ist der erste Schritt ein anderer\uncover<7->{:~Wir erstellen ein neues Benutzerkonto (ein Rolle) speziell für die geplante Datenbank auf unserem DBMS.}
+\item<8-> Wenn unter diesem Benutzer etwas schief geht, oder ein Angreifer dessen Passwort irgendwie erhält, dann ist der Schaden zumindest auf diese eine Datenbank limitiert.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Verbinding to PostgreSQL via psql}%
+\begin{itemize}%
+\item Wir sind auf dem Datenbank-Server-Computer engeloggt.%
+\item<2-> Nehmen Sie an, dass das Passwort des Datenbankadministratorbenutzers \\textil{postgres} auf \textil{XXX} gesetzt ist.\uncover<3->{ Benutzen Sie niemals etwas wie \textil{XXX} als Passwort.}%
+\item<4-> Wir öffnen ein Terminal (unter \ubuntu\ \linux\ via~\ubuntuTerminal, under \ubuntu\ \linux; under \microsoftWindows\ durch \windowsTerminal).%
+\item<5-> Wir wollen nun den Klienten \psql\ mit der passenden Verbindungs-URI\cite{PGDG:PD} starten, um auf den \postgresql-Server zuzugreifen.%
+\end{itemize}%
+\uncover<6->{%
+\usefulTool{psql}{%
+\psql\ ist ein textbasiertes Konsolenprogramm mit dem man sich auf den \postgresql-Server verbinden kann. %
+Von der \psql-Konsole\ können wir SQL-Befehle an den \postgresql-Server schicken und dessen Ausgaben empfangen.%
+}}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Verbinding to PostgreSQL via psql}%
+\begin{itemize}%
+\item Wir wollen nun den Klienten \psql\ mit der passenden Verbindungs-URI\cite{PGDG:PD} starten, um auf den \postgresql-Server zuzugreifen.%
+\item<2-> Die Verbindungs-URI ist \textil{postgres://postgres:XXX@localhost}\uncover<3->{, wobei%
+\begin{itemize}%
+\item \textil{postgress://} identifiziert den parameter als Verbindungs-URI.%
+\item<2-> Das zweite \inQuotes{\textil{postgres}} ist der Benutzername.%
+\item<3-> Der Doppelpunkt~\inQuotes{\textil{:}} trennt den Benutzername von dem Password~\textil{XXX}.\uncover<4->{ Benutzen Sie niemals etwas wie \textil{XXX} als Passwort.}%
+\item<5-> Nach dem \inQuotes{\textil{@}} kommt die Netzwerkadresse, auf der der \postgresql-Server läuft.\uncover<6->{ \localhost\ steht für den aktuellen Computer.}%
+\end{itemize}}%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Erstellen des Benutzers}%
+
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Erstellen des Benutzers vis Script}%
+%\gitSQLAndOutput{3-}{\programmingWithPythonCodeRepo}{veryFirstProject}{very_first_program.py}{--args format}{0.05}{0.5}{0.9}{0.8}%
+\end{frame}%
 %
 \section{Zusammenfassung}%
 %
