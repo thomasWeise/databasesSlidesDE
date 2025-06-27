@@ -79,7 +79,7 @@ Es ist kostenfrei, Open Source, und die Grundlage für alle Beispieldatenbanken 
 \begin{itemize}%
 \item Lernen wir eine Methode, die nur bei \postgresql-Datenbanken funktioniert?%
 \item<9-> Oder werden die Dinge, die wir anschauen, auch bei \mariadb, \microsoftSqlServer, \oracleDB, \mysql, \sqlite, usw.\ funktionieren?%
-\item<10-> Ja.\uncover<11->{ Wir verwenden die Spache SQL, die von all diesen Datenbanken unterstützt wird.~\cite{C20245YOQ,MS2001S1URLC,PGDG:PD:SC,SP2002STYSI2D,SPMP1998SI2TDDASVEI12T,T2018ISARD,ANSIX3135,DB2019HTTPS,ISO90751987,ISOIEC9707112023E}}%
+\item<10-> Ja.\uncover<11->{ Wir verwenden die Spache SQL, die von all diesen Datenbanken unterstützt wird.\cite{C20245YOQ,MS2001S1URLC,PGDG:PD:SC,SP2002STYSI2D,SPMP1998SI2TDDASVEI12T,T2018ISARD,ANSIX3135,DB2019HTTPS,ISO90751987,ISOIEC9707112023E}}%
 \end{itemize}%
 }%
 %
@@ -222,8 +222,8 @@ Von der \psql-Konsole\ können wir SQL-Befehle an den \postgresql-Server schicke
 \item<4-> oder wir können die SQL-Kommandos in eine Datei schreiben und diese via \psql\ in einem Schritt ausführen.%
 \end{itemize}%
 }%
-\item<5-> Zum letzen Mal werden wir beides anschauen.%
-\item<6-> Danach werden wir nur noch mit Dateien arbeiten.%
+\item<5-> Wir werden wieder beides anschauen.%
+\item<6-> Später werden wir irgendwann nur noch mit Dateien arbeiten.%
 \end{itemize}%
 \end{frame}%
 %
@@ -231,7 +231,7 @@ Von der \psql-Konsole\ können wir SQL-Befehle an den \postgresql-Server schicke
 \frametitle{Erstellen der Datenbank via Terminal}%
 \uncover<-12>{%
 \begin{itemize}%
-\only<-1>{\item Wir loggen uns jetzt in unseren \postgresql-Server ein und erstellen die neue Datenbank Schritt-für-Schritt.}%
+\only<-1>{\item Wir loggen uns jetzt in unseren \postgresql-Server ein und erstellen die neue Datenbank.}%
 \only<2>{\item<2-> Wir starten \psql\ mit der passenden Verbindungs-URI. Wir benutzen immer noch das Systemadministratorenkonto \textil{postgres}.}%
 \only<3>{\item<3-> \psql\ läuft und ist mit dem \postgresql\ DBMS verbunden.}%
 \only<4>{\item<4-> Wir erstellen die Datenbank \textil{factory} für den Benutzer \textil{boss} mit Hilfe des SQL-Befehls \sqlil{CREATE DATABASE ... OWNER}.}%

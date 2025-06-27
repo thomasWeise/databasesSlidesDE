@@ -1,0 +1,296 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{8.~Fabrik-Datenbank:~Tabelle \emph{product}}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item Nun wollen wir die eigentliche Datenbank entwickeln.%
+\item<2-> Normalerweise würden wir dabei einem Designprozess folgen, wir würden die Anforderungen aufschreiben und analysieren, ein konzeptuelles Modell entwickeln und daraus ein logisches Modell ableiten\dots%
+\item<3-> {\dots}das machen wir jetzt nicht -- unser Ziel ist \emph{Learning by Doing.}%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Wir nutzen eine Relationale Datenbank}%
+\begin{itemize}%
+\item Wahrscheinlich kennen Sie bereits Tabellenkalkulationssoftware wie \microsoftExcel\cite{P2020MSS2ABG,A2024TSAFMSS2,W2018MSSDB} oder \libreofficeCalc\cite{DF2024LTDF,GL2012LTSOOSSCBAFACSOL,S2022L7PFEUU}.%
+\item<2-> Auch dort sind Daten in Tabellen organisiert.%
+\item<3-> In einer relationalen Datenbank sind die Spalten der Tabellen aber \emph{typisiert}\uncover<4->{: Sie können Text eingeben, der dem vorgegebenen Datentyp entspricht.}%
+\item<5-> Und es kann mehrere verschiedene Tabellen geben.%
+\item<6-> Und die Datensätze in verschiedenen Tabellen können miteinander fest verbunden sein.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Struktur der Datenbank}%
+\begin{itemize}%
+\item Dieses Format erlaubt es uns, unsere Daten nach Kategorie einzuteilen.%
+\item<2-> Wir werden eine Tabelle für die \emph{Producte} unseres Betriebs erstellen.%
+\item<3-> Wir werden eine Tabelle für die \emph{Kunden} unseres Betriebs erstellen.%
+\item<4-> Wir werden eine Tabelle für die \emph{Bestellungen} der Kunden unseres Betriebs erstellen.%
+\item<5-> Fangen wir mit der Tabelle für die Produkte an.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Erstellen der Tabelle}%
+%
+\begin{frame}%
+\frametitle{Name der Tabelle}%
+\begin{itemize}%
+\item For many programming languages, there exist comprehensive and clear style guides.%
+\item<2-> Such style guides tell us how to name things and how to structure code consistently.%
+\item<3-> This is important, because we always work together with other people on projects and everybody should be able to read everyone's code.%
+\item<4-> For SQL, there does not exist one generally accepted best practice standard style guide.%
+\item<5-> We will still try to define some general rules.%
+\end{itemize}%
+\uncover<6->{%
+\bestPractice{tableName}{%
+Tabellennamen sollten (Englische) Nomen im Singular sein, mit Kleinbuchstaben geschrieben, und ohne Prefix~(z.B.~kein \inQuotes{tbl\_} am Anfange haben)~\cite{B2025DS:SBPASG}.%
+}%
+\uncover<7->{\begin{itemize}%
+\item Nennen wir unsere Tabelle für Produkte also \textil{products}.%
+\end{itemize}%
+}}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Grobstruktur}%
+\begin{itemize}%
+\only<-10>{%
+\item Erstellen wir also die Tabelle~\sqlil{product}.%
+\item<2-> Welche Spalten brauchen wir?%
+\uncover<3->{%
+\begin{itemize}%
+\item Jedes Produkt hat einen \emph{Namen}.\uncover<4->{ %
+Der Name ist im Grunde Text, also brauchen wir eine Spalte für Text.}%
+\item<5-> Jedes Produkt hat einen Preis.\uncover<6->{ %
+Der Preis ist eine Zahl die den Anforderungen an eine Geldmenge entsprechen muss.}%
+\item<7-> Um die Produkte auszuliefern, kommt jedes Produkt in ein Schachtel.\uncover<8->{ %
+Diese Schachteln haben eine Breite, Höhe, und Tiefe, sowie (wenn das Produkt eingepackt ist) ein bestimmtes Gewicht.\uncover<9->{ %
+Das sind also noch vier Zahlen, die wir speichern müssen.}}%
+\end{itemize}%
+}}%
+\item<10-> Das ist also die grundlegende Struktur unserer Tabelle.%
+\end{itemize}%
+\locateGraphic{11}{width=0.625\paperwidth}{graphics/create/dbStructureProduct}{0.1875}{0.2}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{SQL}%
+\begin{itemize}%
+\item Diese Struktur ist im Grunde recht einfach.%
+\item<2-> Nun müssen wir sie in SQL-Kommandos übersetzen.%
+\item<3-> Wir müssen dazu Namen, Datentypen, und Einschränkungen für die Spalten festlegen.%
+\item<4-> Dann können wir die SQL-Kommandos an das \postgresql\ DBMS schicken und die Tabelle erstellen.%
+\item<5-> Dies kann dann innerhalb einer interaktiven \psql-Session oder mit Hilfe eines Skripts erfolgen.%
+\item<6-> Schauen wir uns das mal an.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Interaktive PSQL Session -- Teil 1}%
+\begin{itemize}%
+\only<-2>{\item Wir erstellen das Kommando zuerst insgesamt und erklären dann Schritt-für-Schritt seine Komponenten.%
+\item<2-> Wir loggen uns jetzt in unseren \postgresql-Server ein und erstellen die neue Tabelle.}%
+\only<3>{\item<3-> Wir starten \psql\ mit der passenden Verbindungs-URI. Diesmal verwenden with den Benutzer \textil{boss} mit Passwort \textil{superboss123} und arbeiten auf der Datenbank \textil{factory}.}%
+\only<4>{\item<4-> \psql\ läuft und ist mit dem \postgresql\ DBMS verbunden.}%
+\only<5>{\item<5-> Mit diesem \sqlil{CREATE TABLE} Kommando -- das wir gleich im Detail anschauen -- wird die Tabelle mit allen notwendigen Spalten erstellt.}%
+\only<6>{\item<6-> Das Kommando wird erfolgreich ausgeführt und \sqlil{CREATE TABLE} wird uns als Antwort ausgegeben.}%
+\end{itemize}%
+%
+\locateGraphic{3}{width=0.85\paperwidth}{graphics/create/createTable1psql}{0.075}{0.25}%
+\locateGraphic{4}{width=0.85\paperwidth}{graphics/create/createTable2started}{0.075}{0.25}%
+\locateGraphic{5}{width=0.85\paperwidth}{graphics/create/createTable3command}{0.075}{0.25}%
+\locateGraphic{6}{width=0.85\paperwidth}{graphics/create/createTable4created}{0.075}{0.25}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Command Structure}%
+\begin{itemize}%
+\only<-1>{\item \sqlil{CREATE TABLE} ist das SQL-Kommando um eine Tabelle anzulegen.}%
+\only<2>{\item<2> \sqlil{product} ist der Name der Tabelle, die wir anlegen wollen.}%
+\only<3>{\item<3> Dann folgen die Namen, Datentypen, und Einschränkungen der Spalten unserer Tabelle. %
+Diese sind von Klammern umrahmt~(\textil{(...)}) und durch Kommas~(\textil{,}) getrennt.}%
+\end{itemize}%
+\locateGraphic{1}{width=0.85\paperwidth}{graphics/create/createTable1psql}{0.075}{0.275}%
+\locateGraphic{2}{width=0.85\paperwidth}{graphics/create/createTable3commandTableName}{0.075}{0.275}%
+\locateGraphic{3}{width=0.85\paperwidth}{graphics/create/createTable3commandSpalten}{0.075}{0.275}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Die Spalte \texttt{name}}%
+\begin{itemize}%
+%
+\only<-4>{\item Wir legen eine Spalte \textil{name} für die Namen der Produkte an.%
+\uncover<2->{ Die Namen sind Text, haben aber keine feste Lände.%
+\uncover<3->{ Dafür gibt es den Datentyp \sqlil{VARCHAR}.%
+\uncover<4->{ In Klammern geben wir eine Maximallänge an. Hier ist 100 Zeichen eine vernünftige Wahl.%
+}}}}%
+%
+\only<5-8>{\item<5-> Jedes Produkt muss einen Namen haben.%
+\uncover<6->{ Es kann kein Produkt ohne Name geben.%
+\uncover<7->{ Wir schreiben daher \sqlil{NOT NULL} hinter den Datentypen.%
+\uncover<8->{ Diese Einschränkung stellt sicher, dass jeder Datensatz immer einen Wert in der Spalte \sqlil{name} haben muss.%
+}}}}%
+%
+\only<9-12>{\item<5-> Die Produktnamen müssen eindeutig sein.%
+\uncover<10->{ Zwei verschiedene Produkte dürfen niemals den gleichen Namen haben.%
+\uncover<11->{ Wir schreiben daher \sqlil{UNIQUE} hinter den Datentypen.%
+\uncover<12->{ Diese Einschränkung stellt sicher, dass jeder Wert in der Spalte \sqlil{name} nur einmal vorkommen kann.%
+}}}}%
+%
+\end{itemize}%
+\locateGraphic{-4}{width=0.8\paperwidth}{graphics/create/createTable3commandNameVarchar}{0.1}{0.33}%
+\locateGraphic{5-8}{width=0.8\paperwidth}{graphics/create/createTable3commandNameNotNull}{0.1}{0.33}%
+\locateGraphic{9-12}{width=0.8\paperwidth}{graphics/create/createTable3commandNameUnique}{0.1}{0.33}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Die Spalte \texttt{price}}%
+\begin{itemize}%
+%
+\only<-17>{\item Wir legen eine Spalte \textil{price} für den Preis der Produkte an.%
+\uncover<2->{ Die Auswahl des richtigen Datentypen ist diesmal schwer. %
+\only<3-15>{\begin{itemize}%
+\item Preise wie \inQuotes{1,34€} oder \inQuotes{12.99元} oder \inQuotes{\$3.99} sehen auf den ersten Blick wie Fließkommazahlen aus.\only<4-7>{%
+\begin{itemize}%
+\item Sie kennen Fließkommazahlen aus \python~(Datentype \pythonil{float}) oder \texttt{Java} und \textil{C}~(Datentypen \pythonil{float}, \pythonil{double}, \dots).%
+\item<5-> Aber Fließkommazahlen sind ungenau!%
+\item<6-> Beispiel:~\pythonil{0.1 + 0.1 + 0.1 - 0.3} ergiebt~\pythonil{5.551115123125783e-17} in \python\dots%
+\end{itemize}%
+}%
+\only<8->{ Preise sind aber keine Fließkommazahlen!}%
+%
+\item<9-> Preise könnten Ganzzahlen sein, z.B. die Anzahl Cent oder 分.\only<10-11>{%
+\begin{itemize}%
+\item Dann muss man sie aber jedesmal in \inQuotes{umrechnen}, wenn man sie anzeigen oder mit ihnen rechnen will.%
+\item<11-> Aber das ist fehleranfällig\cite{W2020HSISCVISS}.%
+\end{itemize}%
+}%
+\only<12->{ Preise sind aber keine Ganzzahlen.}%
+%
+\only<13-15>{\item Der Datentype \sqlil{DECIMAL(x, y)} erlaubt es uns, Zahlen mit \textil{x}~Stellen (\textil{y} davon nach dem Komma) exakt darzustellen.%
+\only<15>{%
+\begin{itemize}%
+\item Mit \sqlil{price DECIMAL(10, 2)} können wir Zahlen mit 10~Ziffern, 2~davon nach dem Komma, exakt speichern\cite{PGDG:PD:NT}.%
+\end{itemize}%
+}%
+}%
+%
+\end{itemize}%
+%
+}%
+\uncover<16->{ Wir benutzen den Datentyp~\sqlil{DECIMAL(10, 2)}.}%
+}}%
+%
+\only<18-21>{\item Jedes Produkt muss einen Preis haben.%
+\uncover<19->{ Es kann kein Produkt ohne Preis geben.%
+\uncover<20->{ Wir schreiben daher \sqlil{NOT NULL} hinter den Datentypen.%
+\uncover<21->{ Diese Einschränkung stellt sicher, dass jeder Datensatz immer einen Wert in der Spalte \sqlil{preis} haben muss.%
+}}}}%
+%
+\end{itemize}%
+%
+\only<5-6>{%
+\bestPractice{floatImprecise}{%
+Nehmen Sie immer an, dass \pythonilIdx{float}-Werte ungenau sind. %
+Nehmen Sie NIEMALS an, dass diese exact sind\cite{PTVF2007NRTAOSC:EAAS,BHK2006CNFCMEARFCS:NS,programmingWithPython}.%
+}}%
+\only<7-8>{%
+\bestPractice{moneyNotFloat}{%
+Repräsentieren Sie niemals Geldwerte mit Fließkommazahlen\cite{SE:SO:WNUDOFTRC,W2020HSISCVISS}.%
+}}%
+\only<14-16>{%
+\bestPractice{moneyDecimal}{%
+Geldwerte müssen mit dem Datentype \sqlilIdx{DECIMAL} gespeicher werden\cite{C2024SCVDTCBP,W2020HSISCVISS}.%
+}}%
+%
+\locateGraphic{-3,17}{width=0.8\paperwidth}{graphics/create/createTable3commandPriceDecimal}{0.1}{0.343}%
+\locateGraphic{18-21}{width=0.8\paperwidth}{graphics/create/createTable3commandPriceNotNull}{0.1}{0.343}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Die Spalten \texttt{weight}, \texttt{width}, \texttt{height}, und \texttt{depth}}%
+\begin{itemize}%
+%
+\only<-8>{\item Wir legen die Spalten für das Gewicht und die Dimensionen der Boxen für unsere Produkte an.%
+\only<2-5>{%
+\begin{itemize}%
+\item Das Gewicht soll in Gram in der Spalte \textil{weight} gespeichert werden.%
+\item<3-> Die Breite soll in Millimeter in der Spalte \textil{width} gespeichert werden.%
+\item<4-> Die Höhe soll in Millimeter in der Spalte \textil{height} gespeichert werden.%
+\item<5-> Die Tiefe soll in Millimeter in der Spalte \textil{depth} gespeichert werden.%
+\end{itemize}%
+\uncover<6->{ Alle Dimensionen sind Ganzzahlen.
+\uncover<7->{ Der Datentype \sqlil{INT} stellt Werte von -2\decSep147\decSep483\decSep648 bis +2\decSep147\decSep483\decSep647 dar.
+\uncover<8->{ Das reicht.}}}%
+}%
+}%
+%
+\only<9-12>{\item Jedes Produkt muss ein Gewicht und alle Box-Dimensionen haben.%
+\uncover<10->{ Es kann kein Produkt ohne Gewicht oder mit unbekannter Größe geben.%
+\uncover<11->{ Wir schreiben daher \sqlil{NOT NULL} hinter die Datentypen.%
+\uncover<12->{ Diese Einschränkung stellt sicher, dass jeder Datensatz immer Werte für alle vier Attribute haben muss.%
+}}}}%
+%
+\end{itemize}%
+\locateGraphic{1,6-8}{width=0.8\paperwidth}{graphics/create/createTable3commandWWHDint}{0.1}{0.33}%
+\locateGraphic{9-12}{width=0.8\paperwidth}{graphics/create/createTable3commandWWHDnotNull}{0.1}{0.355}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Interaktive PSQL Session -- Teil 2}%
+\begin{itemize}%
+\only<-1>{\item Damit ist das SQL-Kommando erklärt.}%
+\only<2>{\item<2-> Wie bereits gesagt können wir es erfolgreich auf unserem \postgresql-Server ausführen.}%
+\only<3-4>{\item<3-> Mit einer \sqlil{SELECT ... FROM} Anfrage auf die passende Systemtabelle können wir prüfen, ob die Tabelle \sqlil{product} nun wirklich existiert.%
+\uncover<4->{ Sie tut es.}}%
+\only<5>{\item<5-> Wir beenden die \psql-Session durch \textil{\\q} und \keys{\enter}.}%
+\only<6>{\item<6-> Wir sind zurück im normalen Terminal.}%
+\end{itemize}%
+%
+\locateGraphic{-2}{width=0.85\paperwidth}{graphics/create/createTable4created}{0.075}{0.25}%
+\locateGraphic{3}{width=0.85\paperwidth}{graphics/create/createTable5select}{0.075}{0.25}%
+\locateGraphic{4}{width=0.85\paperwidth}{graphics/create/createTable6selected}{0.075}{0.25}%
+\locateGraphic{5}{width=0.85\paperwidth}{graphics/create/createTable7quit}{0.075}{0.25}%
+\locateGraphic{6}{width=0.85\paperwidth}{graphics/create/createTable8done}{0.075}{0.25}%
+\end{frame}%
+%
+%
+\begin{frame}[fragile]
+\frametitle{Erstellen der Tabelle via Script}%
+\gitLoadAndExecSQL{factory:create_table_product}{}{factory}{create_table_product.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{1}{factory:create_table_product}{}{0.225}{0.07}{0.9}{0.91}
+\listingSQL{2}{factory:create_table_product}{0.05}{0.07}{0.9}{0.91}
+\listingOutput{3}{factory:create_table_product}{,style=tool_style_sql}{0.05}{0.07}{0.9}{0.91}
+\end{frame}
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Fertig
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
