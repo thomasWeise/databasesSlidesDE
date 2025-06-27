@@ -35,6 +35,7 @@ Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.gith
 4. [Geschichte](https://thomasweise.github.io/databasesSlidesDE/04_geschichte.pdf)
 5. [Software und Literatur](https://thomasweise.github.io/databasesSlidesDE/05_software_und_literatur.pdf)
 6. [Installation von PostgreSQL](https://thomasweise.github.io/databasesSlidesDE/06_installation_postgresql)
+7. [Fabrik-Datenbank: Benutzer und Datenbank](https://thomasweise.github.io/databasesSlidesDE/07_fabrik_datenbank_benutzer_und_db)
 
 ### 2.3. Die Beispiele
 Unser Kurs bietet sehr viele Beispiele.

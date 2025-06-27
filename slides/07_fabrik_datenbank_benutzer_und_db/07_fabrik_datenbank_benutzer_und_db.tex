@@ -1,0 +1,285 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{7.~Fabrik-Datenbank:~Benutzer und Datenbank}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item In vielen Kursen über \emph{Datenbanken} wird das Gebiet in einzelnen Stücken diskutiert.%
+\item<2-> Themen wie der Datenbank-Entwurfsprozess, Datenmodellierung, Entity-Relationship-Diagramme, $\sigma$\nobreakdashes-Algebra, SQL\nobreakdashes-Befehle, und Normalisierung werden besprochen.%
+\item<3-> Praktische Beispiele werden die Übung verlagert.%
+\item<4-> Das ist OK.%
+\item<5-> Als ich Student war, habe ich alles, was ich über Datenbanken wissen musste aber anders gelernt.%
+\item<6-> Durch Ausprobieren und Herumspielen.%
+\item<7-> Und deshalb machen wir das jetzt auch.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Was sind Datenbanken und wie benutzt man sie?}%
+\begin{itemize}%
+\item Bisher sind \emph{Datenbanken} für Sie nur irgendwelche abstrakten Dinge zum Speichern von Daten, auf die irgendwie über ein Klienten-Programm zugegriffen wird.%
+\item<2-> Alles sehr eigenartig.%
+\item<3-> Relationale Datenbanken speichern Tabellen haben wir gesagt.%
+\item<4-> Aber irgendwie ganz anders als ein vernünftiges \microsoftExcel-Spreadsheet.%
+\item<5-> Wahrscheinlich ist Ihnen immer noch nicht klar, was Datenbanken eigentlich sind.%
+\item<6-> Und wie man die benutzt.%
+\item<7-> Lassen Sie uns das ändern.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Fabrik-Datenbank}%
+\begin{itemize}%
+\item Wir haben folgendes Fantasie-Szenario\uncover<2->{%
+\begin{itemize}%
+\item Sie arbeiten für eine kleine Fabrik, die Schuhe und Handtaschen herstellt.%
+\item<3-> Sie wurden als die IT\nobreakdashes-Abteilung dieser Fabrik angestellt.%
+\item<4-> An Ihrem ersten Arbeitstag kommt ihr Chef und sagt:~\emph{Mache bitte eine Datenbank, um alle unsere Produktvarianten, Kundendaten, und Bestellungen zu speichern.}%
+\end{itemize}%
+}%
+%
+\item<5-> Wir benutzen dazu \postgresql, weil es ein sehr weit verbreitetes DBMS ist.\uncover<6->{ Im es war auf Rang~1 im \citetitle{SE:SO:2024DS}\cite{SE:SO:2024DS} und auf Rang~2 in\cite{PMPVEPWGSMB2025ATAODMSTTHOOSP}.}%
+\end{itemize}%
+%
+\uncover<7->{%
+\usefulTool{postgresql}{%
+\postgresql\cite{TA2024DDAMWPAM,FP2023LP,OH2017PUAR,B2024PELUYDW} ist ein fortschrittliches relationales DBMS. %
+Es ist kostenfrei, Open Source, und die Grundlage für alle Beispieldatenbanken in diesem Kurse.%
+}}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Was wird passieren?}%
+\begin{itemize}%
+\item In diesem Beispiel werden wird einiges lernen.%
+\item<2-> Wir lernen die wichtigsten Struktur und Komponenten von relationalen Datenbanken kennen.%
+\uncover<3->{%
+\begin{itemize}%
+\item DBs bestehen aus Tabellen, die ihrerseits aus Zeilen und Spalten bestehen.%
+\item<4-> Die Zeilen sind die in den Tabellen gespeicherten Datensätze.%
+\item<5-> Jeder Datensatz einer Tabelle hat die selben Attribute, die den Spalten entsprechn.%
+\item<6-> Wir lernen, wie wir Tabellen erstellen, Datensätze speichern, und wieder laden können.%
+\end{itemize}%
+}%
+\item<7-> Wie geht das?\uncover<8->{%
+\begin{itemize}%
+\item Lernen wir eine Methode, die nur bei \postgresql-Datenbanken funktioniert?%
+\item<9-> Oder werden die Dinge, die wir anschauen, auch bei \mariadb, \microsoftSqlServer, \oracleDB, \mysql, \sqlite, usw.\ funktionieren?%
+\item<10-> Ja.\uncover<11->{ Wir verwenden die Spache SQL, die von all diesen Datenbanken unterstützt wird.~\cite{C20245YOQ,MS2001S1URLC,PGDG:PD:SC,SP2002STYSI2D,SPMP1998SI2TDDASVEI12T,T2018ISARD,ANSIX3135,DB2019HTTPS,ISO90751987,ISOIEC9707112023E}}%
+\end{itemize}%
+}%
+%
+\item<12-> Natürlich können wir keines dieser Themen vollständig oder tiefgreifend bearbeiten.%
+\item<13-> Aber wir können ein Gefühl für sie entwickeln, auf dem man aufbauen kann.%
+\item<14-> Also: Los geht's.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\section{Erstellen eines Benuterkontos}%
+%
+\begin{frame}%
+\frametitle{Benutzerkonto Erstellen}%
+\begin{itemize}%
+\item Der erste Schritt, diese Anforderung zu erstellen, wäre es, eine neue Datenbank anzulegen.%
+\item<2-> Wir haben ja \postgresql\ schon installiert, das wird sich also machen lassen.%
+\item<3-> Unser Chef möchte vollen Zugriff auf diese neue Datenbank haben.%
+\item<4-> Er ist aber kein Datenbankadministrator,
+\item<5-> Wir wollen ihm also Zugriff auf die neue Datenbank geben, aber lieber nicht die Kontrolle über das gesamte DBMS.%
+\item<6-> Deshalb ist der erste Schritt ein anderer\uncover<7->{:~Wir erstellen ein neues Benutzerkonto (ein Rolle) speziell für die geplante Datenbank auf unserem DBMS.}
+\item<8-> Wenn unter diesem Benutzer etwas schief geht, oder ein Angreifer dessen Passwort irgendwie erhält, dann ist der Schaden zumindest auf diese eine Datenbank limitiert.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Verbindung to PostgreSQL via psql}%
+\begin{itemize}%
+\item Wir sind auf dem Datenbank-Server-Computer engeloggt.%
+\item<2-> Nehmen Sie an, dass das Passwort des Datenbankadministratorbenutzers \\textil{postgres} auf \textil{XXX} gesetzt ist.\uncover<3->{ Benutzen Sie niemals etwas wie \textil{XXX} als Passwort.}%
+\item<4-> Wir öffnen ein Terminal (unter \ubuntu\ \linux\ via~\ubuntuTerminal; under \microsoftWindows\ durch \windowsTerminal).%
+\item<5-> Wir wollen nun den Klienten \psql\ mit der passenden Verbindungs-URI\cite{PGDG:PD} starten, um auf den \postgresql-Server zuzugreifen.%
+\end{itemize}%
+\uncover<6->{%
+\usefulTool{psql}{%
+\psql\ ist ein textbasiertes Konsolenprogramm mit dem man sich auf den \postgresql-Server verbinden kann. %
+Von der \psql-Konsole\ können wir SQL-Befehle an den \postgresql-Server schicken und dessen Ausgaben empfangen.%
+}}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Verbinding to PostgreSQL via psql}%
+\begin{itemize}%
+\item Wir wollen nun den Klienten \psql\ mit der passenden Verbindungs-URI\cite{PGDG:PD} starten, um auf den \postgresql-Server zuzugreifen.%
+\item<2-> Die Verbindungs-URI ist \textil{postgres://postgres:XXX@localhost}\uncover<3->{, wobei%
+\begin{itemize}%
+\item \textil{postgress://} identifiziert den parameter als Verbindungs-URI.%
+\item<2-> Das zweite \inQuotes{\textil{postgres}} ist der Benutzername.%
+\item<3-> Der Doppelpunkt~\inQuotes{\textil{:}} trennt den Benutzername von dem Password~\textil{XXX}.\uncover<4->{ Benutzen Sie niemals etwas wie \textil{XXX} als Passwort.}%
+\item<5-> Nach dem \inQuotes{\textil{@}} kommt die Netzwerkadresse, auf der der \postgresql-Server läuft.\uncover<6->{ \localhost\ steht für den aktuellen Computer.}%
+\end{itemize}}%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Erstellen des Benutzers via Terminal}%
+\uncover<-9>{%
+\begin{itemize}%
+\only<-1>{\item Wir loggen uns jetzt in unseren \postgresql-Server ein und erstellen das neue Benutzerkonto Schritt-für-Schritt.}%
+\only<2>{\item<2-> Wir starten \psql\ mit der passenden Verbindungs-URI.}%
+\only<3>{\item<3-> \psql\ läuft und ist mit dem \postgresql\ DBMS verbunden.}%
+\only<4>{\item<4-> Wir erstellen das Benutzerkonto \textil{boss} mit dem (verschlüsselt zu speichernden) Passwort \textil{superboss123} mit Hilfe des SQL-Befehls \sqlil{CREATE USER}.}%
+\only<5>{\item<5-> Der Befehl war erfolgreich. \psql\ zeigt dies durch Ausgabe von \sqlil{CREATE ROLE} an.}%
+\only<6>{\item<6-> Wir wollen uns die Liste aller Benutzerkonten ausgeben lassen. Dazu wenden wir den SQL-Befehl \sqlil{SELECT ... FROM} auf die entsprechende Systemtabelle an.}%
+\only<7>{\item<7-> Es gibt zwei Benutzerkonten: Das Systemadministratorkonto \textil{postgres} und den neuen Benutzer \textil{boss}.}%
+\only<8>{\item<8-> Wir beenden die \psql-Session durch \textil{\\q} und \keys{\enter}.}%
+\only<9>{\item<9-> Wir sind zurück im normalen Terminal.}%
+\end{itemize}}%
+\locateGraphic{2}{width=0.85\paperwidth}{graphics/user/psqlNewUser1starting}{0.075}{0.25}%
+\locateGraphic{3}{width=0.85\paperwidth}{graphics/user/psqlNewUser2psqlOpen}{0.075}{0.25}%
+\locateGraphic{4}{width=0.85\paperwidth}{graphics/user/psqlNewUser3command}{0.075}{0.25}%
+\locateGraphic{5}{width=0.85\paperwidth}{graphics/user/psqlNewUser4executed}{0.075}{0.25}%
+\locateGraphic{6}{width=0.85\paperwidth}{graphics/user/psqlNewUser5getUsers}{0.075}{0.25}%
+\locateGraphic{7}{width=0.85\paperwidth}{graphics/user/psqlNewUser6gotUsers}{0.075}{0.25}%
+\locateGraphic{8}{width=0.85\paperwidth}{graphics/user/psqlNewUser7typeQuit}{0.075}{0.25}%
+\locateGraphic{9}{width=0.85\paperwidth}{graphics/user/psqlNewUser8quit}{0.075}{0.25}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Erstellen des Benutzers via Script}%
+%
+\only<-4>{%
+\begin{itemize}%
+\item Alternativ können wir auch die SQL-Kommandos in eine Text-Datei schreiben.%
+\item<2-> Diese können wir dann mit \psql\ an den \postgresql-Server schicken und in einem Schritt ausführen.%
+\item<3-> Das ist viel angenehmer, besonders wenn wir mehrere komplexe Befehle auführen wollen.%
+\end{itemize}%
+}%
+%
+\uncover<4->{%
+\begin{center}%
+\resizebox{0.9\paperwidth}{!}{\parbox{\paperwidth}{\bashil{psql "postgres://user:password@host:port/database"\ \ -v ON_ERROR_STOP=1 -ebf script.sql}}}%
+\end{center}%
+\uncover<5->{%
+\begin{itemize}%
+\item \bashil{psql}: Das Programm \psql%
+\item<6-> Verbindungs-URI, in Anführungszeichen.%
+\uncover<7->{%
+\begin{itemize}%
+\item \textil{postgres://} zeigt an, dass das eine \postgresql\ Verbindungs-URI ist%
+\item<8-> \textil{user:password}: Benutzername und Passwort%
+\item<9-> \textil{host}:~Netzwerkadresse das \postgresql-Server, \localhost~$=$~unser Computer%
+\item<10-> \textil{port}:~der Port, an dem der Server auf Verbindungen wartet, weglassen für Default~(\textil{5432})%
+\item<11-> \textil{database}: Name der Datenbank, weglassen wenn wir direkt auf dem System arbeiten%
+\end{itemize}%
+}%
+%
+\item<12-> \bashil{-v ON_ERROR_STOP=1}: Das Program soll bei Fehlern sofort abbrechen.%
+%
+\item<13-> \bashil{-e}: Drucke alle erfolgreichen Befehle auf \pgls{stdout}%
+%
+\item<14-> \bashil{-b}: Drucke gescheiterte Befehle auf \pgls{stderr}.%
+%
+\item<15-> \bashil{-f filename}: Lese Kommandos aus Datei \textil{filename}.%
+%
+\item<16-> \bashil{-ebf filename}: Das selbe wir \bashil{-e -b -f filename}.%
+%
+\end{itemize}%
+}%
+}%
+\end{frame}%
+%
+\begin{frame}[fragile]
+\frametitle{Erstellen des Benutzers via Script}%
+\gitLoadAndExecSQL{factory:create_user}{}{factory}{create_user.sql}{}{}{}
+\listingSQLandOutput{1}{factory:create_user}{}{0.17}{0.07}{0.9}{0.92}
+\listingSQL{2}{factory:create_user}{0.05}{0.12}{0.9}{0.92}
+\listingOutput{3}{factory:create_user}{,style=tool_style_sql}{0.05}{0.12}{0.9}{0.92}
+\end{frame}
+%
+\section{Erstellen einer Datenbank}
+%
+\begin{frame}%
+\frametitle{Erstellen einer Datenbank}%
+\begin{itemize}%
+\item Nachdem wir den Benutzer~\inQuotes{boss} erstellt haben, können wir die Datenbank \inQuotes{factory} für diesen Benutzer anlegen.%
+\item<2-> Das machen wir genauso wie vorhin das Erstellen des Benutzers\uncover<3->{%
+\begin{itemize}%
+\item Wir können entweder im Terminal \psql\ öffnen und die entsprechenden SQL-Kommandos nacheinander eingeben\dots%
+\item<4-> oder wir können die SQL-Kommandos in eine Datei schreiben und diese via \psql\ in einem Schritt ausführen.%
+\end{itemize}%
+}%
+\item<5-> Zum letzen Mal werden wir beides anschauen.%
+\item<6-> Danach werden wir nur noch mit Dateien arbeiten.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Erstellen der Datenbank via Terminal}%
+\uncover<-12>{%
+\begin{itemize}%
+\only<-1>{\item Wir loggen uns jetzt in unseren \postgresql-Server ein und erstellen die neue Datenbank Schritt-für-Schritt.}%
+\only<2>{\item<2-> Wir starten \psql\ mit der passenden Verbindungs-URI. Wir benutzen immer noch das Systemadministratorenkonto \textil{postgres}.}%
+\only<3>{\item<3-> \psql\ läuft und ist mit dem \postgresql\ DBMS verbunden.}%
+\only<4>{\item<4-> Wir erstellen die Datenbank \textil{factory} für den Benutzer \textil{boss} mit Hilfe des SQL-Befehls \sqlil{CREATE DATABASE ... OWNER}.}%
+\only<5>{\item<5-> Der Befehl war erfolgreich. \psql\ zeigt dies durch Ausgabe von \sqlil{CREATE DATABASE} an.}%
+\only<6>{\item<6-> Wir können alle Elemente einer Datenbank durch Kommentare dokumentieren. Exemplarisch speichern wir einen Kommentar zur Datenbank.}%
+\only<7>{\item<7-> Der SQL-Befehl \sqlil{COMMENT ON ... IS} war erfolgreich, was die Ausgabe \sqlil{COMMENT} anzeigt.}%
+\only<8>{\item<8-> Wir wollen uns nun die Liste aller Datenbanken auf dem Server ausgeben lassen und fragen die entsprechende Systemtabelle mit \sqlil{SELECT ... FROM} ab.}%
+\only<9>{\item<9-> Die Ausgabe zeigt unsere neue Datenbank mit an, ist aber ggf.\ im seitenweisen Anzeigemodus.}%
+\only<10>{\item<10-> Falls wir im seitenweisen Anzeigemodus sind, verlassen wir diesen durch Druck auf~\keys{q}.}%
+\only<11>{\item<11-> Wir beenden die \psql-Session durch \textil{\\q} und \keys{\enter}.}%
+\only<12>{\item<12-> Wir sind zurück im normalen Terminal.}%
+\end{itemize}}%
+%
+\locateGraphic{2}{width=0.85\paperwidth}{graphics/db/createDB01start}{0.075}{0.25}%
+\locateGraphic{3}{width=0.85\paperwidth}{graphics/db/createDB02started}{0.075}{0.25}%
+\locateGraphic{4}{width=0.85\paperwidth}{graphics/db/createDB03createDatabase}{0.075}{0.25}%
+\locateGraphic{5}{width=0.85\paperwidth}{graphics/db/createDB04dbCreated}{0.075}{0.25}%
+\locateGraphic{6}{width=0.85\paperwidth}{graphics/db/createDB05comment}{0.075}{0.25}%
+\locateGraphic{7}{width=0.85\paperwidth}{graphics/db/createDB06commented}{0.075}{0.25}%
+\locateGraphic{8}{width=0.85\paperwidth}{graphics/db/createDB07selectDatname}{0.075}{0.25}%
+\locateGraphic{9}{width=0.85\paperwidth}{graphics/db/createDB08selected}{0.075}{0.25}%
+\locateGraphic{10}{width=0.85\paperwidth}{graphics/db/createDB09selectedQ}{0.075}{0.25}%
+\locateGraphic{11}{width=0.85\paperwidth}{graphics/db/createDB10quit}{0.075}{0.25}%
+\locateGraphic{12}{width=0.85\paperwidth}{graphics/db/createDB11done}{0.075}{0.25}%
+\end{frame}%
+%
+\begin{frame}[fragile]
+\frametitle{Erstellen der Datenbank via Script}%
+\gitLoadAndExecSQL{factory:create_database}{}{factory}{create_database.sql}{}{}{}
+\listingSQLandOutput{1}{factory:create_database}{}{0.225}{0.07}{0.9}{0.92}
+\listingSQL{2}{factory:create_database}{0.05}{0.16}{0.9}{0.92}
+\listingOutput{3}{factory:create_database}{,style=tool_style_sql}{0.05}{0.099}{0.9}{0.92}
+\end{frame}
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Wir haben soeben mit einem echten DBMS interagiert.%
+\item<2-> Wir haben die SQL-Befehle \sqlil{CREATE USER} und \sqlil{CREATE DATABASE} zum Erstellen von Benutzerkonten und Datenbanken benutzt.%
+\item<3-> Wir haben auch zum ersten Mal den SQL-Befehl \sqlil{SELECT ... FROM} benutzt, um Daten aus einer Tabelle auszulesen.%
+\item<4-> Wir haben gesehen, dass das Schwierigste an der ganzen Sache ist, \postgresql\ und \psql\ erstmal zum Laufen zu bekommen.%
+\item<5-> Das eigentliche Arbeiten mit dem DBMS war gar nicht so schwer\dots%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
