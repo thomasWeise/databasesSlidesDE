@@ -1,0 +1,68 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{7.~Beispiele Herunterladen}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item Im Rest dieses Kurses werden wir intensiv mit praktischen Beispielen arbeiten.%
+\item<2-> Wenn wir ein Konzept vorstellen, dann probieren wir das praktisch aus.%
+\item<3-> Damit Sie diese Beispiele nachvollziehen können, stellen wir sie in einem \github\ repository zur Verfügung.%
+\item<4-> Dieses Repository finden Sie unter \expandafter\url{\databasesCodeRepo}.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Herunterladen der Beispiele}%
+%
+\begin{frame}[t]%
+\frametitle{Herunterladen der Beispiele}%
+\begin{itemize}%
+\only<-2>{\item Öffnen Sie einen Webbrowser und besuchen Sie die Webseite \expandafter\url{\databasesCodeRepo}.%
+\only<2>{ Klicken Sie auf das nach unten gerichtete Dreieck im Button \menu{Code}.}%
+}%
+%
+\only<3>{\item<3-> In dem sich öffnenden Menü, klicken Sie auf \menu{Download ZIP}.}%
+%
+\only<4-5>{\item<4-> Der Download beginnt und ist irgendwann abgeschlossen.%
+\only<5->{ Öffnen Sie die heruntegrladene Datei.}}%
+\only<6->{\item<6-> Die Datei ist ein ZIP-Archiv, also eine Datei, die andere Dateien und Verzeichnisse enthält.%
+\only<7->{ Sie können Sie an einem Ihnen angenehmen Ort entpacken. %
+\only<8->{ Das erste große Beispiel, mit dem wir als nächstes beginnen, befindet sich üprigens im Ordner \textil{factory}.}%
+}%
+}%
+\end{itemize}%
+%
+\locateGraphicTB{-2}{width=0.6\paperwidth}{graphics/examplesBrowser1website}{0.2}{0.33}%
+\locateGraphicTB{3}{width=0.6\paperwidth}{graphics/examplesBrowser2beginDownload}{0.2}{0.33}%
+\locateGraphicTB{4-5}{width=0.6\paperwidth}{graphics/examplesBrowser3downloaded}{0.2}{0.33}%
+\locateGraphicTB{6-}{width=0.6\paperwidth}{graphics/examplesBrowser4opened}{0.2}{0.33}%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Wir haben nun das Repository mit den Beispielen für diesen Kurs heruntergeladen.%
+\item<2-> Damit haben Sie alle Skripte, die wir im folgenden verwenden, direkt zur Hand.%
+\item<3-> Sie können also unsere Beispiele sehr komfortabel nachvollziehen.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
