@@ -136,34 +136,61 @@ Von der \psql-Konsole\ können wir SQL-Befehle an den \postgresql-Server schicke
 %
 \begin{frame}[t]%
 \frametitle{Erstellen des Benutzers via Terminal}%
-\uncover<-9>{%
 \begin{itemize}%
 \only<-1>{\item Wir loggen uns jetzt in unseren \postgresql-Server ein und erstellen das neue Benutzerkonto Schritt-für-Schritt.}%
 \only<2>{\item<2-> Wir starten \psql\ mit der passenden Verbindungs-URI.}%
 \only<3>{\item<3-> \psql\ läuft und ist mit dem \postgresql\ DBMS verbunden.}%
 \only<4>{\item<4-> Wir erstellen das Benutzerkonto \textil{boss} mit dem (verschlüsselt zu speichernden) Passwort \textil{superboss123} mit Hilfe des SQL-Befehls \sqlil{CREATE USER}.}%
 \only<5>{\item<5-> Der Befehl war erfolgreich. \psql\ zeigt dies durch Ausgabe von \sqlil{CREATE ROLE} an.}%
-\only<6>{\item<6-> Wir wollen uns die Liste aller Benutzerkonten ausgeben lassen. Dazu wenden wir den SQL-Befehl \sqlil{SELECT ... FROM} auf die entsprechende Systemtabelle an.}%
-\only<7>{\item<7-> Es gibt zwei Benutzerkonten: Das Systemadministratorkonto \textil{postgres} und den neuen Benutzer \textil{boss}.}%
-\only<8>{\item<8-> Wir beenden die \psql-Session durch \textil{\\q} und \keys{\enter}.}%
-\only<9>{\item<9-> Wir sind zurück im normalen Terminal.}%
-\end{itemize}}%
+\end{itemize}%
 \locateGraphic{2}{width=0.85\paperwidth}{graphics/user/psqlNewUser1starting}{0.075}{0.25}%
 \locateGraphic{3}{width=0.85\paperwidth}{graphics/user/psqlNewUser2psqlOpen}{0.075}{0.25}%
 \locateGraphic{4}{width=0.85\paperwidth}{graphics/user/psqlNewUser3command}{0.075}{0.25}%
-\locateGraphic{5}{width=0.85\paperwidth}{graphics/user/psqlNewUser4executed}{0.075}{0.25}%
-\locateGraphic{6}{width=0.85\paperwidth}{graphics/user/psqlNewUser5getUsers}{0.075}{0.25}%
-\locateGraphic{7}{width=0.85\paperwidth}{graphics/user/psqlNewUser6gotUsers}{0.075}{0.25}%
-\locateGraphic{8}{width=0.85\paperwidth}{graphics/user/psqlNewUser7typeQuit}{0.075}{0.25}%
-\locateGraphic{9}{width=0.85\paperwidth}{graphics/user/psqlNewUser8quit}{0.075}{0.25}%
+\locateGraphic{5}{width=0.85\paperwidth}{graphics/user/psqlNewUser4executed}{0.075}{0.25}
 \end{frame}%
+%
+\begin{frame}[fragile,t]
+\frametitle{CREATE USER}%
+\begin{itemize}%
+\item Und damit haben wir bereits unser erstes SQL-Kommando gelernt:~\sqlil{CREATE USER}.%
+\item<2-> Es hat die folgende Syntax:%
+\end{itemize}%
+\gitLoadSQL{syntax:create_user}{}{syntax/create_user.sql}%
+\asSyntax{\listingSQL{2}{syntax:create_user}{0.05}{0.3}{0.9}{0.6}}%
+\end{frame}
+%
+\begin{frame}[t]%
+\frametitle{Erstellen des Benutzers via Terminal}%
+\begin{itemize}%
+\only<1>{\item Zurück zur \psql-Session:~Der Befehl war erfolgreich. \psql\ zeigt dies durch Ausgabe von \sqlil{CREATE ROLE} an.}%
+\only<2>{\item<2-> Wir wollen uns die Liste aller Benutzerkonten ausgeben lassen. Dazu wenden wir den SQL-Befehl \sqlil{SELECT ... FROM} auf die entsprechende Systemtabelle an.}%
+\only<3>{\item<3-> Es gibt zwei Benutzerkonten: Das Systemadministratorkonto \textil{postgres} und den neuen Benutzer \textil{boss}.}%
+\only<4>{\item<4-> Wir beenden die \psql-Session durch \textil{\\q} und \keys{\enter}.}%
+\only<5>{\item<5-> Wir sind zurück im normalen Terminal.}%
+\end{itemize}%
+\locateGraphic{1}{width=0.85\paperwidth}{graphics/user/psqlNewUser4executed}{0.075}{0.25}%
+\locateGraphic{2}{width=0.85\paperwidth}{graphics/user/psqlNewUser5getUsers}{0.075}{0.25}%
+\locateGraphic{3}{width=0.85\paperwidth}{graphics/user/psqlNewUser6gotUsers}{0.075}{0.25}%
+\locateGraphic{4}{width=0.85\paperwidth}{graphics/user/psqlNewUser7typeQuit}{0.075}{0.25}%
+\locateGraphic{5}{width=0.85\paperwidth}{graphics/user/psqlNewUser8quit}{0.075}{0.25}%
+\end{frame}%
+%
+\begin{frame}[fragile,t]
+\frametitle{SELECT FROM}%
+\begin{itemize}%
+\item Und nun kennen wir das zweite SQL-Kommando:~\sqlil{SELECT...FROM}.%
+\item<2-> Es hat die folgende Syntax:%
+\end{itemize}%
+\gitLoadSQL{syntax:select_from}{}{syntax/select_from.sql}%
+\asSyntax{\listingSQL{2}{syntax:select_from}{0.05}{0.3}{0.9}{0.6}}%
+\end{frame}
 %
 \begin{frame}[t]%
 \frametitle{Erstellen des Benutzers via Script}%
 %
 \only<-4>{%
 \begin{itemize}%
-\item Alternativ können wir auch die SQL-Kommandos in eine Text-Datei schreiben.%
+\item Alternativ können wir auch die SQL-Kommandos einfach alle in eine Text-Datei schreiben.%
 \item<2-> Diese können wir dann mit \psql\ an den \postgresql-Server schicken und in einem Schritt ausführen.%
 \item<3-> Das ist viel angenehmer, besonders wenn wir mehrere komplexe Befehle auführen wollen.%
 \end{itemize}%
@@ -290,6 +317,16 @@ SQL-Schlüsselworte (wie \sqlil{SELECT}, \sqlil{CREATE}, \dots) sollten immer du
 \listingSQLandOutput{1}{factory:create_database}{}{0.225}{0.07}{0.9}{0.92}
 \listingSQL{2}{factory:create_database}{0.05}{0.16}{0.9}{0.92}
 \listingOutput{3}{factory:create_database}{,style=tool_style_sql}{0.05}{0.099}{0.9}{0.92}
+\end{frame}
+%
+\begin{frame}[fragile,t]
+\frametitle{CREATE DATABASE}%
+\begin{itemize}%
+\item Und nun kennen wir das dritte SQL-Kommando:~\sqlil{CREATE DATABASE}.%
+\item<2-> Es hat die folgende Syntax:%
+\end{itemize}%
+\gitLoadSQL{syntax:create_database}{}{syntax/create_database.sql}%
+\asSyntax{\listingSQL{2}{syntax:create_database}{0.05}{0.3}{0.9}{0.6}}%
 \end{frame}
 %
 \section{Zusammenfassung}%
