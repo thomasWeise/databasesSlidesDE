@@ -39,10 +39,21 @@
 \frametitle{Struktur der Datenbank}%
 \begin{itemize}%
 \item Dieses Format erlaubt es uns, unsere Daten nach Kategorie einzuteilen.%
-\item<2-> Wir werden eine Tabelle für die \emph{Producte} unseres Betriebs erstellen.%
+\item<2-> Wir werden eine Tabelle für die \emph{Produkte} unseres Betriebs erstellen.%
 \item<3-> Wir werden eine Tabelle für die \emph{Kunden} unseres Betriebs erstellen.%
 \item<4-> Wir werden eine Tabelle für die \emph{Bestellungen} der Kunden unseres Betriebs erstellen.%
 \item<5-> Fangen wir mit der Tabelle für die Produkte an.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Ziel}%
+\begin{itemize}%
+\item Das Ziel dieser Einheit is es, einige grundlegende SQL-Befehle und -Datentypen kennenzulernen.%
+\item<2-> Wir lernen, wie man eine Tabelle erstellt.%
+\item<3-> Wir lernen eine kleine Untermenge der verfügbaren Datentypen kennen.%
+\item<4-> Wir lernen, wie man Daten in eine Tabelle speichert.%
+\item<5-> Und wir lernen, wie man sie wieder ausliest.%
 \end{itemize}%
 \end{frame}%
 %
@@ -51,18 +62,15 @@
 \begin{frame}%
 \frametitle{Name der Tabelle}%
 \begin{itemize}%
-\item For many programming languages, there exist comprehensive and clear style guides.%
-\item<2-> Such style guides tell us how to name things and how to structure code consistently.%
-\item<3-> This is important, because we always work together with other people on projects and everybody should be able to read everyone's code.%
-\item<4-> For SQL, there does not exist one generally accepted best practice standard style guide.%
-\item<5-> We will still try to define some general rules.%
+\item Das erste, was unsere Tabelle braucht, ist einen Namen.%
+\item<2-> Eine oft verwendete Stilkonvention für Namen für Tabellen besagt:%
 \end{itemize}%
-\uncover<6->{%
+\uncover<3->{%
 \bestPractice{tableName}{%
 Tabellennamen sollten (Englische) Nomen im Singular sein, mit Kleinbuchstaben geschrieben, und ohne Prefix~(z.B.~kein \inQuotes{tbl\_} am Anfange haben)~\cite{B2025DS:SBPASG}.%
 }%
-\uncover<7->{\begin{itemize}%
-\item Nennen wir unsere Tabelle für Produkte also \textil{products}.%
+\uncover<4->{\begin{itemize}%
+\item Nennen wir unsere Tabelle für Produkte also \textil{product}.%
 \end{itemize}%
 }}%
 \end{frame}%
@@ -86,23 +94,22 @@ Das sind also noch vier Zahlen, die wir speichern müssen.}}%
 }}%
 \item<10-> Das ist also die grundlegende Struktur unserer Tabelle.%
 \end{itemize}%
-\locateGraphic{11}{width=0.625\paperwidth}{graphics/create/dbStructureProduct}{0.1875}{0.2}%
+\locateGraphic{11}{width=0.625\paperwidth}{graphics/dbStructureProduct}{0.1875}{0.2}%
 \end{frame}%
 %
-\begin{frame}%
-\frametitle{SQL}%
+\begin{frame}[fragile,t]
+\frametitle{\texttt{CREATE TABLE}}%
 \begin{itemize}%
 \item Diese Struktur ist im Grunde recht einfach.%
 \item<2-> Nun müssen wir sie in SQL-Kommandos übersetzen.%
 \item<3-> Wir müssen dazu Namen, Datentypen, und Einschränkungen für die Spalten festlegen.%
-\item<4-> Dann können wir die SQL-Kommandos an das \postgresql\ DBMS schicken und die Tabelle erstellen.%
-\item<5-> Dies kann dann innerhalb einer interaktiven \psql-Session oder mit Hilfe eines Skripts erfolgen.%
-\item<6-> Schauen wir uns das mal an.%
+\item<4-> Das SQL-Kommando sieht in etwa so aus:%
 \end{itemize}%
-\end{frame}%
+\sqlSyntax{4-}{syntax/create_table.sql}{0.05}{0.4}{0.9}{0.6}%
+\end{frame}
 %
 \begin{frame}[t]%
-\frametitle{Interaktive PSQL Session -- Teil 1}%
+\frametitle{Interaktive PSQL Session -- Teil~1}%
 \begin{itemize}%
 \only<-2>{\item Wir erstellen das Kommando zuerst insgesamt und erklären dann Schritt-für-Schritt seine Komponenten.%
 \item<2-> Wir loggen uns jetzt in unseren \postgresql-Server ein und erstellen die neue Tabelle.}%
@@ -112,23 +119,23 @@ Das sind also noch vier Zahlen, die wir speichern müssen.}}%
 \only<6>{\item<6-> Das Kommando wird erfolgreich ausgeführt und \sqlil{CREATE TABLE} wird uns als Antwort ausgegeben.}%
 \end{itemize}%
 %
-\locateGraphic{3}{width=0.85\paperwidth}{graphics/create/createTable1psql}{0.075}{0.25}%
-\locateGraphic{4}{width=0.85\paperwidth}{graphics/create/createTable2started}{0.075}{0.25}%
-\locateGraphic{5}{width=0.85\paperwidth}{graphics/create/createTable3command}{0.075}{0.25}%
-\locateGraphic{6}{width=0.85\paperwidth}{graphics/create/createTable4created}{0.075}{0.25}%
+\locateGraphic{3}{width=0.85\paperwidth}{graphics/createTable1psql}{0.075}{0.25}%
+\locateGraphic{4}{width=0.85\paperwidth}{graphics/createTable2started}{0.075}{0.25}%
+\locateGraphic{5}{width=0.85\paperwidth}{graphics/createTable3command}{0.075}{0.25}%
+\locateGraphic{6}{width=0.85\paperwidth}{graphics/createTable4created}{0.075}{0.25}%
 \end{frame}%
 %
 \begin{frame}[t]%
-\frametitle{Command Structure}%
+\frametitle{Kommandostruktur}%
 \begin{itemize}%
 \only<-1>{\item \sqlil{CREATE TABLE} ist das SQL-Kommando um eine Tabelle anzulegen.}%
 \only<2>{\item<2> \sqlil{product} ist der Name der Tabelle, die wir anlegen wollen.}%
 \only<3>{\item<3> Dann folgen die Namen, Datentypen, und Einschränkungen der Spalten unserer Tabelle. %
 Diese sind von Klammern umrahmt~(\textil{(...)}) und durch Kommas~(\textil{,}) getrennt.}%
 \end{itemize}%
-\locateGraphic{1}{width=0.85\paperwidth}{graphics/create/createTable1psql}{0.075}{0.275}%
-\locateGraphic{2}{width=0.85\paperwidth}{graphics/create/createTable3commandTableName}{0.075}{0.275}%
-\locateGraphic{3}{width=0.85\paperwidth}{graphics/create/createTable3commandSpalten}{0.075}{0.275}%
+\locateGraphic{1}{width=0.85\paperwidth}{graphics/createTable1psql}{0.075}{0.275}%
+\locateGraphic{2}{width=0.85\paperwidth}{graphics/createTable3commandTableName}{0.075}{0.275}%
+\locateGraphic{3}{width=0.85\paperwidth}{graphics/createTable3commandSpalten}{0.075}{0.275}%
 \end{frame}%
 %
 \begin{frame}[t]%
@@ -154,9 +161,9 @@ Diese sind von Klammern umrahmt~(\textil{(...)}) und durch Kommas~(\textil{,}) g
 }}}}%
 %
 \end{itemize}%
-\locateGraphic{-4}{width=0.8\paperwidth}{graphics/create/createTable3commandNameVarchar}{0.1}{0.33}%
-\locateGraphic{5-8}{width=0.8\paperwidth}{graphics/create/createTable3commandNameNotNull}{0.1}{0.33}%
-\locateGraphic{9-12}{width=0.8\paperwidth}{graphics/create/createTable3commandNameUnique}{0.1}{0.33}%
+\locateGraphic{-4}{width=0.8\paperwidth}{graphics/createTable3commandNameVarchar}{0.1}{0.33}%
+\locateGraphic{5-8}{width=0.8\paperwidth}{graphics/createTable3commandNameNotNull}{0.1}{0.33}%
+\locateGraphic{9-12}{width=0.8\paperwidth}{graphics/createTable3commandNameUnique}{0.1}{0.33}%
 \end{frame}%
 %
 \begin{frame}[t]%
@@ -219,8 +226,8 @@ Repräsentieren Sie niemals Geldwerte mit Fließkommazahlen\cite{SE:SO:WNUDOFTRC
 Geldwerte müssen mit dem Datentype \sqlilIdx{DECIMAL} gespeicher werden\cite{C2024SCVDTCBP,W2020HSISCVISS}.%
 }}%
 %
-\locateGraphic{-3,17}{width=0.8\paperwidth}{graphics/create/createTable3commandPriceDecimal}{0.1}{0.343}%
-\locateGraphic{18-21}{width=0.8\paperwidth}{graphics/create/createTable3commandPriceNotNull}{0.1}{0.343}%
+\locateGraphic{-3,17}{width=0.8\paperwidth}{graphics/createTable3commandPriceDecimal}{0.1}{0.343}%
+\locateGraphic{18-21}{width=0.8\paperwidth}{graphics/createTable3commandPriceNotNull}{0.1}{0.343}%
 \end{frame}%
 %
 %
@@ -249,8 +256,8 @@ Geldwerte müssen mit dem Datentype \sqlilIdx{DECIMAL} gespeicher werden\cite{C2
 }}}}%
 %
 \end{itemize}%
-\locateGraphic{1,6-8}{width=0.8\paperwidth}{graphics/create/createTable3commandWWHDint}{0.1}{0.33}%
-\locateGraphic{9-12}{width=0.8\paperwidth}{graphics/create/createTable3commandWWHDnotNull}{0.1}{0.355}%
+\locateGraphic{1,6-8}{width=0.8\paperwidth}{graphics/createTable3commandWWHDint}{0.1}{0.33}%
+\locateGraphic{9-12}{width=0.8\paperwidth}{graphics/createTable3commandWWHDnotNull}{0.1}{0.355}%
 \end{frame}%
 %
 %
@@ -313,10 +320,29 @@ Geldwerte müssen mit dem Datentype \sqlilIdx{DECIMAL} gespeicher werden\cite{C2
 }}}}%
 %
 \end{itemize}%
-\locateGraphic{-4}{width=0.8\paperwidth}{graphics/create/createTable3commandIdPK}{0.1}{0.35}%
-\locateGraphic{5-8}{width=0.8\paperwidth}{graphics/create/createTable3commandIdInt}{0.1}{0.35}%
-\locateGraphic{9-12}{width=0.8\paperwidth}{graphics/create/createTable3commandIdPKgenerated}{0.1}{0.35}%
+\locateGraphic{-4}{width=0.8\paperwidth}{graphics/createTable3commandIdPK}{0.1}{0.35}%
+\locateGraphic{5-8}{width=0.8\paperwidth}{graphics/createTable3commandIdInt}{0.1}{0.35}%
+\locateGraphic{9-12}{width=0.8\paperwidth}{graphics/createTable3commandIdPKgenerated}{0.1}{0.35}%
 \end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Ersatzschlüssel (Surrogate Keys)}%
+%
+\bestPractice{surrogatePrimaryKey}{%
+Es ist oftmals eine gute Idee, Ersatzschlüssel (Surrogate (Primary) Keys), die auf automatisch erhöhten Ganzzahlen basieren, als Primärschlüssel zu verwenden.\cite{B2025DS:SBPASG}.%
+}%
+%
+\uncover<2->{%
+\bestPractice{primaryKeyId}{%
+Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine Tabelle verwenden, sollten wir sie \sqlil{id}~nennen. %
+}%
+\uncover<3->{%
+\begin{itemize}%
+\item Diese Namensgebung ist etwas kontrovers\cite{SE:SE:WINATPKCICBPC}, hat aber den Vorteil, dass jeder, der unsere Datenbank verwendet, sofort die Bedeutung einer Spalte namens \sqlil{id} versteht.%
+\item<4-> Daher ist diese Praxis weit verbreitet\cite{B2025DS:SBPASG,PGDG:PD}.%
+\end{itemize}%
+}}%
+\end{frame}
 %
 %
 \begin{frame}[t]%
@@ -330,11 +356,11 @@ Geldwerte müssen mit dem Datentype \sqlilIdx{DECIMAL} gespeicher werden\cite{C2
 \only<6>{\item<6-> Wir sind zurück im normalen Terminal.}%
 \end{itemize}%
 %
-\locateGraphic{-2}{width=0.85\paperwidth}{graphics/create/createTable4created}{0.075}{0.25}%
-\locateGraphic{3}{width=0.85\paperwidth}{graphics/create/createTable5select}{0.075}{0.25}%
-\locateGraphic{4}{width=0.85\paperwidth}{graphics/create/createTable6selected}{0.075}{0.25}%
-\locateGraphic{5}{width=0.85\paperwidth}{graphics/create/createTable7quit}{0.075}{0.25}%
-\locateGraphic{6}{width=0.85\paperwidth}{graphics/create/createTable8done}{0.075}{0.25}%
+\locateGraphic{-2}{width=0.85\paperwidth}{graphics/createTable4created}{0.075}{0.25}%
+\locateGraphic{3}{width=0.85\paperwidth}{graphics/createTable5select}{0.075}{0.25}%
+\locateGraphic{4}{width=0.85\paperwidth}{graphics/createTable6selected}{0.075}{0.25}%
+\locateGraphic{5}{width=0.85\paperwidth}{graphics/createTable7quit}{0.075}{0.25}%
+\locateGraphic{6}{width=0.85\paperwidth}{graphics/createTable8done}{0.075}{0.25}%
 \end{frame}%
 %
 %
@@ -350,6 +376,7 @@ Geldwerte müssen mit dem Datentype \sqlilIdx{DECIMAL} gespeicher werden\cite{C2
 %
 \begin{frame}%
 \frametitle{Daten Einfügen}%
+\uncover<-11>{%
 \begin{itemize}%
 \item Nun haben wir die Tabelle \sqlil{product} erstellt, aber sie ist leer.%
 \item<2-> Füllen wir sie mit Daten!%
@@ -371,6 +398,164 @@ Geldwerte müssen mit dem Datentype \sqlilIdx{DECIMAL} gespeicher werden\cite{C2
 \end{itemize}%
 }%
 \end{itemize}%
+}%
+%
+\locateGraphic{12}{width=0.625\paperwidth}{graphics/dbStructureProduct}{0.1875}{0.2}%
+\end{frame}%
+%
+%
+\begin{frame}[fragile,t]
+\frametitle{\texttt{INSERT INTO}}%
+\begin{itemize}%
+\item Das SQL-Kommando um Daten an eine Tabelle anzuhängen sieht wie folgt aus\only<-2>{:}\only<3->{.}%
+\item<3-> Man kann dieses Kommando beliebig oft verwenden, um Daten anzufügen.
+\end{itemize}%
+\sqlSyntax{2-}{syntax/insert_into.sql}{0.05}{0.3}{0.9}{0.6}%
+\end{frame}
+%
+%
+\begin{frame}[fragile,t]
+\frametitle{Füllen der Tabelle \texttt{product}}%
+\gitLoadAndExecSQL{factory:insert_into_table_product}{}{factory}{insert_into_table_product.sql}{factory}{boss}{superboss123}%
+\listingSQL{1}{factory:insert_into_table_product}{0.075}{0.07}{0.9}{0.91}
+\listingOutput{2}{factory:insert_into_table_product}{,style=tool_style_sql}{0.05}{0.07}{0.9}{0.91}
+\end{frame}
+%
+\begin{frame}%
+\frametitle{\texttt{UNIQUE} Einschränkung}%
+\begin{itemize}%
+\item Nun wollen wir noch ausprobieren, ob die \sqlil{UNIQUE}-Einschränkung wirklich funktioniert.%
+\item<2-> Die \sqlil{UNIQUE}-Einschränkung spezifiziert, dass in der Spalte, auf die es angewendet wird, alle Werte einzigartig seien müssen.%
+\item<3-> Wir hatten geschrieben \sqlil{name VARCHAR(100) NOT NULL UNIQUE}\uncover<4->{, was bedeuted das%
+\begin{itemize}%
+\item die Spalte \sqlil{name} Texte speichert, die eine beliebige Länge von bis zu 100~Zeichen haben können~(\sqlil{VARCHAR(100)}),%
+\item<5-> jede Zeile einen Wert in dieser Spalte haben \emph{muss}~(\sqlil{NOT NULL}), und%
+\item<6-> kein Wert in dieser Spalte doppelt auftreten darf~(\sqlil{UNIQUE}).%
+\end{itemize}%
+}%
+\item<7-> Was passiert also, wenn wir versuchen, noch einen Eintrag für \inQuotes{Shoe, Size 36} einzufügen?%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}[fragile,b]
+\frametitle{Versuch, die \texttt{UNIQUE}-Einschränkung zu brechen}%
+\uncover<3->{%
+\begin{itemize}%
+\item Tatsächlich: Der Versuch, die Einschränkung zu brechen, schlägt fehl.%
+\item<4-> In einer \microsoftExcel\ or \libreofficeCalc-Tabelle hätten wir das nicht herhindern können\dots%
+\end{itemize}\smallskip%
+}%
+\gitLoadAndExecSQL{factory:insert_into_table_product_error}{}{factory}{insert_into_table_product_error.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{}{factory:insert_into_table_product_error}{}{0.07}{0.07}{0.9}{0.7}
+\end{frame}
+%
+\section{Daten Selektieren}%
+%
+\begin{frame}%
+\frametitle{Daten Selektieren}%
+\begin{itemize}%
+\item Nun haben wir Daten in die Tabelle \sqlil{product} eingefügt.%
+\item<2-> Wie bekommen wir sie wieder \inQuotes{heraus}?%
+\item<3-> Zum Beispiel mit \sqlil{SELECT * FROM product;}.%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}[fragile,t]
+\frametitle{Spalten auswählen}%
+\begin{itemize}%
+\item Hier wir wählen nur ein paar der Spalten aus:%
+\end{itemize}%
+\gitLoadAndExecSQL{factory:select_from_table_product_1}{}{factory}{select_from_table_product_1.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{}{factory:select_from_table_product_1}{}{0.15}{0.23}{0.9}{0.75}
+\end{frame}
+%
+%
+\begin{frame}[fragile,t]
+\frametitle{Zeilen bedingt auswählen}%
+\begin{itemize}%
+\item Oft braucht man nicht alle Zeilen einer Tabelle auf einmal.%
+\item<2-> Mit Hilfe der \sqlil{WHERE}-Klausel in der \sqlil{SELECT...FROM}-Anweisungen können Bedingungen definiert werden. Es werden nur die Zeilen zurückgegeben, die die Bedingungen erfüllen.%
+\end{itemize}%
+\sqlSyntax{3-}{syntax/select_from_where.sql}{0.05}{0.4}{0.9}{0.6}%
+\end{frame}
+%
+%
+\begin{frame}[fragile,t]
+\frametitle{Zeilen auswählen: Nur Handtaschen}%
+\begin{itemize}%
+\item Nun selektieren wir alle Zeilen, deren \sqlil{name}-Wert das Wort \inQuotes{Purse} enthält~(via \sqlil{LIKE}\cite{PGDG:PD:PM}).%
+\end{itemize}%
+\gitLoadAndExecSQL{factory:select_from_table_product_2}{}{factory}{select_from_table_product_2.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{}{factory:select_from_table_product_2}{}{0.07}{0.23}{0.9}{0.7}
+\end{frame}
+%
+%
+%
+\begin{frame}[fragile,t]
+\frametitle{Spalten Erstellen}%
+\begin{itemize}%
+\item Wir können auch in der Abfrage komplett neue Werte mathematisch berechnen\cite{PGDG:PD:MFAO} und ihnen mit \sqlil{AS} einen Spaltennamen zuweise.%
+\end{itemize}%
+\gitLoadAndExecSQL{factory:select_from_table_product_3}{}{factory}{select_from_table_product_3.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{}{factory:select_from_table_product_3}{}{0.15}{0.27}{0.9}{0.7}
+\end{frame}
+%
+%
+%
+\begin{frame}[fragile,t]
+\frametitle{Spalten Erstellen und Sortieren}%
+\begin{itemize}%
+\item Die Abfrageergebnisse mit \sqlil{ORDER BY} basierend auf den Werten von einer oder mehreren Spalten sortiert werden, wobei \sqlil{DESC}~absteigend und \sqlil{ASC}~für aufsteigendes Sortieren angegeben werden kann.%
+\end{itemize}%
+\gitLoadAndExecSQL{factory:select_from_table_product_4}{}{factory}{select_from_table_product_4.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{}{factory:select_from_table_product_4}{}{0.15}{0.3}{0.9}{0.67}
+\end{frame}
+%
+%
+%
+\begin{frame}[fragile,t]
+\frametitle{Spalten Erstellen und Sortieren und Limitieren}%
+\begin{itemize}%
+\item Wir können die Anzahl der zurückgegebenen Zeilen mit \sqlil{LIMIT} begrenzen.%
+\end{itemize}%
+\gitLoadAndExecSQL{factory:select_from_table_product_5}{}{factory}{select_from_table_product_5.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{}{factory:select_from_table_product_5}{}{0.15}{0.23}{0.9}{0.7}
+\end{frame}
+%
+%
+%
+\begin{frame}[fragile,t]
+\frametitle{Spalten Erstellen und Sortieren und Limitieren}%
+\begin{itemize}%
+\item Wir können auch Konstanten als Wert einer mit \sqlil{AS} definierten Spalte zuweise.%
+\item<2-> Statistiken wie der Durchschnitt \sqlil{AVG(s)} über alle Zeilen können für eine Spalte~\sqlil{s} berechnet werden\cite{PGDG:PD:AF}.%
+\end{itemize}%
+\gitLoadAndExecSQL{factory:select_from_table_product_6}{}{factory}{select_from_table_product_6.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{}{factory:select_from_table_product_6}{}{0.08}{0.3}{0.9}{0.67}
+\end{frame}
+%
+%
+%
+\begin{frame}[fragile,t]
+\frametitle{Spalten Erstellen und Sortieren und Limitieren}%
+\begin{itemize}%
+\item Mit \sqlil{UNION ALL} können die Ausgaben von mehreren \sqlil{SELECT}-Anweisungen untereinander angereiht werden\cite{PGDG:PD:CQUIE}.%
+\end{itemize}%
+\gitLoadAndExecSQL{factory:select_from_table_product_7}{}{factory}{select_from_table_product_7.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{}{factory:select_from_table_product_7}{}{0.15}{0.27}{0.9}{0.7}
+\end{frame}
+%
+%
+\begin{frame}%
+\frametitle{Die Schönheit der Datenbanktabellen}%
+\begin{itemize}%
+\item Daten in solchen Tabellen zu verwalten ist auf gewisse Weise wunderschön.%
+\item<2-> Wir können neue Daten in die Tabelle anfügen, und doch würden unsere Anfragen funktionieren.%
+\item<3-> Ihr Ergebnis wird immer neu berechnet und ist immer aktuell.%
+\item<4-> Unsere Tabelle könnte hunderte oder zehntausende von Zeilen haben, und dennoch würden unsere Anfragen problemlos funktionieren.%
+\end{itemize}%
 \end{frame}%
 %
 %
@@ -379,7 +564,15 @@ Geldwerte müssen mit dem Datentype \sqlilIdx{DECIMAL} gespeicher werden\cite{C2
 \begin{frame}%
 \frametitle{Zusammenfassung}%
 \begin{itemize}%
-\item Fertig
+\item In dieser Einheit haben wir sehr, sehr viel gelernt.%
+\item<2-> Wir haben gelernt, wie man eine Tabelle in einem SQL-basierten relationalen DBMS erzeugt, nämlich mit \sqlil{CREATE TABLE}.%
+\item<3-> Wir haben mehrere Datentypen kennengelernt, von \sqlil{INT} über \sqlil{VARCHAR} bis \sqlil{DECIMAL}.%
+\item<4-> Wir haben gelernt, wie man die möglichen Werte für eine Spalte einschränkt, z.B.~mit \sqlil{UNIQUE}, \sqlil{NOT NULL}, or \sqlil{PRIMARY KEY}.%
+\item<5-> Wir haben gelernt, was ein Primärschlüssel~(\sqlil{PRIMARY KEY}) ist, nämlich die Spalte(n), durch deren Wert jede Zeile in einer Tabelle eindeutig identifiziert (und von anderen Tabellen referenziert) werden kann.%
+\item<5-> Wir haben gelernt, dass man mit \sqlil{INSERT INTO} Zeilen an eine Tabelle anhängen kann.%
+\item<6-> Und wir haben gelernt, wie man mit \sqlil{SELECT FROM} Werte aus einer Tabelle ausliest.%
+\item<7-> Wir wissen nun auch, dass man \sqlil{SELECT FROM} mit weitere Befehle zur Auswahl~(\sqlil{WHERE}, \sqlil{LIKE}, \sqlil{LIMIT}), Benennung~(\sqlil{AS}), und Sortierung~(\sqlil{ORDER BY}) sowie zur Berechnung von Statistiken~(\sqlil{AVG}) kombinieren kann.%
+\item<8-> Nicht übel.%
 \end{itemize}%
 \end{frame}%
 %

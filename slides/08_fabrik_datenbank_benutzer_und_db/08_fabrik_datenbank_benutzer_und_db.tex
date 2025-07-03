@@ -95,7 +95,7 @@ Es ist kostenfrei, Open Source, und die Grundlage für alle Beispieldatenbanken 
 \begin{frame}%
 \frametitle{Benutzerkonto Erstellen}%
 \begin{itemize}%
-\item Der erste Schritt, diese Anforderung zu erstellen, wäre es, eine neue Datenbank anzulegen.%
+\item Der erste Schritt, diese Anforderung zu erfüllen, wäre es, eine neue Datenbank anzulegen.%
 \item<2-> Wir haben ja \postgresql\ schon installiert, das wird sich also machen lassen.%
 \item<3-> Unser Chef möchte vollen Zugriff auf diese neue Datenbank haben.%
 \item<4-> Er ist aber kein Datenbankadministrator,
@@ -105,10 +105,20 @@ Es ist kostenfrei, Open Source, und die Grundlage für alle Beispieldatenbanken 
 \end{itemize}%
 \end{frame}%
 %
+\begin{frame}[fragile,t]
+\frametitle{Erstellen eines Benutzerkontos:~\texttt{CREATE USER}}%
+\begin{itemize}%
+\item Das SQL-Kommando, um einen neues Benutzerkonto auf den Datenbankserver zu erstellen, lautet~\sqlil{CREATE USER}.%
+\item<2-> \only<-2>{Es hat die folgende Syntax:}\only<3->{Nun kennen wir das passende Kommando\only<-3>{.}\only<4->{\dots}}%
+\item<4-> {\dots}aber wie können wir dieses Kommando eingeben?
+\end{itemize}%
+\sqlSyntax{2-}{syntax/create_user.sql}{0.05}{0.36}{0.9}{0.6}%
+\end{frame}
+%
 \begin{frame}%
 \frametitle{Verbindung to PostgreSQL via psql}%
 \begin{itemize}%
-\item Wir sind auf dem Datenbank-Server-Computer engeloggt.%
+\item Wir sitzen an der Tastatur vor dem Computer, auf dem der Datenbank-Server läuft.%
 \item<2-> Nehmen Sie an, dass das Passwort des Datenbankadministratorbenutzers \\textil{postgres} auf \textil{XXX} gesetzt ist.\uncover<3->{ Benutzen Sie niemals etwas wie \textil{XXX} als Passwort.}%
 \item<4-> Wir öffnen ein Terminal (unter \ubuntu\ \linux\ via~\ubuntuTerminal; under \microsoftWindows\ durch \windowsTerminal).%
 \item<5-> Wir wollen nun den Klienten \psql\ mit der passenden Verbindungs-URI\cite{PGDG:PD} starten, um auf den \postgresql-Server zuzugreifen.%
@@ -148,15 +158,6 @@ Von der \psql-Konsole\ können wir SQL-Befehle an den \postgresql-Server schicke
 \locateGraphic{4}{width=0.85\paperwidth}{graphics/user/psqlNewUser3command}{0.075}{0.25}%
 \locateGraphic{5}{width=0.85\paperwidth}{graphics/user/psqlNewUser4executed}{0.075}{0.25}
 \end{frame}%
-%
-\begin{frame}[fragile,t]
-\frametitle{CREATE USER}%
-\begin{itemize}%
-\item Und damit haben wir bereits unser erstes SQL-Kommando gelernt:~\sqlil{CREATE USER}.%
-\item<2-> Es hat die folgende Syntax:%
-\end{itemize}%
-\sqlSyntax{2}{syntax/create_user.sql}{0.05}{0.3}{0.9}{0.6}%
-\end{frame}
 %
 \begin{frame}[t]%
 \frametitle{Erstellen des Benutzers via Terminal}%
@@ -263,20 +264,15 @@ SQL-Schlüsselworte (wie \sqlil{SELECT}, \sqlil{CREATE}, \dots) sollten immer du
 %
 \section{Erstellen einer Datenbank}
 %
-\begin{frame}%
-\frametitle{Erstellen einer Datenbank}%
+\begin{frame}[fragile,t]
+\frametitle{Erstellen einer Datenbank:~\texttt{CREATE DATABASE}}%
 \begin{itemize}%
 \item Nachdem wir den Benutzer~\inQuotes{boss} erstellt haben, können wir die Datenbank \inQuotes{factory} für diesen Benutzer anlegen.%
-\item<2-> Das machen wir genauso wie vorhin das Erstellen des Benutzers\uncover<3->{%
-\begin{itemize}%
-\item Wir können entweder im Terminal \psql\ öffnen und die entsprechenden SQL-Kommandos nacheinander eingeben\dots%
-\item<4-> oder wir können die SQL-Kommandos in eine Datei schreiben und diese via \psql\ in einem Schritt ausführen.%
+\item<2-> Das machen wir genauso wie vorhin das Erstellen des Benutzers.
+\item<3-> Diesmal lautet das Kommando \sqlil{CREATE DATABASE}:%
 \end{itemize}%
-}%
-\item<5-> Wir werden wieder beides anschauen.%
-\item<6-> Später werden wir irgendwann nur noch mit Dateien arbeiten.%
-\end{itemize}%
-\end{frame}%
+\sqlSyntax{3-}{syntax/create_database.sql}{0.05}{0.36}{0.9}{0.6}%
+\end{frame}
 %
 \begin{frame}[t]%
 \frametitle{Erstellen der Datenbank via Terminal}%
@@ -317,15 +313,6 @@ SQL-Schlüsselworte (wie \sqlil{SELECT}, \sqlil{CREATE}, \dots) sollten immer du
 \listingOutput{3}{factory:create_database}{,style=tool_style_sql}{0.05}{0.099}{0.9}{0.92}
 \end{frame}
 %
-\begin{frame}[fragile,t]
-\frametitle{CREATE DATABASE}%
-\begin{itemize}%
-\item Und nun kennen wir das dritte SQL-Kommando:~\sqlil{CREATE DATABASE}.%
-\item<2-> Es hat die folgende Syntax:%
-\end{itemize}%
-\sqlSyntax{2}{syntax/create_database.sql}{0.05}{0.3}{0.9}{0.6}%
-\end{frame}
-%
 \section{Zusammenfassung}%
 %
 \begin{frame}%
@@ -336,6 +323,12 @@ SQL-Schlüsselworte (wie \sqlil{SELECT}, \sqlil{CREATE}, \dots) sollten immer du
 \item<3-> Wir haben auch zum ersten Mal den SQL-Befehl \sqlil{SELECT ... FROM} benutzt, um Daten aus einer Tabelle auszulesen.%
 \item<4-> Wir haben gesehen, dass das Schwierigste an der ganzen Sache ist, \postgresql\ und \psql\ erstmal zum Laufen zu bekommen.%
 \item<5-> Das eigentliche Arbeiten mit dem DBMS war gar nicht so schwer\dots%
+\item<6-> {\dots}und wir kennen nun zwei Möglichkeiten, mit dem \postgresql\ DBMS via \psql\ zu interagieren\uncover<7->{:%
+\begin{itemize}%
+\item entweder über eine interaktive Session, bei der wir Kommandos in ein Terminal eintippen.%
+\item<8-> oder, indem wir die Kommandos in eine Datei schreiben, und diese direkt an den Server schicken.%
+\end{itemize}%
+}%
 \end{itemize}%
 \end{frame}%
 %
