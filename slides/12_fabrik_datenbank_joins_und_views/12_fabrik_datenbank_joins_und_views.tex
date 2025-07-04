@@ -1,0 +1,128 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{10.~Fabrik-Datenbank:~Joins und Views}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Positive Seite}%
+\begin{itemize}%
+\item Bisher läuft es ganz gut.%
+\item<2-> Wir haben gelernt, wie wir die Daten, die in einem Managementsystem für eine Fabrik anfallen, in unterschiedliche Kategorien einteilen können.%
+\item<3-> Wir haben gelernt, wie wir mit dem DBMS \postgresql\ interagieren können und wie wir für jede dieser Datenkategorien eine Tabelle in einer Datenbank erstellen können.%
+\item<4-> Das ist schonmal sehr schön.%
+\item<5-> Wir haben auch gelernt, wie wir die Integrität unserer Daten schützen können.%
+\item<6-> Auf der einen Seite kennen wir Datentypen wie \sqlil{DECIMAL} und \sqlil{DATE}, die sicherstellen, das unsere Daten bestimmte Kriterien einhalten.
+\item<7-> Auf der anderen Seite kennen wir Einschränkungen wie \sqlil{NOT NULL}, \sqlil{UNIQUE}, \sqlil{CONSTRAINT}, und \sqlil{REFERENCES}.%
+\item<8-> Damit sind Datenbanken Spreadsheets, wie wir sie mit \microsoftExcel\ oder \libreofficeCalc\ erstellen können, weit überlegen.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t,fragile]
+\frametitle{Negative Seite}%
+\begin{itemize}%
+\only<-3>{\item Auf der anderen Seite ist das Arbeiten mit Datenbanken kompliziert.%
+\item<2-> Die Interaktion mit dem \postgresql-Server über \psql\ ist nicht einfach und andere DBMS sind auch nicht einfacher zu bedienen.}%
+\item<3-> Ärgerlich ist, dass Daten, die mehrere Tabellen verbinden, schwer zu verstehen sind.%
+\item<4-> Wir erinnern uns an die Tabelle~\sqlil{demand}\only<-4>{:}\uncover<5->{.}%
+\item<5-> Nun wollen wir also lernen, wie wir die Daten aus verschiedenen Tabellen zusammenführen und klar verständlich präsentieren können.%
+\end{itemize}%
+\gitLoadAndExecSQL{factory:insert_into_table_demand}{}{factory}{insert_into_table_demand.sql}{factory}{boss}{superboss123}%
+\listingOutput{4}{factory:insert_into_table_demand}{,style=tool_style_sql}{0.05}{0.27}{0.9}{0.72}
+\end{frame}
+%
+\section{JOINs}%
+%
+\begin{frame}%
+\frametitle{Bestellungen der Kunden}%
+\begin{itemize}%
+\item Wir wollen nun eine Liste unserer Kunden.%
+\item<2-> Für jeden Kunden wollen wir die \sqlil{id}-Werte aller ihrer Bestellungen.%
+\item<3-> Mit anderen Worten, wir wollen eine SQL-Anfrage, die zwei Spalten produziert.%
+\item<4-> In der ersten Spalte -- nennen wir sie \sqlil{name} -- wollen wir die Namen der Kunden.%
+\item<5-> In der zweiten Spalte -- nennen wir sie \sqlil{demand_id} -- wollen wir die \sqlil{id}-Werte der Bestellungen des Kunden.%
+\item<6-> Wenn Kunden mehrere Bestellungen aufgegeben haben, dann werden sie mehrmals im Ergebnis auftauchen, jeweils mit einer Bestellung.%
+\item<7-> Wenn ein Kunde keine Bestellungen aufgegeben hat, dann soll er trotzdem auftauchen, aber nur einmal, mit einem \sqlil{NULL}-Wert als \sqlil{demand_id}.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Erstellen der Anfrage}%
+\begin{itemize}%
+\item Im ersten Schritt brauchen wir also alle Kundennamen.%
+\item<2-> \sqlil{SELECT name FROM customer;} macht das.%
+\item<3-> Nun müssen wir die \sqlil{id}-Werte der Tabelle~\sqlil{customer} mit der Spalte~\sqlil{customer} der Tabelle~\sqlil{demand} referenzieren.%
+\item<4-> Das geht mit einem so-genannten~\sqlil{LEFT JOIN}\cite{PGDG:PD:JT}.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[fragile,t]
+\frametitle{\texttt{LEFT JOIN}: Syntax}%
+\uncover<2-8>{%
+\begin{itemize}%
+\item Angenommen, Tabelle~\sqlil{Table_1} hat den Primärschlüssel~\sqlil{a}\only<-2>{.}\uncover<3->{ %
+und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel auf \sqlil{Table_1.a} verweist.%
+}%
+\item<4-> \sqlil{SELECT ... FROM Table_1 LEFT JOIN Table_2 ON (Table_1.a = Table_2.b)} geht dann Zeile für Zeile durch \sqlil{Table_1} und sucht für jeden Wert von \sqlil{Table_1.a} alle passenden Zeilen aus \sqlil{Table_2} heraus, also alle Zeilen, für die \sqlil{Table_1.a = Table_2.b} gilt.%
+\item<5-> Jede dieser Zeilen wird dann eine Zeile im Ergebnis.%
+\item<6-> Gibt es keine solche Zeile, so trotzdem eine Ergebniszeile generiert, jedoch alle Werte, die vielleicht aus \sqlil{Table_2} übernommen würden, werden als~\sqlil{NULL} angegeben.%
+\item<7-> Beachten Sie: Um Klarheit zu schaffen, können wir den Tabellenname als Prefix, gefolgt von einem Punkt, dem Spaltennamen voranstellen.%
+\item<8-> \sqlil{Table_1.a} bedeutet also \inQuotes{Spalte~\sqlil{a} aus Tabelle~\sqlil{Table_1}}.%
+\end{itemize}%
+}%
+\sqlSyntax{1,9}{syntax/left_join.sql}{0.05}{0.07}{0.9}{0.92}%
+\sqlSyntax{2-6}{syntax/left_join.sql}{0.1}{0.56}{0.8}{0.8}%
+\end{frame}
+%
+\begin{frame}[fragile,t]
+\frametitle{\texttt{LEFT JOIN} von \texttt{customer} mit \texttt{demand}}%
+\begin{itemize}%
+\item Übertragen wir also diese Syntax auf unsere Situation.%
+\end{itemize}%
+\gitLoadAndExecSQL{factory:select_customer_demand_1}{}{factory}{select_customer_demand_1.sql}{factory}{boss}{superboss123}%
+\listingSQL{1}{factory:select_customer_demand_1}{0.05}{0.2}{0.9}{0.79}
+\listingOutput{2}{factory:select_customer_demand_1}{,style=tool_style_sql}{0.05}{0.2}{0.9}{0.79}
+\end{frame}
+%
+\begin{frame}%
+\frametitle{Zählen der Bestellungen}%
+\begin{itemize}%
+\item Jetzt wollen wir zählen, wie viele Bestellungen jeder Kunde bisher gemacht hat.%
+\item<2-> Wir kennen inzwischen alles, was wir dazu brauchen:%
+\item<3-> Mit \sqlil{LEFT JOIN} von der Tabelle~\sqlil{customer} auf die Tabelle~\sqlil{demand} bekommen wir die Bestellungen pro Kunde.%
+\item<4-> Alles, was dann zu tun ist, ist die Daten nache Kundenname zu gruppieren~(\sqlil{GROUP BY name}).%
+\item<5-> Dann können wir die Zeilen pro \sqlil{name}-Wert zählen, mit~\sqlil{COUNT(*)}.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[fragile,t]
+\frametitle{\texttt{LEFT JOIN}: Bestellungen pro Kunde zählen}%
+\gitLoadAndExecSQL{factory:select_customer_demand_2}{}{factory}{select_customer_demand_2.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{}{factory:select_customer_demand_2}{}{0.05}{0.09}{0.9}{0.9}
+\end{frame}
+%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Fertig.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%

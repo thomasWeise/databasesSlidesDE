@@ -49,7 +49,7 @@
 \frametitle{Erstellen der Tabelle mit \texttt{CREATE TABLE}}%
 \begin{itemize}%
 \item Wir wissen ja schon, dass man Tabellen mit \sqlil{CREATE TABLE} erstellt.%
-\item<4-> Wir haben dieses Kommando via \psql\ an den \postgresql-Server geschickt und das Erstellen der Datenbank hat funktioniert.%
+\item<4-> Wir haben dieses Kommando via \psql\ an den \postgresql-Server geschickt und das Erstellen der Tabelle hat funktioniert.%
 \item<5-> Wir erkennen einige Komponenten des Kommandos wieder.%
 \item<6-> Andere, insbesondere der Teil mit \sqlil{CONSTRAINT}, sind neu.%
 \item<7-> Arbeiten wir uns durch das Kommando durch!%
@@ -205,12 +205,125 @@ Wir müssen die Spalte also \emph{nicht} mit \sqlil{UNIQUE} annotieren.%
 \listingSQL{6}{factory:create_table_customer}{0.075}{0.18}{0.9}{0.84}
 \end{frame}
 %
+\section{Einfügen von Daten}%
+%
+\begin{frame}[t]%
+\frametitle{Daten Einfügen}%
+\begin{itemize}%
+\item Nun haben wir die Tabelle \sqlil{customer} erstellt, aber sie ist leer.%
+\item<2-> Füllen wir sie mit Daten!%
+\uncover<-8>{%
+\item<3-> Wir haben vier Kunden: Herr~Bibbo, Herr~Bebbo, Frau~Bebba, und Herr~Bobbo\only<-3>{.}\uncover<4->{:%
+\begin{itemize}%
+\item Herr~Bibbo lebt im Südcampus unserer Universität Hefei~(合肥大学)\uncover<5->{,}%
+\item<5-> Herr~Bebbo hat seine Geschäftsadresse im Rathaus der Stadt Chemnitz in Deutschland\uncover<6->{,}%
+\item<6-> Frau~Bebba wohnt direkt am Times Square in New York, USA\uncover<7->{, und}%
+\item<7-> Herr~Bobbo arbeitet am Eiffelturm in Paris, Frankreich.%
+\end{itemize}}%
+\item<8-> Ihre Telefonnummern sind 11~Wiederholungen einer einzigen Ziffer.%
+}%
+\end{itemize}%
+%
+\locateGraphic{3-}{width=0.8\paperwidth}{graphics/dbStructureCustomer}{0.1}{0.57}%
+\end{frame}%
+%
+%
+\begin{frame}[fragile,t]
+\frametitle{Füllen der Tabelle \texttt{product}}%
+\gitLoadAndExecSQL{factory:insert_into_table_customer}{}{factory}{insert_into_table_customer.sql}{factory}{boss}{superboss123}%
+\listingSQL{1}{factory:insert_into_table_customer}{0.05}{0.17}{0.9}{0.91}
+\listingOutput{2}{factory:insert_into_table_customer}{,style=tool_style_sql}{0.05}{0.17}{0.9}{0.91}
+\end{frame}
+%
+\begin{frame}[t,fragile]
+\frametitle{\texttt{CHECK CONSTRAINT}}%
+\begin{itemize}%
+\item Nun wollen wir noch ausprobieren, ob die \sqlil{CHECK CONSTRAINTS} wirklich funktioniert.%
+\item<2-> Was denken Sie, kann die SQL-Anweisung hier funktioneren? Warum/nicht?%
+\item<4-> Sehr schön. Die Integrität unserer Daten wird also geschützt.%
+\end{itemize}%
+\gitLoadAndExecSQL{factory:insert_into_table_customer_error}{}{factory}{insert_into_table_customer_error.sql}{factory}{boss}{superboss123}%
+\listingSQL{2}{factory:insert_into_table_customer_error}{0.05}{0.27}{0.9}{0.72}
+\listingOutput{3}{factory:insert_into_table_customer_error}{,style=tool_style_sql}{0.05}{0.27}{0.9}{0.72}
+\end{frame}
+%
+\section{Daten Selektieren}%
+%
+\begin{frame}[t,fragile]
+\frametitle{Daten Selektieren: \texttt{LIKE}}%
+\begin{itemize}%
+\only<-3>{%
+\item Nun haben wir Daten in die Tabelle \sqlil{customer} eingefügt.%
+\item<2-> Holen wir sie wieder heraus!%
+}%
+\item<3-> Zuersteinmal wählen wir alle Kunden aus, die in Frankreich wohnen.%
+\item<4-> \sqlil{...WHERE address LIKE '\%France\%'} limitiert die Ausgabe von \sqlil{SELECT} auf Zeilen, in denen das Wort \inQuotes{France} -- genauso geschrieben -- irgendwo im Wert von \sqlil{address} vorkommt.%
+\end{itemize}%
+%
+\gitLoadAndExecSQL{factory:select_from_table_customer_1}{}{factory}{select_from_table_customer_1.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{4}{factory:select_from_table_customer_1}{}{0.05}{0.33}{0.9}{0.665}
+\end{frame}
+%
+\begin{frame}[t,fragile]
+\frametitle{Daten Selektieren: \texttt{ILIKE}}%
+\begin{itemize}%
+\only<-6>{%
+\item Als nächstes wollen wir wissen, wie viele inländische Kunden, also Kunden mit chinesischer Adresse, wir haben -- im Vergleich zur Zahl der ausländischen Kunden.%
+}%
+\item<2-> Im ersten Schritt erstellen wir ein synthetisches Attribute \sqlil{domestic}~(Englisch für inländisch), dass wahr~(\sqlil{TRUE}) seien soll, wenn ein Kunde in China wohnt und falsch~(\sqlil{FALSE}) wenn nicht.%
+\only<-6>{%
+\item<3-> Das können wir mit \sqlil{address LIKE '\%China\%' AS domestic} machen.%
+\item<4-> Wir wollen aber diesmal lieber \sqlil{ILIKE} nehmen: \sqlil{LIKE} beachtet Groß- und Kleinschreibung, \sqlil{ILIKE} nicht.%
+\item<5-> Für \sqlil{LIKE} sind \sqlil{'china'} und \sqlil{'China'} verschieden.%
+\item<6-> Für \sqlil{ILIKE} sind \sqlil{'china'}, \sqlil{'China'}, und \sqlil{'CHINA'} das selbe.%
+}%
+\item<7-> \sqlil{t} steht für \sqlil{TRUE} und \sqlil{f} für \sqlil{FALSE}.%
+\end{itemize}%
+%
+\gitLoadAndExecSQL{factory:select_from_table_customer_2}{}{factory}{select_from_table_customer_2.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{7-}{factory:select_from_table_customer_2}{}{0.05}{0.33}{0.9}{0.665}
+\end{frame}
+%
+\begin{frame}[t,fragile]
+\frametitle{Daten Selektieren: \texttt{GROUP BY} und \texttt{COUNT}}%
+\begin{itemize}%
+\item Wir wollen aber wissen, \alert{wie viele} inländische Kunden, also Kunden mit chinesischer Adresse, wir haben -- im Vergleich zur Zahl der ausländischen Kunden.%
+\only<-5>{%
+\item<2-> Dafür müssen wir die Kunden nach dem Attribut~\sqlil{domestic} gruppieren und dann zählen.%
+\item<3-> Das Gruppieren funktioniert, in dem wir \sqlil{GROUP BY domestic} an die Anfrage anhängen.%
+\item<4-> Statt die Kundennamen zu drucken, zeigen wir dann \sqlil{COUNT(*)} an.%
+\item<5-> Wie \sqlil{AVG} ist \sqlil{COUNT} eine Aggregatfunktion, die eine Statistik über alle Elemente der Gruppe berechnet {\dots} und diese Statistik ist hier einfach \inQuotes{Anzahl}.%
+}%
+\item<6-> Wir haben also einen inländischen und drei ausländische Kunden.%
+\end{itemize}%
+%
+\gitLoadAndExecSQL{factory:select_from_table_customer_3}{}{factory}{select_from_table_customer_3.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{6-}{factory:select_from_table_customer_3}{}{0.05}{0.33}{0.9}{0.665}
+\end{frame}
+%
+\begin{frame}%
+\frametitle{Adressen sind kompliziert}%
+\begin{itemize}%
+\item Wenn Sie gut aufgepasst haben, dann merken Sie, dass unsere Art der Adressbehandlung problematisch ist.%
+\item<2-> Zum einen erkennnen wir zwar \sqlil{'China'} und \sqlil{'china'} beides als China\only<-2>{\dots}\uncover<3->{, würden 中国 aber nicht erkennen.}%
+\item<3-> Zum anderen würden wir eine \emph{Donut Factory Vive la France} in Shanghai, China sowohl als Französisch als auch als inländisch erkennen.%
+\item<4-> Um das letztere Problem zu lösen, könnten wir die Adresse in mehrere Spalten aufteilen, mit einer Spalte für das Land.%
+\item<5-> Selbst dann hätten wir noch Probleme mit verschiedenen Schreibweisen für Länder, z.B.~China, china, 中国, People's Republic of China, PRC, P.R.C., 中华人民共和国, République populaire de Chine, Chine, usw.%
+\item<6-> Als endgültige Lösung würden wir wohl eine weitere Tabelle nur für Länder brauchen, die von unserer Kundentabelle refereziert wird.%
+\item<7-> Das wollen wir jetzt nicht tun {\dots} aber in der nächsten Einheit lernen Sie, wie das prinzipiell geht.%
+\end{itemize}%
+\end{frame}%
+%
 \section{Zusammenfassung}%
 %
 \begin{frame}%
 \frametitle{Zusammenfassung}%
 \begin{itemize}%
-\item Fertig.%
+\item Jetzt haben wir unsere zweite Tabelle erstellt, die Tabelle~\sqlil{customer}.%
+\item<2-> Wir haben einige neue Funktionen zum Arbeiten mit Texten gelernt, z.B.~\pglspl{regex} und \sqlil{ILIKE}.%
+\item<3-> Wir haben gelernt, wie wir mit \sqlil{CONSTRAINT} zusätzliche, komplexere Einschränkungen beim Erstellen einer Tabelle definieren kann.%
+\item<4-> Wir haben gelernt, dass wir Daten in \sqlil{SELECT}-Anfragen mit \sqlil{GROUP BY} gruppieren können und Aggregatfunktionen wir \sqlil{COUNT} über die Gruppen berechnen können.%
+\item<5-> Und wir haben ein wenig ein Gefühl dafür entwickelt, dass Daten wie \inQuotes{Adressen} auf den ersten Blick einfach aussehen, auf den zweiten Blick aber doch komplexer seien können als erwartet.%
 \end{itemize}%
 \end{frame}%
 %
