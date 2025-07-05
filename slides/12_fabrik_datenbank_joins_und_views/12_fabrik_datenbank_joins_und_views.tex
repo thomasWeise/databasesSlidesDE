@@ -42,7 +42,7 @@
 \listingOutput{4}{factory:insert_into_table_demand}{,style=tool_style_sql}{0.05}{0.27}{0.9}{0.72}
 \end{frame}
 %
-\section{JOINs}%
+\section{\texttt{LEFT JOIN}}%
 %
 \begin{frame}%
 \frametitle{Bestellungen der Kunden}%
@@ -112,13 +112,195 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \listingSQLandOutput{}{factory:select_customer_demand_2}{}{0.05}{0.09}{0.9}{0.9}
 \end{frame}
 %
+\section{\texttt{INNER JOIN}}%
+%
+\begin{frame}%
+\frametitle{Verkaufsdaten Zusammenführen}%
+\begin{itemize}%
+\item Wir können nun Daten von verschiedenen Tabellen zusammenführen.%
+\item<2-> Erstellen wir eine Anfrage, die für jede Bestellung den Kundenname, Produktname, Preise, bestellte Anzahl, und Bestelldatum heraussucht.%
+\item<3-> Das Ergebnis dieser Anfrage wäre dann eine klare und lesbare Übersicht unserer Geschäftstransaktionen.%
+\item<4-> Basierend auf unserem vorigen Beispiel können wir erwarten, dass wir nun zwei~\inQuotes{Joins} brachen.%
+\item<5-> Wir müssen ja Daten aus allen drei Tabellen -- \sqlil{demand}, \sqlil{customer}, und \sqlil{product} -- kombinieren.%
+\item<6-> Die Anfrage wid daher etwas komplizierter werden.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Grundidee}%
+\begin{itemize}%
+\item Wir beginnen, die Anfrage zu konstruieren.%
+\item<2-> Was wir wollen ist das:~\emph{\inQuotes{Für jede Zeile in Tabelle~\sqlil{demand} brauchen wir die entsprechende Zeile in Tabelle~\sqlil{customer} und die entsprechende Zeile in Tabelle~\sqlil{product}.}}%
+\item<3-> Wir wissen, dass es immer eine entsprechende Zeile in der Tabelle~\sqlil{customer} geben muss, denn die \sqlilIdx{REFERENCES}-Einschränkung erzwingt das.%
+\item<3-> Wir wissen, dass es immer eine entsprechende Zeile in der Tabelle~\sqlil{product} geben muss, denn die \sqlilIdx{REFERENCES}-Einschränkung erzwingt das.%
+\item<4-> Es gibt keine Zeile in \sqlil{demand} ohne entsprechende Zeile in \sqlil{customer} oder \sqlil{product}.%
+\item<5-> Wir könnten wieder \sqlil{LEFT JOIN}\sqlIdx{JOIN!LEFT} verwenden, denn es könnte niemals~\sqlil{NULL} erzeugen.%
+\item<6-> Lassen Sie uns aber stattdessen \sqlil{INNER JOIN}\sqlIdx{JOIN!INNER}\cite{PGDG:PD:JT} nutzen.%
+\item<7-> Anders als \sqlil{LEFT JOIN} wird \sqlil{INNER JOIN} nur Zeilen ausgeben, wenn alle Tabellen zueinanderpassende Zeilen haben.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[fragile,t]
+\frametitle{\texttt{INNER JOIN}: Syntax}%
+\uncover<2-6>{%
+\begin{itemize}%
+\item Angenommen, Tabelle~\sqlil{Table_1} hat den Primärschlüssel~\sqlil{a}\only<-2>{.}\uncover<3->{ %
+und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel auf \sqlil{Table_1.a} verweist.%
+}%
+\item<4-> \sqlil{SELECT ... FROM Table_1 INNER JOIN Table_2 ON (Table_1.a = Table_2.b)} geht dann Zeile für Zeile durch \sqlil{Table_1} und sucht für jeden Wert von \sqlil{Table_1.a} alle passenden Zeilen aus \sqlil{Table_2} heraus, also alle Zeilen, für die \sqlil{Table_1.a = Table_2.b} gilt.%
+\item<5-> Jede dieser Zeilen wird dann eine Zeile im Ergebnis.%
+\item<6-> Gibt es keine solche Zeile, \alert{wird anders als bei \sqlil{LEFT JOIN} \emph{keine} Ergebniszeile generiert.}%
+\end{itemize}%
+}%
+\sqlSyntax{1,7}{syntax/inner_join.sql}{0.05}{0.07}{0.9}{0.92}%
+\sqlSyntax{2-5}{syntax/inner_join.sql}{0.1}{0.56}{0.8}{0.8}%
+\end{frame}
+%
+\begin{frame}[fragile,t]
+\begin{itemize}%
+\item Um Daten aus mehreren Tabellen zu kombinieren, brauchen wir mehrere Joins.%
+\end{itemize}%
+\frametitle{\texttt{INNER JOIN}: Mehrere \texttt{INNER JOIN} zusammen}%
+\sqlSyntax{1}{syntax/inner_join_2.sql}{0.05}{0.2}{0.9}{0.79}%
+\end{frame}
+%
+\begin{frame}%
+\frametitle{Anfrage Zusammenbauen}%
+\begin{itemize}%
+\item Wir fangen an mit \sqlil{SELECT <something> FROM demand}.%
+\item<2-> Dann schreiben wir \sqlil{INNER JOIN customer ON (customer.id = demand.customer)}.
+\item<3-> Für jede Zeile in \sqlil{demand} gibt uns das die passende Zeile in \sqlil{customer}.%
+\item<4-> Nun fügen wir einfach das nächste \sqlil{INNER JOIN} an, in dem wir direkt danach \sqlil{INNER JOIN product ON (product.id = demand.product)} schreiben.%
+\item<5-> Damit bekommen wir die passende Zeile aus der Tabelle~\sqlil{product}.%
+\item<6-> Da wir diesmal sowohl Kunden- als auch Produktnamen haben, selektieren wir \sqlil{customer.name AS customer_name} und  \sqlil{product.name AS product_name}.%
+\item<7-> Wir selektieren ebenfalls \sqlil{product.price AS price}, \sqlil{demand.amount AS amount}, und \sqlil{demand.ordered as ordered}.%
+\item<8-> Wir sortieren die Ausgabe mit \sqlilIdx{ORDER BY} lexikographisch nach \sqlil{customer_name}, \sqlil{ordered}, und \sqlil{product_name}, \sqlil{price}, und \sqlil{amount}.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[fragile,t]
+\frametitle{Die Anfrage}%
+\gitLoadAndExecSQL{factory:select_sale_data}{}{factory}{select_sale_data.sql}{factory}{boss}{superboss123}%
+\listingSQL{1}{factory:select_sale_data}{0.05}{0.2}{0.9}{0.79}
+\listingOutput{2}{factory:select_sale_data}{,style=tool_style_sql}{0.05}{0.2}{0.9}{0.79}
+\end{frame}
+%
+\section{Sichten / Views}%
+%
+%
+\begin{frame}%
+\frametitle{Sichten / Views}%
+\begin{itemize}%
+\item Nun haben wir sehr schön die Verkaufsdaten unserer Fabrik aufbereitet.%
+\item<2-> Wahrscheinlich brauchen wir diese Anfrage sehr häufig, wahrscheinlich jedes Mal leicht verändert.%
+\item<3-> Vielleicht wollen wir nur Bestellungen aus dem aktuellen Jahr.\uncover<4->{ Dann würden wir eine \sqlil{WHERE}-Klausel anfügen.}%
+\item<5-> Vielleicht wollen wir die Geldmenge pro Kunde aufaddieren.\uncover<6->{ Oder pro Produkt.}%
+\item<7-> Jedes Mal würden wir eine ähnliche Abfrage schreiben.\uncover<8->{ Das ist nicht gut.}%
+\item<9-> Zum Glück gibt es eine Lösung:~Wir können Anfragen als sogenannte \emph{Views}~(Sichten) speichern!\cite{PGDG:PD:CV}.%
+\item<10-> Ein View funktioniert im Grunde wie eine Tabelle.%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}%
+\frametitle{Problem mit unserer Anfrage}%
+\begin{itemize}%
+\item Wir brauchen unsere Anfrage also nur als Sicht zu speichern.%
+\item<2-> Als wir das tuen wollen, fällt uns ein Problem auf\only<-2>{.}\uncover<3->{Kundennamen sind nicht notwendigerweise eindeutig~(nicht~\sqlil{UNIQUE}).}%
+\item<4-> Wenn wir unsere Anfrage später nutzen wollen, um Verkäufe pro Kunde aufzuaddieren, dann würden alle Verkäufe nach Kundennamen gruppiert und dann summiert.\uncover<5->{ Wenn zwei Kunden den selben Namen haben, werden ihre Bestellungen vermengt.}%
+\item<6-> Mobiltelefonnummern sind aber eindeutig in unserer Datenbank.%
+\item<7-> Als \sqlil{customer_name}, werden wir also \sqlil{customer.name || ', ' || customer.phone} benutzen.%
+\item<8-> Der doppelten Strich~\sqlil{||} steht für das aneinanderreihen von Zeichenketten.\uncover<9->{ \sqlil{'Hello ' || 'Word!'} ergibt \sqlil{'Hello World!'}.}%
+\item<10-> Problem gelöst: Da Mobiltelefonnummern eindeutig sind, sind Name + Mobiltelefonnummer auch eindeutig.%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}%
+\frametitle{Anfrage als Sicht speichern und benutzen}%
+\begin{itemize}%
+\item Wir können unsere Anfrage nun als Sicht speichern.%
+\item<2-> Das geht sehr einfach: Wir schreiben~\sqlil{CREATE VIEW sale AS ...}, wobei \sqlil{...} durch unsere Anfrage zu ersetzen ist.
+\item<3-> Damit wird unsere Anfrage unter dem Namen~\sqlil{sale} gespeichert.%
+\item<4-> Sie kann dann wie eine Tabelle verwendet werden.%
+\item<5-> Wir können schreiben \sqlil{SELECT * from sale;}.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[fragile,t]
+\frametitle{Die Anfrage}%
+\gitLoadAndExecSQL{factory:create_view_sale}{}{factory}{create_view_sale.sql}{factory}{boss}{superboss123}%
+\listingSQL{1}{factory:create_view_sale}{0.05}{0.2}{0.9}{0.79}
+\listingOutput{2}{factory:create_view_sale}{,style=tool_style_sql}{0.05}{0.2}{0.9}{0.79}
+\end{frame}
+%
+\section{Die Sicht Benutzen}%
+%
+\begin{frame}%
+\frametitle{Benutzen unserer neuen Sicht}%
+\begin{itemize}%
+\item Benutzen wir nun unsere neue Sicht, um folgende Fragen zu beantworten\uncover<2->{:%
+\begin{itemize}%
+\item Welcher Kunde hat den meisten Umsatz gemacht?%
+\item<3-> Welches Produkt hat den meisten Umsatz gemacht?%
+\end{itemize}%
+}%
+\item<4-> Wir können den Gesamtpreis jeder Bestellung einfach ausrechnen.\uncover<5->{ Wir kennen ja die Anzahl der bestellten Einheiten~(\sqlil{amount}) und den Preis pro Einheit~(\sqlil{price}).}%
+\item<5-> Pro Zeile müssen wir also einfach~\sqlil{amount * price} berechnen.%
+\item<6-> Da wir die Summe dieser Werte pro Kunde bzw.\ pro Produkt wollen, müssen wir die Zeilen jeweils nach \sqlil{customer_name} oder \sqlil{product_name} gruppieren.%
+\item<7-> Pro Gruppe berechnen wir dann~\sqlil{SUM(amount * price)}\cite{PGDG:PD:AF}.%
+\item<8-> Schließlich sortieren wir die Werte absteigend, weil wir ja die Bestseller am Anfang haben wollen.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[fragile,t]
+\frametitle{Verkaufserlös nach Kunde}%
+\gitLoadAndExecSQL{factory:select_from_view_sale_1a}{}{factory}{select_from_view_sale_1a.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{}{factory:select_from_view_sale_1a}{}{0.05}{0.09}{0.9}{0.9}
+\end{frame}
+%
+\begin{frame}[fragile,t]
+\frametitle{Verkaufserlös nach Produkt}%
+\gitLoadAndExecSQL{factory:select_from_view_sale_1b}{}{factory}{select_from_view_sale_1b.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{}{factory:select_from_view_sale_1b}{}{0.05}{0.09}{0.9}{0.9}
+\end{frame}
+%
+\begin{frame}%
+\frametitle{Weitere Schritte}%
+\begin{itemize}%
+\item Wie konnten die Sicht tatsächlich wie eine Tabelle verwenden.%
+\item<2-> Man kann es sich so vorstellen:~Wenn wir ein \sqlil{SELECT} über sie ausführen, dann wird intern zuerst die Anfrage unserer Sicht ausgeführt und unser \sqlil{SELECT} dann darüber angewendet.%
+\item<3-> Nehmen wir nun an, das unsere Datenbank schon mehrere Jahre existiert.%
+\item<4-> Wir wollen dann vielleicht nicht alle Verkäufe, die jemals stattfanden, aufsummieren.%
+\item<5-> Stattdessen wollen wir vielleicht nur die Verkäufe im Jahr~2025 beachten.%
+\item<6-> Alles, was wir dafür ändern müssen, ist eine \sqlil{WHERE}-Klausel an unsere Anfragen anhängen, mit der Bedingung \sqlil{(ordered >= '2025-01-01')} and \sqlil{(ordered < '2026-01-01')}.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[fragile,t]
+\frametitle{Verkaufserlös nach Kunde in 2025}%
+\gitLoadAndExecSQL{factory:select_from_view_sale_2a}{}{factory}{select_from_view_sale_2a.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{}{factory:select_from_view_sale_2a}{}{0.05}{0.09}{0.9}{0.9}
+\end{frame}
+%
+\begin{frame}[fragile,t]
+\frametitle{Verkaufserlös nach Produkt in 2025}%
+\gitLoadAndExecSQL{factory:select_from_view_sale_2b}{}{factory}{select_from_view_sale_2b.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{}{factory:select_from_view_sale_2b}{}{0.05}{0.09}{0.9}{0.9}
+\end{frame}
 %
 \section{Zusammenfassung}%
 %
 \begin{frame}%
 \frametitle{Zusammenfassung}%
 \begin{itemize}%
-\item Fertig.%
+\item Wir sind nun ein ganzes Stück stärker geworden.%
+\item<2-> Mit \sqlil{JOIN}s sind wir nun in der Lage, Daten aus verschiedenen Tabellen zusammenzufügen.%
+\item<3-> Das ist eines der wichtigsten Features, das Datenbanken uns bieten.%
+\item<4-> Wir haben auch gelernt, wie wir Sichten~(Views) erstellen können, also gespeicherte Anfragen.%
+\item<5-> Damit ist es uns nicht nur möglich, bestimmte, oft benötigte Anfragen zu speichern um unnötiges, mehrmaliges eingeben zu verhindern.%
+\item<6-> Sichten sind auch ein zentrales Werkzeug, um verschiedenen Werkzeugen und Benutzern {\dots} nun {\dots} verschiedene Sichten auf die Daten zu bieten.%
+\item<7-> Wir können sie nutzen, um bestimmten Nutzern oder Applikationen nur bestimmte Teile unserer gespeicherten Daten zugänglich zu machen.%
 \end{itemize}%
 \end{frame}%
 %
