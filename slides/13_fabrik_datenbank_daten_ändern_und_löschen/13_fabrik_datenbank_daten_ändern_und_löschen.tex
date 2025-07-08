@@ -1,0 +1,137 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{10.~Fabrik-Datenbank:~Daten ändern und löschen}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item Wir haben nun eine Datenbank mit drei Tabellen erstellt~(via~\sqlil{CREATE DATABASE} und~\sqlil{CREATE TABLE}).%
+\item<2-> Wir haben Daten in die Tabellen eingefügt~(via~\sqlil{INSERT INTO}).%
+\item<3-> Und wir haben die Daten wieder ausgelesen~(via~\sqlil{SELECT FROM}) und sogar Daten von verschiedenen Tabellen zusammengeführt~(via~\sqlil{LEFT JOIN} und~\sqlil{INNER JOIN}).%
+\item<4-> Was wir noch nicht gemacht haben, ist Daten zu ändern und zu löschen.%
+\item<5-> Auch dafür gibt es einfache SQL-Befehle.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Daten Ändern}%
+%
+\begin{frame}[t,fragile]
+\frametitle{Daten Ändern}
+\begin{itemize}%
+\only<-4>{%
+\item Unsere Fabrik hat einen neuen Anbieter für Schuhschachteln gefunden.%
+\item<2-> Die neuen Schachteln sind 5mm niedriger und daher billiger.%
+\item<3-> Wir müssen also die Verpackungsdimensionen der Produkte, die in Schuhschachteln ausgeliefert werden, verringern.%
+\item<4-> Das geht mit einer \sqlil{UPDATE <table> SET <fields>}\sqlIdx{UPDATE{\idxdots}SET}-Anweisung\cite{PGDG:PD:U}.}%
+\item<5-> Mit \sqlil{UPDATE} können Daten geändert werden.%
+\end{itemize}%
+\sqlSyntax{5}{syntax/update_de.sql}{0.1}{0.07}{0.9}{0.92}%
+\end{frame}
+%
+\begin{frame}[t,fragile]
+\frametitle{Produkte in Schuhschachteln:~Finden und Ändern}
+\begin{itemize}%
+\only<-1>{\item Finden wir zuerst alle Produkte in Schuhschachteln.}%
+\only<-2>{\item<2-> Jetzt nutzen wir die selbe \sqlil{WHERE}-Klausel in unserer \sqlil{UPDATE}-Anweisung\cite{PGDG:PD:U}.}%
+\item<3-> Mit der \postgresql-spezifischen \sqlil{RETURNING}-Anweisung geht es noch besser\cite{SE:DA:2020WDSSOAOTNPSDIOR}.%
+\end{itemize}%
+\gitLoadAndExecSQL{factory:update_table_product_1}{}{factory}{update_table_product_1.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{1}{factory:update_table_product_1}{}{0.12}{0.17}{0.9}{0.81}
+\gitLoadAndExecSQL{factory:update_table_product_2}{}{factory}{update_table_product_2.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{2}{factory:update_table_product_2}{}{0.12}{0.17}{0.9}{0.81}
+\gitLoadAndExecSQL{factory:update_table_product_3}{}{factory}{update_table_product_3.sql}{factory}{boss}{superboss123}%
+\gitLoadAndExecSQL{factory:update_table_product_4}{}{factory}{update_table_product_4.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{3}{factory:update_table_product_4}{}{0.12}{0.17}{0.9}{0.81}
+\end{frame}
+%
+\begin{frame}[fragile,t]
+\frametitle{Referentielle Integrität während Updates}%
+\begin{itemize}%
+\only<-6>{%
+\item Wir hatten herausgefunden, dass wir keine Zeilen in die Tabelle~\sqlil{demand} eintragen können, für die es keine entsprechenden Zeilen in den Tabellen~\sqlil{customer} und~\sqlil{product} gibt.%
+\item<2-> Aber was passiert, wenn wir den \sqlil{id}-Wert einer Zeile in der Tabelle~\sqlil{product} \emph{ändern}, so dass die entsprechenden Bestellungen nicht mehr \inQuotes{passen}?%
+\item<3-> Wir wissen:~Herr~Bibbo hat 12 Einheiten des Produkts \inQuotes{Shoe, Size 42} bestellt.\uncover<4->{ %
+\inQuotes{Shoe, Size 42} hat \sqlil{id = 7}.}%
+\item<4-> Was passiert, wenn wir die \sqlil{product}~Tabelle so ändern, dass \inQuotes{Shoe, Size 42} dann \sqlil{id = 20} hat?\uncover<5->{ Die Zeile mit der Bestellung in Tabelle~\sqlil{demand} würde dann ja nicht mehr auf ein existierendes Produkt verweisen\dots}}%
+\item<6-> Wir fragen also: Können wir mit \sqlil{UPDATE} die referentielle Integrität unserer Daten verletzen?%
+\item<9-> Wir können es offenbar nicht.\uncover<10->{~Und das ist gut so!}%
+\end{itemize}%
+\gitLoadAndExecSQL{factory:update_table_product_error}{}{factory}{update_table_product_error.sql}{factory}{boss}{superboss123}%
+\listingSQL{7}{factory:update_table_product_error}{0.05}{0.3}{0.9}{0.79}
+\listingOutput{8}{factory:update_table_product_error}{,style=tool_style_sql}{0.05}{0.3}{0.9}{0.79}
+\end{frame}
+%
+\section{Daten Löschen}%
+%
+%
+\begin{frame}[t,fragile]
+\frametitle{Daten Löschen}
+\begin{itemize}%
+\item Wir stellen fest, dass wir noch nie ein Paar \inQuotes{Shoe, Size 36} verkauft haben!%
+\item<2-> Daher wollen wir dieses Produkt aus unserem Sortiment streichen.%
+\item<3-> Um Daten zu löschen, verwenden wir das Kommando \sqlil{DELETE FROM ... WHERE ...;}.\cite{PGDG:PD:D}%
+\end{itemize}%
+\sqlSyntax{4}{syntax/delete_de.sql}{0.1}{0.5}{0.9}{0.92}%
+\end{frame}
+%
+\begin{frame}[t,fragile]
+\frametitle{Löschen des Produkts mit \texttt{id = 1}}%
+\begin{itemize}%
+\only<-2>{\item \inQuotes{Shoe, Size 36} hat \sqlil{id = 1} in Tabelle~\sqlil{product}.}%
+\only<-3>{\item<2-> Löschen wir also diese Zeile!}%
+\only<4->{\item<4-> Die \postgresql-spezifische \sqlil{RETURNING}-Klausel gibt uns die gelöschten Daten zurück.\cite{SE:DA:2020WDSSOAOTNPSDIOR}}%
+\end{itemize}%
+\gitLoadAndExecSQL{factory:delete_from_table_product}{}{factory}{delete_from_table_product.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{3-}{factory:delete_from_table_product}{}{0.12}{0.17}{0.9}{0.81}
+\end{frame}
+%
+\begin{frame}[fragile,t]
+\frametitle{Referentielle Integrität während Löschen}%
+\begin{itemize}%
+\only<-6>{%
+\item Wir hatten herausgefunden, dass wir keine Zeilen in die Tabelle~\sqlil{demand} eintragen können, für die es keine entsprechenden Zeilen in den Tabellen~\sqlil{customer} und~\sqlil{product} gibt.%
+\item<2-> Aber was passiert, wenn wir eine Zeile aus der Tabelle~\sqlil{customer} löschen, auf die Zeilen in der Tabelle~\sqlil{demand} verweisen?%
+\item<3-> Wir wissen:~Herr~Bebbo hat vier Bestellungen aufgegeben.\uncover<4->{ %
+Herr~Bebbo hat \sqlil{id = 2} Tabelle~\sqlil{customer}.}%
+\item<5-> Was passiert, wenn wir diesen Eintrag aus der Tabelle~\sqlil{customer} löschen?\uncover<6->{ Die Zeilen mit seinen Bestellungen in Tabelle~\sqlil{demand} würde dann ja nicht mehr auf einen existierendes Kunden verweisen\dots}}%
+\item<7-> Wir fragen also: Können wir mit \sqlil{DELETE} die referentielle Integrität unserer Daten verletzen?%
+\item<10-> Wir können es offenbar nicht.\uncover<11->{~Und das ist gut so!}%
+\end{itemize}%
+\gitLoadAndExecSQL{factory:delete_from_table_customer_error}{}{factory}{delete_from_table_customer_error.sql}{factory}{boss}{superboss123}%
+\listingSQL{8}{factory:delete_from_table_customer_error}{0.05}{0.3}{0.9}{0.79}
+\listingOutput{9}{factory:delete_from_table_customer_error}{,style=tool_style_sql}{0.05}{0.3}{0.9}{0.79}
+\end{frame}
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Jetzt können wir auch Daten in Tabellen verändern und löschen.%
+\item<2-> Damit können wir nun aktiv mit Datenbanken arbeiten.%
+\item<3-> Wir können nun alles machen, was wir auch mit Spreadsheets wie \microsoftExcel\ oder \libreofficeCalc\ machen können\uncover<4->{ {\dots} und viel mehr!}%
+\item<5-> Wir haben auch einen anderen wichtigen Aspekt gelernt\uncover<6->{:~Während eigentlich alle wichtigen relationalen DBMSe die Sprache~SQL unterstützen, gibt es trotzdem Unterschiede!}%
+\item<7-> \postgresql\ bietet z.B.\ zusätzlich das Statement~\sqlil{RETURNING} für die \sqlil{INSERT}, \sqlil{UPDATE}, und \sqlil{DELETE}-Befehle an, welches sehr nützlich ist und uns jeweils die betroffenen Zeilen der Tabelle zurückgibt.%
+\item<8-> Andere DBMSe unterstützen dieses Statement teilweise\cite{HWACIS:R,M:MSD:D,M:MSD:IR} oder gar nicht.%
+\item<9-> Selbst SQL-basierte DBMSe sind also nicht zwangsläufig kompatibel.%
+\item<10-> Sie können also nicht einfach gegeneinander ausgetauscht werden, und man muss gut überlegen, welches DBMS man für ein Projekt einsetzen will.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
