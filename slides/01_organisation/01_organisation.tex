@@ -90,8 +90,10 @@ Das Ziel ist, dass Sie Freude beim Lernen und bei der Arbeit mit unserem Themeng
 \item<3-> Dieses Buch steht kostenlos im Internet.%
 \item<4-> Es wird noch aktiv weiterentwickelt.%
 \item<5-> \alert{Sie} können mir helfen, es weiterzuentwickeln, durch Fragen, Anregungen, das Finden von Fehlern, usw.%
-\item<6-> URL:~\expandafter\url{\databasesUrl/databases.pdf}%%
 \end{itemize}%%
+\uncover<6->{\centering%
+\resizebox{\linewidth}{!}{URL:~\expandafter\url{\databasesUrl/databases.pdf}}%
+}%
 \end{frame}%
 %
 \begin{frame}[t]%
@@ -131,22 +133,6 @@ Das Ziel ist, dass Sie Freude beim Lernen und bei der Arbeit mit unserem Themeng
 \end{itemize}%
 \end{frame}%
 %
-\begin{frame}%
-\frametitle{Beispiele}%
-\begin{itemize}%
-\item In diesem Kurs werden wir sehr viele Beispiele verwenden.\uncover<2->{%
-\begin{enumerate}%
-\item Wir verwenden zum Beispiel das \postgresql\ Datenbankmanagementsystem\cite{TA2024DDAMWPAM,FP2023LP,OH2017PUAR,B2024PELUYDW}.%
-\item<3-> Wir werden echte Datenbanken damit erstellen und mit der Datenbanksprache \sql\cite{C20245YOQ,MS2001S1URLC} darauf zugreifen.%
-\item<4-> Wir werden die Strukturen von Datenbanken mit den Werkzeugen \yEd\cite{SG2015MDAWY,Y2011YGEM} und \pgmodeler\cite{AES2006PPDM} modelieren.%
-\item<5-> Wir werden von der Programmiersprache \python\cite{programmingWithPython} aus mit dem \psycopg-Modul\cite{VDGE2010P} auf unsere \postgresql\ Datenbanken zugreifen.
-\item<6-> Wir werden \libreofficeBase\cite{FNFHWSKLSSGLFRSRPLJG2022BG7R1BOL7C,S2022L7PFEUU} verwenden, um Formulare und Berichte für unsere \postgresql\ Datenbanken zu erstellen.%
-\end{enumerate}}%
-\item<7-> Alle Beispiele sind in dem \github~Repository \expandafter\url{\databasesCodeRepo} bereitgestellt.%
-\item<8-> Sie können (und sollen!) also jeden Schritt jedes Beispiels genau nachvollziehen.%
-\end{itemize}%
-\end{frame}%
-%
 \begin{frame}[fragile,t]
 \frametitle{Beispielprogramme und Output}%
 \begin{itemize}%
@@ -164,7 +150,7 @@ Das Ziel ist, dass Sie Freude beim Lernen und bei der Arbeit mit unserem Themeng
 \frametitle{Komplexere Beispielprogramme}%
 \parbox{0.435\linewidth}{%
 \begin{itemize}%
-\item Für einige Beispiele mit komplexeren Kommandos werden der Programmkode, die Kommandozeile zu dessen Ausführung, der \pgls{stdout}, der Exit-Kode, und die Softwareversion mit angezeigt.%
+\item Für einige Beispiele mit komplexeren Kommandos werden der Programmkode, die Kommandozeile zu dessen Ausführung, der \glsreset{stdout}\pgls{stdout}, der Exit-Kode, und die Softwareversion mit angezeigt.%
 \item<2-> Natürlich mit einem Link zum Kode auf \github.%
 \end{itemize}%
 }%
@@ -210,9 +196,9 @@ Das Ziel ist, dass Sie Freude beim Lernen und bei der Arbeit mit unserem Themeng
 \frametitle{Ökosystem}%
 \begin{itemize}%
 \item Wir versuchen, ein Ökosystem von Lehrmaterial aufzubauen.%
-\item<2-> Aktuell gibt es folgende beiden Kurse\uncover<3->{:%
+\item<2-> Aktuell gibt es folgende beiden Kurse\uncover<3->{:\medskip%
 \begin{itemize}%
-\item \python, mit dem Textbuch \emph{\furtherReading{programmingWithPython}}\uncover<4->{ und}%
+\item \python, mit dem Textbuch \emph{\furtherReading{programmingWithPython}}\uncover<4->{ und\medskip}%
 \item<4-> Datenbanken, mit dem Textbuch \emph{\furtherReading{databases}}.%
 \end{itemize}%
 }%
@@ -231,12 +217,12 @@ Das Ziel ist, dass Sie Freude beim Lernen und bei der Arbeit mit unserem Themeng
 \item Bringen Sie Ihren Laptop mit.\uncover<2->{\begin{enumerate}%
 \item Ihren eigenen Laptop.%
 \item<3-> Immer.%
-\item<4-> Vollziehen unsere Beispiele nach.%
+\item<4-> Vollziehen Sie unsere Beispiele nach.%
 \item<5-> Am Besten während der Vorlesung.%
 \item<6-> Auf Ihrem eigenen Laptop.%
 \end{enumerate}}%
 \item<7-> Das sind schon alle Voraussetzungen.%
-\item<8-> Bonus:~Im Idealfall arbeiten Sie mit dem Betriebssystem \ubuntu\ \linux\cite{CN2020ULB,H2020ULU2E}.%
+\item<8-> Bonus:~Im Idealfall arbeiten Sie mit dem Betriebssystem \ubuntu\ \linux\cite{CN2020ULB,H2020ULU2E}.\uncover<9->{ Sie könnten es ja in einer virtuellen Maschine installieren.}%
 \end{itemize}%
 \end{frame}%
 %
