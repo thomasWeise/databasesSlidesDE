@@ -93,7 +93,7 @@ Never use \sql\ keywords or reserved words as names, e.g., for columns or tables
 \item<4-> Sie werden über den Primärschlüssel identifiziert, den wir~\sqlil{id} genannt haben.%
 \item<5-> Die Werte für \sqlil{id} sind einzigartig in der Tabelle~\sqlil{customer}:~Jeder Record $=$ jede Zeile der Tabelle hat einen anderen \sqlil{id}-Wert.%
 \item<6-> Wir könnten also für jede Bestellung den \sqlil{id}-Wert des Kunden-Eintrags aus der \sqlil{customer}-Tabelle speichern.%
-\item<7-> Mit diesem Wert können wir dann den Kunden-Record in der Tabelle \sqlil{customer} finden und z.B.~den Namen und die Adresse auslesen.%
+\item<7-> Mit diesem Wert können wir dann den Kunden-Record in der Tabelle \sqlil{customer} finden und \DEzB~den Namen und die Adresse auslesen.%
 \end{itemize}%
 \end{frame}%
 %
@@ -103,7 +103,7 @@ Never use \sql\ keywords or reserved words as names, e.g., for columns or tables
 \item \alert<7>{Zu jeder Bestellung gehört ein Kunde}.%
 \item Wir könnten für jede Bestellung den \sqlil{id}-Wert des Kunden-Eintrags aus der \sqlil{customer}-Tabelle\only<6->{ als Fremdschlüssel~(Foreign Key)} speichern\only<6->{\cite{PGDG:PD:FK}}.%
 \only<-7>{%
-\item Mit diesem Wert können wir dann den Kunden-Record in der Tabelle \sqlil{customer} finden und z.B.~den Namen und die Adresse auslesen.%
+\item Mit diesem Wert können wir dann den Kunden-Record in der Tabelle \sqlil{customer} finden und \DEzB~den Namen und die Adresse auslesen.%
 \item<2-> Wir würden also eine neue Spalte namens~\sqlil{customer} in der Tabelle~\sqlil{demand} erstellen, die vom Datentype~\sqlil{INT} ist~(denn die Spalte \sqlil{id} in er Tabelle~\sqlil{customer} ist ja auch ein~\sqlil{INT}).%
 \item<3-> Wie stellen wir sicher, dass die Zahlen, die wir in der Spalte~\sqlil{customer} unserer neuen Tabelle~\sqlil{demand} speichern, wirklich passende Kunden-\sqlil{id}s sind?%
 \item<4-> Irgendwie müssen wir dem DBMS sagen:~\emph{\inQuotes{Diese neue Spalte hier referenziert die Spalte~\sqlil{id} der Tabelle~\sqlil{customer}. Es dürfen nur Werte auftreten, die auch dort vorkommen!}}%
@@ -121,7 +121,7 @@ Never use \sql\ keywords or reserved words as names, e.g., for columns or tables
 \item Zu jeder Bestellung gehört ein Produkt.%
 \item<2-> Wir könnten für jede Bestellung den \sqlil{id}-Wert des Produkt-Eintrags aus der \sqlil{product}-Tabelle als Fremdschlüssel~(Foreign Key) speichern\cite{PGDG:PD:FK}.%
 \only<-7>{%
-\item<3-> Mit diesem Wert können wir dann den Produkt-Record in der Tabelle \sqlil{product} finden und z.B.~den Preis auslesen.%
+\item<3-> Mit diesem Wert können wir dann den Produkt-Record in der Tabelle \sqlil{product} finden und \DEzB~den Preis auslesen.%
 \item<4-> Wir würden also eine neue Spalte namens~\sqlil{product} in der Tabelle~\sqlil{demand} erstellen, die vom Datentype~\sqlil{INT} ist~(denn die Spalte \sqlil{id} in er Tabelle~\sqlil{product} ist ja auch ein~\sqlil{INT}).%
 \item<5-> Dazu müssen wir \sqlil{REFERENCES product(id)} schreiben, wobei sich \sqlil{product} auf die Tabelle~\sqlil{product} und \sqlil{id}~auf die Spalte~\sqlil{id} der Tabelle~\sqlil{product} bezieht.%
 \item<6-> Dadurch wird sichergestellt, dass es nur Bestellungen geben kann, deren \sqlil{product}-Wert zu einer Zeile in der Tabelle~\sqlil{product} passt.%

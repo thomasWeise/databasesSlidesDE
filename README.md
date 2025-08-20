@@ -2,7 +2,7 @@
 
 ## 1. Introduction
 
-*"Databases"*, zu Deutsch "Datenbanken", ist sowohl ein Buch als auch ein Kurs der [Universität Hefei](http://www.hfuu.edu.cn/english/) ([合肥大学](http://www.hfuu.edu.cn/)).
+*"Databases"*, zu Deutsch "Datenbanken", ist sowohl ein Buch als auch ein Kurs der [Universität Hefei](http://www.hfuu.edu.cn/english) ([合肥大学](http://www.hfuu.edu.cn)).
 Hier stellen wir alle Ressourcen des Kurses zur Verfügung.
 
 Das Ziel dieses Kurses und Buches ist es, sowohl Bachelor- als auch Masterstudenten das Thema *Datenbanken* zu vermitteln.
@@ -61,7 +61,7 @@ Dieses Repository beinhaltet zwei Arten von Materialien:
 Materialien, die ich (Thomas Weise) selbst erstellt habe und solche, die von anderen erstellt wurden.
 
 Die große Mehrzahl des Materials wurde von mir persönlich erstellt.
-Dieses und ausschließlich dieses Material steht unter der Attribution-NonCommercial-ShareAlike 4.0 International Lizenz (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), siehe [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/).
+Dieses und ausschließlich dieses Material steht unter der Attribution-NonCommercial-ShareAlike 4.0 International Lizenz (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), siehe [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0).
 
 Das Kursmaterial beinhaltet auch Bilder und Grafiken, die von Anderen erstellt wurden.
 Diese sind explizit markiert und stehen unter der Lizenz ihrer Autoren.
@@ -92,6 +92,18 @@ Die Liste mit Dateien, die nicht unter der CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0
 + das [yEd](https://www.yworks.com/products/yed) Logo: The yEd logo is protected by copyright. yEd is a registered trademark of [yWorks GmbH](https://www.yworks.com). Unauthorized use, reproduction, or distribution is strictly prohibited., e.g.,
     - slides/05_software_und_literatur/graphics/yEdLogo.pdf
     - slides/05_software_und_literatur/graphics/yEdLogo.svg
++ die Fotos im Ordner "slides/01_organisation/graphics":
+  - [Chemnitz Karl-Marx-Kopf (chemnitzKM.jpg)](https://global-geography.org/af/Geography/Europe/Germany/Pictures/Saxony/Chemnitz_-_Brueckenstrasze_Karl-Marx-Monument_1) Ewald Judt [CC BY 4.0](https://creativecommons.org/licenses/by/4.0)
+  - [Chemnitz Roter Turm (chemnitzRT.jpg)](https://global-geography.org/af/Geography/Europe/Germany/Pictures/Saxony/Chemnitz_-_Red_Tower) Ewald Judt [CC BY 4.0](https://creativecommons.org/licenses/by/4.0)
+  - [Chemnitz Rathaus (chemnitzARH.jpg)](https://global-geography.org/af/Geography/Europe/Germany/Pictures/Saxony/Chemnitz_-_Marktet_Square_Old_Town_Hall)  Ewald Judt [CC BY 4.0](https://creativecommons.org/licenses/by/4.0)
+  - [TU Chemnitz Strana (chemnitzTUC.jpg)](https://dium.uniud.it/it/didattica/erasmus/accordi-attivi/technische-universit%C3%A4t-chemnitz) Kolossos [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+  - [Chemnitz Market (chemnitzMA.jpg)](https://pixabay.com/photos/chemnitz-christmas-christmas-market-2847837) [eagle77](https://pixabay.com/users/eagle77-6271011) [Pixabay Content License](https://pixabay.com/service/license-summary)
+  - [Chemnitz Schlossteich (chemnitzST.jpg)](https://pixabay.com/photos/chemnitz-castle-pond-pond-lake-3552667) [eagle77](https://pixabay.com/users/eagle77-6271011) [Pixabay Content License](https://pixabay.com/service/license-summary)
+  - [Chemnitz City Center (chemnitzCC.jpg)](https://pixabay.com/photos/chemnitz-building-red-tower-1752712) [Firstclasspixel](https://pixabay.com/users/firstclasspixel-2344651) [Pixabay Content License](https://pixabay.com/service/license-summary)
+  - [Kassel Königsplatz (kasselKP.jpg)](https://pixabay.com/photos/kassel-kassel-downtown-downtown-628483) [till_westhof](https://pixabay.com/users/till_westhof-604861) [Pixabay Content License](https://pixabay.com/service/license-summary)
+  - [Kassel Herkules (kasselHERC.jpg)](https://pixabay.com/photos/hercules-statue-stairs-kassel-park-4174005) [webandi](https://pixabay.com/users/webandi-1460261) [Pixabay Content License](https://pixabay.com/service/license-summary)
+  - [Kassel Mountain Park (kasselMP.jpg)](https://pixabay.com/photos/kassel-world-heritage-1092096) [Barni1](https://pixabay.com/users/barni1-773830) [Pixabay Content License](https://pixabay.com/service/license-summary)
+  - [Kassel Schloss Wilhelmshöhe (kasselWH.jpg)](https://pixabay.com/photos/wilhelmsh%C3%B6he-castle-kassel-1201140) [Pixabay Content License](https://pixabay.com/service/license-summary)
 
 Sie können die neuesten Versionen des Materials unter <https://thomasweise.github.io/databases> finden.
 Diese Versionen können sich ändern, da wir diesen Kurs aktiv weiterentwickeln.
@@ -112,6 +124,6 @@ Wenn Sie weitere Fragen oder Vorschläge haben, kontaktieren Sie bitte
 Prof. Dr. Thomas Weise (汤卫思教授)
 vom Institute of Applied Optimization (应用优化研究所, IAO)
 der School of Artificial Intelligence and Big Data ([人工智能与大数据学院](http://www.hfuu.edu.cn/aibd))
-der [Hefei University](http://www.hfuu.edu.cn/english/) ([合肥大学](http://www.hfuu.edu.cn/)),
+der [Hefei University](http://www.hfuu.edu.cn/english) ([合肥大学](http://www.hfuu.edu.cn)),
 in Hefei, Anhui, China (中国安徽省合肥市)
 via email an [tweise@hfuu.edu.cn](mailto:tweise@hfuu.edu.cn) mit CC an [tweise@ustc.edu.cn](mailto:tweise@ustc.edu.cn).

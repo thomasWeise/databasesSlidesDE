@@ -103,7 +103,7 @@ Wir müssen die Spalte also \emph{nicht} mit \sqlil{UNIQUE} annotieren.%
 \item<3-> Wenn wir zu unserer Tabelle~\sqlil{product} zurückgehen, stellen wir fest, dass wir problemlos \sqlil{' bla     blab  '}, \sqlil{' '}, oder sogar die leere Zeichenkette~\sqlil{''} als Produktname eingeben können.\uncover<4->{ Nur weglassen können wir den Namen wegen \sqlil{NOT NULL} nicht\dots}%
 \item<5-> Was bedeutet eigentlich \emph{korrekt}?%
 \item<6-> Unser DBMS kann nicht feststellen, ob der Kunde Herr Bebbo tatsächlich Bebbo heißt.%
-\item<7-> Was wir aber verhinden können, ist z.B.\ das aus Versehen \inQuotes{ Bebbo} statt \inQuotes{Bebbo} eingegeben wird.%
+\item<7-> Was wir aber verhinden können, ist \DEzB\ das aus Versehen \inQuotes{ Bebbo} statt \inQuotes{Bebbo} eingegeben wird.%
 \item<8-> Und wir können leere Zeichenfolgen verbieten.%
 \item<9-> Mit Hilfe von Einschränkungen, die als \sqlil{CONSTRAINT} formuliert werden\cite{PGDG:PD:C}.%
 \end{itemize}%
@@ -121,7 +121,7 @@ Wir müssen die Spalte also \emph{nicht} mit \sqlil{UNIQUE} annotieren.%
 \begin{frame}%
 \frametitle{Die Spalte \texttt{name}:~\texttt{CONSTRAINT}}%
 \begin{itemize}%
-\item Wir wollen die Werte in der Spalte \sqlil{name} so einschränken, dass sie mit einem \inQuotes{Wort-Zeichen}, z.B.~ \inQuotes{A}, \inQuotes{b}, oder~\inQuotes{张}, beginning und enden müssen.\uncover<2->{ Dazwischen erlauben wir beliebige Zeichen.}%
+\item Wir wollen die Werte in der Spalte \sqlil{name} so einschränken, dass sie mit einem \inQuotes{Wort-Zeichen}, \DEzB~ \inQuotes{A}, \inQuotes{b}, oder~\inQuotes{张}, beginning und enden müssen.\uncover<2->{ Dazwischen erlauben wir beliebige Zeichen.}%
 \item<3-> Man kann natürlich immer noch \inQuotes{sgjw9345 s熊猫fki345Q} als Name eingeben\only<3>{.}\uncover<4->{ {\dots} aber Leerzeichen oder Zahlen am Anfang und Ende sind unmöglich und leere Zeichenketten auch.}%
 \item<5-> Bisher haben wir keine Möglichkeit, so eine Einschränkung zu formulieren.%
 \item<6-> Mit \sqlil{LIKE} (wie in unsere SQL-Anfrage nach Schuhen\dots) geht es leider nicht.%
@@ -134,7 +134,7 @@ Wir müssen die Spalte also \emph{nicht} mit \sqlil{UNIQUE} annotieren.%
 \begin{itemize}%
 \item Reguläre Ausdrücke -- \glsreset{regex}\glspl{regex} -- sind Vorlagen für Zeichenketten, die mit anderen Zeichenketten verglichen werden können.%
 \item<2-> Wenn ein regulärer Ausdruck zu einer Zeichenkette passt, dann spricht man von einem \emph{match}.%
-\item<3-> \Pglspl{regex} werden von sehr vielen Werkzeugen und Programmiersprachen~(wie z.B.~\python\cite{programmingWithPython}) unterstützt -- und auch von \sql\ und, daher, auch von \postgresql\cite{PGDG:PD:PRE}.%
+\item<3-> \Pglspl{regex} werden von sehr vielen Werkzeugen und Programmiersprachen~(wie \DEzB~\python\cite{programmingWithPython}) unterstützt -- und auch von \sql\ und, daher, auch von \postgresql\cite{PGDG:PD:PRE}.%
 \item<4-> \Pglspl{regex} sind ein komplett anderes Fachgebiet.
 \item<5-> Sie können darüber in \citetitle{PGDG:PD:PRE}\cite{PGDG:PD:PRE} nachlesen.%
 \item<6-> Hier wollen wir sie nur kurz vorstellen und direkt einsetzen.%
@@ -308,7 +308,7 @@ Wir müssen die Spalte also \emph{nicht} mit \sqlil{UNIQUE} annotieren.%
 \item<2-> Zum einen erkennnen wir zwar \sqlil{'China'} und \sqlil{'china'} beides als China\only<-2>{\dots}\uncover<3->{, würden 中国 aber nicht erkennen.}%
 \item<3-> Zum anderen würden wir eine \emph{Donut Factory Vive la France} in Shanghai, China sowohl als Französisch als auch als inländisch erkennen.%
 \item<4-> Um das letztere Problem zu lösen, könnten wir die Adresse in mehrere Spalten aufteilen, mit einer Spalte für das Land.%
-\item<5-> Selbst dann hätten wir noch Probleme mit verschiedenen Schreibweisen für Länder, z.B.~China, china, 中国, People's Republic of China, PRC, P.R.C., 中华人民共和国, République populaire de Chine, Chine, usw.%
+\item<5-> Selbst dann hätten wir noch Probleme mit verschiedenen Schreibweisen für Länder, \DEzB~China, china, 中国, People's Republic of China, PRC, P.R.C., 中华人民共和国, République populaire de Chine, Chine, usw.%
 \item<6-> Als endgültige Lösung würden wir wohl eine weitere Tabelle nur für Länder brauchen, die von unserer Kundentabelle refereziert wird.%
 \item<7-> Das wollen wir jetzt nicht tun {\dots} aber in der nächsten Einheit lernen Sie, wie das prinzipiell geht.%
 \end{itemize}%
@@ -320,7 +320,7 @@ Wir müssen die Spalte also \emph{nicht} mit \sqlil{UNIQUE} annotieren.%
 \frametitle{Zusammenfassung}%
 \begin{itemize}%
 \item Jetzt haben wir unsere zweite Tabelle erstellt, die Tabelle~\sqlil{customer}.%
-\item<2-> Wir haben einige neue Funktionen zum Arbeiten mit Texten gelernt, z.B.~\pglspl{regex} und \sqlil{ILIKE}.%
+\item<2-> Wir haben einige neue Funktionen zum Arbeiten mit Texten gelernt, \DEzB~\pglspl{regex} und \sqlil{ILIKE}.%
 \item<3-> Wir haben gelernt, wie wir mit \sqlil{CONSTRAINT} zusätzliche, komplexere Einschränkungen beim Erstellen einer Tabelle definieren kann.%
 \item<4-> Wir haben gelernt, dass wir Daten in \sqlil{SELECT}-Anfragen mit \sqlil{GROUP BY} gruppieren können und Aggregatfunktionen wir \sqlil{COUNT} über die Gruppen berechnen können.%
 \item<5-> Und wir haben ein wenig ein Gefühl dafür entwickelt, dass Daten wie \inQuotes{Adressen} auf den ersten Blick einfach aussehen, auf den zweiten Blick aber doch komplexer seien können als erwartet.%

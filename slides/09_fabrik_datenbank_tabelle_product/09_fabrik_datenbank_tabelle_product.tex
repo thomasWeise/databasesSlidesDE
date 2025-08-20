@@ -67,7 +67,7 @@
 \end{itemize}%
 \uncover<3->{%
 \bestPractice{tableName}{%
-Tabellennamen sollten (Englische) Nomen im Singular sein, mit Kleinbuchstaben geschrieben, und ohne Prefix~(z.B.~kein \inQuotes{tbl\_} am Anfange haben)~\cite{B2025DS:SBPASG}.%
+Tabellennamen sollten (Englische) Nomen im Singular sein, mit Kleinbuchstaben geschrieben, und ohne Prefix~(\DEzB~kein \inQuotes{tbl\_} am Anfange haben)~\cite{B2025DS:SBPASG}.%
 }%
 \uncover<4->{\begin{itemize}%
 \item Nennen wir unsere Tabelle für Produkte also \textil{product}.%
@@ -182,7 +182,7 @@ Diese sind von Klammern umrahmt~(\textil{(...)}) und durch Kommas~(\textil{,}) g
 }%
 \only<8->{ Preise sind aber keine Fließkommazahlen!}%
 %
-\item<9-> Preise könnten Ganzzahlen sein, z.B. die Anzahl Cent oder 分.\only<10-11>{%
+\item<9-> Preise könnten Ganzzahlen sein, \DEzB\ die Anzahl Cent oder 分.\only<10-11>{%
 \begin{itemize}%
 \item Dann muss man sie aber jedesmal in \inQuotes{umrechnen}, wenn man sie anzeigen oder mit ihnen rechnen will.%
 \item<11-> Aber das ist fehleranfällig\cite{W2020HSISCVISS}.%
@@ -290,7 +290,7 @@ Geldwerte müssen mit dem Datentype \sqlilIdx{DECIMAL} gespeicher werden\cite{C2
 \item<4-> Die Produktnamen, gespeichert in \sqlil{name}, sind einmalig~(\sqlil{UNIQUE}).%
 \item<5-> Wir könnten diese Spalte als Primärschlüssel nehmen.%
 \item<6-> Dann würde die Tabelle für Bestellungen für jede Bestellung den Namen des Produktes mitspeichern.%
-\item<7-> Über den Namen können wir dann die Eigenschaften, z.B.\ den Preis, auslesen.%
+\item<7-> Über den Namen können wir dann die Eigenschaften, \DEzB\ den Preis, auslesen.%
 \item<8-> Aber was, wenn wir irgendwann den Namen eines Produktes ändern?%
 \item<9-> Dann geht die Verbindung verloren\dots%
 \end{itemize}%
@@ -567,7 +567,7 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 \item In dieser Einheit haben wir sehr, sehr viel gelernt.%
 \item<2-> Wir haben gelernt, wie man eine Tabelle in einem SQL-basierten relationalen DBMS erzeugt, nämlich mit \sqlil{CREATE TABLE}.%
 \item<3-> Wir haben mehrere Datentypen kennengelernt, von \sqlil{INT} über \sqlil{VARCHAR} bis \sqlil{DECIMAL}.%
-\item<4-> Wir haben gelernt, wie man die möglichen Werte für eine Spalte einschränkt, z.B.~mit \sqlil{UNIQUE}, \sqlil{NOT NULL}, or \sqlil{PRIMARY KEY}.%
+\item<4-> Wir haben gelernt, wie man die möglichen Werte für eine Spalte einschränkt, \DEzB~mit \sqlil{UNIQUE}, \sqlil{NOT NULL}, or \sqlil{PRIMARY KEY}.%
 \item<5-> Wir haben gelernt, was ein Primärschlüssel~(\sqlil{PRIMARY KEY}) ist, nämlich die Spalte(n), durch deren Wert jede Zeile in einer Tabelle eindeutig identifiziert (und von anderen Tabellen referenziert) werden kann.%
 \item<5-> Wir haben gelernt, dass man mit \sqlil{INSERT INTO} Zeilen an eine Tabelle anhängen kann.%
 \item<6-> Und wir haben gelernt, wie man mit \sqlil{SELECT FROM} Werte aus einer Tabelle ausliest.%
