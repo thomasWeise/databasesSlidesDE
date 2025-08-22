@@ -1,0 +1,265 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{14.~psycopg Installieren}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\locate{}{\parbox{0.94\paperwidth}{%
+%
+\begin{itemize}%
+\item Wir wollen nun von \python\ aus auf unsere \glslink{db}{Datenbank} zugreifen.%
+\item<2-> Dafür verwenden wir das Paket \psycopg\cite{VDGE2010P}.%
+\item<3-> Das müssen wir zuerst installieren.\uncover<4->{ %
+Das geht auf zwei Arten\only<-4>{.}\uncover<5->{:%
+\begin{enumerate}%
+\item Für den Produktivbetrieb von Programmen würden wir Pakete immer über das \glslink{terminal}{Terminal} in einem \glslink{virtualEnvironment}{virtuellen Environment} installieren.%
+\item<6-> Arbeiten wir mit \pycharm, dann könne wir das \glslink{virtualEnvironment}{virtuelle Environment} genauso gut in \pycharm\ direkt verwenden, wobei dieser Ansatz nur für Softwareentwicklung und nicht für den Produktivbetrieb geeignet ist.%
+\end{enumerate}%
+}}%
+\end{itemize}}}{0.03}{0.52}%
+%
+\locateGraphic[The \href{https://www.python.org}{\python\ programming language} logo is under the copyright of its owners.]{1-}{width=0.5\paperwidth}{../05_software_und_literatur/graphics/pythonLogo}{0.1}{0.15}%
+\locateGraphic[Copyright \textcopyright~Gabriella Albano and the Psycopg team]{2-}{width=0.15\paperwidth}{../05_software_und_literatur/graphics/psycopgLogo}{0.675}{0.1}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Virtuelle Environments~(1)}%
+\begin{itemize}%
+\item Aber was sind virtuelle Environments~(\glsFullpl{virtualEnvironment}) eigentlich?%
+\item<2-> Für \python\ gibt es sehr sehr viele verschiedene Softwarepakete, die zusätzliche Funktionalität anbieten.%
+\item<3-> Fast alle gibt es in verschiendenen Versionen, weil sich Software ja weiterentwickelt.%
+\item<4-> Manchmal bietet eine neue Version neue Funktionalität an, manchmal wird auch eine alte Funktionalität entfernt, machmal ändern sich \glsFullpl{API}.%
+\item<5-> Nicht alle Versionen eines Paketes sind also kompatibel.%
+\item<6-> Jedes Paket kann selber wieder\only<7->{ bestimmte Versionen} andere Pakete brauchen.%
+\item<7-> Hat man verschiedene \python\ Programme, so kann es sein, dass ein Paket~\numpy\ mindest in Version~2.3.0 braucht und ein anderes \numpy\ höchstens in Version~1.26.4.%
+\item<8-> Dann kann man beide Programme nicht \inQuotes{zusammen} installieren.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Virtuelle Environments~(2)}%
+\begin{itemize}%
+\item Die Lösung für dieses Problem sind virtuelle Environments.
+\item<2-> Ein virtuelles Environment ist im Grunde ein Ordner im System, in dem sich eine eigenständige \python-Installation befindet.%
+\item<3-> In diesem Ordner sind dann auch alle installierten Pakete.%
+\item<4-> Nun kann man jedes \python-Programm, dass man braucht, in ein separates virtuelles Environment installieren.%
+\item<5-> Somit können keine (vermeidbaren) Versionskonflikte mehr auftreten.
+\item<6-> Gleichgültig ob wir \psycopg\ für den Produktiveinsatz brauchen oder ob wir nur bequem in \pycharm\ Software entwickeln wollen, wir werden also auf jeden Fall ein virtuelles Environment verwenden.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Installation im Terminal}%
+%
+\begin{frame}%
+\frametitle{Programme im Terminal}%
+\begin{itemize}%
+\item \glslink{db}{Datenbanken} sind Speicher für große Mengen strukturierter Daten.%
+\item<2-> Sie bilden die Backends von modernen Applikationen.%
+\item<3-> Sie beinhalten die Daten, die Geschäfte antreiben sowie den Inhalt riesiger Webseiten.%
+\item<4-> Wir können uns auf Datenbanken über Applikationen und Programme verbinden, um mit den Daten zu arbeiten.%
+\item<5-> Diese sind oftmals Middlewares, wie Web Services oder Application \glslink{server}{Servers}, die Geschäftslogik implementieren und dafür sorgen, dass wir mit den Daten korrekt arbeiten.%
+\item<6-> Solche Applikationen sind Programme, die, wenn wir sie mit \python\ entwickelt haben, oftmals im \glslink{terminal}{Terminal} laufen.%
+\item<7-> Niemals würde man sie in einer \glslink{ide}{IDE} wie \pycharm\ starten.%
+\end{itemize}%
+\uncover<8->{\cquotation{programmingWithPython}{The only proper way to run a \python\ application in a productive scenario is in the terminal.}}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Psycopg im Terminal und Virtuellen Environment}%
+\begin{itemize}%
+%
+\only<-4>{%
+\item Beginnen wir also mit einer Installation im \glslink{terminal}{Terminal}.%
+\item<2-> Wir machen die Installation hier nur unter \ubuntu\ \linux.%
+\item<3-> Unter \microsoftWindows\ funktioniert es fast genauso\only<-3>{.}\uncover<4->{ Sie können Beispiele dafür im Kurs~\citetitle{programmingWithPython}~\bracketCite{programmingWithPython} finden.}%%
+}%
+%
+\only<-7>{%
+\item<5-> Wir öffnen also ein Terminal via \ubuntuTerminal.%
+\item<6-> Wir gehen in das Verzeichnis, in dem wir später unser Program ausführen möchten.%
+\item<7-> Wir erstellen einen neuen Ornder namens \textil{.venv} um dort das neue \glslink{virtualEnvironment}{virtuelle Environment} rein zu installieren.%
+}%
+%
+\only<-8>{%
+\item<8-> Wir initialisieren ein leeres \glslink{virtualEnvironment}{virtuelles Environment} in diesem Ordnung mit dem Kommando \bashil{python3 -m venv --upgrade-deps .venv} und~\keys{\enter}.%
+}%
+%
+\only<-10>{%
+\item<9-> Das \glslink{virtualEnvironment}{Virtuelle Environment} wurde erstellt.%
+\item<10-> Wir aktivieren das Environment mit dem Kommando \bashil{source .venv/bin/activate} und~\keys{\enter}.%
+}%
+%
+\only<-13>{%
+\item<11-> Solange ein virtuelles Environment aktiv ist, werden alle neue Pakete in dieses Environment installiert und \python-Programme laden ihre benötigten Pakete aus diesem Environment.%
+\item<12-> Sie sehen auch, dass sich der Promt des Terminals geändert hat, was as aktive Environment anzeigt.%
+\item<13-> Beachten Sie: Das Environment ist nur im aktuellen Terminal aktiv.%
+}%
+%
+\only<-17>{%
+\item<14-> Unter \python\ installieren wir Pakete normalerwise mit Hilfe des Paketmanagers~\pip.%
+}\only<-18>{%
+\item<15-> \pip~nutzt automatisch das aktuelle virtuelle Environment, wenn eines aktiv ist.%
+}\only<-19>{%
+\item<16-> Wir installieren \psycopg\ in unser neues Environment in dem wir \bashil{pip install psycopg} schreiben und \keys{\enter}~drücken.%
+\item<17-> Der \pip-Installer schlägt nun in \pypi\ nach und lädt das Paket herunter.%
+\item<18-> Hier wurde \psycopg\ in Version~\textil{3.2.4} heruntergeladen und installiert.%
+\item<19-> Bei Ihnen wird bestimmt eine neue Version installiert.%
+}%
+%
+%\only<-21>{%
+\item<20-> Wir sind fertig und können das virtuelle Environment deaktivieren.%
+\item<21-> Der Prompt ändert sich wieder zurück.%
+\item<22-> Von jetzt an wird wieder die Systeminstallation von \python\ verwendet.%
+\item<23-> Wenn wir das Paket brauchen, dann müssen wir das Environment wieder aktivieren.%
+%}%
+%
+\end{itemize}%
+%
+\locateGraphic{5-7}{width=0.7\paperwidth}{graphics/pipInstallPyscopgVenv1mkdir}{0.15}{0.525}%
+\locateGraphic{8}{width=0.7\paperwidth}{graphics/pipInstallPyscopgVenv2venv}{0.15}{0.525}%
+\locateGraphic{9-10}{width=0.7\paperwidth}{graphics/pipInstallPyscopgVenv3activate}{0.15}{0.525}%
+\locateGraphic{11-13}{width=0.7\paperwidth}{graphics/pipInstallPyscopgVenv4activated}{0.15}{0.525}%
+\locateGraphic{14-19}{width=0.7\paperwidth}{graphics/pipInstallPyscopgVenv5pip}{0.15}{0.525}%
+\locateGraphic{20-}{width=0.7\paperwidth}{graphics/pipInstallPyscopgVenv6deactivate}{0.15}{0.525}%
+\end{frame}%
+%
+\section{PyCharm:~Beispiele Herunterladen und Pyscopg Installieren}%
+%
+\begin{frame}%
+\frametitle{Git und GitHub}%
+\begin{itemize}%
+\item Die \pycharm\ \glslink{ide}{IDE} erlaubt uns, im Grunde in einem Schritt die Beispiel-Kodes für diesen Kurs von \github\ herunterzuladen und die notwendigen \python-Pakete installieren.%
+\item<2-> Dabei treffen wir auf zwei Konzepte: \git\ und die bereits diskutierten virtuellen Environments.%
+\item<3-> \git\ ist ein verteiltes \glslink{VCS}{Versionsmanagementsystem} -- es erlaubt uns, sogenannte Repositorie zu erstellen, die im Grunde Verzeichnisse sind deren Änderungs- und Versionsgeschichte mit gespeichert wird und über die man kollaborativ arbeiten kann.%
+\item<4-> Jedes Teammitglied arbeitet dazu auf einer lokalen Kopie des Kodes und kann ihre lokalen Änderungen in das Repository \inQuotes{committen} sowie die Änderungen anderer Teammitglieder herunterladen.%
+\item<5-> \github\ ist eine Webseite, auf der wir \git-Repositories online anlegen können.%
+\item<6-> Alle Beispiele dieses Kurses sind im \git\ Repository \expandafter\url{\databasesCodeRepo} auf \github\ gespeichert.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Git und Klonen}%
+\begin{itemize}%
+\item Der Prozess des Herunterladens eines \git-Repositories~(inklusive seiner Versiongeschichte) wird \emph{klonen} genannt.%
+\item<2-> \pycharm\ ist eine \glslink{ide}{IDE} für die Softwareentwicklung in \python\ die \git\ unterstützt.%
+\item<3-> Sie können \pycharm\ verwenden, um \git-Repositories zu klonen und ein lokales virtuelles Environment zu erstellen, in dem die benötigten Pakete der Repositories installiert werden.%
+\item<4-> Da wir auf unsere \postgresql\ Datenbank über das \python-Paket \psycopg\ zugreifen, definiert unser Repository dieses Paket als benötigte Abhängigkeit.%
+\item<5-> Sie können also in einem Schritt das Repository mit den Beispielen klonen und die benötigten Pakete installieren.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Beispiel-Repository Klonen und Psycopg Installieren mit PyCharm}%
+\begin{itemize}%
+%
+\only<-1>{%
+\item Um ein Repository zu klonen, klicken Sie im Willkommensbildschirm von \pycharm\ auf~\menu{Clone Repository}.%
+}\only<-2>{%
+\item<2-> Alternativ können Sie auch im \menu{File}-Menü auf \menu{Project from Version Control\dots} klicken.%
+}\only<-3>{%
+\item<3-> Ein neues Formal öffnet sich. Wir müssen hier die \pgls{URL} des \git\ Repositories eingeben sowie den lokalen Ort wo die Dateien gespeichert werden sollen.%
+}\only<-4>{%
+\item<4-> Die \pgls{URL} unseres Repositories ist \expandafter\url{\databasesCodeRepo}. %
+Also lokalen Ort wähle ich den temporären Ordner meines Systems aus, weil ich die Daten gleich wieder löschen will. %
+Sie werden einen anderen Ort auswählen. %
+Wir klicken auf \menu{Clone}.%
+}\only<-5>{%
+\item<5-> Das Klonen beginnt und das Repository wird heruntergeladen.%
+}\only<-6>{%
+\item<6-> Eventuell werden wir gefragt, ob wir diesem Projekt vertrauen wollen. Wenn Sie geprüft haben, dass alles OK ist, können Sie dem zustimmen und auf \menu{Trust Project} klicken.%
+}\only<-7>{%
+\item<7-> Das Klonen ist fertig. %
+Das Repository wurde heruntergeladen. %
+Eventuell bemerkt \pycharm\ bereits, dass dieses Projekt \python-Pakete braucht und bietet uns an, einen \python-Interpreter zu konfigurieren.%
+}\only<-8>{%
+\item<8-> Wir können den \python-Interpreter auch konfigurieren, in dem wir auf das Menü~\menu{File} klicken und dann \menu{Settings\dots} auswählen, oder in dem wir direkt \keys{\ctrl+\Alt+S} drücken.%
+}\only<-9>{%
+\item<9-> Wir gehen zu den \menu{Python}-Einstellungen und wählen \menu{Interpreter} aus. %
+Dann klicken wir~\menu{Add Interpreter}.%
+}\only<-10>{%
+\item<10-> {\dots}und dann klicken wir auf \menu{Add Local Interpreter\dots}.%
+}\only<-11>{%
+\item<11-> In dem sich öffnenden Dialog wählen wir \menu{Generate new} aus. %
+Als \emph{Type} wählen wir \menu{Virtualenv}. %
+Als Ordner fügen wir einfach \textil{.venv} an den Projektordner an. %
+Dann klicken wir~\menu{OK}.%
+}\only<-12>{%
+\item<12-> Und dann klicken wir nochmal~\menu{OK}.%
+}\only<-13>{%
+\item<13-> Wie Sie sehen, wurde der Ordner \textil{.venv} erstellt. %
+Hier befindet sich das virtuelle Environment und hier werden die benötigten \python-Pakete lokal installiert.%
+}\only<-14>{%
+\item<14-> Wir öffnen die Datei \textil{requirements.txt} im Verzeichnis des Projekts. %
+Diese Datei listet alle \python-Pakete, die unser Projekt braucht. %
+Dazu gehört \textil{psycopg} in Version~\textil{3.2.4}. %
+(Natürlich werden wir die Version in Zukunft updaten.)%
+}\only<-15>{%
+\item<15-> Wir klicken auf die gelben Glühbirne bzw.\ die gelben Notifikationen. woraufhin sich ein Dialog öffnen, der uns fragt, ob wir nicht \psycopg\ installieren möchten. %
+Wir klicken da drauf.%
+}\only<-16>{%
+\item<16-> Wir werden gebeten, die Installation zu bestätigen. %
+Wir klicken auf~\menu{Yes}.%
+}\only<-17>{%
+\item<17-> Das Paket wird heruntergeladen.%
+}\only<-18>{%
+\item<18-> Das Paket wurde installiert. %
+Gegebenenfalls informiert uns \pycharm, dass eine neue Version des Pakets zur Verfügung steht.%
+}%
+%
+\item<19-> Tatsächlich können wir das Paket im Ordner \textil{.venv} sehen.%
+%
+\end{itemize}%
+%
+\locateGraphicTB{1}{width=0.45\paperwidth}{graphics/cloneAndSetupPsycopg01AwelcomeScreenClone}{0.275}{0.3}%
+\locateGraphicTB{2}{width=0.45\paperwidth}{graphics/cloneAndSetupPsycopg01BcloneRepository}{0.275}{0.3}%
+\locateGraphicTB{3}{width=0.45\paperwidth}{graphics/cloneAndSetupPsycopg02enterUrl}{0.275}{0.3}%
+\locateGraphicTB{4}{width=0.45\paperwidth}{graphics/cloneAndSetupPsycopg03urlEntered}{0.275}{0.3}%
+\locateGraphicTB{5}{width=0.45\paperwidth}{graphics/cloneAndSetupPsycopg04cloning}{0.275}{0.3}%
+\locateGraphicTB{6}{width=0.45\paperwidth}{graphics/cloneAndSetupPsycopg05trustQuestion}{0.275}{0.3}%
+\locateGraphicTB{7}{width=0.6\paperwidth}{graphics/cloneAndSetupPsycopg06cloned}{0.2}{0.3}%
+\locateGraphicTB{8}{width=0.6\paperwidth}{graphics/cloneAndSetupPsycopg07settings}{0.2}{0.3}%
+\locateGraphicTB{9}{width=0.5\paperwidth}{graphics/cloneAndSetupPsycopg08interpreter}{0.25}{0.3}%
+\locateGraphicTB{10}{width=0.5\paperwidth}{graphics/cloneAndSetupPsycopg09addLocalInterpreter}{0.25}{0.3}%
+\locateGraphicTB{11}{width=0.5\paperwidth}{graphics/cloneAndSetupPsycopg10localInterpreter}{0.25}{0.3}%
+\locateGraphicTB{12}{width=0.5\paperwidth}{graphics/cloneAndSetupPsycopg11ok}{0.25}{0.3}%
+\locateGraphicTB{13}{width=0.6\paperwidth}{graphics/cloneAndSetupPsycopg12venv}{0.2}{0.26}%
+\locateGraphicTB{14}{width=0.6\paperwidth}{graphics/cloneAndSetupPsycopg13requirementsTxt}{0.2}{0.3}%
+\locateGraphicTB{15}{width=0.6\paperwidth}{graphics/cloneAndSetupPsycopg14installPackage}{0.2}{0.28}%
+\locateGraphicTB{16}{width=0.65\paperwidth}{graphics/cloneAndSetupPsycopg15installPackageOk}{0.175}{0.25}%
+\locateGraphicTB{17}{width=0.6\paperwidth}{graphics/cloneAndSetupPsycopg16installingPackage}{0.2}{0.25}%
+\locateGraphicTB{18}{width=0.65\paperwidth}{graphics/cloneAndSetupPsycopg17installedPackage}{0.175}{0.29}%
+\locateGraphicTB{19}{width=0.65\paperwidth}{graphics/cloneAndSetupPsycopg18installedPackageInVenv}{0.175}{0.25}%
+%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Es gibt zwei grundlegende Arten \python-Pakete zu installieren.%
+\item<2-> Wollen wir eine Applikation im Produktiveinsatz benutzen, dann installieren wir die Pakete im Terminal.%
+\item<3-> Arbeitem wir mit \pycharm\ in der Software-Entwicklung, dann wollen können wir Pakete auch direkt in der \glslink{ide}{IDE} installieren.%
+\item<4-> Beide Arten verwenden \glslink{virtualEnvironment}{virtuelle Environments}.%
+\item<5-> Sie können mehr über diese Verfahren in unserem Schwesterkurs \citetitle{programmingWithPython}~\bracketCite{programmingWithPython} lernern.%
+\item<6-> So oder so, wir können nun \psycopg\ verwenden, um von \python\ aus auf \postgresql-Datenbanken zuzugreifen.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%

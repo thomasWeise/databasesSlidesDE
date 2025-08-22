@@ -43,6 +43,7 @@ Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.gith
 12. [Fabrik-Datenbank: Joins und Views](https://thomasweise.github.io/databasesSlidesDE/12_fabrik_datenbank_joins_und_views.pdf)
 13. [Fabrik-Datenbank: Daten ändern und löschen](https://thomasweise.github.io/databasesSlidesDE/13_fabrik_datenbank_daten_ändern_und_löschen)
 14. [Python Installieren](https://thomasweise.github.io/programmingWithPythonSlidesDE/03_python_installieren.pdf) &mdash; Slide-Set&nbsp;03 der Schwestervorlesung "[Programming with Python](https://thomasweise.github.io/programmingWithPython)"
+15. [Psycopg Installieren](https://thomasweise.github.io/databasesSlidesDE/15_psycopg_installieren)
 
 
 ### 2.3. Die Beispiele
@@ -93,17 +94,17 @@ Die Liste mit Dateien, die nicht unter der CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0
     - slides/05_software_und_literatur/graphics/yEdLogo.pdf
     - slides/05_software_und_literatur/graphics/yEdLogo.svg
 + die Fotos im Ordner "slides/01_organisation/graphics":
-  - [Chemnitz Karl-Marx-Kopf (chemnitzKM.jpg)](https://global-geography.org/af/Geography/Europe/Germany/Pictures/Saxony/Chemnitz_-_Brueckenstrasze_Karl-Marx-Monument_1) Ewald Judt [CC BY 4.0](https://creativecommons.org/licenses/by/4.0)
-  - [Chemnitz Roter Turm (chemnitzRT.jpg)](https://global-geography.org/af/Geography/Europe/Germany/Pictures/Saxony/Chemnitz_-_Red_Tower) Ewald Judt [CC BY 4.0](https://creativecommons.org/licenses/by/4.0)
-  - [Chemnitz Rathaus (chemnitzARH.jpg)](https://global-geography.org/af/Geography/Europe/Germany/Pictures/Saxony/Chemnitz_-_Marktet_Square_Old_Town_Hall)  Ewald Judt [CC BY 4.0](https://creativecommons.org/licenses/by/4.0)
-  - [TU Chemnitz Strana (chemnitzTUC.jpg)](https://dium.uniud.it/it/didattica/erasmus/accordi-attivi/technische-universit%C3%A4t-chemnitz) Kolossos [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
-  - [Chemnitz Market (chemnitzMA.jpg)](https://pixabay.com/photos/chemnitz-christmas-christmas-market-2847837) [eagle77](https://pixabay.com/users/eagle77-6271011) [Pixabay Content License](https://pixabay.com/service/license-summary)
-  - [Chemnitz Schlossteich (chemnitzST.jpg)](https://pixabay.com/photos/chemnitz-castle-pond-pond-lake-3552667) [eagle77](https://pixabay.com/users/eagle77-6271011) [Pixabay Content License](https://pixabay.com/service/license-summary)
-  - [Chemnitz City Center (chemnitzCC.jpg)](https://pixabay.com/photos/chemnitz-building-red-tower-1752712) [Firstclasspixel](https://pixabay.com/users/firstclasspixel-2344651) [Pixabay Content License](https://pixabay.com/service/license-summary)
-  - [Kassel Königsplatz (kasselKP.jpg)](https://pixabay.com/photos/kassel-kassel-downtown-downtown-628483) [till_westhof](https://pixabay.com/users/till_westhof-604861) [Pixabay Content License](https://pixabay.com/service/license-summary)
-  - [Kassel Herkules (kasselHERC.jpg)](https://pixabay.com/photos/hercules-statue-stairs-kassel-park-4174005) [webandi](https://pixabay.com/users/webandi-1460261) [Pixabay Content License](https://pixabay.com/service/license-summary)
-  - [Kassel Mountain Park (kasselMP.jpg)](https://pixabay.com/photos/kassel-world-heritage-1092096) [Barni1](https://pixabay.com/users/barni1-773830) [Pixabay Content License](https://pixabay.com/service/license-summary)
-  - [Kassel Schloss Wilhelmshöhe (kasselWH.jpg)](https://pixabay.com/photos/wilhelmsh%C3%B6he-castle-kassel-1201140) [Pixabay Content License](https://pixabay.com/service/license-summary)
+    - [Chemnitz Karl-Marx-Kopf (chemnitzKM.jpg)](https://global-geography.org/af/Geography/Europe/Germany/Pictures/Saxony/Chemnitz_-_Brueckenstrasze_Karl-Marx-Monument_1) Ewald Judt [CC BY 4.0](https://creativecommons.org/licenses/by/4.0)
+    - [Chemnitz Roter Turm (chemnitzRT.jpg)](https://global-geography.org/af/Geography/Europe/Germany/Pictures/Saxony/Chemnitz_-_Red_Tower) Ewald Judt [CC BY 4.0](https://creativecommons.org/licenses/by/4.0)
+    - [Chemnitz Rathaus (chemnitzARH.jpg)](https://global-geography.org/af/Geography/Europe/Germany/Pictures/Saxony/Chemnitz_-_Marktet_Square_Old_Town_Hall)  Ewald Judt [CC BY 4.0](https://creativecommons.org/licenses/by/4.0)
+    - [TU Chemnitz Strana (chemnitzTUC.jpg)](https://dium.uniud.it/it/didattica/erasmus/accordi-attivi/technische-universit%C3%A4t-chemnitz) Kolossos [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+    - [Chemnitz Market (chemnitzMA.jpg)](https://pixabay.com/photos/chemnitz-christmas-christmas-market-2847837) [eagle77](https://pixabay.com/users/eagle77-6271011) [Pixabay Content License](https://pixabay.com/service/license-summary)
+    - [Chemnitz Schlossteich (chemnitzST.jpg)](https://pixabay.com/photos/chemnitz-castle-pond-pond-lake-3552667) [eagle77](https://pixabay.com/users/eagle77-6271011) [Pixabay Content License](https://pixabay.com/service/license-summary)
+    - [Chemnitz City Center (chemnitzCC.jpg)](https://pixabay.com/photos/chemnitz-building-red-tower-1752712) [Firstclasspixel](https://pixabay.com/users/firstclasspixel-2344651) [Pixabay Content License](https://pixabay.com/service/license-summary)
+    - [Kassel Königsplatz (kasselKP.jpg)](https://pixabay.com/photos/kassel-kassel-downtown-downtown-628483) [till_westhof](https://pixabay.com/users/till_westhof-604861) [Pixabay Content License](https://pixabay.com/service/license-summary)
+    - [Kassel Herkules (kasselHERC.jpg)](https://pixabay.com/photos/hercules-statue-stairs-kassel-park-4174005) [webandi](https://pixabay.com/users/webandi-1460261) [Pixabay Content License](https://pixabay.com/service/license-summary)
+    - [Kassel Mountain Park (kasselMP.jpg)](https://pixabay.com/photos/kassel-world-heritage-1092096) [Barni1](https://pixabay.com/users/barni1-773830) [Pixabay Content License](https://pixabay.com/service/license-summary)
+    - [Kassel Schloss Wilhelmshöhe (kasselWH.jpg)](https://pixabay.com/photos/wilhelmsh%C3%B6he-castle-kassel-1201140) [Pixabay Content License](https://pixabay.com/service/license-summary)
 
 Sie können die neuesten Versionen des Materials unter <https://thomasweise.github.io/databases> finden.
 Diese Versionen können sich ändern, da wir diesen Kurs aktiv weiterentwickeln.
