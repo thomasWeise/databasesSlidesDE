@@ -44,7 +44,7 @@ Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.gith
 13. [Fabrik-Datenbank: Daten ändern und löschen](https://thomasweise.github.io/databasesSlidesDE/13_fabrik_datenbank_daten_ändern_und_löschen.pdf)
 14. [Python Installieren](https://thomasweise.github.io/programmingWithPythonSlidesDE/03_python_installieren.pdf) &mdash; Slide-Set&nbsp;03 der Schwestervorlesung "[Programming with Python](https://thomasweise.github.io/programmingWithPython)"
 15. [Psycopg Installieren](https://thomasweise.github.io/databasesSlidesDE/15_psycopg_installieren.pdf)
-16. [Von Python auf PostgreSQL Zugreifen](https://thomasweise.github.io/databasesSlidesDE/16_von_python_auf_postgresql_zugreifen.pdf)
+16. [Fabrik-Datenbank: von Python auf PostgreSQL Zugreifen](https://thomasweise.github.io/databasesSlidesDE/16_fabrik_datenbank_von_python_auf_postgresql_zugreifen.pdf)
 
 
 ### 2.3. Die Beispiele
