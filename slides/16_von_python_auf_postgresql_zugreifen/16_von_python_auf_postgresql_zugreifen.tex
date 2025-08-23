@@ -1,0 +1,453 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{16.~Von Python auf PostgreSQL Zugreifen}%
+%
+\begin{document}%
+%
+\gitExec{setup}{\databasesCodeRepo}{.}{python -m pip install --no-input -r requirements.txt}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Wie arbeiten wir mit den Daten?}%
+\begin{itemize}%
+\item Wenn wir uns anschauen, was wir bisher geschafft haben, dann ist das schon ziemlich cool.%
+\item<2-> Es gibt aber ein großes Problem, dass wir uns noch gar nicht angeschaut haben\only<-2>{.}\uncover<3->{: \alert<3>{Die Daten liegen vollständig in der \glslink{db}{Datenbank}.}}%
+\item<4-> Auf den ersten Blick ist das auch ordentlich, denn da gehören sie ja auch hin.%
+\item<5-> Auf den zweiten Blick erkennen wir ein Problem\only<-5>{.}\uncover<6->{: \alert<6>{ Niemand außer uns~(den \glslink{dba}{DBAs} und Entwicklern) can mit dieser Situation arbeiten.}}%
+\item<7-> Klar, wir können ein Benutzerkonto \textil{boss} für unsere Chefin erstellen, mit dem sie sich einloggen und mit den Daten arbeiten kann.%
+\item<8-> Aber wird sie wirklich mit \sql\ herumhantieren?%
+\item<9-> Können Sie sich vorstellen, dass der Sekretär der Verkaufsabteilung Bestellungen mit \sqlil{INSERT INTO demand (...} in das System einpflegt?%
+\item<10-> Wohl eher nicht.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Zugriff auf die Daten}%
+\begin{itemize}%
+\only<-5>{%
+\item Die Daten sind in der Datenbank, wo sie hingehören.%
+\item<2-> Das \dbms\ beschützt sie und erzwingt, dass die von uns definierten Einschränkungen und Rechte eingehalten werden.%
+\item<3-> Aber nur coole Menschen wie wir können damit arbeiten.%
+\item<4-> Weniger kultivierte Leute schauen auf \psql\ wie eine Kuh ins Uhrwerk.%
+}%
+\item<5-> Wir brauchen also alternative Methoden, damit alle Mitglieder unserer Organisation mit der Datenbank arbeiten können.%
+\item<7-> Dafür gibt es mehrere Möglichkeiten\only<-7>{.}\uncover<8->{:%
+\begin{enumerate}%
+%
+\item Wir können unser eigenes \glslink{client}{Klienten}-Programm schreiben. %
+Dann können wir den Benutzern ein komfortables Interface zum Eingeben und Auslesen der Daten anbieten. %
+Die Benutzer müssen dann niemals mit \sql\ arbeiten.%
+%
+\item<9-> Wir können auch ein Front-End in Form einer Webapplikation schreiben, vielleicht basierend auf dem \pgls{flask} \glslink{server}{Server}. %
+Dann können die Nutzer auf die Daten über den Web Browser zugrifen. %
+Unser Programm erledigt dann den eigentlichen Datenbankzugriff im Hintergrund.%
+%
+\item<10-> Oder wir benutzen ein generelles Interface, wie es von \libreofficeBase\ angeboten wird, und verbinden uns so auf die Datenbank. %
+Mit solch einem Werkzeug können wir bequem Formulare zum Eingeben von Daten und Berichte zum Auslesen und Visualisieren erstellen. %
+Benutzer arbeiten dann nur mit dem Interface.%
+%
+\end{enumerate}%
+}%
+%
+\item<11-> Hier schauen wir uns die erste Möglichkeit an, in einer späteren Einheit auch noch die dritte.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Was wir jetzt machen werden}%
+\begin{itemize}%
+\only<-7>{%
+\item Schreiben wir nun also ein Programm, dass auf unsere \postgresql\ Datenbank zugreift.%
+}%
+%
+\item<2-> Wir verwenden die Programmiersprache \python, die Sie in der Schwestervorlesung \citetitle{programmingWithPython}\cite{programmingWithPython} lernen.%
+%
+\only<-7>{%
+\item<3-> In \python\ können wir beliebige Programme schreiben und Datentypen wir \pythonilIdx{int}, \pythonilIdx{float}, und \pythonilIdx{str} verwenden.%
+%
+\item<4-> Wir können Kontrollflussstatements wie~\pythonil{if...then...else}, \pythonilIdx{for}- und \pythonilIdx{while}~Schleifen verwenen.%
+%
+\item<5-> Wir können Funktionen mit Hilfe von \pythonilIdx{def} definieren.%
+%
+\item<6-> \python\ unterstützt auch objekt-orientiertes Programmieren~(\glslink{OOP}{OOP}).%
+}%
+%
+\item<7-> Für \python\ gibt es unglaublich viele Pakete, die verschiedene zusätzliche Funktionalität anbieten, \DEzB~\numpy, \pandas, \scikitlearn, \scipy, \tensorflow, oder \pytorch.%
+%
+\item<8-> Diese Pakete liegen im \pypi\ repository und werden via \pip\ installiert.%
+%
+\item<9-> \python\ hat keine native Verbindung zu \postgresql.%
+%
+\item<10-> Zum Glück gibt es das Paket \psycopg, welches eine nach PEP~249\cite{PEP249} standardisierte \glslink{API}{API} zum Zugriff auf \postgresql\ anbietet.%
+%
+\item<11-> Mit \psycopg\ können wir \sql-Anfragen in einem \python-Programm erstellen, an \postgresql\ schicken, und die Antworten auslesen.%
+%
+\item<12-> Das ist sehr gut, weil wir ja schon einiges an \sql\ kennen.%
+%
+\item<13-> Somit müssen wir uns nur mit \python\ auseinandersetzen.%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}%
+\frametitle{Python und PsycoPG}%
+\locate{}{\parbox{0.94\paperwidth}{%
+%
+\begin{itemize}%
+\item Wir wollen also nun von \python\ aus auf unsere \glslink{db}{Datenbank} zugreifen.%
+\item<2-> Dafür verwenden wir das Paket \psycopg\cite{VDGE2010P}.%
+\item<3-> Dieses haben wir in der letzten Einheit installiert.%
+\item<4-> Es kann also losgehen.%
+\end{itemize}}}{0.03}{0.52}%
+%
+\locateGraphic[The \href{https://www.python.org}{\python\ programming language} logo is under the copyright of its owners.]{1-}{width=0.5\paperwidth}{../05_software_und_literatur/graphics/pythonLogo}{0.1}{0.15}%
+\locateGraphic[Copyright \textcopyright~Gabriella Albano and the Psycopg team]{2-}{width=0.15\paperwidth}{../05_software_und_literatur/graphics/psycopgLogo}{0.675}{0.1}%
+\end{frame}%
+%
+\section{Daten mit Python aus PostgreSQL Datenbank auslesen}%
+%
+\begin{frame}[t]%
+\frametitle{Daten mit Python aus PostgreSQL Datenbank auslesen}%
+\gitLoadAndExecPython{factory:connect_and_select}{\databasesCodeRepo}{factory}{connect_and_select.py}{}%
+%
+\begin{itemize}%
+\only<-1>{%
+\item Wir wollen mit einem \python-Programm Daten aus unserer Datenbank auslesen.%
+}%
+%
+\only<-3>{%
+\item<2-> Unser Programm muß dazu zwei Funktionen vom Paket \psycopg\ importieren, nämlich \pythonil{connect} ind \pythonil{dict_row}.
+\item<3-> Wir brauchen diese, um uns mit dem \postgresql\ \dbms\ zu verbinden und um zu definieren, wie wir Anfrageergebnsse empfangen wollen.%
+}%
+%
+\only<-5>{%
+\item<4-> Wir wollen die Daten mit einer \sqlil{SELECT}-Anweisung auslesen.
+\item<5-> Diese schicken wir NICHT mit dem \psql\ \glslink{client}{Klient} an das \dbms, sondern via \python.%
+}%
+%
+\only<-8>{%
+\item<6-> Dafür müssen wir zuerst eine Verbindung zum \dbms\ herstellen.%
+\item<7-> Diese öffnen wir mit einem \pythonilIdx{with}-Statement, dass Sie hoffentlich aus einer \python-Vorlesung kennen.%
+\item<8-> Datenbank-Sessions und Cursors sind als \emph{context managers}\cite{PSF:P3D:TPLR:WSCM} implementiert, was hier nur bedeutet, dass sie am Ende des \pythonil{with}-Blocks automatisch geschlossen werden.%
+}%
+%
+\only<-11>{%
+\item<9-> Am Anfang des Blocks wird mit der \pythonilIdx{connect} Funktion eine Verbindung \pythonil{conn} zum \postgresql\ \dbms geöffnet\cite{VDGE2022PPDAFP:CC1}.%
+\item<10-> Wir geben dafür die selbe Verbindungs-\pgls{URI} an, die wir auch mit \psql\ verwenden würden.%
+\item<11-> Damit wird der \postgresql\ \glslink{server}{Server} gefunden und der Nutzer mit dem Passwort eingelogg.%
+}%
+%
+\only<-13>{%
+\item<12-> Dann öffnen wir mit der Methode \pythonilIdx{cursor} der Verbindung einen so genannten Cursor~\cite{PEP249,VDGE2022PPDAFP:CC2}.%
+\item<13-> Cursors sind Objekte mit denen wir die Kommandos an den Server schicken und die Antwort des Servers empfangen können.%
+}%
+%
+\only<-16>{%
+\item<14-> Der Cursor liefert uns die Ergebnisse von \sql-Anfragen.%
+\item<15-> Beim Erstellen des Cursos kann man optional einen Parameter \pythonil{row_factory} spezifizieren.%
+\item<16-> Hier nutzen wir dafür die \pythonilIdx{dict_row}-Function, die dafür sort, dass wir Anfrageergebnisse als \pythonilIdx{dict} zurückbekommen.%
+}%
+%
+\only<-19>{%
+\item<17-> Das Cursor-Objekt \pythonil{cur} hat die Methode \pythonilIdx{execute}\cite{PEP249}.%
+\item<18-> Der erste Parameter dieser Methode ist ein \sql-Statement, dass vom \dbms\ ausgeführt werden soll.%
+\item<19-> Der optionale zweite Parameter erlaubt uns, Anfrageparameter zu spezifizieren. Wir brauchen ihn diesmal nicht.%
+}%
+%
+\only<-21>{%
+\item<20-> Was wir wollen ist alle Bestellungen des Kunden Mr.~Bebbo~(ID~2) auslesen.%
+\item<21-> Wir nutzen also \pythonil{cur} um das Kommando \pythonil{\"SELECT * FROM demand WHERE customer=2\"} mit der \pythonilIdx{execute}-Methode abzusensen.%
+}%
+%
+\only<-23>{%
+\item<22-> Nachdem das Kommando abgeschickt ist, können wir den Cursor als \pythonilIdx{Iterator}\cite{PEP234} in einer \pythonilIdx{for}-Schleife verwenden.%
+\item<23-> Wir können die Anfrageergebnisse Zeile für Zeile ausgeben.%
+}%
+%
+\only<-25>{%
+\item<24-> Jede Zeile wird uns dabei als \pythonilIdx{dict} geliefert.%
+\item<25-> Dieses \pythonilIdx{dict} hat die Spaltennamen als Schlüssel und die Attributwerte als, nunja, Werte.%
+}%
+%
+\only<-27>{%
+\item<26-> Nachdem alle diese \pythonilsIdx{dict} zum \glslink{stdout}{stdout} geschrieben wurden ended die \pythonil{for}-Schleife.%
+\item<27-> Der \pythonil{with}-Block ist vorbei und der Cursor und die Verbindung wird geschlossen.%
+}%
+%
+\only<-29>{%
+\item<28-> Wir erinnern uns, dass Mr.~Bebbo vier Bestellungen abgegeben hatte.%
+\item<29-> Und diese werden ausgegeben.%
+}%
+%
+\only<-32>{%
+\item<30-> Wie uns der Output zeigt, werden die Werte auch in vernünftigen Datentypen geliefert.%
+\item<31-> Ganzzahlige Werte wie IDs kommen als \pythonils{int} an.%
+\item<32-> Die Datums kommen als \pythonilIdx{datetime.date}.%
+}%
+%
+\item<33-> Sehr schön.%
+%
+\end{itemize}%
+%
+\listingPython{-27}{factory:connect_and_select}{0.11}{0.42}{0.78}{0.7}%
+\listingOutput{28-}{factory:connect_and_select}{,style=text_style}{0.11}{0.42}{0.78}{0.7}%
+%
+\end{frame}%
+%
+\section{Einen Datensatz aus Python zur PostgreSQL Datenbank schicken}%
+%
+\begin{frame}[t]%
+\frametitle{Einen Datensatz aus Python zur PostgreSQL Datenbank schicken}%
+\gitLoadAndExecPython{factory:connect_and_insert_1}{\databasesCodeRepo}{factory}{connect_and_insert_1.py}{}%
+%
+\begin{itemize}%
+\only<-1>{%
+\item Wir wollen mit einem \python-Programm einen Datensatz in unsere Datenbank schreiben.%
+}%
+%
+\only<-4>{%
+\item<2-> Am Anfang des Programms importieren wir den Datentyp \pythonilIdx{LiteralString}.%
+\item<3-> Dieser Datentyp is speziell für String-Konstanten.%
+\item<4-> Wir diskutieren das später.%
+}%
+%
+\only<-7>{%
+\item<5-> Wir wollen Datensätze in die Datenbank einfügen.%
+\item<6-> Das geht mit dem \sqlilIdx{INSERT INTO}-Statement.%
+\item<7-> Weil dieses Statement lang ist, schreiben wir es erstmal als Variable hin.%
+}%
+%
+\only<-9>{%
+\item<8-> Wir geben der Variable den \glslink{typeHint}{Type Hint} \pythonilIdx{LiteralString}, womit wir ausdrücken, dass das ein String ist, den wir direkt so hingeschrieben haben und nicht das Ergebnis von irgendwelchen String operationen.%
+\item<9-> Warum erklären wir später. Machen wir erstmal weiter.%
+}%
+%
+\only<-12>{%
+\item<10-> Wir beginnen mit dem selben \pythonilIdx{with}-Block wie vorhin.%
+\item<11-> Erst wird eine Verbindung~\pythonil{conn} zum \postgresql\ \dbms\ geöffnet\cite{VDGE2022PPDAFP:CC1}.%
+\item<12-> Dann wird ein Cursor~\pythonil{cur} in der Verbindung erstellt\cite{VDGE2022PPDAFP:CC2}.%
+}%
+%
+\only<-15>{%
+\item<13-> Wir benutzen nun wieder die Methode~\pythonilIdx{execute} des Cursors.%
+\item<14-> Der erste Parameter ist wieder das \sql\ statement.%
+\item<15-> Diesmal brauche wir auch den zweiten Parameter: Eine Sequenz mit den Parametern für das Statement.%
+}%
+%
+\only<-17>{%
+\item<16-> Unser \sql\ statement ist \pythonil{\"INSERT INTO demand (customer, product, amount, ordered) VALUES (\%s,\%s,\%s,\%s)\"}.
+\item<17-> Der erste Teil ist klar: Wir wollen einen neuen Datensatz in die Tabelle \sqlil{demand} via \sqlilIdx{INSERT INTO} einfügen.%
+}%
+%
+\only<-19>{%
+\item<18-> Dafür geben wir den Name der Tabelle (\sqlil{demand}) sowie die Namen der Spalten an, deren Werte wir schreiben wollen, nämlich i.e., \sqlil{customer}, \sqlil{product}, \sqlil{demand}, and sqlil{ordered}.%
+\item<19-> In einem richtigen \sql-Kommando würden wir nun die zu schreibenden Werte in Klammern nach dem Schlüsselwort \sqlil{VALUES} angeben.%
+}%
+%
+\only<-21>{%
+\item<20-> Stattdessen steht hier \pythonil{\"VALUES (\%s,\%s,\%s,\%s)\"}.%
+\item<21-> Diese \textil{\%s} werden, eins nach dem anderen, mit den Parameterwerten im zweiten Argument der Methode ersetzt.%
+}%
+%
+\only<-23>{%
+\item<22-> Diese werden sich nach \sql\ konvertiert, gleichgültig welchem Datentyp sie angehören.%
+\item<23-> \pythonil{cur.execute(statement, (3, 4, 5, \"2025-03-05\"))} fügt eine neuen Datensatz in die Tabelle \sqlil{demand} ein, bei dem \pythonil{3} der Wert für \sqlil{customer}, \pythonil{4} der Wert für \sqlil{product}, \pythonil{5} der Wert für \sqlil{amount}, und \pythonil{\"2025-03-05\"} der Wert für \sqlil{ordered} sind.%
+}%
+%
+\only<-24>{%
+\item<24-> Daher ist die customer~ID des Datensatzes~3, die product~ID ist~4, die Produktmenge ist~5, und das Bestelldatum ist der 5.\ März 2025.%
+}%
+\item<25-> Und das Program läuft auch problemlos durch.%
+\end{itemize}%
+%
+\listingPython{-24}{factory:connect_and_insert_1}{0.14}{0.35}{0.72}{0.7}%
+\listingOutput{25-}{factory:connect_and_insert_1}{,style=text_style}{0.11}{0.42}{0.78}{0.7}%
+%
+\end{frame}%
+%
+\section{Exkursion: Systemsicherheit / System Security}
+%
+\begin{frame}%
+\frametitle{Systemsicherheit / System Security}%
+\begin{itemize}%
+\item Datenbanken sind einige der wichtigsten Komponenten des IT-Ökosystems von Organisationen.%
+\item<2-> Wir müssen sie vor Angriffen sowohl von außen als auch von innen schützen.%
+\item<3-> Wir müssen den Diebstahl, die Manipulation, und die Zerstörung von unseren Daten verhinden.%
+\item<4-> Wenn Programme auf unsere Datenbank zugreifen, dann müssen wir verhindern, dass sie zum Angriff auf unser System misbraucht werden.%
+\item<5-> Programme bekommen ihren Input oft entweder von Benutzereingaben, aus Dateien, aus dem Internet, oder von anderen Programmen.%
+\item<6-> Wenn dieser Input ungeprüft an die Datenbank gesendet wird, dann kann das katastrophale Konsequenzen haben.%
+\item<7-> Die Manipulation der Eingabedaten von Programmen, die auf Datenbanken zugreifen, ist ein sehr alter und sehr häufiger Angriffsvektor\cite{S2008SI}.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Programm sah komisch aus}%
+\begin{itemize}%
+\item Und deshalb sah unser Programm komisch aus.%
+\item<2-> Zum Beispiel haben wir in \python\ ja \glslink{fstring}{f-Strings}, die genau dazu da sind, Zeichenketten aus Parameterwerten zu konstruieren.%
+\item<3-> Man könnte also fragen: Warum haben wir unsere \sqlil{INSERT INTO}-Anfrage so komisch zusammengebaut, anstatt die Standardwerkzeuge unserer Programmiersprache zu verwenden?%
+\item<4-> Dann haben wir auch noch den komischen Datentyp \pythonilIdx{LiteralString} verwendet.%
+\item<5-> Wofür soll das gut sein?%
+\item<6-> Die Antwort auf beide Fragen ist: \alert{Systemsicherheit}~(systems security).%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{LiteralString}%
+\begin{itemize}%
+\item \pythonilIdx{LiteralString} ist ein Sonderfall des Datentyps~\pythonil{str}.%
+\item<2-> Er existiert für String-Literale, also Strings, die wir \inQuotes{genau so in den Quelltext hingeschrieben haben.}%
+\item<3-> Eine Variable kann diesen Datentyp haben. Dann ist sie immer noch ein String.%
+\item<4-> Aber wir haben explizit gesagt: Dieser String ist \alert{NICHT} das Ergebnis von irgendeiner String-Operation, nicht das Ergebnis von String-Konkatenation~(\pythonil{+}), nicht das Ergebnis von \glslink{strinterpolation}{String Interpolation}, und auch kein \glslink{fstring}{f-String}.%
+\item<5-> Wir benutzen also nicht nur keine \glslink{fstring}{f-Strings} in unserem Programm, wir sagen sogar noch explizit das wir das nicht tun.%
+\item<6-> Warum machen wir das, wo \glslink{fstring}{f-Strings} doch eigentlich so cool sind\cite{programmingWithPython}?%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{SQL Injection}%
+\begin{itemize}%
+\item \glslink{SQLi}{SQL Injection Attacks}~(SQLi)\cite{ASO2024SIADPP,KDP2024AOSIAITCAIWA,CMCVGHRDCAAFL2023SIADINFD,S2008SI,databases} sind Angriffe auf \sql\ \glslink{server}{Server} die dadurch ermöglicht werden, dass \sql\ Anfragen mit Hilfe von String-Koncatenation~(\python{+}) der \glslink{strinterpolation}{String-Interpolation} zusammengebaut werden.%
+\item<2-> Stellen Sie sich vor, wir würden unsere Anfrage so zusammenbauen: \pythonil{\"INSERT INTO demand (customer, product, amount, ordered) VALUES (\" + s + "\)\"}.%
+\item<3-> Jetzt könnte jemand kommen, und den Wert für \pythonil{s} so setzen: \pythonil{s = "1, 2, 3, '2023-02-02'); DROP TABLE demand;"}.%
+\item<4-> Das \textil{);} in \pythonil{s} würde die Einfügeanfrage beenden.%
+\item<5-> Der Rest von \pythonil{s} wäre dann eine neue \sql-Anfrage.%
+\item<6-> Das \sqlil{DROP TABLE...} würde die gesamte Tabelle \sqlil{demand} löschen~(das Kommado lernen wir später).%
+\item<7-> Das ist nur \emph{ein} Beispiel.%
+\item<8-> Andere typische Beispiele sind das Umgehen von Passwortabfragen um Zugriff auf sensible Daten zu erhalten.%
+\item<9-> Ein Angreifer könnte also alle möglichen fiesen Dinge tun, wenn wir unsere Datenbank nicht vor dieser Art Angriff schützen.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Darum LiteralString}%
+\begin{itemize}%
+\item \pythonils{LiteralString} gibt es in \python\ also aus Sicherheitsgründen\cite{PEP675}.%
+\item<2-> Es soll dabei helfen \glslink{SQLi}{SQLi}-Angriff zu verhindern.%
+\item<3-> Die Idee ist, das statische Typ-Checker in Zukunft festellen so können, ob ein String ein Literal ist oder das Ergebnis von String-Operationen und Fehler in Sicherheitskritischen Situation anzeigen können~\cite{PEP675,VDGE2022PPDAFP:ST}.%
+\item<4-> Es ist in \psycopg\ also verboten, irgendeine Art von String-Operation zu verwenden, um ein \sql-Kommando zusammenzubauen.%
+\item<5-> \sql-Kommandos müssen vom Typ \pythonil{LiteralString} sein.%
+\item<6-> Somit wird SQLi-Angriffen ein Riegel vorgeschoben~(wenn man sich an die Vorgaben hält).
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Wie bauen wir dann Anfragen zusammen?}%
+\begin{itemize}%
+\item OK, es ist also verboten, unsere Anfragen irgendwie mit String-Operationen zusammenzubauen.%
+\only<-7>{%
+\item<2-> Es würde aber wenig Sinn ergeben, wenn wir nur \sql-Kommandos verwenden dürften, die hart-kodierte String-Literale sind.%
+\item<3-> Wie bekommen wir Parameter in unsere Anfragen rein?%
+}%
+\item<4-> Dafür gibt es die Platzhalter~\pythonil{\"\%s\"} in \psycopg.%
+\item<5-> Wir stellen die Werte für die Platzhalter zur Verfügung und das System kann dann \DEzB\ String-Escaping anwenden, also alle \inQuotes{gefährlichen} Zeichen durch \glslink{escapeSequence}{Escape-Sequenzen} ersetzen und in harmlosen Text umwandeln.%
+\item<6-> Egal welche Werte für Query-Parameter bereitgestellt werden, es kann kein bösartiger String für eine Attacke konstruiert werden.%
+\item<7-> \glslink{SQLi}{SQLi}-Angriffe werden verhindert.%
+\end{itemize}%
+\uncover<8->{%
+\bestPractice{sqlCommandAssembly}{%
+Gleichgültig, welche Programmiersprache und welche Werkzeuge Sie zum Zugriff auf eine Datenbank verwenden, konstrieren Sie \alert{NIEMALS} \sql-Kommandos mit String-Operationen. %
+Verwenden Sie \alert{immer} die entsprechenden Methoden wie Anfrageparameter, die Ihnen das System anbietet. %
+Öffnen Sie \alert{niemals} die Tür für \glslink{SQLi}{SQLi}-Angriffe.}}%
+\end{frame}%
+%%
+\section{Mehrere Datensätze aus Python zur PostgreSQL Datenbank schicken}%
+%
+\begin{frame}[t]%
+\frametitle{Mehrere Datensätze aus Python zur PostgreSQL Datenbank schicken}%
+\gitLoadAndExecPython{factory:connect_and_insert_2}{\databasesCodeRepo}{factory}{connect_and_insert_2.py}{}%
+%
+\begin{itemize}%
+\only<-1>{%
+\item Wir wollen mit einem \python-Programm mehrere Datensätze in unsere Datenbank schreiben.%
+}%
+\only<-3>{%
+\item<2-> Das geht fast ganz genauso als wenn wir nur einen Datensatz schreiben würden.%
+\item<3-> Es gibt nur zwei kleine Unterschiede.%
+}%
+%
+\only<-5>{%
+\item<4-> Erstens verwenden wir die Methode \pythonil{executemany} anstelle von \pythonil{execute}.%
+\item<5-> Zweitens bekommt diese Methode eine \alert{Squence von} Sequenzen von Parameterwerten, wobei das \sql-Kommando dann für jede einzelne Sequenz aufgerufen wird.%
+}%
+%
+\only<-7>{%
+\item<6-> Wir benutzen das selbe \sql-Kommando also, um drei Datensätze in unsere Tabelle einzufügen.%
+\item<7-> Davor wird wie immer die Verbindung zur Datenbank am Anfang des \pythonil{with}-Blocks aufgebaut und an dessen Ende wieder geschlossen.%
+}%
+%
+\item<8-> Es scheint ohne Fehler zu klappen.%
+%
+\end{itemize}%
+%
+\listingPython{-7}{factory:connect_and_insert_2}{0.16}{0.35}{0.68}{0.7}%
+\listingOutput{8-}{factory:connect_and_insert_2}{,style=text_style}{0.11}{0.42}{0.78}{0.7}%
+\end{frame}%
+%
+\section{Überprüfen des Ergebnisses}%
+%
+\begin{frame}[t]%
+\frametitle{Überprüfen des Ergebnisses}%
+\gitLoadAndExecPython{factory:connect_and_select_2}{\databasesCodeRepo}{factory}{connect_and_select.py}{}%%
+\gitLoadAndExecSQL{factory:select_from_view_sale_3}{}{factory}{select_from_view_sale_1.sql}{factory}{boss}{superboss123}%
+%
+\begin{itemize}%
+\only<-1,6->{%
+\item Überprüfen wir mal, ob die Daten wirklich zur Datenbank durchgekommen sind.%
+}%
+\only<-3,6->{%
+\item<2-> Führen wir nochmal unser Beispielprogramm von vorhin aus.%
+\item<3-> Mr.~Bebbo hat nun fünf Bestellung anstatt von vier, so wie es nach dem Hinzufügen der Daten seien soll.%
+}%
+%
+\only<-5,6->{%
+\item<4-> Führen wir doch nochmal unsere Sicht~(View) \sqlil{sale} von Einheit~12 aus.%
+\item<5-> Auch hier haben sich die Daten korrekt geändert.%
+}%
+\item<6-> Es hat also alles gut funktioniert.%
+%
+\end{itemize}%
+%
+\listingPython{2}{factory:connect_and_select}{0.11}{0.36}{0.78}{0.7}%
+\listingOutput{3}{factory:connect_and_select_2}{,style=text_style}{0.11}{0.36}{0.78}{0.7}%
+\listingSQL{4}{factory:select_from_view_sale_3}{0.11}{0.4}{0.78}{0.7}%
+\listingOutput{5}{factory:select_from_view_sale_3}{,style=sql_style}{0.125}{0.3}{0.85}{0.7}%
+%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Wir haben nun gelernt, wie wir von \python\ aus auf unsere \postgresql\ Datenbank zugreifen können.%
+\item<2-> Wir können Daten in die Datenbank einfügen und Daten aus der Datenbank auslesen.%
+\item<3-> Wir brauchen dazu nur grundlegende \python\ Kenntnisse, denn der Zugriff funktioniert wieder über \sql.%
+%
+\item<4-> Wir haben hier aber nur an der Oberfläche gekratzt.%
+\only<-6>{%
+\item<5-> Wir können nun theoretisch Datenströme in \DEzB\ dem \glsFull{XML} oder dem \glsFull{CSV}-Format einlesen und an die Datenbank schicken.%
+\item<6-> Oder wir können die vielen \gls{ML}, \gls{AI}, und Visualisierungs-Bibliotheken von \python, wie \scikitlearn, \tensorflow, \scipy, \pytorch, oder \matplotlib\ benutzen, um Daten zu verarbeiten.%
+}%
+%
+\item<7-> Wir müssen aber immer vorsichtig sein: Es kann sehr schnell passieren, dass wir aus Versehen das Tor für  \DEzB~\glslink{SQLi}{SQLi}-Angriffe öffnen.%
+\item<8-> Deshalb dürfen wir niemals \sql-Anfragen aus Zeichenketten zusammenbauen.%
+\item<9-> Stattdessen müssen diese hart im Quelltext kodiert sein und wir dürfen nur Anfrage-Parameter verwenden, um dynamisch Anfragen zu generieren.%
+\item<10-> Was wir überhaupt niemals machen sollten, sind Benutzernamen und Passwörter hart in unseren Programmquelltext zu schreiben. Das habe ich hier nur der Einfachheit halber gemacht\dots%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
