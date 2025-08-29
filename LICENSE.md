@@ -49,6 +49,11 @@ The list of files not under the CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0 license bu
     - [Kassel Herkules (kasselHERC.jpg)](https://pixabay.com/photos/hercules-statue-stairs-kassel-park-4174005) [webandi](https://pixabay.com/users/webandi-1460261) [Pixabay Content License](https://pixabay.com/service/license-summary)
     - [Kassel Mountain Park (kasselMP.jpg)](https://pixabay.com/photos/kassel-world-heritage-1092096) [Barni1](https://pixabay.com/users/barni1-773830) [Pixabay Content License](https://pixabay.com/service/license-summary)
     - [Kassel Schloss Wilhelmshöhe (kasselWH.jpg)](https://pixabay.com/photos/wilhelmsh%C3%B6he-castle-kassel-1201140) [Pixabay Content License](https://pixabay.com/service/license-summary)
+    - Logo der Universität Kassel (logoUniKassel.pdf), Copyright [Universität Kassel](http://uni-kassel.de), mit Genehmigung der Pressestelle der Universität Kassel unter den [Logo Benutzungsbedingungen](https://www.uni-kassel.de/hochschulverwaltung/themen/toolbox-fuer-oeffentlichkeitsarbeit/corporate-design-und-medienvorlagen/standardlogos.html)
+    - Universität Kassel, Wilhelmshöher Allee (kasselUniWA.jpg), Copyright [Universität Kassel](http://uni-kassel.de), mit Genehmigung der Pressestelle der Universität Kassel
+    - Universität Kassel, Mensavorplatz (kasselUniMVP.jpg), Copyright [Universität Kassel](http://uni-kassel.de), mit Genehmigung der Pressestelle der Universität Kassel
+    - Universität Kassel, Glaskasten (kasselUniGK.jpg), Copyright [Universität Kassel](http://uni-kassel.de), mit Genehmigung der Pressestelle der Universität Kassel
+    - Universität Kassel, Campus Center (kasselUniCC.jpg), Copyright [Universität Kassel](http://uni-kassel.de), mit Genehmigung der Pressestelle der Universität Kassel
 
 
 ## creative commons

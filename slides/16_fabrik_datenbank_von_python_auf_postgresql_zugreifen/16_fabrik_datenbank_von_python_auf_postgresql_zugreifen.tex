@@ -7,7 +7,7 @@
 \RequirePackage{\sharedDir/styles/styles}%
 \toggleToGerman%
 %
-\subtitle{16.~Fabrik Datenbank:\\von Python auf PostgreSQL Zugreifen}%
+\subtitle{16.~Fabrik Datenbank:\\von Python auf PostgreSQL zugreifen}%
 %
 \begin{document}%
 %
@@ -306,7 +306,7 @@ Benutzer arbeiten dann nur mit dem Interface.%
 \frametitle{LiteralString}%
 \begin{itemize}%
 \item \pythonilIdx{LiteralString} ist ein Sonderfall des Datentyps~\pythonil{str}.%
-\item<2-> Er existiert für String-Literale, also Strings, die wir \inQuotes{genau so in den Quelltext hingeschrieben haben.}%
+\item<2-> Er existiert für String-\glslink{literal}{Literale}, also Strings, die wir \inQuotes{genau so in den Quelltext hingeschrieben haben.}%
 \item<3-> Eine Variable kann diesen Datentyp haben. Dann ist sie immer noch ein String.%
 \item<4-> Aber wir haben explizit gesagt: Dieser String ist \alert{NICHT} das Ergebnis von irgendeiner String-Operation, nicht das Ergebnis von String-Konkatenation~(\pythonil{+}), nicht das Ergebnis von \glslink{strinterpolation}{String Interpolation}, und auch kein \glslink{fstring}{f-String}.%
 \item<5-> Wir benutzen also nicht nur keine \glslink{fstring}{f-Strings} in unserem Programm, wir sagen sogar noch explizit das wir das nicht tun.%
@@ -334,7 +334,7 @@ Benutzer arbeiten dann nur mit dem Interface.%
 \begin{itemize}%
 \item \pythonils{LiteralString} gibt es in \python\ also aus Sicherheitsgründen\cite{PEP675}.%
 \item<2-> Es soll dabei helfen \glslink{SQLi}{SQLi}-Angriff zu verhindern.%
-\item<3-> Die Idee ist, das statische Typ-Checker in Zukunft festellen so können, ob ein String ein Literal ist oder das Ergebnis von String-Operationen und Fehler in Sicherheitskritischen Situation anzeigen können~\cite{PEP675,VDGE2022PPDAFP:ST}.%
+\item<3-> Die Idee ist, das statische Typ-Checker in Zukunft festellen so können, ob ein String ein \glslink{literal}{Literal} ist oder das Ergebnis von String-Operationen und Fehler in Sicherheitskritischen Situation anzeigen können~\cite{PEP675,VDGE2022PPDAFP:ST}.%
 \item<4-> Es ist in \psycopg\ also verboten, irgendeine Art von String-Operation zu verwenden, um ein \sql-Kommando zusammenzubauen.%
 \item<5-> \sql-Kommandos müssen vom Typ \pythonil{LiteralString} sein.%
 \item<6-> Somit wird SQLi-Angriffen ein Riegel vorgeschoben~(wenn man sich an die Vorgaben hält).
@@ -346,7 +346,7 @@ Benutzer arbeiten dann nur mit dem Interface.%
 \begin{itemize}%
 \item OK, es ist also verboten, unsere Anfragen irgendwie mit String-Operationen zusammenzubauen.%
 \only<-7>{%
-\item<2-> Es würde aber wenig Sinn ergeben, wenn wir nur \sql-Kommandos verwenden dürften, die hart-kodierte String-Literale sind.%
+\item<2-> Es würde aber wenig Sinn ergeben, wenn wir nur \sql-Kommandos verwenden dürften, die hart-kodierte String-\glslink{literal}{Literale} sind.%
 \item<3-> Wie bekommen wir Parameter in unsere Anfragen rein?%
 }%
 \item<4-> Dafür gibt es die Platzhalter~\pythonil{\"\%s\"} in \psycopg.%

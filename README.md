@@ -44,7 +44,7 @@ Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.gith
 13. [Fabrik-Datenbank: Daten ändern und löschen](https://thomasweise.github.io/databasesSlidesDE/13_fabrik_datenbank_daten_ändern_und_löschen.pdf)
 14. [Python Installieren](https://thomasweise.github.io/programmingWithPythonSlidesDE/03_python_installieren.pdf) &mdash; Slide-Set&nbsp;03 der Schwestervorlesung "[Programming with Python](https://thomasweise.github.io/programmingWithPython)"
 15. [Psycopg Installieren](https://thomasweise.github.io/databasesSlidesDE/15_psycopg_installieren.pdf)
-16. [Fabrik-Datenbank: von Python auf PostgreSQL Zugreifen](https://thomasweise.github.io/databasesSlidesDE/16_fabrik_datenbank_von_python_auf_postgresql_zugreifen.pdf)
+16. [Fabrik-Datenbank: von Python auf PostgreSQL zugreifen](https://thomasweise.github.io/databasesSlidesDE/16_fabrik_datenbank_von_python_auf_postgresql_zugreifen.pdf)
 
 
 ### 2.3. Die Beispiele
@@ -111,6 +111,11 @@ Die Liste mit Dateien, die nicht unter der CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0
     - [Kassel Herkules (kasselHERC.jpg)](https://pixabay.com/photos/hercules-statue-stairs-kassel-park-4174005) [webandi](https://pixabay.com/users/webandi-1460261) [Pixabay Content License](https://pixabay.com/service/license-summary)
     - [Kassel Mountain Park (kasselMP.jpg)](https://pixabay.com/photos/kassel-world-heritage-1092096) [Barni1](https://pixabay.com/users/barni1-773830) [Pixabay Content License](https://pixabay.com/service/license-summary)
     - [Kassel Schloss Wilhelmshöhe (kasselWH.jpg)](https://pixabay.com/photos/wilhelmsh%C3%B6he-castle-kassel-1201140) [Pixabay Content License](https://pixabay.com/service/license-summary)
+    - Logo der Universität Kassel (logoUniKassel.pdf), Copyright [Universität Kassel](http://uni-kassel.de), mit Genehmigung der Pressestelle der Universität Kassel unter den [Logo Benutzungsbedingungen](https://www.uni-kassel.de/hochschulverwaltung/themen/toolbox-fuer-oeffentlichkeitsarbeit/corporate-design-und-medienvorlagen/standardlogos.html)
+    - Universität Kassel, Wilhelmshöher Allee (kasselUniWA.jpg), Copyright [Universität Kassel](http://uni-kassel.de), mit Genehmigung der Pressestelle der Universität Kassel
+    - Universität Kassel, Mensavorplatz (kasselUniMVP.jpg), Copyright [Universität Kassel](http://uni-kassel.de), mit Genehmigung der Pressestelle der Universität Kassel
+    - Universität Kassel, Glaskasten (kasselUniGK.jpg), Copyright [Universität Kassel](http://uni-kassel.de), mit Genehmigung der Pressestelle der Universität Kassel
+    - Universität Kassel, Campus Center (kasselUniCC.jpg), Copyright [Universität Kassel](http://uni-kassel.de), mit Genehmigung der Pressestelle der Universität Kassel
 
 Sie können die neuesten Versionen des Materials unter <https://thomasweise.github.io/databases> finden.
 Diese Versionen können sich ändern, da wir diesen Kurs aktiv weiterentwickeln.
