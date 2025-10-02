@@ -35,6 +35,8 @@ Das geht auf zwei Arten\only<-4>{.}\uncover<5->{:%
 \locateGraphic[Copyright \textcopyright~Gabriella Albano and the Psycopg team]{2-}{width=0.15\paperwidth}{../05_software_und_literatur/graphics/psycopgLogo}{0.675}{0.1}%
 \end{frame}%
 %
+\section{Virtuelle Environments}%
+%
 \begin{frame}%
 \frametitle{Virtuelle Environments~(1)}%
 \begin{itemize}%
@@ -94,12 +96,12 @@ Das geht auf zwei Arten\only<-4>{.}\uncover<5->{:%
 }%
 %
 \only<-8>{%
-\item<8-> Wir initialisieren ein leeres \glslink{virtualEnvironment}{virtuelles Environment} in diesem Ordnung mit dem Kommando \bashil{python3 -m venv --upgrade-deps .venv} und~\keys{\enter}.%
+\item<8-> Wir initialisieren ein leeres \glslink{virtualEnvironment}{virtuelles Environment} in diesem Ordnung mit dem Kommando \bashil{python3 -m venv --upgrade-deps .venv} und~\keys{\return}.%
 }%
 %
 \only<-10>{%
 \item<9-> Das \glslink{virtualEnvironment}{Virtuelle Environment} wurde erstellt.%
-\item<10-> Wir aktivieren das Environment mit dem Kommando \bashil{source .venv/bin/activate} und~\keys{\enter}.%
+\item<10-> Wir aktivieren das Environment mit dem Kommando \bashil{source .venv/bin/activate} und~\keys{\return}.%
 }%
 %
 \only<-13>{%
@@ -113,7 +115,7 @@ Das geht auf zwei Arten\only<-4>{.}\uncover<5->{:%
 }\only<-18>{%
 \item<15-> \pip~nutzt automatisch das aktuelle virtuelle Environment, wenn eines aktiv ist.%
 }\only<-19>{%
-\item<16-> Wir installieren \psycopg\ in unser neues Environment in dem wir \bashil{pip install psycopg} schreiben und \keys{\enter}~drücken.%
+\item<16-> Wir installieren \psycopg\ in unser neues Environment in dem wir \bashil{pip install psycopg} schreiben und \keys{\return}~drücken.%
 \item<17-> Der \pip-Installer schlägt nun in \pypi\ nach und lädt das Paket herunter.%
 \item<18-> Hier wurde \psycopg\ in Version~\textil{3.2.4} heruntergeladen und installiert.%
 \item<19-> Bei Ihnen wird bestimmt eine neue Version installiert.%

@@ -1,0 +1,271 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{17.~LibreOffice Installieren}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}[t]%
+\frametitle{Einleitung}%
+%
+\begin{itemize}%
+\item Wir wollen nun von einer \glslink{GUI}{GUI}, einem Graphical User Interface, auf unsere \glslink{db}{Datenbank} zugreifen.%
+%
+\item<2-> \libreofficeBase\ kann entweder als stand-alone \glslink{dbms}{DBMS} verwendet werden, oder als Benutzerinterface das sich auf andere \glslink{db}{Datenbanken} verbinden kann\cite{FNFHWSKLSSGLFRSRPLJG2022BG7R1BOL7C,S2022L7PFEUU}.%
+%
+\item<3-> Seine Funktionalität ist ähnlich zu \microsoftAccess\cite{SSI2023MA2BTA,B2020HOMA2,UC2021AFD}, aber es ist kostenlos.%
+%
+\item<4-> Daher verwenden wir \libreofficeBase\ als simple \glslink{GUI}{GUI} für unsere \postgresql\ \glslink{db}{Datenbank}.%
+%
+\item<5-> Das müssen wir zuerst \libreoffice\ installieren.
+\end{itemize}%
+%
+\locateGraphic[The \href{https://www.libreoffice.org}{\libreoffice} logo is under the copyright of its owners.]{}{width=0.6\paperwidth}{../05_software_und_literatur/graphics/libreofficeLogo}{0.2}{0.675}%
+\end{frame}%
+%
+%
+\section{LibreOffice unter Linux Installieren}%
+%
+\begin{frame}[t]%
+\frametitle{LibreOffice unter Linux Installieren}%
+\begin{itemize}%
+%
+\only<-3>{%
+\item Wir wollen \libreoffice\ unter \ubuntu\ \linux\ benutzen.%
+}%
+%
+\only<-5>{%
+\item<2-> Unter \ubuntu\ \linux\ ist \libreoffice\ bereits standardmäßig vorinstalliert.%
+}%
+%
+\only<-5>{%
+\item<3-> Sie können ein Terminal\cite{B2022ELATCL} durch Druck auf~\ubuntuTerminal\ öffnen.%
+}%
+%
+\only<-6>{%
+\item<4-> Tippen Sie \bashil{libreoffice --version} und drücken Sie~\keys{\return}.%
+}%
+%
+\only<-7>{%
+\item<5-> Auf meinem System ist \libreoffice~24.2.7.2 installiert.
+}%
+%
+\only<-8>{%
+\item<6-> Wir können \libreofficeBase\ aus dem \glslink{terminal}{Terminal} starten, in dem wir \bashil{libreoffice --base} eintippen und \keys{\return} drücken.%
+}%
+%
+\only<-9>{%
+\item<7-> Alternativ können wir auch die Dash durch Druck auf \keys{\OSwin} oder durch klick auf das kleine \ubuntu-Symbol am unten linken Bildrand öffnen.%
+}%
+%
+\only<-9>{%
+\item<8-> Dann tippen wir \textil{libreoffice} ein und klicken auf das Symbol für \libreofficeBase.%
+}%
+%
+\only<-9>{%
+\item<9-> \libreofficeBase\ startet\dots%
+}%
+\only<-10>{%
+\item<10-> Dann öffnet sich die Startansicht von \libreofficeBase.%
+}%
+%
+\only<-13>{%
+\item<11-> Sollte \libreoffice\ wider Erwarten nicht installiert sein, dann können wir es einfach installieren.%
+}%
+%
+\item<12-> Dazu tippen wir \bashil{sudo apt-get install libreoffice} in das \glslink{terminal}{Terminal} ein.%
+%
+\item<13-> Wir benötigen \pgls{sudo}-Privilegien, also müssen wir das Super-User Passwort eingeben.%
+%
+\item<14-> Nun würde \libreoffice\ installiert werden. Bei mit passiert nichts, weil ich es schon installiert habe.%
+\end{itemize}%
+%
+\locateGraphic{3-5}{width=0.8\paperwidth}{graphics/ubuntu/installingLibreOfficeUbuntu1checkVersion}{0.1}{0.45}%
+\locateGraphic{6}{width=0.8\paperwidth}{graphics/ubuntu/installingLibreOfficeUbuntu2runFromTerminal}{0.1}{0.45}%
+\locateGraphicTB{7-8}{width=0.15\paperwidth}{graphics/ubuntu/installingLibreOfficeUbuntu3openDash}{0.025}{0.45}%
+\locateGraphicTB{8}{width=0.775\paperwidth}{graphics/ubuntu/installingLibreOfficeUbuntu4runFromDash}{0.2}{0.45}%
+\locateGraphic{9}{width=0.8\paperwidth}{graphics/ubuntu/installingLibreOfficeUbuntu5startupScreen}{0.1}{0.37}%
+\locateGraphic{10}{width=0.6\paperwidth}{graphics/ubuntu/installingLibreOfficeUbuntu6startupForm}{0.2}{0.2}%
+\locateGraphic{12}{width=0.8\paperwidth}{graphics/ubuntu/installingLibreOfficeUbuntu7aptGet}{0.1}{0.45}%
+\locateGraphic{13}{width=0.8\paperwidth}{graphics/ubuntu/installingLibreOfficeUbuntu8pw}{0.1}{0.45}%
+\locateGraphic{14}{width=0.8\paperwidth}{graphics/ubuntu/installingLibreOfficeUbuntu9already}{0.1}{0.45}%
+\end{frame}%
+%
+\section{LibreOffice unter Windows Installieren}%
+%
+\begin{frame}[t]%
+\frametitle{LibreOffice unter Windows Installieren}%
+%
+\begin{itemize}%
+%
+\only<-2>{%
+\item Wir wollen \libreoffice\ unter \microsoftWindows\ installieren.
+}%
+%
+\only<-3>{%
+\item<2-> Wir öffnen einen Web Browser und gehen zur Webseite \url{https://libreoffice.org}.%
+%
+\item<3-> Dort klicken wir auf \menu{DOWNLOAD}.%
+}%
+%
+\only<-4>{%
+\item<4-> In dem Menü, das sich öffnet, klicken wir auf \menu{Download LibreOffice}.%
+}%
+%
+\only<-6>{%
+\item<5-> Das bringt uns zur Download-Seite, wo wir wieder auf \menu{DOWNLOAD} klicken.%
+%
+\item<6-> Wir lassen \glslink{OS}{operating system} auf \menu{Windows (64-bit)}.%
+}%
+%
+\only<-7>{%
+\item<7-> Das bringt uns zu einer anderen Download-Seite, wo wir dann auf den großen Button klicken, um \libreoffice\ herunterzuladen.%
+}%
+%
+\only<-8>{%
+\item<8-> Der Download beginnt.%
+}%
+%
+\only<-9>{%
+\item<9-> Nachdem der Download fertig ist, öffnen bzw.\ führen wir die heruntergeladene Datei aus.%
+}%
+%
+\only<-10>{%
+\item<10-> Der Startbildschirm des \microsoftWindows\ Installers erscheint.%
+}%
+%
+\only<-12>{%
+\item<11-> Er erinnert uns, dass das kein Programm aus dem Microsoft Store ist.%
+\item<12-> Wir installieren das Programm trotzdem.%
+}%
+%
+\only<-13>{%
+\item<13-> Jawohl.%
+}%
+%
+\only<-14>{%
+\item<14-> Der Installations-Wizard öffnet sich und wir klicken auf \menu{Next}.%
+}%
+%
+\only<-15>{%
+\item<15-> Wir lassen den Installationstyp auf \inQuotes{Typical} und klicken \menu{Next}.%
+}%
+%
+\only<-16>{%
+\item<16-> Wir lassen alle Einstellungen unverändert und klicken auf \menu{Install}.%
+}%
+%
+\only<-17>{%
+\item<17-> Die Installation beginnt.%
+}%
+%
+\only<-18>{%
+\item<18-> Wenn \microsoftWindows\ uns fragt, ob wir Änderungen am Computer durch den Installer zulassen wollen, dann klicken wir auf \menu{Yes} oder \menu{Ja} oder \menu{好吧} oder wie auch immer das bei Ihnen heist.%
+}%
+%
+\only<-19,21>{%
+\item<19-> Die Installation geht weiter.%
+}%
+%
+\only<-20>{%
+\item<20-> Eventuell werden Sie informiert, dass der Rechner nach der Installation neu starten muss. Das ist OK.%
+}%
+%
+\only<-22>{%
+\item<22-> Die Installation ist fertig.%
+}%
+%
+\only<-22>{%
+\item<22-> Gegebenenfalls muss nun der Neustart erfolgen. Wir klicken auf \menu{Yes}.%
+}%
+%
+\only<-23>{%
+\item<23-> Gegebenenfalls muss nun der Neustart erfolgen.%
+}%
+%
+\only<-24>{%
+\item<24-> Das System startet neu.%
+}%
+%
+\only<-25>{%
+\item<25-> Nun haben wir einen neuen Shortcut auf dem Desktop, mit dem wir \libreoffice\ starten können. Wir klicken darauf.%
+}%
+%
+\only<-26>{%
+\item<26-> \libreoffice\ startet.%
+}%
+%
+\only<-27>{%
+\item<27-> \libreoffice\ möchte gerne verschiedene Dateiformate managen. Das brauchen wir nicht.%
+}%
+%
+\only<-29>{%
+\item<28-> Um \libreofficeBase\ zu starten, müssen wir auf das \menu{Base Database} am linken unteren Rand klicken.%
+}%
+\item<29-> \libreofficeBase\ startet.%
+\item<30-> Wir sind hier fertig und können das Programm wieder schließen.%
+%
+%
+\end{itemize}%
+%
+\locateGraphicTB{2-3}{width=0.7\paperwidth}{graphics/windows/installingLibreOfficeWindows01website}{0.15}{0.3}%
+\locateGraphicTB{4}{width=0.7\paperwidth}{graphics/windows/installingLibreOfficeWindows02download}{0.15}{0.3}%
+\locateGraphicTB{5-6}{width=0.6\paperwidth}{graphics/windows/installingLibreOfficeWindows03downloadPage1}{0.2}{0.25}%
+\locateGraphicTB{7}{width=0.6\paperwidth}{graphics/windows/installingLibreOfficeWindows04downloadPage2}{0.2}{0.25}%
+\locateGraphicTB{8}{width=0.6\paperwidth}{graphics/windows/installingLibreOfficeWindows05downloading}{0.2}{0.25}%
+\locateGraphicTB{9}{width=0.6\paperwidth}{graphics/windows/installingLibreOfficeWindows06open}{0.2}{0.25}%
+%
+\locateGraphicTB{10}{width=0.4\paperwidth}{graphics/windows/installingLibreOfficeWindows07starting}{0.3}{0.3}%
+\locateGraphicTB{11-12}{width=0.4\paperwidth}{graphics/windows/installingLibreOfficeWindows08msStore1}{0.3}{0.3}%
+\locateGraphicTB{13}{width=0.4\paperwidth}{graphics/windows/installingLibreOfficeWindows09msStore2}{0.3}{0.3}%
+%
+\locateGraphicTB{14}{width=0.6\paperwidth}{graphics/windows/installingLibreOfficeWindows10wizard}{0.2}{0.3}%
+\locateGraphicTB{15}{width=0.6\paperwidth}{graphics/windows/installingLibreOfficeWindows11wizardTypical}{0.2}{0.3}%
+\locateGraphicTB{16}{width=0.6\paperwidth}{graphics/windows/installingLibreOfficeWindows12wizardStartInstall}{0.2}{0.3}%
+\locateGraphicTB{17}{width=0.6\paperwidth}{graphics/windows/installingLibreOfficeWindows13installStart}{0.2}{0.3}%
+%
+\locateGraphicTB{18}{width=0.4\paperwidth}{graphics/windows/installingLibreOfficeWindows14permitChanges}{0.3}{0.3}%
+%
+\locateGraphicTB{19}{width=0.6\paperwidth}{graphics/windows/installingLibreOfficeWindows15installing}{0.2}{0.3}%
+\locateGraphicTB{20}{width=0.6\paperwidth}{graphics/windows/installingLibreOfficeWindows16needsReboot}{0.2}{0.3}%
+\locateGraphicTB{21}{width=0.6\paperwidth}{graphics/windows/installingLibreOfficeWindows17installing}{0.2}{0.3}%
+\locateGraphicTB{22}{width=0.6\paperwidth}{graphics/windows/installingLibreOfficeWindows18finish}{0.2}{0.3}%
+%
+\locateGraphicTB{23}{width=0.6\paperwidth}{graphics/windows/installingLibreOfficeWindows19restartNow}{0.2}{0.3}%
+\locateGraphicTB{24}{width=0.6\paperwidth}{graphics/windows/installingLibreOfficeWindows20restarting}{0.2}{0.3}%
+%
+\locateGraphicTB{25}{width=0.5\paperwidth}{graphics/windows/installingLibreOfficeWindows21afterRestart}{0.25}{0.3}%
+%
+\locateGraphicTB{26}{width=0.55\paperwidth}{graphics/windows/installingLibreOfficeWindows22startingLibreOffice}{0.225}{0.3}%
+%
+\locateGraphicTB{27}{width=0.55\paperwidth}{graphics/windows/installingLibreOfficeWindows23noCheckOnStartup}{0.225}{0.3}%
+%
+\locateGraphicTB{28-}{width=0.55\paperwidth}{graphics/windows/installingLibreOfficeWindows24db}{0.225}{0.33}%
+%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Wir haben \libreoffice\ und damit \libreofficeBase\ auf unserem Rechner installiert.%
+%
+\item<2-> Nun können wir es als graphisches Benutzerinterface für unsere \postgresql\ \glslink{db}{Datenbank} verwenden.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
