@@ -97,7 +97,7 @@ Das sind also noch vier Zahlen, die wir speichern müssen.}}%
 \locateGraphic{11}{width=0.625\paperwidth}{graphics/dbStructureProduct}{0.1875}{0.2}%
 \end{frame}%
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{\texttt{CREATE TABLE}}%
 \begin{itemize}%
 \item Diese Struktur ist im Grunde recht einfach.%
@@ -404,7 +404,7 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 \end{frame}%
 %
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{\texttt{INSERT INTO}}%
 \begin{itemize}%
 \item Das SQL-Kommando um Daten an eine Tabelle anzuhängen sieht wie folgt aus\only<-2>{:}\only<3->{.}%
@@ -414,7 +414,7 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 \end{frame}
 %
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Füllen der Tabelle \texttt{product}}%
 \gitLoadAndExecSQL{factory:insert_into_table_product}{}{factory}{insert_into_table_product.sql}{factory}{boss}{superboss123}%
 \listingSQL{1}{factory:insert_into_table_product}{0.075}{0.07}{0.9}{0.91}
@@ -438,7 +438,7 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 \end{frame}%
 %
 %
-\begin{frame}[fragile,b]
+\begin{frame}[b]
 \frametitle{Versuch, die \texttt{UNIQUE}-Einschränkung zu brechen}%
 \uncover<3->{%
 \begin{itemize}%
@@ -462,7 +462,7 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 \end{frame}%
 %
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Spalten auswählen}%
 \begin{itemize}%
 \item Hier wir wählen nur ein paar der Spalten aus:%
@@ -472,7 +472,7 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 \end{frame}
 %
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Zeilen bedingt auswählen}%
 \begin{itemize}%
 \item Oft braucht man nicht alle Zeilen einer Tabelle auf einmal.%
@@ -482,7 +482,7 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 \end{frame}
 %
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Zeilen auswählen: Nur Handtaschen}%
 \begin{itemize}%
 \item Nun selektieren wir alle Zeilen, deren \sqlil{name}-Wert das Wort \inQuotes{Purse} enthält~(via \sqlil{LIKE}\cite{PGDG:PD:PM}).%
@@ -493,7 +493,7 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 %
 %
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Spalten Erstellen}%
 \begin{itemize}%
 \item Wir können auch in der Abfrage komplett neue Werte mathematisch berechnen\cite{PGDG:PD:MFAO} und ihnen mit \sqlil{AS} einen Spaltennamen zuweise.%
@@ -504,7 +504,7 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 %
 %
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Spalten Erstellen und Sortieren}%
 \begin{itemize}%
 \item Die Abfrageergebnisse mit \sqlil{ORDER BY} basierend auf den Werten von einer oder mehreren Spalten sortiert werden, wobei \sqlil{DESC}~absteigend und \sqlil{ASC}~für aufsteigendes Sortieren angegeben werden kann.%
@@ -515,7 +515,7 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 %
 %
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Spalten Erstellen und Sortieren und Limitieren}%
 \begin{itemize}%
 \item Wir können die Anzahl der zurückgegebenen Zeilen mit \sqlil{LIMIT} begrenzen.%
@@ -526,7 +526,7 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 %
 %
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Spalten Erstellen und Sortieren und Limitieren}%
 \begin{itemize}%
 \item Wir können auch Konstanten als Wert einer mit \sqlil{AS} definierten Spalte zuweise.%
@@ -538,7 +538,7 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 %
 %
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Spalten Erstellen und Sortieren und Limitieren}%
 \begin{itemize}%
 \item Mit \sqlil{UNION ALL} können die Ausgaben von mehreren \sqlil{SELECT}-Anweisungen untereinander angereiht werden\cite{PGDG:PD:CQUIE}.%

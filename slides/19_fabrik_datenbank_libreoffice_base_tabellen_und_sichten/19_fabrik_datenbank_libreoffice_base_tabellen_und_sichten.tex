@@ -1,0 +1,266 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{19.~Fabrik-Datenbank:~Tabellen und Sichten in LibreOffice Base}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Datenbankzugriff mit Python}%
+%
+\begin{itemize}%
+\item Bisher können wir unsere \glslink{db}{Datenbanken} nur mit \glsShort{SQL} bearbeiten.%
+%
+\item<2-> Das ist ungeignet für die große Mehrheit der Leute in einer Organisation.%
+%
+\item<3-> Leute sind daran gewöhnt, mit \microsoftExcel-Tabellen oder \microsoftWord-Dokumenten zu arbeiten.%
+%
+\item<4-> Wenn wir ihnen sagen, dass sie eine Programmiersprache für Daten lernen sollen, wird das auf wenig Gegenliebe stoßen.%
+%
+\item<5-> Aber nun werden wir eine andere Möglichkeit, mit unserer \glslink{db}{Datenbank} zu interagieren lernen.%
+\end{itemize}%
+\end{frame}%
+%
+%
+\section{Tabellen in LibreOffice Base}%
+%
+\begin{frame}[t]%
+\frametitle{Daten über LibreOffice Base in Tabellen eingeben}%
+%
+\begin{itemize}%
+%
+\only<-2>{%
+\item Wir wollen \libreofficeBase\ verwenden, um mit einer Tabelle in unserer \postgresql\ \glslink{db}{Datenbank} zu arbeiten.%
+}%
+%
+\only<-2>{%
+\item<2-> Wir öffnen also unser Dokument \textil{factory.odb} aus der vorigen Einheit mit \libreofficeBase\ und verbinden uns auf unsere \glslink{db}{Datenbank}, wobei wir das Passwort \textil{superboss123} eingeben müssen.%
+}%
+%
+\only<-3>{%
+\item<3-> Wir nun wählen die Tabelle \textil{demand} in der Tabellen-Sicht aus und Doppelklicken darauf.%
+}%
+%
+\only<-4>{%
+\item<4-> Ein neues Fenster öffnet sich.%
+}%
+%
+\only<-5>{%
+\item<5-> In diesem Fenster sehen wir die Daten unserer Tabelle.%
+}%
+%
+\only<-6>{%
+\item<6-> Die Spaltennamen unserer Tabelle sind auch hier Spaltennamen.%
+}%
+%
+\only<-7>{%
+\item<7-> Jeder Datensatz ist auf einer Zeile dargestellt.%
+}%
+%
+\only<-8>{%
+\item<8-> Das ist schon mal sehr gut.%
+}%
+%
+\only<-9>{%
+\item<9-> Wie gesagt, viele Leute sind mit \microsoftExcel-Tabellen vertraut.%
+}%
+%
+\only<-10>{%
+\item<10-> Die Ansicht hier sieht dem schon recht ähnlich.%
+}%
+%
+\only<-11>{%
+\item<11-> Die Benutzer können die Konzepte von Spalten und Zeilen intuitiv verstehen.%
+}%
+%
+\only<-12>{%
+\item<12-> Das ist viel klarer, also die Ausgaben von \psql\dots%
+}%
+%
+\only<-13>{%
+\item<13-> Wir können die Daten hier auch gleich bearbeiten.%
+}%
+%
+\only<-14>{%
+\item<14-> Wir können aber auch neue Datensätze eingeben.%
+}%
+%
+\only<-15>{%
+\item<15-> Dafür positionieren wir den Kursor in das zweite Feld der leeren Zeile am Ende der Tabelle.%
+}%
+%
+\only<-16>{%
+\item<16-> Wir überspringen die Spalte \sqlil{id}, weil ihr Wert automatisch vom \glsShort{dbms} gesetzt wird.%
+}%
+%
+\only<-17>{%
+\item<17-> Wir wählen Mr.~Bobbo aus, geben also customer ID~4 ein.%
+}%
+%
+\only<-18>{%
+\item<18-> Wir speichern das er am 12.~April 2025 11 Einheiten des Produkts mit ID~7, also Schuhe der Größe~37, bestellt hat.%
+}%
+%
+\only<-19>{%
+\item<19-> Nachdem wir diese Daten eingegeben haben und unser Kursor am Ende der letzten Spalte ist, drücken wir \keys{\tab}.%
+}%
+%
+\only<-20>{%
+\item<20-> Die Daten werden nun an das \glsShort{dbms} geschickt.%
+}%
+%
+\only<-21>{%
+\item<21-> Sehen Sie, dass im Feld \sqlil{id} des neuen Datensatzes eine~0 steht?%
+}%
+%
+\only<-22>{%
+\item<22-> Der Grund ist, dass wir hier keinen Wert eingegeben haben.%
+}%
+%
+\only<-23>{%
+\item<23-> Das System hat den neuen Datensatz an das \glsShort{dbms} geschickt.%
+}%
+%
+\only<-24>{%
+\item<24-> Das \glsShort{dbms} setzt das \sqlil{id}-Feld automatisch.%
+}%
+%
+\only<-25>{%
+\item<25-> Die \libreofficeBase\ \glsShort{GUI} weis das aber nicht\dots%
+}%
+%
+\only<-26>{%
+\item<26-> Um den wirklichen Wert des Feldes~\sqlil{id} zu sehen, müssen wir die Daten nochmal neu laden.%
+}%
+%
+\only<-27>{%
+\item<27-> Wir klicken auf den Neu-Laden-Button~\libreOfficeBaseRefresh.%
+}%
+%
+\only<-28>{%
+\item<28-> Danach hat das \sqlil{id}-Feld unseres neuen Datensatzes den korrekten Wert~13.%
+}%
+%
+\item<29-> Wir schließen das Tabellen-Fenster und gehen zurück ins Hauptfenster.%
+%
+\end{itemize}%
+%
+\locateGraphicTB{3}{width=0.54\paperwidth}{graphics/tableAndView/factoryLibreOfficeBaseTableAndView1chooseTableDemand}{0.23}{0.22}%
+\locateGraphicTB{4-15}{width=0.54\paperwidth}{graphics/tableAndView/factoryLibreOfficeBaseTableAndView2tableDemand}{0.23}{0.22}%
+\locateGraphicTB{16-17,20}{width=0.54\paperwidth}{graphics/tableAndView/factoryLibreOfficeBaseTableAndView3addDemand}{0.23}{0.22}%
+\locateGraphicTB{18-19}{width=0.54\paperwidth}{graphics/tableAndView/factoryLibreOfficeBaseTableAndView3addDemand}{0.4}{0.22}%
+\locateGraphicTB{21-27}{width=0.54\paperwidth}{graphics/tableAndView/factoryLibreOfficeBaseTableAndView4demandAdded}{0.23}{0.22}%
+\locateGraphicTB{28-}{width=0.54\paperwidth}{graphics/tableAndView/factoryLibreOfficeBaseTableAndView5demandsRefreshed}{0.23}{0.22}%
+%
+\end{frame}%
+%
+\begin{frame}
+\frametitle{Bestellungen vorher}%
+\gitLoadAndExecSQL{factory:select_sale_data_1}{}{factory}{select_sale_data.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{}{factory:select_sale_data_1}{}{0.05}{0.11}{0.9}{0.89}%
+\end{frame}
+%
+\begin{frame}
+\frametitle{Bestellungen nachher}%
+\gitLoadAndExecSQL{factory:update_according_to_base_table_add_tab12}{}{factory}{update_according_to_base_table_add.sql}{factory}{boss}{superboss123}%
+\gitLoadAndExecSQL{factory:select_sale_data_2}{}{factory}{select_sale_data.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{}{factory:select_sale_data_2}{}{0.05}{0.11}{0.9}{0.89}%
+\end{frame}
+%
+%
+\section{Sichten in LibreOffice Base ausführen}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Sichten in LibreOffice Base ausführen}%
+%
+\begin{itemize}%
+%
+\only<-3>{%
+\item Eine Datenbanksicht stellt einer Applikation eine Perspektive auf die Daten zur Verfügung.%
+%
+\item<2-> Eine Sicht sieht ein bisschen aus wie eine Tabelle, ist aber eher sowas wie eine gespeicherte \glsShort{SQL}-Abfrage.%
+%
+\item<3-> Wir können auch aus \libreofficeBase\ auf Sichten zugreifen {\dots} und dort sehen sie auch wie Tabellen aus.%
+}%
+%
+\only<-5>{%
+\item<4-> Zurück in der \inQuotes{Tables} Ansicht klicken wir doppelt auf die Siche \sqlil{sale}.%
+}%
+%
+\only<-6>{%
+\item<5-> Dadurch öffnet sich wieder ein neues Fenster.%
+}%
+%
+\only<-7>{%
+\item<6-> Wie sehen jetzt das Ergebnis der Abfrage in einer schönen tabellarischen Form.%
+}%
+%
+\only<-7>{%
+\item<7-> Vielleicht ist die Spalte \sqlil{customer_name} dabei ein Wenig komisch auf Ihrem Rechner dargestellt.%
+}%
+%
+\only<-9>{%
+\item<8-> In dem Fall können Sie ihre Größe ändern und etwas breiter machen, in dem Sie ihren rechten Rand mit der linken Maustaste ziehen.%
+}%
+%
+\only<-10>{%
+\item<9-> Dann erscheinen alle Daten korrekt.%
+}%
+%
+\only<-11>{%
+\item<10-> Vorhin hatten wir ja neue Daten in die Tabelle für Bestellungen eingetragen.%
+}%
+%
+\only<-12>{%
+\item<11-> Früher hatten wir nur eine Bestellung für Mr.~Bobbo in unserem System.%
+}%
+%
+\only<-13>{%
+\item<12-> Nun erscheint eine Neue in der letzten Zeile der Sicht.%
+}%
+%
+\item<13-> Das bestätigt noch einmal, dass unsere Sicht neu ausgeführt wurde und das unsere Änderungen tatsächlich in der Datenbank gespeichert wurden.%
+%
+\end{itemize}%
+%
+\locateGraphicTB{4}{width=0.54\paperwidth}{graphics/tableAndView/factoryLibreOfficeBaseTableAndView6chooseViewSale}{0.23}{0.3}%
+\locateGraphicTB{5-}{width=0.54\paperwidth}{graphics/tableAndView/factoryLibreOfficeBaseTableAndView7viewSale}{0.23}{0.3}%
+%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item An dieser Stelle sehen wir bereits einen wichtigen Vorteil davon, eine \glsShort{GUI} wie \libreofficeBase\ zu verwenden.%
+%
+\item<2-> Wir können nun die Daten in unseren Tabellen viel bequemer eingeben und anzeigen.%
+%
+\item<3-> Vorher mussten wir uns die abstrakte tabellarische Form unserer Tabellen mit unserer Fantasie vorstellen.%
+%
+\item<4-> Aber jetzt können wir sie wirklich als Tabellen sehen und editieren.%
+%
+\item<5-> Dadurch haben wir ein viel besseres Look \& Feel für unsere Datenbank.%
+%
+\item<6-> Mit so einem Interface könnte ein normaler Benutzer bereits arbeiten.%
+%
+\item<7-> Das ist schon sehr nett.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%

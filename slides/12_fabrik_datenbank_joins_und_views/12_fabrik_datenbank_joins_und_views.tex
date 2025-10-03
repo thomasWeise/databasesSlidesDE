@@ -67,7 +67,7 @@
 \end{itemize}%
 \end{frame}%
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{\texttt{LEFT JOIN}: Syntax}%
 \uncover<2-8>{%
 \begin{itemize}%
@@ -82,10 +82,10 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \end{itemize}%
 }%
 \sqlSyntax{1,9}{syntax/left_join_de.sql}{0.05}{0.07}{0.9}{0.92}%
-\sqlSyntax{2-6}{syntax/left_join_de.sql}{0.1}{0.56}{0.8}{0.8}%
+\sqlSyntax{2-5}{syntax/left_join_de.sql}{0.1}{0.56}{0.8}{0.75}%
 \end{frame}
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{\texttt{LEFT JOIN} von \texttt{customer} mit \texttt{demand}}%
 \begin{itemize}%
 \item Übertragen wir also diese Syntax auf unsere Situation.%
@@ -106,10 +106,10 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \end{itemize}%
 \end{frame}%
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{\texttt{LEFT JOIN}: Bestellungen pro Kunde zählen}%
 \gitLoadAndExecSQL{factory:select_customer_demand_2}{}{factory}{select_customer_demand_2.sql}{factory}{boss}{superboss123}%
-\listingSQLandOutput{}{factory:select_customer_demand_2}{}{0.05}{0.09}{0.9}{0.9}
+\listingSQLandOutput{}{factory:select_customer_demand_2}{}{0.05}{0.11}{0.9}{0.89}%
 \end{frame}
 %
 \section{\texttt{INNER JOIN}}%
@@ -140,7 +140,7 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \end{itemize}%
 \end{frame}%
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{\texttt{INNER JOIN}: Syntax}%
 \uncover<2-6>{%
 \begin{itemize}%
@@ -153,10 +153,10 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \end{itemize}%
 }%
 \sqlSyntax{1,7}{syntax/inner_join_de.sql}{0.05}{0.07}{0.9}{0.92}%
-\sqlSyntax{2-5}{syntax/inner_join_de.sql}{0.1}{0.56}{0.8}{0.8}%
+\sqlSyntax{2-5}{syntax/inner_join_de.sql}{0.1}{0.56}{0.8}{0.75}%
 \end{frame}
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \begin{itemize}%
 \item Um Daten aus mehreren Tabellen zu kombinieren, brauchen wir mehrere Joins.%
 \end{itemize}%
@@ -178,7 +178,7 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \end{itemize}%
 \end{frame}%
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Die Anfrage}%
 \gitLoadAndExecSQL{factory:select_sale_data}{}{factory}{select_sale_data.sql}{factory}{boss}{superboss123}%
 \listingSQL{1}{factory:select_sale_data}{0.05}{0.2}{0.9}{0.79}
@@ -227,7 +227,7 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \end{itemize}%
 \end{frame}%
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Die Anfrage}%
 \gitLoadAndExecSQL{factory:create_view_sale}{}{factory}{create_view_sale.sql}{factory}{boss}{superboss123}%
 \listingSQL{1}{factory:create_view_sale}{0.05}{0.2}{0.9}{0.79}
@@ -253,13 +253,13 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \end{itemize}%
 \end{frame}%
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Verkaufserlös nach Kunde}%
 \gitLoadAndExecSQL{factory:select_from_view_sale_1a}{}{factory}{select_from_view_sale_1a.sql}{factory}{boss}{superboss123}%
 \listingSQLandOutput{}{factory:select_from_view_sale_1a}{}{0.05}{0.09}{0.9}{0.9}
 \end{frame}
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Verkaufserlös nach Produkt}%
 \gitLoadAndExecSQL{factory:select_from_view_sale_1b}{}{factory}{select_from_view_sale_1b.sql}{factory}{boss}{superboss123}%
 \listingSQLandOutput{}{factory:select_from_view_sale_1b}{}{0.05}{0.09}{0.9}{0.9}
@@ -277,13 +277,13 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \end{itemize}%
 \end{frame}%
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Verkaufserlös nach Kunde in 2025}%
 \gitLoadAndExecSQL{factory:select_from_view_sale_2a}{}{factory}{select_from_view_sale_2a.sql}{factory}{boss}{superboss123}%
 \listingSQLandOutput{}{factory:select_from_view_sale_2a}{}{0.05}{0.09}{0.9}{0.9}
 \end{frame}
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Verkaufserlös nach Produkt in 2025}%
 \gitLoadAndExecSQL{factory:select_from_view_sale_2b}{}{factory}{select_from_view_sale_2b.sql}{factory}{boss}{superboss123}%
 \listingSQLandOutput{}{factory:select_from_view_sale_2b}{}{0.05}{0.09}{0.9}{0.9}

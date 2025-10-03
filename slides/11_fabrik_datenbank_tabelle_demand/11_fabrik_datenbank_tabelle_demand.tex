@@ -54,7 +54,7 @@ Never use \sql\ keywords or reserved words as names, e.g., for columns or tables
 \end{frame}%
 %
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Erstellen der Tabelle mit \texttt{CREATE TABLE}}%
 \begin{itemize}%
 \item Wir wissen ja schon, dass man Tabellen mit \sqlil{CREATE TABLE} erstellt.%
@@ -97,7 +97,7 @@ Never use \sql\ keywords or reserved words as names, e.g., for columns or tables
 \end{itemize}%
 \end{frame}%
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Die Spalte \texttt{customer}}%
 \begin{itemize}%
 \item \alert<7>{Zu jeder Bestellung gehört ein Kunde}.%
@@ -115,7 +115,7 @@ Never use \sql\ keywords or reserved words as names, e.g., for columns or tables
 \listingSQL{8}{factory:create_table_demand}{0.175}{0.34}{0.65}{0.63}
 \end{frame}
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Die Spalte \texttt{product}}%
 \begin{itemize}%
 \item Zu jeder Bestellung gehört ein Produkt.%
@@ -178,7 +178,7 @@ der ein Datum nach unserem (dem Gregorianischen) Kalender darstellt\cite{PGDG:PD
 \end{frame}%
 %
 %
-\begin{frame}[fragile,t]
+\begin{frame}[t]
 \frametitle{Füllen der Tabelle \texttt{demand}}%
 \gitLoadAndExecSQL{factory:insert_into_table_demand}{}{factory}{insert_into_table_demand.sql}{factory}{boss}{superboss123}%
 \listingSQL{1}{factory:insert_into_table_demand}{0.05}{0.13}{0.9}{0.91}

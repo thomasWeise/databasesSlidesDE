@@ -1,0 +1,270 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{18.~Fabrik-Datenbank:~LibreOffice Base mit PostgreSQL verbinden}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Datenbankzugriff mit Python}%
+%
+\begin{itemize}%
+\item Wir haben bereits diskutiert, wie wir uns mit \python\ auf unser \glsShort{dbms} verbinden können.%
+%
+\item<2-> Wir könnten eine Applikation mit einer schönen Benutzeroberfläche programmieren.%
+%
+\item<3-> Wir könnten auch ein \python-Programm schreiben, das Daten aus verschiedenen Quellen, \DEzB\ Webseiten, Webservices, anderen \glslink{db}{Datenbanken} oder Sensoren in Maschinen zieht und in unsere DB einfügt.%
+%
+\item<4-> Oder vielleicht schreiben wir auch ein \python-Programm, dass die Daten unsere Datenbank mit Methoden der \glsFull{AI} und \glsFull{ML} analysiert, um zukünftige Verkäufe vorherzusehen.%
+%
+\item<5-> Vielleicht läuft unser \python-Kode auch in einem \glslink{server}{Webserver} und bietet uns Web-basierte Formulare zur Dateneingabe an.%
+%
+\item<6-> Alle das sind eher große Applikationen.%
+%
+\item<7-> Sie werden für spezielle Use-Cases von Softwareingenieuren entwickelt und von Programmierern implementiert und gewartet {\dots} und sind daher teuer.%
+%
+\item<8-> Sie werden also eher selten in kleinen Firmen auftauchen.%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}%
+\frametitle{Billige Datenbankanwendungen}%
+%
+\begin{itemize}%
+\item Aber selbst in Umgebungen mit weniger großen Budgets ist es oft sinnvoll \glslink{db}{Datenbanken} zu benutzen.%
+%
+\item<2-> Es gibt viele Situationen, wo kleinere Firmen oder auch Individuen Daten speichern und verarbeiten wollen.%
+%
+\item<3-> Diese können dann oft nach kommerziellen Lösungen suchen, aber die gibt es nicht für jeden Anwendungsfall und manchmal sind sie einfach zu teuer.%
+%
+\item<4-> Manchmal sind wir auch in einer frühen Phase des Ausrollens einer Datenbank in einer großen Organisation.%
+%
+\item<5-> Vielleicht ist ein großes Investment in der Zukunft geplant.%
+%
+\item<6-> Aber wir müssen erstmal die Organisation davon überzeugen, dass unser Projekt sinnvoll ist.%
+%
+\item<7-> We wollen dann einen schnellen und billigen Prototyp unserer Applikation, mit dem wir zumindest Daten erstellen und auslesen können.%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Grafische Benutzeroberfläche für Datenbank}%
+%
+\begin{itemize}%
+\only<-6>{%
+\item Wir haben bereits gelernt, wie wir auf eine \glslink{db}{Datenbank} via \glsShort{SQL} oder aus einer Programmiersprache heraus zugreifen können.%
+}%
+%
+\only<-7>{%
+\item<2-> Eine dritte und ganz andere Art, mit \glslink{db}{Datenbanken} zu arbeiten, ist auf sie über eine \glsShort{GUI} zuzugreifen.%
+}%
+%
+\only<-8>{%
+\item<3-> Typische Beispiele so einer \glsShort{GUI} sind das kommerzielle \microsoftAccess\cite{SSI2023MA2BTA,B2020HOMA2,UC2021AFD} und die kostenfreie Open Source Software \libreofficeBase\cite{FNFHWSKLSSGLFRSRPLJG2022BG7R1BOL7C,S2022L7PFEUU}.%
+}%
+%
+\only<-9>{%
+\item<4-> Beide erlauben es, \glslink{db}{Datenbanken} in einzelnen Dateien zu erstellen und auf dem lokalen Computer auf sie zuzugreifen.%
+}%
+%
+\only<-10>{%
+\item<5-> Sie realisieren solche \glslink{db}{Datenbanken} als einzelne lokale Dateien auf denen der aktuelle Benutzer arbeiten kann.%
+}%
+%
+\item<6-> Wie Sie gelernt haben, können \inQuotes{echte \glslink{dbms}{DBMSe}} Datenbanken auf einem Computer speichern und Benutzer greifen von anderen Computern auf die zentral gemanageden Daten zu.%
+%
+\item<7-> Daher können weder \microsoftAccess\ noch \libreofficeBase\ als \glsShort{dbms} für Applikationen empfohlen werden, die über Hobbies und einfache Aufgaben aus kleinen Büros hinausgehen.%
+%
+\item<8-> Sie haben aber beide coole Werkzeuge, wie Berichte und Formulare.%
+%
+\item<9-> Anstatt sie als \glsShort{dbms} zu verwenden, können wir sie als GUI benutzen, die auf eine Datenbank in einem \emph{anderen} \glsShort{dbms} liegt!%
+%
+\item<10-> Und dann können wir diese coolen Werkzeuge benutzen, um mit einer Datenbank in einem professionnen \glsShort{dbms} zu arbeiten-%
+%
+\item<11-> Und genau das machen wir nun, mit dem kostenlosen \libreofficeBase.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Mit der Datenbank verbinden}%
+%
+\begin{frame}[t]%
+\frametitle{Mit der Datenbank verbinden}%
+%
+\begin{itemize}%
+\only<-3>{%
+\item Wir wollen uns nun von \libreofficeBase\ aus auf unsere Fabrik-Datenbank im \postgresql\ \glsShort{dbms} verbinden.%
+%
+\item<2-> Dazu öffnen wir zuerst \libreofficeBase, so wie wir das in der letzten Einheit gelernt haben.%
+%
+\item<3-> Der \postgresql\ \Gls{server} muss auch laufen.%
+}%
+%
+\only<-4>{%
+\item<4-> Im Startbildschirm von  \libreofficeBase\ wählen wir \inQuotes{Connect to existing database} aus.%
+}%
+%
+\only<-6>{%
+\item<5-> Wir klicken auf as Drop-Down Menü für Datenbankarten.%
+\item<6-> Und wir wählen \postgresql\ als Datenbankart aus.%
+}%
+%
+\only<-7>{%
+\item<7-> Wir klicken auf \menu{Next}.%
+}%
+%
+\only<-13>{%
+\item<8-> Nun müssen wir die Informationen über unsere Datenbank eingeben\only<-8>{.}\uncover<9->{%
+\begin{itemize}%
+\only<-9>{%
+\item Der Name der Datenbank ist \textil{factory}.%
+}%
+\only<-10>{%
+\item<10-> Als \glslink{server}{Server} wählen wir \localhost\ aus, weil user \glsShort{dbms} auf unserem lokalen Computer läuft.%
+}%
+\only<-11>{%
+\item<11-> Wenn unser \glsShort{dbms} auf einem anderen Computer laufen würde, dann würden wir dessen IP-Addresse eingeben.%
+}%
+%
+\only<-12>{%
+\item<12-> Als \glslink{port}{Port} wählen wir den Standard-\postgresql-\glslink{port}{Port} 5321 aus.%
+}%
+%
+\item<13-> Dann klicken wir \menu{Next}.%
+\end{itemize}}%
+}%
+%
+\only<-22>{%
+\item<14-> Nun geben wir die Authentikationsinformationen ein\only<-14>{.}\uncover<15->{:%
+\begin{itemize}%
+\only<-15>{%
+\item Mit diesen Informationen wird sich \libreofficeBase\ in unser \glsShort{dbms} einloggen.%
+}%
+\only<-16>{%
+\item<16-> Wir können den Benutzername eingeben, nämlich \textil{boss}.%
+}%
+\only<-17>{%
+\item<17-> Wir hatten das Passwort \textil{superboss123} für diesen Benutzer gesetzt, aber wir können es nicht eingeben.%
+}%
+\only<-18>{%
+\item<18-> Es muss jedesmal eingetippt werden, wenn wir diese Verbindung benutzen.%
+}%
+\only<-19>{%
+\item<19-> Das ist wahrscheinlich damit keine sensitiven Daten wie Passwörter in einem \libreofficeBase-Document gespeichert werden können.%
+}%
+\only<-20>{%
+\item<20-> So können keine Zugangsdaten verloren gehen oder aus Versehen mit dem Dokument an andere Benutzer weitergegeben werden.%
+}%
+\only<-21>{%
+\item<21-> So oder so, wir müssen müssen \menu{Password required} auswählen, denn der Benutzer \textil{boss} muss sich mit einem Passwort anmelden.%
+}%
+\item<22-> Dann klicken wir \menu{Test Connection}.%
+\end{itemize}%
+}}%
+%
+\only<-23>{%
+\item<23-> Das Authentikationsfenster ploppt auf, wir tippen das Passwort \textil{superboss123} ein und drücken \menu{OK}.
+}%
+%
+\only<-24>{%
+\item<24-> Der Test war erfolgreich. Wir klicken \menu{OK}.%
+}%
+%
+\only<-25>{%
+\item<25-> Zurück in der Eingabemaske können wir nun \menu{Next} kicken.%
+}%
+%
+\only<-27>{%
+\item<26-> Das bringt uns in das letzte Fenster des Dokument-Erstellungs-Dialogs.%
+}%
+\only<-28>{%
+\item<27-> Wir wählen aus, dass wir die Datenbank nicht registrieren wollen.%
+}%
+\only<-29>{%
+\item<28-> Wir wählen aus, dass wir die Datenbank zum Bearbeiten öffnen wollen.%
+%
+\item<29-> Schlussendlich können wir auf \menu{Finish} klicken.%
+}%
+%
+\only<-31>{%
+\item<30-> Wir müssen das \libreofficeBase\ Dokument nun in einer passenden Datei speichern.%
+}%
+%
+\only<-32>{%
+\item<31-> Der Dateityp ist \textil{odb}, was im Grunde einer ZIP-komprimierten Kollektion von \glsShort{XML}-Doumenten entspricht.%
+%
+\item<32-> Egal. Wir wählen \textil{factory.odb} als Dateiname und klicken \menu{Save}.
+}%
+%
+\only<-34>{%
+\item<33-> Nun öffnet sich die Datenbank-\glsShort{GUI}.%
+}%
+%
+\only<-35>{%
+\item<34-> Wir sehen ganz viele Informationen.%
+}%
+%
+\only<-36>{%
+\item<35-> Schauen wir erstmal nach den Dantenbankobjekten, die wir selbst bereits erstellt haben.%
+}%
+%
+\only<-37>{%
+\item<36-> Wir gehen in die \menu{Tables}-Ansicht und skrollen nach unten.%
+}%
+%
+\item<37-> Wenn wir bis in den \menu{public}-Knoten skrollen, dann finden wir unsere drei Tabellen und die Sicht~\sqlil{sale}.%
+\item<38-> \libreofficeBase\ kann unsere Fabrik-Datenbank und die Objekte darin sehen.%
+%
+\end{itemize}%
+%
+\locateGraphicTB{4}{width=0.54\paperwidth}{graphics/connect/factoryLibreOfficeBaseConnect01selectDatabase}{0.23}{0.25}%
+\locateGraphicTB{5}{width=0.54\paperwidth}{graphics/connect/factoryLibreOfficeBaseConnect02connectToExisting}{0.23}{0.25}%
+\locateGraphicTB{6}{width=0.54\paperwidth}{graphics/connect/factoryLibreOfficeBaseConnect03postgres}{0.23}{0.25}%
+\locateGraphicTB{7}{width=0.54\paperwidth}{graphics/connect/factoryLibreOfficeBaseConnect04postgres}{0.23}{0.25}%
+\locateGraphicTB{8-13}{width=0.54\paperwidth}{graphics/connect/factoryLibreOfficeBaseConnect05connection}{0.23}{0.27}%
+\locateGraphicTB{14-22}{width=0.54\paperwidth}{graphics/connect/factoryLibreOfficeBaseConnect06authentication}{0.23}{0.27}%
+\locateGraphicTB{23}{width=0.56\paperwidth}{graphics/connect/factoryLibreOfficeBaseConnect07test}{0.22}{0.3}%
+\locateGraphicTB{24}{width=0.56\paperwidth}{graphics/connect/factoryLibreOfficeBaseConnect08testSuccess}{0.22}{0.3}%
+\locateGraphicTB{25}{width=0.54\paperwidth}{graphics/connect/factoryLibreOfficeBaseConnect09authenticationNext}{0.23}{0.27}%
+\locateGraphicTB{26-29}{width=0.54\paperwidth}{graphics/connect/factoryLibreOfficeBaseConnect10notRegister}{0.23}{0.27}%
+\locateGraphicTB{30-32}{width=0.56\paperwidth}{graphics/connect/factoryLibreOfficeBaseConnect11save}{0.22}{0.32}%
+\locateGraphicTB{33-36}{width=0.66\paperwidth}{graphics/connect/factoryLibreOfficeBaseConnect12openingScreen}{0.17}{0.32}%
+\locateGraphicTB{37-}{width=0.66\paperwidth}{graphics/connect/factoryLibreOfficeBaseConnect13publicTables}{0.17}{0.32}%
+%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Wir haben nun \libreofficeBase\ erfolgreich mit unserem \postgresql\ \glsShort{dbms} verbunden.%
+%
+\item<2-> \libreofficeBase\ kann sich nun bei dem \postgresql\ \glslink{server}{Server} einloggen.%
+%
+\item<3-> Das würde so ähnlich auch mit anderen \glslink{dbms}{DBMSen} funktionieren.%
+%
+\item<4-> Wir hätten auch \microsoftAccess\ anstatt von \libreofficeBase\ benutzen können.%
+%
+\item<5-> Der wichtige Punkt ist, dass es Werkzeuge wie \microsoftAccess\ und \libreofficeBase\ von Drittanbietern gibt und das diese such auf \glslink{db}{Datenbanken} verbinden können, die von \glslink{server}{Servern} wie \postgresql, \pgls{mysql}, \oracleDB, oder \microsoftSqlServer\ gemanaged werden.%
+%
+\item<6-> Aber was werden wir damit alles machen können?%
+\item<7-> Bald werden wir es wissen.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
