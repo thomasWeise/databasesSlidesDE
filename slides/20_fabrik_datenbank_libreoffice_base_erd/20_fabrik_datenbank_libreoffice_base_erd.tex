@@ -1,0 +1,169 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{20.~Fabrik-Datenbank:~ERDs in LibreOffice Base}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Entity-Relationship-Diagramme}%
+%
+\begin{itemize}%
+\item Ein wichtiges Werkzeug bei der Entwicklung von Datenbanken sind Entity-Relationship-Diagrams~(\glslink{ERD}{ERDs}).%
+%
+\item<2-> Sie werden sehr oft verwendet, wenn wir erste, abstrakte, konzeptuelle Modelle einer Datenbank entwickeln.%
+%
+\item<3-> Solche Diagramme stellen Objekte und deren Beziehungen visuell dar.%
+%
+\item<4->  Es ist tatsächlich sehr sinnvoll, erstmal ein Modell  Datenbank zu entwickeln, bevor wir mit \glsShort{SQL} loslegen.%
+%
+\item<5-> Die modellierten Objekte können dann auf tabellen und die Beziehungen auf Fremdschlüssel abgebildet werden.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Beispiel: Fabrikdatenbank}%
+%
+\begin{itemize}%
+\only<-6>{%
+\item Hier sehen wir ein \glsShort{ERD} für die Objekte in unserer Fabrikdatenbank.%
+}%
+%
+\only<-7>{%
+\item<2-> Alle drei Objekttypen sind dargestellt.%
+}%
+%
+\only<-8>{%
+\item<3-> Die Linien, die sie verbinden, symbolisieren die Beziehungen.%
+}%
+%
+\item<4-> Hier sehen wir das ein Kunde~(und Produkt) mit beliebig vielen Objekten des Typs \emph{Demand} verbunden seien kann.%
+%
+\item<5-> Jedes solche Demand-Objekt ist mit genau einem Kunde~(und Produkt) verbunden.%
+%
+\item<6-> Wir können die Struktur der Datenbank auf Basis so eines Designs erstellen.%
+%
+\item<7-> Das lernen wir später alles ganz genau.%
+%
+\item<8-> In unserem Beispiel haben wir das nicht gemacht, weil wir schnell in die Welt der Datenbanken eintauchen wollten.%
+\end{itemize}%
+%
+\locateGraphic{}{width=0.8\paperwidth}{graphics/factoryDbErd}{0.1}{0.65}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{ERDs Reverse Engineeren}%
+\begin{itemize}%
+\item Sagen wir, dass wir tatsächlich eine Datenbank zuerst als \glsShort{ERD} enworfen und dann mit \glsShort{SQL} implementiert haben.%
+%
+\item<2-> Die Tabellen und ihre Fremdschlüssel entsprechen dann dem Modell, das als \glsShort{ERD} gezeichnet wurde.%
+%
+\item<3-> Die Information des \glsShort{ERD} ist dann in der Datenbank präsent.%
+%
+\item<4-> Sie steckt in der Struktur der Tabellen und der Fremdschlüssel.%
+%
+\item<5-> Wenn das stimmt, dann können wir ein \glsShort{ERD} zumindest teilweise auch aus einer Datenbank rekonstruieren.%
+%
+\item<6-> Natürlich können wir die Bedeutung hinter den Objekten und deren Beziehungen nicht wieder \inQuotes{zuückberechnen}.%
+%
+\item<7-> Aber wir können die Objekte und Beziehungen problemlos auf einer syntaktischen Ebene wiederherstellen.%
+%
+\item<8-> Das können wir so schnell und automatisch machen, dass wir eigentlich immer mit einer \glsShort{ERD}-basierten Ansicht unserer Datenbank arbeiten können.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\section{ERDs in LibreOffice Base}%
+%
+\begin{frame}[t]%
+\frametitle{ERDs in LibreOffice Base}%
+\begin{itemize}%
+%
+\only<-2>{%
+\item \libreofficeBase\ bietet uns genau dieses Feature.%
+}%
+%
+\only<-2>{%
+\item<2-> Wir öffnen also unser Dokument \textil{factory.odb} aus der vorigen Einheit mit \libreofficeBase\ und verbinden uns auf unsere \glslink{db}{Datenbank}, wobei wir das Passwort \textil{superboss123} eingeben müssen.%
+}%
+%
+\only<-3>{%
+\item<3-> Wir öffnen das \menu{Tools}-Menü und klicken auf \menu{Relationships}.%
+}%
+%
+\only<-6>{%
+\item<4-> Ein sehr überfrachtetes Diagramm öffnet sich.%
+}%
+%
+\only<-6>{%
+\item<5-> Wir sehen alle drei Tabellen in unserer \glslink{db}{Datenbank}, aber sie sind nicht schön arrangiert.%
+}%
+%
+\only<-6>{%
+\item<6-> Wir können sie aber anklicken und herumziehen.%
+}%
+%
+\only<-7>{%
+\item<7-> Nachdem wir sie neu arrangiert haben, bekommen wir eine sehr schöne Übersicht über unsere Datenbank.%
+}%
+%
+\only<-8>{%
+\item<8-> Wir sehen \DEzB, dass die \sqlil{id}-Spalten die Primärschlüssel der Tabellen sind, denn sie sind mit dem Schlüssel-Icon~\libreOfficeBaseKey\ markiert.%
+}%
+%
+\only<-9>{%
+\item<9-> Wir sehen, dass jeder \sqlil{id}-Wert in Tabelle \sqlil{customer} in $n$~Datensätzen als \sqlil{customer}-Wert in der Tabelle \sqlil{demand} verwendet werden kann.%
+}%
+%
+\only<-10>{%
+\item<10-> Das selbe gilt für die \sqlil{id}-Werte in der Tabelle \sqlil{product}, die in $n$~Datensätzen der Tabelle \sqlil{demand} als Wert der Spalte \sqlil{product} stehen kann.%
+}%
+%
+\item<11-> Dabei steht $n$ für \inQuotes{beliebig oft}.%
+%
+\end{itemize}%
+%
+\locateGraphicTB{3}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseErd1Open}{0.2}{0.33}%
+\locateGraphicTB{4-6}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseErd2overview}{0.2}{0.33}%
+\locateGraphicTB{7-}{width=0.5\paperwidth}{graphics/factoryLibreOfficeBaseErd3overviewRearranged}{0.45}{0.26}%
+%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Diese Form von \glslink{ERD}{ERDs} bietet eine sehr schöne Übersicht über die Struktur einer Datenbank.%
+%
+\item<2-> Solche Diagramme können automatisch von der \libreofficeBase\ \glsShort{GUI} für uns erstellt werden.%
+%
+\item<3-> Wenn unsere \glsShort{db} komplexer ist, mit vielen Tabellen und Beziehungen, dann kann so eine Illustration schon sehr hilfreich seien.%
+%
+\item<4-> Stellen Sie sich vor, dass Sie neu in ein Team einer Organisation als \glsShort{dba} eintreten.%
+%
+\item<5-> Stellen Sie sich vor, dass sie an einer existierenden Datenbank arbeiten sollen.%
+%
+\item<6-> Leider gibt es keine Dokumentation.%
+%
+\item<7-> Sie können sich nun auf das \glsShort{dbms} verbinden und versuchen, die Struktur der Datenbank mit \glsShort{SQL} herauszufinden.%
+%
+\item<8-> Oder Sie verbinden sich mit \libreofficeBase\ und bekommen eine schnelle und umfangreiche Übersicht über die Datenbank, über die Tabellen und deren Beziehungen\dots%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%

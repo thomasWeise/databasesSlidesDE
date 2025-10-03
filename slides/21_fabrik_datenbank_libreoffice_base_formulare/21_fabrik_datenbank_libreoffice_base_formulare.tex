@@ -1,0 +1,567 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{21.~Fabrik-Datenbank:~Formulare in LibreOffice Base}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+%
+\begin{itemize}%
+\only<-9>{%
+\item Irgendwann ist uns aufgefallen, dass Daten in eine \glslink{db}{Datenbank} über einen \glsShort{SQL} \glslink{client}{Client} wie \psql\ einzugeben keine besonders angenehme Sache ist.%
+}%
+%
+\only<-10>{%
+\item<2-> Wir haben dann gesehen, dass es viel schöner ist, Daten in Tabellen über eine Tabellen-basiert \glsShort{GUI} wie \libreofficeBase\ einzugeben.%
+}%
+%
+\item<3-> Das ist schon mal ein großer Schritt vorwärts, denn man muss dafür kein \glsShort{SQL} mehr verstehen.%
+%
+\item<4-> Wir, die \glslink{dba}{DBAs} können eine Datenbank mit \glsShort{SQL} erstellen und managen.%
+%
+\item<5-> Dann können wir ein Frontend wie \libreofficeBase\ darauf verbinden und das als \glslink{client}{Client} anderen Mitarbeitern geben.%
+%
+\item<6-> Diese können dann die Daten auf eine für sie natürlichere Art eingeben.%
+%
+\item<7-> Unsere Datenbank bleibt konsistent und die Datenintegrität wird durch die Einschränkungen gesichert.%
+%
+\item<8-> Das ist viel besser, als so etwas wie ein \microsoftExcel-Sheet zu verwenden.%
+%
+\item<9-> Mehrere Leute können gleichzeitig an der \glslink{db}{Datenbank} mit dem \glslink{client}{Client} von mehreren Computern aus arbeiten. on multiple computers.%
+%
+\item<10-> Verschiedene Arten von zusammenhängenden Daten können gleichzeitig eingegeben werden.%
+%
+\item<11-> Und es ist viel schwerer, ungültige Daten zu produzieren.%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}%
+\frametitle{Zusammenhängende Datensätze}%
+\begin{itemize}%
+\item Daten mit Fremdschlüsseln einzugeben ist aber immer noch unangenehm.%
+%
+\item<2-> Das sieht man, wenn wir mit Tabelle \sqlil{demand} arbeiten.%
+%
+\item<3-> Der Benutzer muss die Tabellen \sqlil{product} und \sqlil{customer} beide auch offen halten.%
+%
+\item<4-> Er muss die Kunden-IDs und die Produkt-IDs nachschlagen und manuell benutzen.%
+%
+\item<5-> Es gibt keinen Schutz dagegen, die ID es falschen Kunden oder des falschen Produkts einzugeben.%
+%
+\item<6-> Wir können Daten inzwischen sehr schön mit der Sicht \sqlil{sale} zusammensetzen, nachdem wir sie eingegeben haben{\dots}%
+%
+\item<7-> {\dots}wir haben aber noch keine möglichkeit, sie komfortabel einzugeben.%
+%
+\item<8-> Noch nicht.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Formulare}%
+%
+\begin{itemize}%
+%
+\item Jetzt lernen wir eine einfache Art, wie eine Eingabemethode für Datensätze mit Fremdschlüsseln zu bauen.%
+%
+\item<2-> Diese Methode nennt sich \emph{Formulare}~(engl.\ forms).%
+%
+\item<3-> Sowohl \microsoftAccess\ als auch \libreofficeBase\ erlauben es uns, so genannte Formulare zu bauen.%
+%
+\item<4-> Formulare sind Eingabemasken, die auf verschiedene Art entworfen werden können.%
+%
+\item<5-> In Formulare können wir verschiedene Schaltflächen einfügen.%
+%
+\item<6-> Die Schaltflächen können ihre Daten von verschiedenen Tabellen erhalten.%
+%
+\item<7-> Das ist was wir wollen.%
+%
+\item<8-> Wir werden also ein Formular entwerfen, mit dem wir Bestellungen in unsere \glslink{db}{Datenbank} eingeben können.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Formulare mit LibreOffice Base Entwickeln}%
+%
+\begin{frame}[t]%
+\frametitle{Ein Formular mit LibreOffice Base Entwickeln}%
+\begin{itemize}%
+\only<-2>{%
+\item Entwickeln wir nun ein Formular, um Daten in die Tabelle \sqlil{demand} einzugeben.%
+}%
+%
+\only<-2>{%
+\item<2-> Wir öffnen also unser Dokument \textil{factory.odb} aus der vorigen Einheit mit \libreofficeBase\ und verbinden uns auf unsere \glslink{db}{Datenbank}, wobei wir das Passwort \textil{superboss123} eingeben müssen.%
+}%
+%
+\only<-4>{%
+\item<3-> Um ein neues Formular zu erstellen, wählen wir zuerst \emph{Forms} auf der linken Seite aus.%
+%
+\item<4-> Dann klicken wir auf \inQuotes{Create Form in Design View\dots}%
+}%
+%
+\only<-6>{%
+\item<5-> Ein neues Formular öffnet sich in der Design-Ansicht.%
+}%
+%
+\only<-7>{%
+\item<6-> Wir wollen eine Tabelle einfügen.%
+}%
+%
+\only<-8>{%
+\item<7-> Leider ist die entsprechende Option wahrscheinlich unter dem Doppel-Größer Symbol \libreOfficeBaseMore\ nahe dem linken unteren Ende der Ansicht verborgen.%
+}%
+%
+\only<-8>{%
+\item<8-> Wir klicken darauf.%
+}%
+%
+\only<-9>{%
+\item<9-> Nun klicken wir auf den \menu{Table Control} Button~\libreOfficeBaseTable.%
+}%
+%
+\only<-11>{%
+\item<10-> Wir klicken in das leere Formular und ziehen mit der Maus ein Gebiet für die Tabelle auf.%
+%
+\item<11-> Dann lassen wir den Mausknopf los.%
+}%
+%
+\only<-13>{%
+\item<12-> Ein Dialog öffnet sich.%
+}%
+%
+\only<-14>{%
+\item<13-> Er fragt uns nach den Daten, die in der Tabelle angezeigt werden sollen.%
+}%
+%
+\only<-15>{%
+\item<14-> Wir scrollen in der Ansicht auf der rechten Seite ganz nach unten und wählen \inQuotes{public.demand} aus.%
+%
+\item<15-> Wir klicken auf \menu{Next}.%
+}%
+%
+\only<-17>{%
+\item<16-> Im nächsten Dialog wählen wir die Spalten aus, die in die Tabelle eingefügt werden sollen.%
+}%
+%
+\only<-18>{%
+\item<17-> Wir wählen \sqlil{amount} und \sqlil{ordered}.%
+%
+\item<18-> Wir klicken \menu{Finish}.%
+}%
+%
+\only<-20>{%
+\item<19-> Die Tabelle wird nun in das Formular eingefügt.%
+}%
+%
+\only<-21>{%
+\item<20-> Wir wollen weitere Spalten hinzufügen.%
+%
+\item<21-> Rechts-klicken Sie auf die linke Ecke der Spalte \sqlil{amount}.%
+}%
+%
+\only<-22>{%
+\item<22-> In dem Menü, das sich öffnet, klicken wir auf \menu{Insert Column} und dann auf \menu{List Box}.%
+}%
+%
+\only<-24>{%
+\item<23-> Eine neue Spalte \inQuotes{List Box 1} wurde hinzugefügt.%
+%
+\item<24-> Wir klicken mit der rechten Maustaste auf sie.%
+}%
+%
+\only<-25>{%
+\item<25-> In dem Menü, das sich öffnet, klicken Sie auf \menu{Column\dots}.%
+}%
+%
+\only<-27>{%
+\item<26-> Zuerst wählen wir den Tab \menu{General} in dem sich öffnenden Dialog aus.%
+%
+\item<27-> Wir wollen den Namen und das Label der neuen Spalte ändern.%
+}%
+%
+\only<-29>{%
+\item<28-> Wir ändern Name und Label der Spalte auf \inQuotes{customer}.%
+%
+\item<29-> Dann klicken wir auf den Register \menu{Data}.%
+}%
+%
+\only<-31>{%
+\item<30-> Wir müssen zuerst eine Spalte unserer Tabelle \sqlil{demand} auswählen, deren Wert durch dieses Formularfeld gesetzt werden soll.%
+\item<31-> Wir schreiben \sqlil{customer}, also wird der ausgewählte Wert in dieser Spalte gespeichert werden.%
+}%
+%
+\only<-32>{%
+\item<32-> Nun wollen wir die Werte für \emph{Type of list contents} und \emph{Input Required} ändern\dots%
+}%
+%
+\only<-34>{%
+\item<33-> Wir ändern \emph{Input Required} auf \menu{Yes}.%
+}\only<-35>{%
+\item<34-> Wir setzen \emph{Type of list contents} auf \menu{Sql [Native]}.%
+\item<35-> Und wir klicken auf die kleine Ecke neben \emph{List content}.%
+}%
+%
+\only<-37>{%
+\item<36-> Wir müssen eine \glsShort{SQL} \sqlil{SELECT}\sqlIdx{SELECT{\idxdots}FROM}-Anfrage eintragen, die zwei Werte zurückliefert.%
+}%
+%
+\only<-38>{%
+\item<37-> Wir wählen beide aus der Tabelle \sqlil{customer} wie folgt aus\only<-37>{.}\uncover<38->{:}%
+}%
+%
+\only<-39>{%
+\item<38-> Der erste Wert ist der, der in der Tabelle angezeigt wird.\only<39>{ %
+We wählen \sqlil{name || \', \' || phone}, also das Aneinanderhängen des Namen under der Telefonnummer, getrennt von Komma~(denn Namen sind nicht unbedingt eindeutig\dots).%
+}}%
+%
+\only<-41>{%
+\item<40-> Der zweite Wert ist der der in der Spalte \sqlil{customer} der Tabelle \sqlil{demand} gespeichert werden soll.\only<41>{ %
+Wir nehmen dazu die Kunden-\sqlil{id}.%
+}}%
+%
+\only<-43>{%
+\item<42-> Nachdem wir \menu{OK} geklickt und den Dialog geschlossen haben, hat sich der Name der Spalte auf \sqlil{customer} geändert.%
+}\only<-44>{%
+\item<43-> Die Spalte ist ein wenig klein für die Informationen, die darin auftauchen werden.%
+\item<44-> Deshalb rechts-klicken wir auf sie\dots%
+}%
+%
+\only<-45>{%
+\item<45-> {\dots}und wählen \emph{Column width\dots} in dem Menü aus, das sich öffnet.%
+}%
+%
+\only<-46>{%
+\item<46-> Wir schreiben 4cm als \menu{Width} und klicken \menu{OK}.%
+}%
+%
+\only<-48>{%
+\item<47-> Die Spalte ist nun breiter.%
+\item<48-> Wir rechts-klicken nun zwischen diese Spalte und die Spalte \sqlil{amount}.%
+}%
+%
+\only<-49>{%
+\item<49-> In dem Menü, dass sich öffnet, klicken wir wieder auf \menu{Insert Column} und dann auf \menu{List Box}.%
+}%
+%
+\only<-51>{%
+\item<50-> Eine zweite neue \inQuotes{List Box 1}-Spalte taucht auf.%
+\item<51-> Wir klicken mit der rechten Maustaste auf sie.%
+}%
+%
+\only<-52>{%
+\item<52-> In dem Menü, das sich öffnet, klicken wir auf \menu{Column\dots}.%
+}%
+%
+\only<-54>{%
+\item<53-> In dem der \menu{General}-Ansicht setzen wir sowohl den Name als auch das Label der Spalte auf \sqlil{product}.
+\item<54-> Wir setzen die Breite (width) auf 1.57~Inches.%
+}%
+%
+\only<-56>{%
+\item<55-> In der \menu{Data}-Ansicht geben wir wieder eine \glsShort{SQL}-Anfrage ein.%
+}%
+%
+\only<-57>{%
+\item<56-> Diesmal wählen wir Daten aus der Tabelle \sqlil{product} aus.%
+}%
+%
+\only<-58>{%
+\item<57-> Der Spalte \sqlil{name} soll dem Benutzer angezeigt werden.%
+%
+\item<58-> Der Wert der Spalte \sqlil{id} soll gespeichert werden.%
+}%
+%
+\only<-60>{%
+\item<59-> Die \sqlil{id} des ausgrwählten \sqlil{product} soll in dem Feld \sqlil{product} des \sqlil{demand}-Datensatzes gespeichert werden.%
+%
+\item<60-> Deshalb wählen wir \sqlil{product} als \emph{Data field\dots} aus.%
+}%
+%
+\only<-62>{%
+\item<61-> Wir schließen den Dialog.%
+}%
+%
+\only<-63>{%
+\item<62-> Der Formularentwurf ist nun fertig.%
+%
+\item<63-> Wir de-selektieren das Stiftsymbol \libreOfficeBaseDesignMode\ in der Leiste unten.%
+}%
+%
+\only<-65>{%
+\item<64-> Unser Formular öffnet sich.%
+%
+\item<65-> Nun zeigt es die Daten der Tabelle \sqlil{demand} an, und zwar so ähnlich wie unsere Sicht \sqlil{sale} das tut.%
+}%
+%
+\only<-67>{%
+\item<66-> Allerdings ist es ein \emph{Formular}, keine \emph{Sicht}.%
+}%
+%
+\only<-68>{%
+\item<67-> Wir können also Daten editieren und auch neue Daten einfügen.%
+}%
+%
+\only<-69>{%
+\item<68-> Wir scrollen also in die leere Zeile am unteren Ende.%
+%
+\item<69-> Wir klicken auf die kleine Ecke in der Spalter \sqlil{customer}.%
+}%
+%
+\only<-71>{%
+\item<70-> Eine Drop-Down-Liste öffnet sich, aus der wir den Kunden in einer \emph{klar lesbaren Form} auswählen können.%
+}%
+%
+\only<-72>{%
+\item<71-> Wir müssen keine Kunden-ID mehr wissen.%
+%
+\item<72-> Wir wählen Mr.~Bibbo.%
+}%
+%
+\only<-73>{%
+\item<73> Nun klicken wir auf die kleine Ecke in der Spalte \sqlil{product}.%
+}%
+%
+\only<-75>{%
+\item<74-> In der Drop-Down-Liste, die sich öffnet, wählen wir \inQuotes{Shoe, Size 39}.%
+\item<75-> Wir können also das Produkt sehr gut lesbar auswählen und müssen seine ID nicht kennen.%
+}%
+%
+\only<-76>{%
+\item<76-> Nun geben wir die Anzahl (amount) ein.%
+}%
+%
+\only<-78>{%
+\item<77-> Wir geben 7 als Anzahl ein.%
+\item<78-> Wir gehen weiter in das Datums-Feld \sqlil{ordered}.%
+}%
+%
+\only<-80>{%
+\item<79-> Als Bestelldatum geben wir \sqlil{05/07/25} ein, was dem 7.~Mai 2025 entspricht.%
+}%
+\only<-81>{%
+\item<80-> Beachten Sie, wie schön wir hier das Datum eingeben können und das das Format direkt stimmt.%
+}%
+\only<-82>{%
+\item<81-> Wir drücken \keys{\tab}.%
+}%
+\only<-83>{%
+\item<82-> Der Cursor springt in die nächste Zeile der Tabelle \sqlil{demand}.%
+\item<83-> Der Datensatz wurde eingefügt.%
+}%
+%
+\only<-85>{%
+\item<84-> Wir sind unzufrieden damit, wie Bestellmengen und das Darum angezeigt werden.%
+%
+\item<85-> Wir wollen das Formular nochmal bearbeiten und klicken dafür auf das Stiftsymbol~\libreOfficeBaseDesignMode\ in der Leiste unten.%
+}%
+%
+\only<-87>{%
+\item<86-> Die Entwurfsansicht öffnet sich wieder.%
+%
+\item<87-> Wir rechts-klicken auf die Spalte \sqlil{amount}.%
+}%
+%
+\only<-88>{%
+\item<88> In dem Drop-Down-Menü das sich öffnet klicken wir auf \menu{Column\dots}.%
+}%
+%
+\only<-89>{%
+\item<89> Im Tab \menu{General} wollen wir den Minimalwert, die Genauigkeit, und den Tausender-Separator ändern.%
+}%
+%
+\only<-91>{%
+\item<90-> Das Minimum soll nun 0 sein.%
+}%
+%
+\only<-92>{%
+\item<91-> OK, vielleicht wäre 1 besser {\dots} aber jetzt habe ich 0 im Screenshot.%
+}%
+%
+\only<-93>{%
+\item<92-> Wir erlauben keine gebrochenzahligen Mengen, also wird die \emph{decimal accuracy}~0.%
+}%
+%
+\only<-94>{%
+\item<93-> Falls jemand tausende von Schuhen bestellen will, werden wir Tausendertrennzeichen anzeigen.%
+\item<94-> Wir schließen den Dialog.%
+}%
+%
+\only<-95>{%
+\item<95-> Wir rechts-klicken auf die Spalte \sqlil{ordered}.%
+}%
+%
+\only<-96>{%
+\item<96-> In dem Drop-Down-Menü, das sich öffnet, klicken wir auf \menu{Column\dots}.%
+}%
+%
+\only<-97>{%
+\item<97-> In der Ansicht \menu{General} wollen wir das \emph{Date format} ändern und nicht mehr diese grässliche kurze US~Format nehmen.%
+}%
+%
+\only<-99>{%
+\item<98-> Wir setzen das \emph{date format} auf \inQuotes{YYYY-MM-DD}, was das selbe ISO~Format\cite{ISO860112019} ist, dass wir in unseren \glsShort{SQL}-Anfragen verwenden.%
+%
+\item<99-> Wir schließen den Dialog.%
+}%
+%
+\only<-101>{%
+\item<100-> Wir wollen das Formular nun auch etwas breiter machen.%
+}%
+%
+\only<-102>{%
+\item<101-> Wir klicken auf den grünen Griff in der Mitte der rechten Seite der Tabelle und ziehen ihn nach außen.%
+%
+\item<102-> Nachdem wir ihn losgelassen haben, klicken wir wieder das Stiftsymbol~\libreOfficeBaseDesignMode\ und verlassen die Entwurfsansicht.%
+}%
+%
+\only<-104>{%
+\item<103-> Das Formular wird nun wieder in Aktion angezeigt.%
+}%
+%
+\only<-105>{%
+\item<104-> Es sieht nun sehr schön aus.%
+%
+\item<105-> Wir sind mit unserer Arbeit fertig.%
+}%
+%
+\only<-107>{%
+\item<106-> Wir schließen das Formular.%
+}%
+%
+\only<-108>{%
+\item<107-> Wir werden gefragt, ob wir es speichern wollen.%
+%
+\item<108-> Natürlich klicken wir auf \menu{Save}.%
+}%
+%
+\only<-110>{%
+\item<109-> Wir wählen \sqlil{demand} als Name für unser Formular aus und tragen das in die Box \emph{File name:} ein.%
+%
+\item<110-> Wir klicken auf \menu{Save}.%
+}%
+%
+\only<-112>{%
+\item<111-> Wir sind wieder im Hauptfenster von \libreofficeBase.%
+%
+\item<112-> Klicken wir nochmal auf unser Formular \sqlil{demand} um zu sehen, ob es noch da ist und noch funktioniert.%
+}%
+%
+\item<113-> Das Formular öffnet sich in all seiner Schönheit.%
+%
+\end{itemize}%
+%
+\locateGraphicTB{3-4}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms01createInDesignView}{0.2}{0.26}%
+\locateGraphicTB{5-8}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms02designView}{0.2}{0.3}%
+\locateGraphicTB{9}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms03insertTable}{0.2}{0.28}%
+\locateGraphicTB{10-11}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms04insertTable}{0.2}{0.3}%
+\locateGraphicTB{12-15}{width=0.4\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms05selectSource}{0.3}{0.28}%
+\locateGraphicTB{16-18}{width=0.4\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms06tableElements}{0.3}{0.28}%
+\locateGraphicTB{19-21}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms07table}{0.2}{0.3}%
+\locateGraphicTB{22}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms08addListColumn}{0.2}{0.3}%
+\locateGraphicTB{23-24}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms09listColumnAdded}{0.2}{0.3}%
+\locateGraphicTB{25}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms10editListColumn}{0.2}{0.3}%
+\locateGraphicTB{26-27}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms11generalOld}{0.225}{0.28}%
+\locateGraphicTB{28-29}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms12generalNew}{0.225}{0.28}%
+\locateGraphicTB{30-31}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms13dataOld}{0.225}{0.3}%
+\locateGraphicTB{32}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms14dataCustomer}{0.225}{0.3}%
+\locateGraphicTB{33-35}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms15contentsSql}{0.225}{0.3}%
+\locateGraphicTB{36-41}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms16contentsQuery}{0.225}{0.3}%
+\locateGraphicTB{42-44}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms17customerColAdded}{0.2}{0.33}%
+\locateGraphicTB{45}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms18customerSetColWidth}{0.2}{0.33}%
+\locateGraphicTB{46}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms19customerSetColWidth}{0.2}{0.33}%
+\locateGraphicTB{47-48}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms20customerColConfigured}{0.2}{0.33}%
+\locateGraphicTB{49}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms21insertColumn}{0.2}{0.33}%
+\locateGraphicTB{50-51}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms22columnInserted}{0.2}{0.33}%
+\locateGraphicTB{52}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms23columnEdit}{0.2}{0.33}%
+\locateGraphicTB{53-54}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms24columnGeneralProperties}{0.225}{0.3}%
+\locateGraphicTB{55-58}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms25columnSQL}{0.225}{0.3}%
+\locateGraphicTB{59-60}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms26columnData}{0.225}{0.3}%
+\locateGraphicTB{61-63}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms27formDesigned}{0.225}{0.3}%
+\locateGraphicTB{64-65}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms28formOpen}{0.2}{0.3}%
+\locateGraphicTB{66-69}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms29formUse}{0.2}{0.3}%
+\locateGraphicTB{70-72}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms30formUseCustomer}{0.2}{0.3}%
+\locateGraphicTB{73}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms31formUseCustomerDone}{0.2}{0.3}%
+\locateGraphicTB{74-75}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms32formUseProduct}{0.2}{0.3}%
+\locateGraphicTB{76}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms33formUseProductDone}{0.2}{0.3}%
+\locateGraphicTB{77-78}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms34formUseAmount}{0.2}{0.3}%
+\locateGraphicTB{79-83}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms35formUseDate}{0.2}{0.3}%
+\locateGraphicTB{84-85}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms36formUseDone}{0.2}{0.3}%
+\locateGraphicTB{86-87}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms37formFurtherEdit}{0.2}{0.33}%
+\locateGraphicTB{88}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms38amountEdit}{0.225}{0.29}%
+\locateGraphicTB{89}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms39amountSettings}{0.225}{0.29}%
+\locateGraphicTB{90-94}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms40amountFixed}{0.2}{0.33}%
+\locateGraphicTB{95}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms41editOrdered}{0.2}{0.33}%
+\locateGraphicTB{96}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms42orderedEdit}{0.225}{0.29}%
+\locateGraphicTB{97}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms43orderedSettings}{0.225}{0.29}%
+\locateGraphicTB{98-99}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms44orderedFixed}{0.225}{0.29}%
+\locateGraphicTB{100-102}{width=0.7\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms45wider}{0.15}{0.33}%
+\locateGraphicTB{103-105}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms46editDone}{0.2}{0.33}%
+\locateGraphicTB{106-108}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms47closingSave}{0.2}{0.33}%
+\locateGraphicTB{109-110}{width=0.5\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms48saveAsDemand}{0.25}{0.33}%
+\locateGraphicTB{111-112}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms49forms}{0.4}{0.33}%
+\locateGraphicTB{113}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseForms/factoryLibreOfficeBaseForms50reopened}{0.4}{0.33}%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung: Vorher}%
+\begin{itemize}%
+\item Die Stärke von \glsShort{rdb} ist, dass wir mehrere Tabellen mit zusammenhängenden Daten erstellen können.%
+%
+\item<2-> Eine Tabelle kann existierende Datensätze in einer anderen Tabelle über Fremdschlüssel referenzieren.%
+%
+\item<3-> Das \glsShort{dbms} stellt sicher, dass die referenzielle Integrität immer sichergestellt wird.%
+%
+\item<4-> Allerdings wird das einfügen Daten dadurch sehr unangenehm.%
+%
+\item<5-> Selbst nachdem wir von \glsShort{SQL} auf die einfache tabellen-basierten Ansichten in Werkzeugen wie \microsoftAccess\ und \libreofficeBase\ umgestiegen sind, mussten wir immer noch die IDs der Kunden und Produkte kennen, um korrekt Daten in die Tabelle \sqlil{demand} eingeben zu können.%
+%
+\item<6-> Das ist nicht nur umständlich, sondern auch sehr fehleranfällig.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung: Jetzt}%
+\begin{itemize}%
+\item Jetzt haben wir etwas sehr schönes geschafft.%
+\item<2-> Jetzt können wir strukturierte Formulare für die Dateneingabe entwerfen.%
+\item<3-> Natürlich haben wir nur an der Oberfläche dieses Themas gekrazt.%
+\item<4-> Wir haben nur ein Formular, das wie eine Tabelle aussieht, entworfen.%
+\item<6-> Mit diesem Formular konnten wir die Daten allerdings schon so ähnlich wie mit unserer Sicht \sqlil{sale} verlinken.%
+\item<7-> Es wurde unnötig, Kunden- und Produkt-IDs zu kennen.%
+\item<8-> Stattdessen konnten wir direkt mit den Kunden- und Produkt-Namen arbeiten.%
+\item<9-> Wir können nun Daten von Tabellen, die auf komplexe Art verknüpft sind, eingeben.%
+\item<10-> Und \inQuotes{Wir} schließt auch Leute ein, die nicht wissen, was \glslink{rdb}{RDBs} sind.%
+\item<11-> Mit solchen Formularen kann eine ganz normale Person schon arbeiten.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung: Mehr}%
+\begin{itemize}%
+\item Es gibt noch viel mehr Arten, Formulare zu entwerfen.%
+\item<2-> Die müssen nicht wie Tabellen aussehen.%
+\item<3-> Sie können viele coole Kontrollelemente haben, wie Drop-Down-Listen, Radioknöpfe, Checkboxen, usw.%
+\item<4-> Es gibt viele coole Dinge, die wir lernen könnten.%
+\item<5-> Der wichtige Punkt ist aber, dass wir jetzt wissen, das es Formulare gibt und wie bzw.\ wofür wir sie verwenden können.%
+\item<6-> Und damit können wir zum nächsten Thema übergehen.%
+\end{itemize}%
+\end{frame}%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
