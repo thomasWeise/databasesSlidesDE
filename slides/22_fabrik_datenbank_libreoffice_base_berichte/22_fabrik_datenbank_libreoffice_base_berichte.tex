@@ -1,0 +1,340 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{22.~Fabrik-Datenbank:~Berichte in LibreOffice Base}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}[t]%
+\frametitle{Einleitung}%
+%
+\begin{itemize}%
+\only<-9>{%
+\item Das letzte oft verwendete Element in kleineren \glsShort{db}-Applikationen, das wir uns anschauen, sind Berichte~(engl.\ reports).%
+}%
+%
+\item<2-> Ein Bericht ist im Grunde ein schön formatiertes Dokument, das mit Hilfe der Daten aus einer \glsShort{db} erstellt wird.%
+%
+\item<3-> Formulare sind eine angenehme Art, Daten in die Datenbank einzupflegen.%
+%
+\item<4-> Berichte sind dagegen eine angenehme Art, die Daten aus einer Datenban anzuzeigen.%
+%
+\item<5-> Wenn ein Sekretär, der die Bestellungen der Kunden managed, eine Übersicht über die Geschäftstransaktionen erstellen will, dann kann er auf die Ausgaben der Sicht \sqlil{sale} schauen.%
+%
+\item<6-> Obwohl deren Ausgaben schon schön lesbar sind, ist das trotzdem nichts, das man auf Papier ausdrucken und auf den Tisch eines Managers legen will.%
+%
+\item<7-> Nun könnte man diese Daten durchaus in ein \microsoftWord\ Dokument kopieren und dann ausdrucken.%
+%
+\item<8-> Dann müsste man diesen Copy-Paste-Formatieren-Ausdrucken Workflow aber jedesmal von neuem durchführen, wenn so ein Bericht gebraucht wird.%
+%
+\item<9-> Berichte, also \emph{reports}, automatisieren das im Grunde.%
+%
+\item<10-> Berichte bieten automatische Workflows mit vorformattierten Dokumenten um Daten aus einer Datenbank zu präsentieren.
+\end{itemize}%
+\end{frame}%
+%
+%
+\section{Berichte mit LibreOffice Base Entwickeln}%
+%
+\begin{frame}[t]%
+\frametitle{Einen Berichte mit LibreOffice Base Entwickeln}%
+\begin{itemize}%
+\only<-2>{%
+\item \libreofficeBase\ bietet uns auch die Funktionalität, Berichte zu erstellen.%
+}%
+%
+\only<-2>{%
+\item<2-> Um dieses Feature auszuprobieren, öffnen also unser Dokument \textil{factory.odb} mit \libreofficeBase\ und verbinden uns auf unsere \glslink{db}{Datenbank}, wobei wir das Passwort \textil{superboss123} eingeben müssen.%
+}%
+%
+\only<-3>{%
+\item<3-> Wir wählen \menu{Reports} in der Ansicht \menu{Database} und klicken auf \inQuotes{Use Wizard to Create Report\dots}%
+}%
+%
+\only<-5>{%
+\item<4-> Wir müssen eine Datenquelle für unseren neuen Bericht auswählen.%
+%
+\item<5-> Wir klicken auf \inQuotes{Tables \underline{o}r queries.}%
+}%
+%
+\only<-6>{%
+\item<6> In der Tabellenlist, die sich öffnet, scrollen wir ganz weit runter und wählen \inQuotes{Table: public.sale} aus.%
+}%
+%
+\only<-8>{%
+\item<7-> Wir bekommen alle Spelten der Sicht angezeigt und selektieren sie auch alle.%
+%
+\item<8-> Dann klicken wir auf den \inQuotes{doppelt-größer-als-Button} \menu{\textgreater\textgreater} um die zu der  \inQuotes{Fields in report} Liste hinzuzufügen.%
+}%
+%
+\only<-9>{%
+\item<9-> Nun sind alle Spalten eingestellt und wir klicken auf \menu{Next}.%
+}%
+%
+\only<-11>{%
+\item<10-> Wir werden gefragt, wie wir die Felder benennen wollen.%
+%
+\item<11-> Wir werden ein paar vernünftige Namen eingeben.%
+}%
+%
+\only<-12>{%
+\item<12-> Wir haben ein paar vernünftige Labels eingegeben und klicken auf \menu{Next}.%
+}%
+%
+\only<-14>{%
+\item<13-> Wir können die Datensätze in Gruppen einteilen.%
+}%
+%
+\only<-15>{%
+\item<14-> Wir wollen sie in jeweils einen Abschnitt pro Kunde in \menu{Fields} einteilen.%
+%
+\item<15-> Daher selektieren wir \sqlil{customer_name} und klicken auf den \inQuotes{größer-als-Knopf} \menu{\textgreater} um den Kundenname in \menu{Groupings} einzutragen.%
+}%
+%
+\only<-17>{%
+\item<16-> Er erscheint in \menu{Groupings}.%
+\item<17-> Wir klicken auf \menu{Next}.%
+}%
+%
+\only<-19>{%
+\item<18-> Nun können wir die Datensätze sortieren.%
+}%
+%
+\only<-20>{%
+\item<19-> Sie werden ja bereits nach Kunden sortiert und gruppiert.%
+%
+\item<20-> Aber innerhalb einer Kunden-Sektion wollen wir die Datensätze nach Datum und Produkt und Menge sortieren.%
+}%
+%
+\only<-22>{%
+\item<21-> Wir haben also die entsprechenden Felder hinzugefügt.%
+}%
+%
+\only<-23>{%
+\item<22-> Beim Sortieren bedeutet \inQuotes{descending}, dass große Werte zuerst kommen.%
+}%
+%
+\only<-24>{%
+\item<23-> Beim sortieren bedeutet \inQuotes{ascending}, dass kleine Werte zuerst kommen.%
+%
+\item<24-> Wir klicken auf \menu{Next}.%
+}%
+%
+\only<-26>{%
+\item<25-> Wir können nun das Layout auswählen.%
+}%
+%
+\only<-27>{%
+\item<26-> Wir sind mit dem normalen tabellarischen Aussehen einverstanden.%
+%
+\item<27-> Aber wir wollen den Bericht im \inQuotes{portrait}-Format anzeigen (das Papier soll so herrum gelegt werden, dass es höher als breit ist).%
+}%
+%
+\only<-28>{%
+\item<28> Nachdem wir das Layout geändert haben, klicken wir \menu{Next}.%
+}%
+%
+\only<-29>{%
+\item<29-> Als Name für den Report passt \sqlil{sale} besser als \sqlil{public.sale}.%
+}%
+%
+\only<-31>{%
+\item<30-> Wir wollen den Bericht auch nicht gleich ausführen, sondern wir wollen ihn erst noch bearbeiten.%
+\item<31-> Wir wählen \inQuotes{Modify report layout} aus.%
+}%
+%
+\only<-32>{%
+\item<32-> Wir können jetzt auf \menu{Next} klicken.%
+}%
+%
+\only<-34>{%
+\item<33-> Der Bericht wurde erstellt und ist in der Entwicklungsansicht geöffnet.%
+}%
+%
+\only<-35>{%
+\item<34-> Er sieht etwas grob aus.%
+}%
+%
+\only<-36>{%
+\item<35-> Das Feld für den Kundennamen nimmt viel zu viel Platz ein.%
+}%
+%
+\only<-37>{%
+\item<36-> Da muss auch kein Label dran sein.%
+%
+\item<37-> Wir klicken also auf das Label und drücken \keys{\del}.%
+}%
+%
+\only<-39>{%
+\item<38-> Wir ziehen den linken Rand des \sqlil{customer}-Felds zum linken Rand des Bericht.%
+%
+\item<39-> Wir wollen auch den unteren Rand hochziehen, denn der Abschnitt braucht nicht so viel Platz.%
+}%
+%
+\only<-41>{%
+\item<40-> Nun hat er die richtige Größe.%
+%
+\item<41-> Nun wollen wir auch alle Überschriften nach oben schieben.%
+}%
+%
+\only<-43>{%
+\item<42-> Wir klicken mit der rechten Maustaste und ziehen eine Auswahlbox um den Tabellenkopf und die horizontale Linie.%
+\item<43-> Dann drücken wir die \keys{\arrowkeyup}-Taste ein paar mal um die Überschriften nach oben zu schieben.%
+}%
+%
+\only<-44>{%
+\item<44-> Die Überschriften sind nun nach oben verschoben.%
+}%
+%
+\only<-46>{%
+\item<45-> Wir wollen nun die Gruppenüberschrift des Berichts auch etwas kleiner machen.%
+%
+\item<46-> Deshalb klicken wir auf das \inQuotes{customer\_name Header}-Feld und dann in die Eigenschaft \menu{Height}.%
+}%
+%
+\only<-48>{%
+\item<47-> Wir machen die Höhe schön klein.%
+%
+\item<48-> Dann wollen wir noch etwas Platz zwischen den Gruppen schaffen und deshalb alle Kontrollelemente der Überschriften etwas runterschieben.%
+}%
+%
+\only<-50>{%
+\item<49-> Um sie alle runterzuschieben, müssen wir sie erst auswählen.%
+%
+\item<50-> Wir rechts-klicken also wieder in den Bericht und ziehen eine Auswahlbox über sie.%
+}%
+%
+\only<-52>{%
+\item<51-> Dann drücken wir die \keys{\arrowkeydown}-Taste ein paar Mal.%
+\item<52-> Wir sind fertig und schließen den Bericht.%
+}%
+%
+\only<-54>{%
+\item<53-> Wenn wir den Bericht schließen, werden wir gefragt, ob wir ihn auch speichern wollen.%
+}%
+%
+\only<-55>{%
+\item<54-> Natürlich klicken wir auf \menu{save}.%
+%
+\item<55-> Wir speichern ihn unter dem Namen  \textil{sale}.%
+}%
+%
+\only<-57>{%
+\item<56-> Er taucht unter diesem Namen in der \menu{Reports}-Ansicht auf.%
+%
+\item<57-> Wir doppel-klicken auf ihn.%
+}%
+%
+\only<-59>{%
+\item<58-> Ein neues Dokument öffnet sich in \libreofficeWriter.%
+}%
+%
+\only<-60>{%
+\item<59-> Es beinhaltet alle Daten in einer sehr schön formatierten Art.%
+%
+\item<60-> Wir können es nach \pgls{formatPDF} expeortieren, in dem wir das PDF-Symbol \libreOfficePdf\ anklicken.%
+}%
+%
+\item<61-> Und hier haben wir das exportierte \pgls{formatPDF}-Dokument.%
+\end{itemize}%
+%
+\locateGraphicTB{3}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport01main}{0.2}{0.3}%
+\locateGraphicTB{4-5}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport02wizardDataSource}{0.2}{0.3}%
+\locateGraphicTB{6}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport03wizardDataSource}{0.2}{0.3}%
+\locateGraphicTB{7-8}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport04wizardDataFields}{0.2}{0.3}%
+\locateGraphicTB{9}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport05wizardDataFieldsChosen}{0.2}{0.3}%
+\locateGraphicTB{10-11}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport06wizardLabels}{0.2}{0.3}%
+\locateGraphicTB{12}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport07wizardLabelsChosen}{0.2}{0.3}%
+\locateGraphicTB{13-15}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport08wizardGrouping}{0.2}{0.3}%
+\locateGraphicTB{16-17}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport09wizardGroupingByCustomer}{0.2}{0.3}%
+\locateGraphicTB{18-20}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport10wizardSorting}{0.2}{0.3}%
+\locateGraphicTB{21-24}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport11wizardSortingFields}{0.2}{0.3}%
+\locateGraphicTB{25-27}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport12wizardLayout}{0.2}{0.3}%
+\locateGraphicTB{28}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport13wizardPortrait}{0.2}{0.3}%
+\locateGraphicTB{29}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport14wizardCreate}{0.2}{0.3}%
+\locateGraphicTB{30-31}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport15wizardCreateSale}{0.2}{0.3}%
+\locateGraphicTB{32}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport16wizardCreateModifyLayout}{0.2}{0.3}%
+\locateGraphicTB{33-37}{width=0.8\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport17created}{0.1}{0.3}%
+\locateGraphicTB{38-39}{width=0.8\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport18customerLabelRemoved}{0.1}{0.3}%
+\locateGraphicTB{40-41}{width=0.8\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport19customerShrinked}{0.1}{0.3}%
+\locateGraphicTB{42-43}{width=0.8\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport20headerSelected}{0.1}{0.3}%
+\locateGraphicTB{44}{width=0.8\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport21headerMovedUp}{0.1}{0.3}%
+\locateGraphicTB{45-46}{width=0.8\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport22headerDeselected}{0.1}{0.3}%
+\locateGraphicTB{47-48}{width=0.8\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport23headerShrunk}{0.1}{0.3}%
+\locateGraphicTB{49-50}{width=0.8\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport24headerSelected}{0.1}{0.3}%
+\locateGraphicTB{51-52}{width=0.8\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport25headerMovedDown}{0.1}{0.3}%
+\locateGraphicTB{53-55}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport26save}{0.2}{0.33}%
+\locateGraphicTB{56-57}{width=0.6\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport27saved}{0.37}{0.26}%
+\locateGraphicTB{58-60}{width=0.55\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport28executed}{0.225}{0.3}%
+\locateGraphicTB{61}{width=0.4\paperwidth}{graphics/factoryLibreOfficeBaseReport/factoryLibreOfficeBaseReport29report}{0.3}{0.22}%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung: Funktionalität}%
+\begin{itemize}%
+\only<-9>{%
+\item Unser erster Bericht sieht schon ganz nett aus.%
+}%
+%
+\only<-10>{%
+\item<2-> Natürlich haben wir diesen Bericht nur mal schnell zusammengeklickt.%
+}%
+%
+\item<3-> Man kann noch viel, viel mehr machen.%
+%
+\item<4-> Berichte haben oft eine Funktionalität, Statistiken zu berechnen.%
+%
+\item<5-> Wir hätten \DEzB\ den Umsatz pro Kunde oder den Gesamtumsatz anzeigen können.%
+%
+\item<6-> Oftmals kann man die Daten auch filtern.%
+%
+\item<7-> Es wäre sicher möglich, die Daten in unserem Falle durch ein Start- und End-Datum zu limitieren, die der Benutzer eingeben muss.%
+%
+\item<8-> Berichte können auch oft Diagramme beinhalten.%
+%
+\item<9-> Wir können vielleicht ein Diagramm für jeden Kunden einfügen, das anzeigt, wie viel Geld er wann bei uns ausgegeben hat.%
+%
+\item<10-> \libreofficeBase\ hat diese Funktionalität, aber meine Version der Software auf meinem PC stürzt ab, wenn ich versuche, diese zu nutzen\dots%
+%
+\item<11-> Naja, spielen Sie doch etwas mit \libreofficeBase\ herum {\dots} vielleicht funktioniert es ja bei Ihnen!%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung: Berichte}%
+%
+\begin{itemize}%
+\item Der wichtige Punkt ist jedoch, dass Sie mal einen kleinen Blick darauf werfen konnten, was Berichte im Kontext von Datenbanken sind.%
+%
+\item<2-> Berichte erlauben uns, sehr schön formatierte und druckbare Sichten auf die Daten in unserer Datenbank zu generieren.%
+%
+\item<3-> Sie können von Leuten gelesen und verstanden werden, die nicht mal wissen, was eine Datenbank ist.%
+%
+\item<4-> Sie sind auch daher ein sehr oft verwendetes Werkzeug in vielen kleinen und mittelgroßen Applikationen.%
+%
+\item<5-> Sie werden von Werkzeugen wie \libreofficeBase\ und \microsoftAccess\ unterstützt.%
+%
+\item<6-> Es gibt auch Softwarebibliotheken, die Berichte generieren können.%
+%
+\item<7-> Wahrscheinlich gibt es \python-Bibliotheken, die sehr schöne Berichte erstellen können, vielleicht auch im Zusammenhang mit \matplotlib\ und der anderen Funktionalität die das \python-Ökosystem uns bietet.%
+%
+\item<8-> Und da Sie ja schon wissen, wie man auf eine \postgresql\ \glslink{db}{Datenbank} aus \python\ zugreift, könnten Sie problemlos mit so einer Berichte-Bibliothek arbeiten.%
+\end{itemize}%
+\end{frame}%
+\endPresentation%
+\end{document}%%
+\endinput%
+%

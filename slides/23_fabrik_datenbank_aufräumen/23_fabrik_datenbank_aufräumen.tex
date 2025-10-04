@@ -1,0 +1,381 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{23.~Fabrik-Datenbank:~Aufräumen}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item Wir kommen nun langsam an das Ende unserer kurzen Reise quer durch die Domäne der \glslink{rdb}{relationalen Datenbanken}.%
+%
+\item<2-> Wir haben einen groben Eindruck, was Datenbanken sind und wie wir sie verwenden können.%
+%
+\item<3-> Um unsere Reise, also unser Fabrik-Beispiel, zu beenden, wollen wir alle Dinge, die wir erstellt haben, auch wieder löschen.%
+%
+\item<4-> Natürlichen machen wir das in der umgekehrten Reihenfolge, in der wir die Objekte erstellt haben.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\section{Das Kommando \texttt{DROP}}%
+%
+\begin{frame}[t]%
+\frametitle{Das Kommando \texttt{DROP}}%
+%
+\parbox{0.4\paperwidth}{\small{%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Die \glsShort{SQL} Syntax um verschiedene Datenbank-Objekte zu löschen ist sehr einfach\cite{PGDG:PD:DU,PGDG:PD:DD,PGDG:PD:DT,PGDG:PD:DV}.%
+}%
+%
+\only<-6>{%
+\item<2-> Sie schreiben \sqlilIdx{DROP} gefolgt vom Objekttyp gefolgt vom Objektname.%
+}%
+%
+\only<-7>{%
+\item<3-> Der Objekttyp könnte \DEzB\ \sqlil{TABLE}\sqlIdx{DROP!TABLE}, \sqlil{VIEW}\sqlIdx{DROP!VIEW}, \sqlil{USER}\sqlIdx{DROP!USER} oder \sqlil{DATABASE}\sqlIdx{DROP!DATABASE} sein.%
+}%
+%
+\item<4-> Diese Kommandos werden fehlschlagen, wenn das Objekt noch in Benutzung ist, also wenn es noch von anderen Objekten referenziert wird.%
+%
+\item<5-> Sie können \DEzB\ keine Tabelle löschen, die noch Teil eine Fremdschlüssels ist.%
+%
+\item<6-> Das Kommando wird auch fehlschlagen, wenn das Objekt nicht existiert.%
+%
+\item<7-> Letzteres kann man umgehen, in dem mann \sqlilIdx{IF EXISTS}\sqlIdx{DROP!IF EXISTS} zwischen dem Objekttyp und dem Objektname einfügt.%
+%
+\end{itemize}%
+}}%
+%
+\sqlSyntax{}{syntax/drop.sql}{0.47}{0.1}{0.54}{0.89}%
+%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Warum \texttt{IF EXISTS}?~(1)}%
+\begin{itemize}%
+\item In unserem Fall wissen wir ja, das die Objekte, die wir löschen wollen, alle existieren.%
+%
+\item<2-> Warum erwähnen wir dann die Option \sqlilIdx{IF EXISTS}\sqlIdx{DROP!IF EXISTS} explizit?%
+%
+\item<3-> Weil sie einige interessante Verwendungen hat.%
+%
+\item<4-> Wenn wir \DEzB\ ein Backup unserer gesamten \glsShort{db} machen wollen, dann könnten wir die ganze \glsShort{db} als ein großes \glsShort{SQL}-Skript exportieren.%
+Because it has some interesting use cases\cite{PGDG:PD:SD}.%
+%
+\item<5-> Dieses Skript wäre im Grunde eine Aneinanderreihung aller unserer Listings, mit den \sqlil{CREATE ...}- und \sqlil{INSERT INTO...}-Kommandos und allem.%
+%
+\item<6-> Wenn wir dieses Skript ausführen, würden wir im Grunde die Datenbank wiederherstellen.%
+Running this script would re-create the \glsShort{db} in exactly its present state.
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Warum \texttt{IF EXISTS}?~(2)}%
+\begin{itemize}%
+\item Manchmal aber auch nicht.%
+%
+\item<2-> Wenn die Datenbank schon existiert, dann schlägt das \glsShort{SQL}-Skript fehl.%
+%
+\item<3-> Wir können ja kein Objekt erstellen, das schon existiert.%
+%
+\item<4-> Oder vielleicht hatten wir ja einen Crash oder ein Benutzer hat ein fehlerhaftes \glsShort{SQL}-Kommando ausgeführt und die Datenbank kaput gemacht.%
+%
+\item<5-> Dann existieren vielleicht noch ein paar Tabellen und Views und andere sind weg.%
+%
+\item<6-> Eine Methode, um solche Skripte robuster zu machen, ist ein \sqlil{DROP ... IF EXISTS}\sqlIdx{DROP!IF EXISTS} auszuführen, bevor die Tabellen und Sichten wieder erstellt werden.%
+%
+\item<7-> Dann können wir die Datenbank oder Teile von ihr auch wiederherstellen, wenn sie noch Bruchstückhaft existiert.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Löschen der Beispiels}%
+%
+\begin{frame}[t]%
+\frametitle{Löschen der Objekte in der Datenbank}%
+%
+\parbox{0.4\paperwidth}{\small{%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Nun wollen wir aber endlich alle Objekte wieder löschen, die wir erstellt haben.%
+}%
+%
+\only<-6>{%
+\item<2-> Zuerst löschen wir die Sicht \sqlil{sale}.%
+}%
+%
+\only<-7>{%
+\item<3-> Das geht mit dem Kommando \sqlil{DROP VIEW sale;}\sqlIdx{DROP!VIEW}\cite{PGDG:PD:DV}.%
+}%
+%
+\only<-8>{%
+\item<4-> \sqlil{DROP} ist das \glsShort{SQL}-Kommando um Dinge zu löschen.%
+}%
+%
+\only<-9>{%
+\item<5-> \sqlil{VIEW} wird spezifiziert, um klar zu machen das wir eine Sicht löschen wollen.%
+}%
+%
+\only<-10>{%
+\item<6-> Das verhindert, das wir aus Versehen etwas anderes löschen.%
+}%
+%
+\only<-11>{%
+\item<7-> Wir geben den Namen der Sicht, die wir löschen wollen, an -- nämlich \sqlil{sale}.%
+}%
+%
+\only<-12>{%
+\item<8-> Wir fügen das \sqlilIdx{IF EXISTS} zwischen dem Objekttyp und dem Namen der Sicht ein.%
+}%
+%
+\only<-13>{%
+\item<9-> Wenn die Sicht existiert, wird sie gelöscht.%
+}%
+%
+\only<-14>{%
+\item<10-> Wenn nicht, dann passiert nichts.%
+}%
+%
+\only<-15>{%
+\item<11-> Ohne das \sqlilIdx{IF EXISTS} würde dieser Fall einen Fehler auslösen.%
+}%
+%
+\only<-16>{%
+\item<12-> Mit \sqlilIdx{IF EXISTS} brauchen wir uns nicht darum zu kümmern.%
+}%
+%
+\only<-17>{%
+\item<13-> Wir können das Kommando zweimal ausführen, und es wäre auch OK.%
+}%
+%
+\only<-18>{%
+\item<14-> Wir benutzen die selbe Methode, um alle drei Tabellen zu löschen.%
+}%
+%
+\only<-19>{%
+\item<15-> Wir führen aus \sqlil{DROP TABLE IF EXISTS demand;}, \sqlil{DROP TABLE IF EXISTS product;} und dann \sqlil{DROP TABLE IF EXISTS customer;}\cite{PGDG:PD:DT}.%
+}%
+%
+\only<-20>{%
+\item<16-> Wir müssen Tabelle \sqlil{demand} zuerst löschen und danach die Tabellen \sqlil{customer} und \sqlil{product}.%
+}%
+%
+\only<-21>{%
+\item<17-> Das ist wegen der \sqlilIdx{REFERENCES}-Einschränkungen.%
+}%
+%
+\item<18-> Wir können kein Objekt löschen, das noch referenziert wird.%
+%
+\item<19-> So lange diese Einschränkungen existieren, können die Tabellen \sqlil{customer} und \sqlil{product} nicht gelöscht werden.%
+%
+\item<20-> In dem wir Tabelle \sqlil{demand} zuerst löschen verschwinden auch die beiden Einschränkungen.%
+%
+\item<21-> Die Tabellen \sqlil{customer} und \sqlil{product} werden dann nicht mehr referenziert und können gelöscht werden.%
+\end{itemize}%
+}}%
+%
+\gitLoadAndExecSQL{factory:cleanup_inside_database}{}{factory}{cleanup_inside_database.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{}{factory:cleanup_inside_database}{}{0.47}{0.2}{0.52}{0.7}%
+%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Löschen der Datenbank und des Benutzers}%
+%
+\parbox{0.4\paperwidth}{\small{%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Alle diese \inQuotes{Löschungen} wurden unter dem Benutzer \textil{boss} und dessen Passwort \textil{superboss123} gemacht.%
+}%
+%
+\item<2-> Löschen wir nun auch die Datenbank und diesen Benutzer.%
+%
+\item<3-> Wir löschen zuerst die Datenbank durch \sqlil{DROP DATABASE IF EXISTS factory;}\sqlIdx{DROP!DATABASE}\sqlIdx{IF EXISTS}\cite{PGDG:PD:DD}.%
+%
+\item<4-> Dann können wir auch den Benutzer mit \sqlil{DROP USER IF EXISTS boss;}\sqlIdx{DROP!USER}\sqlIdx{IF EXISTS} löschen\cite{PGDG:PD:DU}.%
+%
+\item<5-> Beachten Sie, dass wir uns als \glsShort{dba} unter Benutzer \textil{postgres} einloggen, um diese Schritte durchzuführen.%
+%
+\item<6-> Damit sind alle Überreste unseres Beispiels von \dbms\ \glslink{server}{Server} verschwunden.%
+\end{itemize}%
+}}%
+%
+\gitLoadAndExecSQL{factory:cleanup_database_and_user}{}{factory}{cleanup_database_and_user.sql}{}{}{}%
+\listingSQLandOutput{}{factory:cleanup_database_and_user}{}{0.47}{0.2}{0.52}{0.7}%
+%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung: Löschen}%
+\begin{itemize}%
+\item Alle Objekte, die wir in einem \glsShort{dbms} erstellen können, können wir auch wieder löschen.%
+%
+\item<2-> Das Löschen von \glsShort{db}-Objekten kommt eher selten vor.%
+%
+\item<3-> In einigen Situationen, \DEzB\ dem Einspielen von Backups, ist es aber sinnvoll.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung: Beispiel}%
+\begin{itemize}%
+%
+\item Nun sind wir mit unserem Beispiel fertig.%
+%
+\item<2-> Was haben wir gelernt?%
+%
+\item<3-> Zuersteinmal haben wir Hands-On Erfahrung mit einem der weltweit führenden \glslink{dbms}{DBMSe}, \postgresql, gesammelt.%
+%
+\item<4-> Wir haben viele Kommandos in der Sprache \glsShort{SQL} and das \glsShort{dbms} geschickt.%
+%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Zusammenfassung: SQL-Kommandos}%
+\begin{itemize}%
+\only<-12>{%
+\item Was für \glsShort{SQL}-Kommandos haben wir denn ausprobiert?%
+}%
+%
+\only<-13>{%
+\item<2-> Nun, wir haben einen Benutzer (eine Rolle) und eine Datenbank erstellt.%
+}%
+%
+\only<-14>{%
+\item<3-> Wir haben Tabellen in der \glsShort{db} erstelt.%
+}%
+%
+\only<-15>{%
+\item<4-> Wir haben Daten in die Tabellen eingefügt und auch wieder ausgelesen.%
+}%
+%
+\only<-16>{%
+\item<5-> Wir haben die Daten mehrerer Tabellen mit Anfragen zusammengesetzt.%
+}%
+%
+\only<-17>{%
+\item<6-> Wir haben eine Sicht erstellt und Anfragen oben auf die Sicht draufgesetzt.%
+}%
+%
+\only<-18>{%
+\item<7-> Wir haben auch die Daten in einer Tabelle verändert.%
+}%
+%
+\only<-19>{%
+\item<8-> Und am Schluss haben wir wieder alles gelöscht.%
+}%
+%
+\item<9-> Wir haben also einige der wichtigsten \glsShort{SQL}-Kommandos kennengelernt.%
+%
+\item<10-> Na klar, wir haben nur mit ihnen herumgespielt.%
+%
+\item<11-> Wir sind nicht mal in die Nähe davon gekommen, ihr volles Verhalten, ihre Sonderfälle, oder ihre Performanz zu verstehen, geschweige denn, was sie eigentlich genau machen.%
+%
+\item<12-> Aber eins ist klar\only<-12>{.}\uncover<13->{: %
+Wenn uns jemand sagen würde, wir dass wir eine \glsShort{db} für eine bestimmte Anwendung erstellen sollen {\dots} dann könnten wir das wahrscheinlich.%
+}%
+%
+\item<14-> Wir könnten etwas zusammenbauen, das in etwa funktioniert.%
+%
+\item<15-> Wäre das eine effiziente oder elegante \glsShort{db}?%
+%
+\item<16-> Mit ziemlicher Sicherheit nicht.%
+%
+\item<17-> Wir haben ja noch gar nichts über Datenbankdesign gelernt.%
+%
+\item<18-> Aber wir haben jetzt bereits schon ein wenig Erfahrung.%
+%
+\item<19-> Wir haben durchaus schon rohe und ungeschlieffene Fähigkeiten auf diesem Gebiet!%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung: Datenbankzugriff via Programmiersprache}%
+\begin{itemize}%
+\item Wir verstehen im Prinzip auch, wie wir von einer Programmiersprache aus auf eine Datenbank zugreifen kann.%
+%
+\item<2-> Wir wissen in etwa, was ein \glsShort{dbms} mit \glsShort{SQL} machen kann und was nicht.%
+%
+\item<3-> Damit können wir eigentlich schon ziemlich komplexe Applikationen bauen.%
+%
+\item<4-> Was ein \glsShort{dbms} machen kann, geht in die Datenbank.%
+%
+\item<5-> Was es nicht machen kann, können wir mit \python\ implementieren.%
+%
+\item<6-> Mit \python\ könnten wir komplexe Datenvarbeitungsschritte durchführen oder auch Daten von Sensoren an die Datenbank schicken.%
+%
+\item<8-> Wir könnten \glsShort{ML} oder \glsShort{AI}-Modelle in \python\ basierend auf Daten aus einer Datenbank trainieren.%
+%
+\item<9-> Dabei kann der Programmkode mit Hilfe einer Bibliothek wie \psycopg\ mit der Datenbank kommunizieren.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung: Datenbankzugriff via GUI}%
+\begin{itemize}%
+\item Vielleicht arbeiten wir auch in einer kleinen Firma, in der nur drei, vier Leute mit der Datenbank arbeiten.%
+%
+\item<2-> Wir wollen wahrscheinlich trotzdem die Power von \postgresql\ nutzen.%
+%
+\item<3-> Aber ein separates Programm zu entwickeln, das mit den Daten arbeitet, könnte vielleicht zu viel Aufwandt sein.%
+%
+\item<4-> Dann verwenden wir doch lieber eine \glsShort{GUI} wie \libreofficeBase\ als Frontend für die Datenbank.%
+%
+\item<5-> Zumindest das Eingeben, Anzeigen, und Ändern der Daten wird dann viel einfacher als über den \psql-\glslink{client}{Client}.%
+%
+\item<6-> Während wir \glslink{dba}{DBAs} immer noch alle Features von \postgresql\ benutzen können, kann der Sekretär im Verkaufsdepartment neue Kunden und Bestellungen viel bequemer eingeben.%
+%
+\item<7-> Wir haben nämlich gelernt, wie man Formulare zum Eingeben von Daten in Tabellen verwenden kann, die in komplexen Beziehungen zu anderen Tabellen stehen.%
+%
+\item<8-> Berichtet dagegen erlauben uns, Daten ansprechend auszulesen, darzustellen, und auszudrucken.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item An dieser Stelle in unserem Kurs haben Sie also mehrere Standardwerkzeuge und Abstraktionen kennengelernt, und zwar während Sie mit einer echten Datenbank auf einem professionellen \glsShort{dbms} gearbeitet haben.%
+%
+\item<2-> Sie haben noch keine tiefen theoretischen Kenntnisse.%
+%
+\item<3-> Aber dafür ein gutes Gefühl dafür, welches Werkzeug für welche Fragestellung geeignet seien könnte.%
+%
+\item<4-> Und ich hoffe, dass ich Ihre Neugier wecken konnte.%
+%
+\item<5-> Vielleicht haben Sie ja irgendein Problem, für das Sie selbst gerne eine Datenbank entwickeln wollen?%
+%
+\item<6-> Vielleicht wollen Sie ja Ihre Bücher oder Musiksammlung katalogisieren?%
+%
+\item<7-> Vielleicht wollen Sie eine Datenbank mit Ihren Vorfahren anlegen?%
+%
+\item<8-> Vielleicht wollen Sie eine Bibliographie von Literaturreferenzen anlegen?%
+%
+\item<9-> Es gibt nichts was Ihnen mehr beim Erlernen von Datenbanken helfen könnte, als so ein eigenes Projekt auszuführen.%
+%
+\item<10-> Das Zweitbeste ist vielleicht, den Rest des Kurses anzuschauen~(oder irgendein Buch zu lesen).%
+\end{itemize}%
+\end{frame}
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
