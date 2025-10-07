@@ -1,0 +1,1040 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{24.~Datenbanken Entwicklung}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item In unserem einführenden Fabrik-Beispiel hatten wir eine einfache Idee, wie unsere \glslink{db}{Datenbank} aussehen sollten.%
+%
+\item<2-> Diese Idee haben wir dann einfach implementiert.%
+%
+\item<3-> Das ist natürlich nicht, wie so etwas funktioniert.%
+%
+\item<4-> In der echten Welt sind Datenbanken viel komplizierter.%
+%
+\item<5-> Da sind nicht nur drei Tabellen.%
+%
+\item<6-> Die Interaktionen zwischen Objekten, Prozessen, und Menschen sind viel komplizierter.%
+%
+\item<7-> Wir haben eine grobe Idee, welche technologische Werkzeuge wir zur Verfügung haben, wenn wir mit \pglspl{db} haben.%
+%
+\item<8-> Aber wir verstehen den praktischen Prozess des Datenbankentwurfs nicht so wirklich.%
+%
+\item<9-> Uns fehlt das Know-How um ein echtes Datenbankprojekt professionell zu realisieren.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Sinnbild}%
+\begin{itemize}%
+%
+\item Stellen Sie sich vor, dass wir Autos bauen wöllten.%
+%
+\item<2-> Wir wissen, was Räder sind und wie sie funktionieren.%
+%
+\item<3-> Wir wissen, dass die Batterie macht und wie wir mit ihr den Motor zum Laufen bringen.%
+%
+\item<4-> Wir wissen, dass normale Leute im Auto auf Sitzen sitzen wollen und wie man Sitze einbaut.%
+%
+\item<5-> Wir wissen was ein Fahrgestellt und eine Karosserie sind, wie man sie baut, und wie man die anderen Teile mit ihnen verbindet.%
+%
+\item<6-> Das bedeutet aber noch nicht, dass wir zulassungsfähige Autos bauen können.%
+%
+\item<7-> Das ist nämlich kein Puzzelspiel, wo man schrittweise Teile zusammensetzt bis nichts mehr übrig ist.%
+%
+\item<8-> Das erfordet einen vernünftig dokumentierten Entwurfsprozess.%
+%
+\item<9-> Erst machen wir einen klaren Plan machen, was wohin gehört und wann was gemacht wird.%
+%
+\item<10-> Erst nach dem Planen beginnt ein Konstruktionsprozess.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Die Drei Modelle / Schemas}%
+%
+\begin{frame}%
+\frametitle{Drei Modelle}%
+\begin{itemize}%
+%
+\item Datenbanken werden in einem methodischen und systematischen Prozess entwickelt.%
+%
+\item<2-> Wir beginnen mit einer Analyse der Anforderungen und arbeiten uns über immer genauere Modelle unserer Applikation vorwärts.%
+%
+\item<3-> Damit werden wir uns in den folgenden Einheiten beschäftigen.%
+%
+\item<4-> Im Kern erfordert der Prozess des Datenbankdesigns das Entwickeln von drei Modellen (auch Schemas genannt)\cite{EN2015FODS}\only<-4>{.}\uncover<5->{:%
+\begin{enumerate}%
+\item das konzeptuelle Modell\uncover<6->{,}%
+\item<6-> das logische Modell\uncover<7->{ und}%
+\item<7-> das physische Modell.%
+\end{enumerate}}%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Konzeptuelles Modell}%
+%
+\begin{definition*}[Konzeptuelles Modell]%
+Das \emph{konzeptuelle Model}~(oder auch \emph{konzeputelle Schema}) einer Datenbank ist ein Model der Entitäten aus er echten Welt deren Daten das System speichert sowie die Beziehungen zwischen diesen.%
+\end{definition*}%
+%
+\uncover<2->{%
+\begin{itemize}%
+\item Das konzeptuelle Modell ist eine abstrakte Sicht auf unserer Szenario.%
+%
+\item<3-> Der Sinn dieses Modells ist es, ein klares Konzept der Applikation bereitzustellen, dass alle am Projekt Beteiligten verstehen können.%
+%
+\item<4-> Dieses Model kann als eine Formalisierung des Daten-bezogenen Teils der Anforderungen gesehen werden.%
+%
+\item<5-> Es ist auch ein wichtiger Teil der Projektdokumentation.%
+%
+\item<6-> Es ist unabhängig von konkreten Datenmodellen und Datenbanktechnologien.%
+%
+\item<7-> Es stellt alle Entitäten, deren Eigenschaften (Attribute) sowie die Beziehungen zwischen ihnen dar.%
+\end{itemize}%
+}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Logisches Modell}%
+%
+\begin{definition*}[Logisches Modell]%
+Das \emph{logische Modell}~(oder \emph{logische Schema}) einer Datenbank ist ein Modell der Daten, das auf einer spezifischen Datenbanktechnologie basiert, \DEzB\ \glslink{rdb}{relationale Datenbank}, hierarchische Datenbank, NoSQL Datenbank, usw.\uncover<2->{ %
+Es representiert die Entitäten, ihre Attribute und Beziehungen sowie Einscharänkungen mit konkreten Datentypen in einem strukturierten formalen Format.}%
+\end{definition*}%
+%
+\uncover<3->{%
+\begin{itemize}%
+%
+\item Das logische Model ist die Ebene, auf der die Benutzer und Applikationen mit der Datenbank interagieren.%
+%
+\item<2-> Das konzeptuelle Model wird in eine technschie Spezifikation übersetzt.%
+%
+\item<3-> Es kann oft auch in einer formalen Datenbanksprache wie \glsShort{SQL} spezifiziert werden.%
+%
+\item<4-> Es kann auf einem bestimmten \glsShort{dbms} oder auf einer Art von DBMSen basieren.%
+\end{itemize}%
+}\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Physisches Modell}%
+%
+\begin{definition*}[Physisches Model]%
+Das \emph{physische Modell}~(oder \emph{physische Schema} oder \emph{interne Schema}) ist die Spezifikation der konkreten technischen Realisierung des logischen Modells.\only<2-7>{ %
+Es ist gebunden an ein konkretes \glsShort{dbms} und spezifiziert exakt wie die Daten gespeichert werden und wie auf sie zugegriffen wird.\only<3->{ %
+Das physische Modell bestimmt die Performanz und die Systemanforderungen, aber nicht die Art, wie Benutzer und Applikationen auf die Daten zugreifen~(denn das wird durch das logische Modell definiert)}}%%
+\end{definition*}%
+%
+\uncover<4->{%
+\begin{itemize}%
+\only<-9>{%
+\item In vielen kleineren Datenbankapplikationen kann das logische Modell direkt als physisches Modell genutzt werden.%
+}%
+%
+\only<-10>{%
+\item<5-> Das logische Modell kann in einer Sprache wie \glsShort{SQL} definiert werden.%
+}%
+%
+\only<-11>{%
+\item<6-> In diesem Fall haben wir bereits eine klare Definition, wie Tabellen erstellt und wie mit Anfragen auf sie zugegeriffen wird.%
+}%
+%
+\only<-12>{%
+\item<7-> Von einem \sqlil{CREATE TABLE}-Kommando, \DEzB, können die meisten normalen DBMSe bereits vernünftige Standardeinstellungen ableiten, wie die Daten gespeichert werden sollen.%
+}%
+%
+\only<-13>{%
+\item<8-> Um eine hohe Performance zu erreichen, kann ein physisches Modell aber weitere Spezifikationen hinzufügen.%
+}%
+%
+\only<-14>{%
+\item<9-> Wie sollen große Datensätze gespeichert werden?%
+}%
+%
+\only<-16>{%
+\item<10-> Sollen die Daten auf eine bestimmte Art sortiert werden?%
+}%
+%
+\only<-17>{%
+\item<11-> Soll es Indexe geben, also zusätzliche Datenstruktueren um bestimmte Anfragen zu beschleunigen?%
+}%
+%
+\item<12-> Diese Spezifikationen sind unsichtbar für Applikationen und Benutzer.%
+%
+\item<13-> Sie greifen auf die Datenbank \DEzB\ via \glsShort{SQL} zu.%
+%
+\item<14-> Ihre Anfragen ändern sich nicht, wenn sich das physische Modell ändert.%
+%
+\item<15-> Das physische Modell beinflusst aber die Anfrage-Performanz und den Speicherbedarf der Daten.%
+%
+\item<16-> Für große Datenbank kann das einen riesigen Unterschied machen.%
+\end{itemize}}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Models and Design}%
+\begin{itemize}%
+\item Im Datenbankdesignprozess geht es zu einem guten Teil darum, diese drei Modelle korrekt hinzubekommen.%
+%
+\item<2-> Es gibt verschiedene Herausforderungen in jedem Schritt, von der Diskussion mit zukünftigen Benutzern hin bis zum Feineinstellen das \glsShort{dbms}.%
+%
+\item<3-> Wir werden uns jetzt diesen Prozess und die Schritte, die man braucht, um eine verünftige Datenbankapplikation zu erstellen, etwas genauer anschauen.%
+%
+\item<4-> Als übergreifendes Beispiel wollen wir eine Datenbank zum Managen von Studierenden, Lehrkräften, und Kursen an einer Universtität erstellen.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Lebenszyklus}%
+%
+\begin{frame}%
+\frametitle{Lebenszyklus von Datenbanken}%
+\begin{itemize}%
+%
+\item Die Entwicklung von Datenbanken ist kein einfacher Prozess der Form \inQuotes{Idee $\rightarrow$ Design $\rightarrow$ Fertig}.%
+%
+\item<2-> Stattdessen benötigt das Entwickeln von Datenbanken mehrere Schritte.%
+%
+\item<3-> Diese Schritte folgen einem \emph{Lebenszyklus}.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Was wir machen müssen}%
+\begin{itemize}%
+\item Wir müssen die Anforderungen an die Datenbank klar verstehen.%
+%
+\item<2-> Wir brauchen eine grobe Skizze der Dinge, die wir einbauen müssen.%
+%
+\item<3-> Wir müssen entscheiden, welche Tabellen und Beziehungen gebraucht werden.%
+%
+\item<4-> Dieses konzeptionelle Modell muss letztendlich auf ein physisches Modell abgebildet werden.%
+%
+\item<5-> Irgendwann wird man eine Art Prototyp brauchen, wo die Benutzer Testdaten eingeben können, um auszuprobieren, ob alles mehr oder weniger so funktioniert, wie es soll.%
+%
+\item<6-> Dann können wir Probleme feststellen und wir müssen vielleicht unseren Entwurf verändern.%
+%
+\item<7-> Irgendwann muss die fertige Applikation auch getestet werden.%
+%
+\item<8-> Wenn dann alle mit dem Design zufrieden sind, können die Datenbank und die Applikation in der Produktivumgebung eingesetzt werden.%
+%
+\item<9-> Die Datenbank wird regelmäßig gewartet und ge-backup-ed.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Langlebigkeit}%
+\begin{itemize}%
+%
+\only<-10>{%
+\item Durch die Langlebigkeit von Datenbanken werden wir irgendwann neue Features hinzufügen und unser Design überarbeiten müssen.%
+}%
+%
+\only<-11>{%
+\item<2-> Anders als normale Softwareprojekte scheinen Datenbankapplikationen überide Jahre \emph{nicht} komplexer zu werden, sie entwickeln sich aber trotzdem immer weiter\cite{SVZ2014OSD}.%
+}%
+%
+\only<-12>{%
+\item<3-> Es gibt viele verschiedene Ansätze, wie man dem Lebenszyklus von Datenbanken eine Struktur geben kann\cite{GMTM2011DDLC}.%
+}%
+%
+\only<-13>{%
+\item<4-> Datenbanken sind im Grunde Softwareartefakte, also könnte man einen der vielen Software-Development Lifecycles~(\glsShort{SDLC}) nehmen\cite{I2018SAH,N2024SEFDS}.%
+}%
+%
+\only<-14>{%
+\item<5-> Datenbanken sind aber speziell.%
+}%
+%
+\only<-15>{%
+\item<6-> Sie haben eine vergleichsweise lange Lebenszeit\cite{SS2005EIDDDFDB:I}.%
+}%
+%
+\only<-16>{%
+\item<7-> Die Hardware eines Computers bleibt für vielleicht drei bis fünf Jahre aktuell.%
+}%
+%
+\item<8-> Softwareprogramme ändern sich oft alle fünf bis zehn Jahre.%
+%
+\item<9-> \DEZB\ kommt alle zwei Jahre eine neue Long-Term Support~(\glsShort{LTS})-Version des \ubuntu\ \glsShort{OS} heraus\cite{C2024TULARC}.%
+%
+\item<10-> \libreoffice\ veröffentlicht neue Releases alle sechs Monate\cite{DF2024TDFWR}.%
+%
+\item<11-> Hauptversionen von \microsoftWindows\ kommen alle zwei bis sechs Jahre heraus\cite{EOEBEB:LOWV}.%
+%
+\item<12-> Wenn eine neue Softwareversion erscheint, dann fallen die alten Versionen normalerweise in ca.\ fünf Jahren aus dem Support und müssen ersetzt werden.%
+%
+\item<13-> Datenbanken bleiben für Dekaden in Benutzung.%
+%
+\item<15-> Ich habe selbst vor langer Zeit eine Datenbank entwickelt, die in einer Niederlassung einer mittelgroßen Firma über zehn Jahre in Benutzung blieb.%%
+%
+\item<16-> Datenbanken und die Applikationen auf ihnen sind wichtige Assets einer Organisation.%
+%
+\item<17-> Sie beinhalten wichtige Informationen, sowohl historische Daten als auch die Daten, die für die aktuelle Arbeit benötigt werden.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Datenbanken als Spiegel der Realen Welt}%
+%
+\begin{itemize}%
+\item Datenbanken speichern nicht nur Daten, sie spiegeln Entitäten aus der realen Welt wider.%
+%
+\item<2-> In unserem kleinen Fabrikbeispiel spiegeln die Daten die Produkte, Kunden, und Interaktionen der Kunden mit der Fabrik wider.%
+%
+\item<3-> Alle diese Aspekte können sich mit der Zeit ändern.%
+%
+\item<4-> Vielleicht wird die Fabrik irgendwann nicht mehr viele Produkte mit jeweils einem eindeutigen, festen Namen verkaufen, sondern stattdessen weniger Produkte, die aber konfigurierbar sind.%
+%
+\item<5-> Vielleicht können ja die Kunden irgendwann die Schuhgröße und -Farbei frei konfigurieren.%
+%
+\item<6-> Das muss dann ja auch irgendwie in die Datenbank rein.%
+%
+\item<7-> Vielleicht wird die Datenbank auch irgendwann erweitert, so dass auch der Vorrat an Produkten und die Lagerhaltung mit erfasst werden sollen.%
+%
+\item<8-> Datenbanken existieren also für eine sehr lange Zeit und können sich während ihrer Existenz weiterentwickeln.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Datenbanklebenszyklus}%
+\begin{itemize}%
+%
+\only<-10>{%
+\item All das zusammen führt zu vielen Anforderungen an den Lebenszyklus der Datanbankentwicklung.%
+}%
+%
+\only<-11>{%
+\item<2-> Dieser Lebenszyklus ist dem normalen \glsShort{SDLC} ähnlich.%
+}%
+%
+\item<3-> Es gibt jedoch zwei Aspekte, die ihn besonders machen\only<-3>{.}\uncover<4->{%
+\begin{enumerate}%
+\item die Langlebigkeit von Datenbanken\only<-4>{.}\uncover<5->{ und}%
+\item<5-> der Fakt, das Datenbanken oft die unterste Ebene von Applikationen sind.%%
+\end{enumerate}}%
+%
+\item<6-> Datenbanken sind die Grundlage auf der andere Applikationen mit Berichten, Formularen, und Webseiten entwickelt werden.%
+%
+\item<7-> Deshalb sind die erste Kontaktpunkt von Entwicklern und Stakeholdern in Projekten.%
+%
+\item<8-> Der Datenbankentwicklungsprozess ist, wo das grundlegende Verständnis der Daten und Prozesse in einer Organisation aufgebaut wird.%
+%
+\item<9-> Hier ist die Situation \inQuotes{am unklarsten}.%
+%
+\item<10-> Hier passieren die meisten Misverständnisse.%
+%
+\item<11-> Die offensichtlichste Anforderung an einen Datenbankentwurfsprozess ist, dass er uns bei der Übersetzung der Informationen von den Stakeholdern in eine laufende Datenbankapplikation hilft.%
+%
+\item<12-> Er soll uns helfen, das Projekt zu planen, Zeitlinen zu entwickeln, wann und wie welcher Meilenstein erreicht werden kann, wie viel was kostet, usw.%
+%
+\item<13-> Aber all diese Dinge werden durch die Unsicherheit beeinflusst.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Unsicherheiten}%
+\begin{itemize}%
+%
+\only<-8>{%
+\item Oft sind sich die Stakeholder selbst nicht völlig klar über ihre eigenen Prozesse und Daten.%
+}%
+%
+\only<-10>{%
+\item<2-> Deshalb können wichtige Aspekte bei Diskussionen einfach übersehen werden.%
+}%
+%
+\only<-11>{%
+\item<3-> \DEZB\ sieht die Aussage~\emph{\inQuotes{Jedes Produkt hat einen Namen.}} auf den ersten Blick sehr vernünftig aus.%
+}%
+%
+\item<4-> Manchmal werden wir aber auch überrascht und folgendes kann passieren:~\emph{\inQuotes{Ah, ja klar, wir verwenden verschiedene Produktnamen für verschiedene Kunden.}}%
+%
+\item<6-> Schon ist die Idee einer einzelnen Tabelle für Produkte dahin\dots%
+%
+\item<7-> Vielleicht haben Prozesse einen harten Kern wie~\emph{\inQuotes{Wir senden das Produkt an die Kunden, nachdem diese bezahlt haben.}}%
+%
+\item<8-> Manchmal gibt es aber auch unscharfe Enden, wie~\emph{\inQuotes{Nein, diese Firma ist ein sehr guter Kunde. Die können auch später bezahlen. Warum geht das nicht mit Ihrem Programm?}}%
+%
+\item<9-> Manchmal nehmen die Stakeholders auch einfach an, dass bestimmte Dinge Allgemeinwissen sind und jeder die kennt:~\emph{\inQuotes{Wenn wir unsere Ware außerhalb der EU verschicken, dann muss Exportsteuer bezahlt werden. Das weiß doch jeder!}}\uncover<10->{ {\dots}der Datenbankentwickler weiß das vielleicht nicht\dots}%
+%
+\item<11-> Ein Datenbankdesignprozess sollte es uns erlauben, unser Design schrittweise und in Antwort auf entdeckte Probleme anzupassen\cite{GMTM2011DDLC,WK1989DKBSRTSDLC}.%
+%
+\item<12-> Gleichzeitig sollte verhindern, dass iterative Veränderungen die Projektstruktur immer weiter verändern und das Projekt durch immer neue Features immer weiter vom Originalziel wegdriftet\cite{GMTM2011DDLC,WK1989DKBSRTSDLC}.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Klassische Softwarentwicklungsprozesse}%
+%
+\begin{frame}[t]%
+\frametitle{Wasserfallmodell}%
+%
+\begin{itemize}%
+\only<-4>{%
+\item Im Gebiet der Softwaretechnologie wurden mehrere verschiedene Designmethoden, also SDLCs, vorgeschlagen.%
+}%
+%
+\only<-5>{%
+\item<2-> Das einfachste ist vielleicht das Wasserfallmodell\cite{R1970MTDOLSS,PM2020SEAPA,GMTM2011DDLC,I2018SAH,N2024SEFDS} von \citeauthor{R1970MTDOLSS} \citeyear{R1970MTDOLSS} veröffentlicht wurde\cite{R1970MTDOLSS}.%
+}%
+%
+\only<-5>{%
+\item<3-> Das Wasserfallmodell ist ein sequentieller Prozess aus Planung, Anforderungsanalyse, Design, Entwicklung, Testen, und Installation und produktivem Einsatz.%
+}%
+%
+\only<-7>{%
+\item<4-> Jeder Schritt produziert Artefakte als Ergebnis, die dann die Eingabe für die nächste Phase werden.%
+}%
+%
+\only<-8>{%
+\item<5-> Das Wasserfallmodell legt fest, welche Aktivitäten in welcher Phase stattfinden und welche Deliverables produziert werden sollen.
+}%
+%
+\only<-9>{%
+\item<6-> Während der Requirements Definition (Anforderungen)-Phase wird der Umfang des Projekts basierend auf Diskussionen mit den Stakeholdern festgelegt.%
+}%
+%
+\only<-10>{%
+\item<7-> Das Wasserfallmodell ist einfach zu verwenden.%
+}%
+%
+\only<-11>{%
+\item<8-> Es erlaubt Entwicklern, entlang einer gut bekannten Struktur zu arbeiten.%
+}%
+%
+\only<-12>{%
+\item<9-> Wir wissen zu jeder Phase des Projekts, wo wir stehen.%
+}%
+%
+\only<-13>{%
+\item<10-> So kommt es zu weniger Missverständnissen.%
+}%
+%
+\only<-13>{%
+\item<11-> Dieses Model kann manchal as streng sequentiell missverstanden werden.%
+}%
+%
+\only<-14>{%
+\item<12-> Wenn wir es wirklich streng sequentiell anwenden würden, dann würde wir nicht verstehen, dass wir in jeder Phase fehler machen können und dass es unerwartete Probleme geben kann.%
+}%
+%
+\only<-15>{%
+\item<13-> \Citeauthor{R1970MTDOLSS} hat bereits anerkannt, dass es Feedback zwischen der vorigen und der nächsten Phase gibt.%
+}%
+%
+\only<-16>{%
+\item<14-> Manchmal brauchen wir auch größere Änderungen, wenn \DEzB\ die Test-Phase nicht das erwartete Ergebnis bringt.%
+}%
+%
+\only<-17>{%
+\item<15-> Eine Idee von \citeauthor{R1970MTDOLSS} ist, bei ganz neuen Projekten den gesamten Prozess einfach zweimal zu durchlaufen.%
+}%
+%
+\only<-18>{%
+\item<16-> Der erste Durchlauf wäre eine kurze Simulation der Entwicklung, für die vielleicht ein Viertel der Projektzeit eingesetzt wird.%
+}%
+%
+\item<17-> Der Sinn dieser Phase wäre es, Erfahrung zu sammeln, mit der wir dann den zweiten Durchlauf zum Erfolg bringen können.%
+%
+\item<18-> Ich mag diese Idee sehr.%
+%
+\item<19-> So oder so, eine Schwachstelle dieses Modells ist es, dass die Anforderungen früh spezifiziert werden und es keinen vordefinierten Weg gibt, später im Projekt Änderungen einzuführen.%
+\end{itemize}%
+%
+\locateGraphic{2-}{width=0.7\paperwidth}{graphics/waterfall}{0.15}{0.5}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{(Rapid) Prototyping}%
+\begin{itemize}%
+%
+\only<-4>{%
+\item Eine weiterer Ansatz, den man als eine Art Erweiterung der \inQuotes{Mach-es-zweimal}-Idee betrachten kann, ist (Rapid) Prototyping\cite{L1989SETRP}.%
+}%
+%
+\only<-4>{%
+\item<2-> Hier erkennen wir an, dass sowohl die Stakeholders als auch die Entwickler wahrscheinlich noch nicht exakt wissen, wie das Endergebnis aussehen soll.%
+}%
+%
+\only<-6>{%
+\item<3-> Wir platzieren einen Kreislauf aus Prototypen und Diskussionen in den Mittelpunkt des Entwicklungsprozesses\cite{BLM2023AEBMOSPAMSAAMCS,L1989SETRP}.%
+}%
+%
+\only<-6>{%
+\item<4-> Zuerst wird eine eingeschränkte Version der Anforderungen aufgenommen und ein Prototyp der Datenbank und der Software wird sofort entwickelt.%
+}%
+%
+\only<-8>{%
+\item<5-> Der Prototyp kann sogar nur ein Mock-Up sein, das nur die grundlegenden Funktionen des Projekts illustriert und nicht mit anderen Werkzeugen interagiert\cite{BLM2023AEBMOSPAMSAAMCS}.%
+}%
+%
+\item<6-> Er dient als Basis für Diskussionen und wir müssen ihn wahrscheinlich mehrfach neu entwickeln.%
+%
+\item<7-> In manchen Varianten des Ansatzes werden die Projektanforderungen für festgelegt\cite{PA2009SETAP,GMTM2011DDLC}, in anderen können sie später bearbeitet werden\cite{L1989SETRP}.%
+%
+\item<8-> Prototyping erlaubt es uns, schrittweise die Projektspezifikation zu verbessern.%
+%
+\item<9-> Das kostet uns aber auch Klarheit im Projektablauf.%
+%
+\end{itemize}%
+%
+\locateGraphic{3-}{width=0.7\paperwidth}{graphics/prototype}{0.15}{0.56}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Das Spiralenmodell}%
+%
+\parbox{0.4\paperwidth}{\small{%
+\begin{itemize}%
+\only<-4>{%
+\item Das Spiralenmodell\cite{B1985ASMOSDAE,B1988ASMOSDAE,PA2009SETAP,GMTM2011DDLC} kann vielleicht als eine weitere Mult-Pass Wasserfallmethode betrachtet werden.%
+}%
+%
+\only<-5>{%
+\item<2-> Der Entwicklungsprozess beginnt wieder mit einer Anforderungsanalyse und einem Entwicklungsplan.%
+}%
+%
+\only<-6>{%
+\item<3-> Ein erste Durchlauf des Wasserfallmodells wird auf Basis einer Untermenge der Anforderungen durchgeführt, um einen ersten Prototyp zu entwickeln.%
+}%
+%
+\only<-7>{%
+\item<4-> Der Prototyp wird ausgewertet und der Zykls beginnt noch einmal, um neue Funktionalität hinzuzufügen und einen neuen Prototypen zu entwickeln.%
+}%
+%
+\only<-8>{%
+\item<5-> In jedem Durchlauf wird eine Risikoanalyse durchgeführt, bevor der Prototyp entwickelt wird.%
+}%
+%
+\only<-9>{%
+\item<6-> Jeder Prototyp reduziert also das Risko.%%
+}%
+%
+\only<-10>{%
+\item<7-> Eine Idee des Spiralmodells ist, das Anforderungen hierarchisch sind.%
+}%
+%
+\only<-11>{%
+\item<8-> In jedem Durchlauf können zusätzliche Anforderungen zu den bereits implementierten hinzugefügt werden.%
+}%
+%
+\item<9-> In einer Datenbank können verschiedene Funktionen (\DEzB\ Lagerhaltung und Bestellungsmanagement) eher unabhängig von einander sein, so dass dieser Ansatz nicht immer gut passt.%
+%
+\item<10-> Die Anforderungen an das Projekt werden früh definiert, so dass der Projektumfang klar festgelegt ist.%
+%
+\item<11-> Dadurch wird aber auch eine schrittweise Verbesserung des Designs nicht so gut unterstützt.%
+%
+\item<12-> Dazu sind sowohl Risikoanalysen und die Struktur des Spiralmodells beide etwas komplex.\cite{S2007OOSE,GMTM2011DDLC}.%
+\end{itemize}}}%
+%
+\locateGraphic{}{width=0.5\paperwidth}{graphics/spiral}{0.45}{0.1}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Rapid Application Development}%
+\begin{itemize}%
+%
+\only<-4>{%
+\item Rapid Application Development~(\glsShort{RAD})\cite{BDCMT1999RADRAER,M1991RAD} is similar to (rapid) prototyping.%
+}%
+%
+\only<-5>{%
+\item<2-> Die Benutzer können die (prototypische) Applikation ausprobieren, bevor sie ausgeliefert wird\cite{S2007OOSE,GMTM2011DDLC,M1996RTWSS}.%
+}%
+%
+\only<-6>{%
+\item<3-> Wenn die Stakeholders mit dem echten System herumspielen können, dann können sie wahrscheinlich besseres Feedback geben als wenn sie nur Spezifikationsdokumente zur Verfügung haben.%
+}%
+%
+\only<-7>{%
+\item<4-> Deshalb wird ein Prototyp so früh wie möglich entwickelt und den Benutzern gegeben.%
+}%
+%
+\only<-8>{%
+\item<5-> \glsShort{RAD}-Projekte werden oft von kleinen, eng zusammenarbeitenden Teams über einen kurzen Zeitraum implementiert.%
+}%
+%
+\only<-9>{%
+\item<6-> Die Projekte sind oft sehr interaktiv und von vergleichsweise geringer Komplexität.%
+}%
+%
+\only<-10>{%
+\item<7-> \glsShort{RAD} führt daher soziale Komponenten und Team-Building in die Softwareentwicklung ein\cite{BDCMT1999RADRAER}.%
+}%
+%
+\item<8-> \Pgls{RAD}-basierte Projekte tendieren dazu, seltener abgelehnt zu werden, wenn sie die Produktivphase erreichen.%
+%
+\item<9-> Der Nachteil ist, dass so genannter \emph{scope creep} häufiger auftritt\only<-9>{.}\uncover<10->{:}%
+%
+\item<10-> Wenn die Stakeholder ein Verändern der Applikation als einfach empfinden, dann fragen sie häufiger nach zusätzlichen Features.%
+%
+\item<11-> Das eigentliche Ziel ein voll funktionsfähiges System zu haben kann aus dem Fokus driften und das Budget bzw.\ der Zeitrahmen könnte überschritten werden.%
+%
+\end{itemize}%
+%
+\locateGraphic{}{width=0.65\paperwidth}{graphics/rapid}{0.175}{0.56}%
+\end{frame}%
+%
+\section{Entwicklungsprozesse für Datenbanken}%
+%
+\begin{frame}[t]%
+\frametitle{Datenbanken sind Anders}%
+\begin{itemize}%
+\only<-10>{%
+\item Datenbanksysteme sind anders als normale Softwareanwendungen.%
+}%
+%
+\only<-10>{%
+\item<2-> \alert{Erstens} sind sie sind oft die Grundlage für mehrere verschiedene Anwendungen.%
+}%
+%
+\only<-11>{%
+\item<3-> Eine Studentenmanagementdatenbank einer Universität, \DEzB, könnte Studenden die Möglichkeit bieten, sich einzuloggen, sich für Module einzuschreiben, und ihre Noten zu sehen.%
+}%
+%
+\only<-12>{%
+\item<4-> Es kann aber auch der Uni-Administration erlauben, neue Module zu erstellen und vielleicht sogar die Modulstruktur von Studiengängen zu managen.%
+}%
+%
+\only<-13>{%
+\item<5-> Vielleicht übernimmt es auch noch die Raumplanung für Lehreinheiten.%
+}%
+%
+\item<6-> Und die Zeitplanung für das Semester, die Prüfungen, und die Stundenpläne der Studenten.%
+%
+\item<7-> All das könnte über verschiedene Applikation mit verschiedenen Benutzerschnittstellen gehen.%
+%
+\item<8-> Aber alle nutzen die selbe Datenbank als Backend.%
+%
+\item<9-> \alert{Zweitens} haben wir bei der Datenbankentwicklung normalerweise eine Abfolge von drei Schemas.%
+%
+\item<10-> Am Anfang wird ein konzeptuelles Schema das die Entitäten und Prozesse der realen Welt modelliert.%
+%
+\item<11-> Dieses wird dann auf ein logisches Schema basierend auf einer konkreten Technologie abgebildet.%
+%
+\item<12-> Am Ende kann ein physisches Schema stehen, dass mit zusätzlichen Konfigurationen die Performanz verbessert.%
+%
+\item<13-> Drittens müssen wir immer beachten, dass Datenbanken sehr langlebige Artefakte sind, die über viele Jahre gewartet und verbessert werden müssen.%
+%
+\item<14-> Aus diesem Grund wurden verschiedene Lebenszyklus-Strukturen für Datenbanken entwickelt.%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Beispiel Lebenszyklus}%
+%
+\parbox{0.42\paperwidth}{\small{%
+\begin{itemize}%
+\only<-7>{%
+\item Ich mag \DEzB\ das Lebenszyklus-Modell von \citeauthor{GMTM2011DDLC}\cite{GMTM2011DDLC}.%
+}%
+%
+\only<-8>{%
+\item<2-> Wir finden darin viele der Aktivitäten, die ein guter \glslink{dba}{DBA} durchführen muss.%
+}%
+%
+\only<-9>{%
+\item<3-> Wir beginnen mit einer Planungsphase.%
+}%
+%
+\only<-9>{%
+\item<4-> Hier werden zwei Aktivitäten geplant\only<-4>{.}\uncover<5->{: (1)~das Sammeln von Informationen über die Prozesse der Organisation, die in der Datenbank gespiegelt werden sollen\only<-5>{.}\uncover<6->{ (2)~die Anforderungsanalyse.}}%
+}%
+%
+\only<-10>{%
+\item<7-> Als Ergebnis hat man dann einen Plan.%
+}%
+%
+\only<-11>{%
+\item<8-> Dann sammeln wir alle benötigten Daten und Informationen über die Organisation.%
+}%
+%
+\only<-12>{%
+\item<9-> Die Entwickler und Designer arbeiten mit allen Stakeholders des Projekts auf allen ebenen zusammen, von den späteren Benutzern der Datenbank bis hin zum Management der Organisation.%
+}%
+%
+\only<-13>{%
+\item<10-> Die Dokumente und Prozesse in der Organisation werden erforscht, ebenso wie der Datenfluss durch die Organisation.%
+}%
+%
+\only<-15>{%
+\item<11-> Wir prüfen welche Systeme bereits existieren, welche Eingabedaten sie brauchen, welche Ausgaben sie produzieren, wer sie benutzt und warum.%
+}%
+%
+\only<-16>{%
+\item<12-> Interviews und Fragebögen können ebenso benutzt werden, um mehr Daten zu sammeln.%
+}%
+%
+\only<-17>{%
+\item<13-> Die Aktivitäten von Personal auf allen Ebenen können auch direkt beobachtet und dokumentiert werden.%
+}%
+%
+\only<-18>{%
+\item<14-> Die aktuellen Anforderungen und mögliche zukünftige Erweiterungen der Datenbank werden erforscht.%
+}%
+%
+\only<-19>{%
+\item<15-> Die Anforderungsspezifikation wird erarbeitet.%
+}%
+%
+\only<-20>{%
+\item<16-> In der Anforderungsanalyse untersichen wir die gsammelten Daten um zu entscheiden, ob das Projekt durchführbar ist und um seine Kosten abzuschätzen.%
+}%
+%
+\only<-21>{%
+\item<17-> Die Projektziele werden spezifiziert.%
+}%
+%
+\only<-21>{%
+\item<18-> Die Grenzen des Projekts (Budget, Equipment, verwendbare Software) werden definiert ebenso wie die Anforderungen an Performanz, Sicherheit, und Wartbarkeit, \dots%
+}%
+%
+\only<-23>{%
+\item<19-> All das ist wichtig für den Erfolg des Projekts.%
+}%
+%
+\only<-24>{%
+\item<20-> Als Ergebnis können wir mögliche Probleme, die später auftreten könnten, bereits jetzt identifizieren.%
+}%
+%
+\only<-25>{%
+\item<21-> Nachdem die Anforderungen gesammelt und analysiert sind, können wir einen Zeitplan für den Rest des Projektes festlegen.%
+}%
+%
+\only<-26>{%
+\item<22-> Datenbanken und die Applikationen, die mit den Daten arbeiten, können nicht völlig von einander getrennt werden.%
+}%
+%
+\only<-27>{%
+\item<23-> Die Datenbank und die Applikationen werden daher parallel in zwei Zweigen des Projekts entwickelt.%
+}%
+%
+\only<-28>{%
+\item<24-> Beide updaten sich gegenseitig.%
+}%
+%
+\only<-29>{%
+\item<25-> Der interne Datenbankdesign-Block entspricht dann wieder der allgemeinen Abfolge der drei Schemas\cite{EN2015FODS}.
+}%
+%
+\only<-30>{%
+\item<26-> Zuerst wird das konzeptuelle Schema entworfen, also die \inQuotes{High-Level}-Sicht auf die Datenbank, welche völlig technologieunabhängig ist.%
+}%
+%
+\only<-31>{%
+\item<27-> Wir wollen die Datenbank auf einer abstrakten Ebene modellieren.%
+}%
+%
+\only<-32>{%
+\item<28-> Dieses Modell basiert auf der Weltsicht und den Prozessen der Stakeholders.%
+}%
+%
+\only<-33>{%
+\item<29-> Dieses Design kann als \glsShort{ERD} modelliert werden\cite{WF1995DHQDM,B1990CMERMO}.%
+}%
+%
+\only<-34>{%
+\item<30-> Normalerweise malt man nicht nur \emph{ein} riesiges \glsShort{ERD}.%
+}%
+%
+\only<-35>{%
+\item<31-> Stattdessen werden oft mehrere kleinere \glslink{ERD}{ERDs} gemalt, die jeweils nicht mehr als zehn Entitätstypen beinhalten\cite{WF1995DHQDM}.%
+}%
+%
+\only<-36>{%
+\item<32-> Dann wird das Datenmodell gewählt.%
+}%
+%
+\only<-37>{%
+\item<33-> Wir fokussieren uns hier auf \glslink{rdb}{relationale} Datenbanken, wo die Daten in Tabellen gespeichert werden.%
+}%
+%
+\only<-38>{%
+\item<34-> Das muss aber nicht immer die richtige Wahl sein.%
+}%
+%
+\only<-39>{%
+\item<35-> Manchmal arbeiten wir vielleicht mit Bilddaten oder Videos, oder wir haben es mit Simulationen und Experimenten zu tun.%
+}%
+%
+\only<-40>{%
+\item<36-> Dann wollen wir vielleicht andere Arten von Datenbanken verwenden.%
+}%
+%
+\only<-41>{%
+\item<37-> Lassen Sie uns trotzdem annehmen, dass wir uns für eine \glslink{rdb}{relationales} Datenbank entschieden haben.%
+}%
+%
+\only<-42>{%
+\item<38-> Nun entscheiden wir uns auch gleich für ein \glsShort{dbms}.%
+}%
+%
+\only<-43>{%
+\item<39-> Die Entscheidung wird getroffen basierend auf Kosten, Wrtung, Lizensen, und Trainingsmöglichkeiten.
+}%
+%
+\only<-43>{%
+\item<40-> In unserem Kurs setzen wir auf \postgresql, weil es ein kostenloses und sehr weit entwickeltes \glsShort{SQL} \glsShort{dbms} ist.%
+}%
+%
+\only<-44>{%
+\item<41-> Dann wird das konzeptuelle Schmea in ein logisches Schema transformiert.%
+}%
+%
+\only<-45>{%
+\item<42-> Dabei werden ggf.\ alle Entitätstypen aus den \glslink{ERD}{ERDs} des konzeptuellen Models in Tabellen und die Beziehungen zwischen ihnen abgebildet\cite{SS2005EIDDDFDB:I,SS2005EIDDDFDB:CDDRAAML}.%
+}%
+%
+\only<-47>{%
+\item<43-> Hierbei führen wir Anpassungen durch, um die Effizent zu verbessern.%
+}%
+%
+\only<-48>{%
+\item<44-> \DEZB\ teilen wir wir dabei manchmal einen Entitätstypen in mehrere Tabellen auf oder kombinieren mehrere Entitätstypen in eine Tabelle, manchmal benutzen wir auch andere Primärschlüssel, usw.%
+}%
+%
+\only<-49>{%
+\item<45-> Wir bilden also das konzeptuelle Modell auf die interne Struktur ab, die uns das \glsShort{dbms} anbietet.%
+}%
+%
+\only<-50>{%
+\item<46-> Wir haben nun ein unoptimiertes Design unserer Datenbank.%
+}%
+%
+\only<-51>{%
+\item<47-> Das logische Schema wird dann in ein physisches Schema übersetzt.%
+}%
+%
+\only<-52>{%
+\item<48-> Dieser Schritt fokussiert sich auf die internen Aspekte der Datenbank, \DEzB, Zugriffspfade, Indexe, Partitionen, usw.%
+}%
+%
+\only<-53>{%
+\item<49-> Danach haben wir ein komplettes Datenbankdesign, optimiert für die geplanten Operationen.%
+}%
+%
+\only<-54>{%
+\item<50-> Die Unterteilung in konzeptuelles, logisches, und physisches Schema wird nicht immer so durchgezogen.%
+}%
+%
+\only<-55>{%
+\item<51-> Während dem Datenbankentwurf muss immer mit den Stakeholders des Projekts gesprochen werden.%
+}%
+%
+\only<-56>{%
+\item<52-> Manchmal ändern sich dadurch die Anforderungen, was dann wieder ordentlich dokumentiert werden muss.%
+}%
+%
+\only<-57>{%
+\item<53-> Währen die Datenbank entwickelt wird, wird gleichzeitig die Applikation für die Benutzer ebenfalls entworfen.%
+}%
+%
+\only<-59>{%
+\item<54-> Auch hierbei können notwendige Änderungen durch Diskussionen mit den Benutzern entdeckt werden.%
+}%
+%
+\only<-61>{%
+\item<55-> Nach dem Entwurf wird die Datenbank auf Basis des Designdokuments entwickelt.%
+}%
+%
+\only<-62>{%
+\item<56-> Tabellen werden erstellt und mit Daten gefüllt, Einschränkungen und Anfragen werden implementiert.%
+}%
+%
+\only<-63>{%
+\item<57-> Nun da die Datenbank existiert kann auch die eigentliche Anwendung (auf Basis der Entwürfe) entwickelt werden.%
+}%
+%
+\item<58-> Sie wird dann mit der Datenbank integriert.%
+%
+\item<59-> Das System wird getestet.%
+%
+\item<60-> Nun wird das System installiert.%
+%
+\item<61-> Die Benutzer können es ausprobieren.%
+%
+\item<62-> Die Stakeholder bewerten die Anwendungen im Hinblick auf Funktionalität und Performanz.%
+%
+\item<63-> Nachdem das System akzeptiert wurde, betritt es die Produktiv-Phase und wird von nun an regelmäßig gewartet.%
+%
+\item<64-> Das System wird kontinuierlich upgedated, verbessert und erweitert, bis es irgendwann sein Lebensende erreicht.%
+%
+\end{itemize}}}%
+%
+\locateGraphic{}{width=0.48\paperwidth}{graphics/gupta}{0.46}{0.05}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Kern des Designs}%
+%
+\parbox{0.42\paperwidth}{\small{%
+\begin{itemize}%
+%
+\only<-4>{%
+\item Die Methode von \citeauthor{GMTM2011DDLC}\cite{GMTM2011DDLC} ist ein umfassender Ansatz für das Ko-Design von Datenbank und Software in großen Projekten.%
+}%
+%
+\only<-6>{%
+\item<2-> Das Hauptziel ist es, Datanbankprojekte besser vorhersehbar zu machen.%
+}%
+%
+\only<-7>{%
+\item<3-> Die meisten Diskussionen über Datenbankdesign fükussieren sich eher auf den Kern des Entwicklungsprozesses, der hier \emph{Database Design} genannt wird.%
+}%
+%
+\only<-8>{%
+\item<4-> Sie kombinieren auch viele der Rahmentätigkeiten wie Installation und Wartung in eine Aktivität.%
+}%
+%
+\only<-9>{%
+\item<5-> Wenn wir den Designprozess für Datenbanken weiter erforschen und ausprobieren, werden auch wir weniger Schritte verwenden.%
+}%
+%
+\only<-10>{%
+\item<6-> Unser vereinfachtes Modell des Datanbanklebenszyklus kombiniert Ideen verschiedener Quellen\cite{SS2005EIDDDFDB:I,SS2005EIDDDFDB:CDDRAAML,D2022DN:DRA}.%
+}%
+%
+\only<-11>{%
+\item<7-> Wir beginnen mit dem Sammeln und Analysieren von Anforderungen.%
+}%
+%
+\only<-12>{%
+\item<8-> Dann werden die drei Schemas (konzeptuell, logisch, und physisch) eines nach dem anderen entworfen\cite{EN2015FODS}.%
+}%
+%
+\only<-13>{%
+\item<9-> Wir beginnen mit dem konzeptuellen Model, wobei Entitäten und ihre Beziehungen mit \glslink{ERD}{ERDs} illustriert werden.%
+}%
+%
+\only<-15>{%
+\item<10-> Dieses Modell wird mit den Stakeholders diskutiert.%
+}%
+%
+\only<-16>{%
+\item<11-> Werden dabei Inkonsistenzen gefunden, dann werden die Anforderungen angepasst.%
+}%
+%
+\only<-17>{%
+\item<12-> Am Ende dieses Schrittes wählen wir ein Datenmodell.%
+}%
+%
+\only<-18>{%
+\item<13-> Die Entitäten des konzeptuellen Modells werden dann in das logische Modell übersetzt.%
+}%
+%
+\only<-19>{%
+\item<14-> Im Kontext eines \glslink{rdb}{relationalen} Datenmodells werden dabei Tabellen erstellt, Schlüssel und Attribute definiert, und die Daten werden normalisiert.%
+}%
+%
+\only<-21>{%
+\item<16-> Das Modell kann in Form von \glsShort{SQL} definiert werden.%
+}%
+%
+\only<-22>{%
+\item<17-> Das logische Modell kann dann auf ein physisches Modell übersetzt werden.%
+}%
+%
+\only<-22>{%
+\item<18-> Das logische Modell beschreibt, wie auf die Daten zugegriffen wird.%
+}%
+%
+\item<19-> Das physische Modell beschreibt, wie dieser Zugriff effizient gemacht werden kann.%
+%
+\item<20-> Nun kann ein Prototyp entwickelt und von den Stakeholders evaluiert werden.%
+%
+\item<21-> Die Datenbank tritt in den Produktivbetrieb ein.%
+%
+\item<22-> Von nun an geht es um Wartung, Backups, Feinjustierungen, sowie das Hinzufügen von Features und das Anpassen an neue Situationen.%
+%
+\item<23-> Die letzten beiden Phasen können Feedback in frühere Phasen geben, also zu änderungen am logischen und physischen Modell führen.%
+%
+\end{itemize}}}%
+%
+\locateGraphic{-4}{width=0.48\paperwidth}{graphics/gupta}{0.46}{0.05}%
+\locateGraphic{5-}{width=0.535\paperwidth}{graphics/ddlc}{0.46}{0.1}%
+\end{frame}%
+
+%
+\begin{frame}%
+\frametitle{Zusammenfassung: Datenbanken}%
+\begin{itemize}%
+\item Datenbanken sind langlebige und wichtige Assets einer Organisation.%
+%
+\item<2-> Sie liegen irgendwo in der Grauzonen zwischen Dokumenten und Software.%
+%
+\item<3-> Sie bilden die Basis für viele der wichtigsten Applikationen einer Organisation.%
+%
+\item<4-> Über hr Design und ihre Performanz haben sie Einfluss auf viele der wichtigstigen Prozesse einer Organisation.%
+%
+\item<5-> Und sie tun das über eine sehr lange Zeit.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung: Datenbanken entwickeln}%
+%
+\begin{itemize}%
+\item Wenn wir eine Datenbank entwickeln wollen, dann können wir nicht einfach irgendwie planlos loslegen.%
+%
+\item<2-> Stattdessen sollten wir einem der bekannten Entwicklungsprozesse folgen.%
+%
+\item<3-> Welchem wir folgen ist wahrscheinlich nicht so wichtig.%
+%
+\item<4-> Wichtig ist, dass alle eine Struktur in unsere Arbeit bringen.%
+%
+\item<5-> Sie können unsere Arbeit anleiten.%
+%
+\item<6-> Sie machen die Projekte planbar.%
+%
+\item<7-> Und vielleicht das Wichtigste: Sie verringern Risiken.%
+%
+\item<8-> Und Risiken gibt es viele.%
+%
+\item<9-> Vielleicht gehen uns Zeit oder Geld aus, vielleicht können wir die Benutzer nicht zufrieden stellen\dots%
+%
+\item<10-> Um solche Risiken zu mildern, folgen wir eben diesen ingenieursmäßigen Ansätzen.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung: Entwurfsprozesse}%
+\begin{itemize}%
+%
+\item Die meisten Datenbank-Entwurfsprozesse arbeiten sich im Kern iterativ von einem konzeptuellen über ein logsches hin zu einem physischen Schema durch.%
+%
+\item<2-> Vorher erfolgen normalerweise das Sammeln und Analysieren von Anforderungen.%
+%
+\item<3-> Während dem Design wird oft enger Kontakt mir den Stakeholdern empfohlen.%
+%
+\item<4-> Dabei können uns Prototypen helfen, Feedback zu sammeln und Missverständnisse zu entdeken.%
+%
+\item<5-> Damit können wir dann, falls notwendig, Design-Dokumente und Schemas überarbeiten.%
+%
+\item<6-> Zum Schluss, nachdem die Applikation im Produktiveinsatz angekommen ist, erfolgen periodische Tätigkeiten wie Wartung, Updates, und Backup.%
+%
+\item<7-> In den folgenden Einheiten werden wir uns beispielhaft durch so einen Entwicklungsprozess durcharbeiten.%
+\end{itemize}%
+\end{frame}
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%

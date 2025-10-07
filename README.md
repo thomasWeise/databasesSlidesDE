@@ -52,6 +52,7 @@ Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.gith
 21. [Fabrik-Datenbank: Formulare in LibreOffice Base](https://thomasweise.github.io/databasesSlidesDE/21_fabrik_datenbank_libreoffice_base_formulare.pdf)
 22. [Fabrik-Datenbank: Berichte in LibreOffice Base](https://thomasweise.github.io/databasesSlidesDE/22_fabrik_datenbank_libreoffice_base_berichte.pdf)
 23. [Fabrik-Datenbank: Aufräumen](https://thomasweise.github.io/databasesSlidesDE/23_fabrik_datenbank_aufräumen.pdf)
+24. [Datenbanken Entwickeln](https://thomasweise.github.io/databasesSlidesDE/24_datenbanken_entwickeln.pdf)
 
 
 ### 2.3. Die Beispiele
