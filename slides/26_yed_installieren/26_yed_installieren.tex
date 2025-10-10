@@ -1,0 +1,255 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{26.~yEd Installieren}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}[b]%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item Ein wichtiger Schritt im Datenbankentwicklungsprozess ist das Erstellen von abstrakten konzeptuellen Modelle der Problemdomäne.%
+\item<2-> Dazu werden graphische Diagramme, sogenannte Entity-Relationship Diagramme~(\glsShort{ERD}s) gezeichnet, die die Objekte und deren Beziehungen aus der realen Welt darstellen, die wir in der Datenbank modellieren wollen.%
+\item<3-> Diese konzeptuellen Modelle sind unabhängig von der letztendlich verwendeten \glsShort{dbms}-Technologie.%
+\item<4-> Als Werkzeug um solche Diagramme zu zeichnen verwenden wir \yEd\cite{SG2015MDAWY,Y2011YGEM}.%
+\end{itemize}%
+\locateGraphic[%
+\parbox{0.6\paperwidth}{\strut\\[10pt]The logo of the \href{https://www.yworks.com/products/yed}{\yEd\ graph editor}. %
+The \yEd~logo is protected by copyright. %
+\yEd~is a registered trademark of \href{https://www.yworks.com}{yWorks~GmbH}. %
+Unauthorized use, reproduction, or distribution is strictly prohibited.}%
+]{}{width=0.2\paperwidth}{../05_software_und_literatur/graphics/yEdLogo}{0.6}{0.06}%
+\end{frame}%
+%
+\section{Ubuntu Linux}%
+%
+\begin{frame}[t]%
+\frametitle{Ubuntu Linux}%
+\begin{itemize}%
+%
+\only<-2>{%
+\item Wir werden \yEd\ von der Webseite \url{https://www.yworks.com/products/yed} herunterladen.%
+\item<2-> Auf dieser Webseite klicken wir auf den \menu{Download}-Button.%
+}%
+%
+\only<-3>{%
+\item<3-> Dann klicken wir auf \emph{More yEd downloads}\dots%
+}%
+%
+\only<-4>{%
+\item<4-> Und klicken wir dann auf \emph{Show all yEd downloads}.%
+}%
+%
+\only<-5>{%
+\item<5-> Wir wollen \emph{Zipped yEd \textil{jar} file} herunterladen, was für alle Systeme funktioniert, auf denen schon \pgls{Java} installiert ist.%
+}%
+%
+\only<-6>{%
+\item<6-> Falls \pgls{Java} auf Ihrem Computer noch nicht installiert ist, instalieren Sie es via \bashil{sudo apt-get install openjdk-xx-jre}, wobei \textil{xx} mit der aktuellen Version ersetzt werden kann, \DEzB~\textil{8} oder \textil{21}.%
+%
+\item<7-> Wir klicken also auf \menu{Download .zip file}.%
+}%
+%
+\only<-9>{%
+\item<8-> Nachdem wir auf den Download-Button geklickt habe, kommen wir zum Lizentbildschirm.%
+%
+\item<9-> Nachdem wir die Lizenz gelesen haben und wenn wir mit ihr OK sind, stimmen wir mit \menu{I accept the license terms} zu.%
+}%
+%
+\only<-10>{%
+\item<10-> Nach dem wir die Lizenz angenommen haben, können wir auf \menu{Download} klicken.%
+}%
+%
+\only<-11>{%
+\item<11-> Der Download beginnt.%
+}%
+%
+\only<-13>{%
+\item<12-> Irgendwann ist der Download fertig.%
+%
+\item<13-> Wir können auf den Ordner klicken, in den die Datei heruntergeladen wurde.%
+}%
+%
+\only<-15>{%
+\item<14-> Wir finden die \textil{zip}-Datei in diesem Ordner.%
+\item<15-> Wir entpacken den Order in das Verzeichnis, in das wir \yEd\ installieren/benutzen wollen.%
+}%
+%
+\only<-18>{%
+\item<16-> Wir öffnen ein \glslink{terminal}{Terminal}, in dem wir \ubuntuTerminal\ drücken.%
+\item<17-> Wir gehen in den Ordner, in dem die ausgepackten Dateien sind und finden die Datei \bashil{yed.jar}.%
+\item<18-> In meinem Fall ist das \bashil{/tmp/yed} {\dots} Sie installieren das natürlich woanders hin.%
+}%
+%
+\only<-19>{%
+\item<19-> Wir staten das Programm mit dem Kommando \bashil{java -jar yed.jar}.%
+}%
+%
+\only<-20>{%
+\item<20-> Der Spash-Screen erscheint, während das Programm lädt.%
+}%
+%
+\only<-21>{%
+\item<21-> Das Programm ist gestartet.%
+}%
+%
+\end{itemize}%
+%
+\locateGraphicTB{1-2}{width=0.45\paperwidth}{graphics/installingYedUbuntu/installYedUbuntu01website}{0.275}{0.33}%
+\locateGraphicTB{3}{width=0.5\paperwidth}{graphics/installingYedUbuntu/installYedUbuntu02downloadsA}{0.25}{0.33}%
+\locateGraphicTB{4}{width=0.5\paperwidth}{graphics/installingYedUbuntu/installYedUbuntu03downloadsB}{0.25}{0.33}%
+\locateGraphicTB{5-7}{width=0.5\paperwidth}{graphics/installingYedUbuntu/installYedUbuntu04downloadsC}{0.25}{0.33}%
+\locateGraphicTB{8-9}{width=0.5\paperwidth}{graphics/installingYedUbuntu/installYedUbuntu05license}{0.25}{0.33}%
+\locateGraphicTB{10}{width=0.5\paperwidth}{graphics/installingYedUbuntu/installYedUbuntu06licenseOkDownload}{0.25}{0.33}%
+\locateGraphicTB{11}{width=0.55\paperwidth}{graphics/installingYedUbuntu/installYedUbuntu07downloading}{0.225}{0.33}%
+\locateGraphicTB{12-13}{width=0.55\paperwidth}{graphics/installingYedUbuntu/installYedUbuntu08downloaded}{0.225}{0.33}%
+\locateGraphicTB{14-15}{width=0.55\paperwidth}{graphics/installingYedUbuntu/installYedUbuntu09inNautilus}{0.225}{0.33}%
+\locateGraphicTB{16-18}{width=0.64\paperwidth}{graphics/installingYedUbuntu/installYedUbuntu10terminalInFolder}{0.18}{0.4}%
+\locateGraphicTB{19}{width=0.64\paperwidth}{graphics/installingYedUbuntu/installYedUbuntu11javaJar}{0.18}{0.4}%
+\locateGraphicTB{20}{width=0.5\paperwidth}{graphics/installingYedUbuntu/installYedUbuntu12splash}{0.25}{0.33}%
+\locateGraphicTB{21}{width=0.64\paperwidth}{graphics/installingYedUbuntu/installYedUbuntu13yEd}{0.18}{0.33}%
+\end{frame}%
+%
+%
+\section{Microsoft Windows}%
+%
+\begin{frame}[t]%
+\frametitle{Microsoft Windows}%
+\begin{itemize}%
+%
+\only<-2>{%
+\item Wir werden \yEd\ von der Webseite \url{https://www.yworks.com/products/yed} herunterladen.%
+\item<2-> Auf dieser Webseite klicken wir auf den \menu{Download}-Button.%
+}%
+%
+\only<-3>{%
+\item<3-> Wir finden den \menu{Download}-Button und klicken darauf.%
+}%
+%
+\only<-4>{%
+\item<4-> Wir klicken auf \menu{yEd for Windows}.%
+}%
+%
+\only<-6>{%
+\item<5-> Nachdem wir auf den Download-Button geklickt habe, kommen wir zum Lizentbildschirm.%
+%
+\item<6-> Nachdem wir die Lizenz gelesen haben und wenn wir mit ihr OK sind, stimmen wir mit \menu{I accept the license terms} zu.%
+}%
+%
+\only<-7>{%
+\item<7-> Nach dem wir die Lizenz angenommen haben, können wir auf \menu{Download} klicken.%
+}%
+%
+\only<-8>{%
+\item<8-> Der Download beginnt.%
+}%
+%
+\only<-9>{%
+\item<9-> Nachdem der Download fertig ist, klicken wir auf \menu{Open file} oder etwas äquivalentes in Ihrem Browser.%
+}%
+%
+\only<-10>{%
+\item<10-> Die Installation beginnt.%
+}%
+%
+\only<-12>{%
+\item<11-> \microsoftWindows\ fragt uns, ob wir der Installation erlauben wollen, Änderungen an unserem Computer vorzunehmen.%
+\item<12-> Wir klicken~\menu{Yes}.%
+}%
+%
+\only<-13>{%
+\item<13-> Wir klicken \menu{Next} im Willkommensbildschirm.
+}%
+%
+\only<-15>{%
+\item<14-> Um \yEd\ zu installieren, müssen wir der Lizenz zustimmen.%
+\item<15-> Wenn Sie mit der Lizenz einverstanden sind, können Sie ihr zustimmen und \menu{Next} klicken.%
+}%
+%
+\only<-16>{%
+\item<16-> Wir ändern den Installationsordner nicht und klicken \menu{Next}.%
+}%
+%
+\only<-17>{%
+\item<17-> Wir ändern auch die Startmenüeinstellungen nicht und klicken \menu{Next}.%
+}%
+%
+\only<-18>{%
+\item<18-> Wir ändern auch die Zuständigkeiten für Dateitypen nicht und klicken \menu{Next}.%
+}%
+%
+\only<-19>{%
+\item<19-> Wir ändern auch die Einstellungen für Icons nicht und klicken \menu{Next}.%
+}%
+%
+\only<-20>{%
+\item<20-> Die Installation beginnt.%
+}%
+%
+\only<-22>{%
+\item<21-> Die Installation ist fertig.%
+\item<22-> Wir markieren \inQuotes{Run yEd Graph Editor} und klicken auf~\menu{Finish}.%
+}%
+%
+\only<-23>{%
+\item<23-> Der Splash-Screen erscheint.%
+}%
+%
+\only<-24>{%
+\item<24-> \yEd\ läuft!%
+}%
+\end{itemize}%
+%
+\locateGraphicTB{1-2}{width=0.64\paperwidth}{graphics/installingYedWindows/installingYedWindows01website}{0.18}{0.33}%
+\locateGraphicTB{3}{width=0.64\paperwidth}{graphics/installingYedWindows/installingYedWindows02download}{0.18}{0.33}%
+\locateGraphicTB{4}{width=0.64\paperwidth}{graphics/installingYedWindows/installingYedWindows03downloadForWindows}{0.18}{0.33}%
+\locateGraphicTB{5-6}{width=0.64\paperwidth}{graphics/installingYedWindows/installingYedWindows04license}{0.18}{0.33}%
+\locateGraphicTB{7}{width=0.64\paperwidth}{graphics/installingYedWindows/installingYedWindows05acceptLicenseAndDownload}{0.18}{0.33}%
+\locateGraphicTB{8}{width=0.64\paperwidth}{graphics/installingYedWindows/installingYedWindows06downloading}{0.18}{0.33}%
+\locateGraphicTB{9}{width=0.64\paperwidth}{graphics/installingYedWindows/installingYedWindows07downloaded}{0.18}{0.33}%
+\locateGraphicTB{10}{width=0.64\paperwidth}{graphics/installingYedWindows/installingYedWindows08preparingInstall}{0.18}{0.33}%
+\locateGraphicTB{11-12}{width=0.5\paperwidth}{graphics/installingYedWindows/installingYedWindows09shouldWeInstall}{0.25}{0.33}%
+\locateGraphicTB{13}{width=0.4\paperwidth}{graphics/installingYedWindows/installingYedWindows10welcome}{0.3}{0.33}%
+\locateGraphicTB{14}{width=0.4\paperwidth}{graphics/installingYedWindows/installingYedWindows11licenseAcceptYesNo}{0.3}{0.33}%
+\locateGraphicTB{15}{width=0.4\paperwidth}{graphics/installingYedWindows/installingYedWindows12licenseAccept}{0.3}{0.33}%
+\locateGraphicTB{16}{width=0.4\paperwidth}{graphics/installingYedWindows/installingYedWindows13destination}{0.3}{0.33}%
+\locateGraphicTB{17}{width=0.4\paperwidth}{graphics/installingYedWindows/installingYedWindows14startMenu}{0.3}{0.33}%
+\locateGraphicTB{18}{width=0.4\paperwidth}{graphics/installingYedWindows/installingYedWindows15fileSuffixes}{0.3}{0.33}%
+\locateGraphicTB{19}{width=0.4\paperwidth}{graphics/installingYedWindows/installingYedWindows17icon}{0.3}{0.33}%
+\locateGraphicTB{20}{width=0.4\paperwidth}{graphics/installingYedWindows/installingYedWindows18installing}{0.3}{0.33}%
+\locateGraphicTB{21-22}{width=0.4\paperwidth}{graphics/installingYedWindows/installingYedWindows19doneRun}{0.3}{0.33}%
+\locateGraphicTB{23}{width=0.55\paperwidth}{graphics/installingYedWindows/installingYedWindows20splash}{0.225}{0.33}%
+\locateGraphicTB{24}{width=0.5\paperwidth}{graphics/installingYedWindows/installingYedWindows21running}{0.25}{0.33}%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Wir haben nun \yEd\ installiert.%
+\item<2-> In sehr vielen Datenbankvorlesungen werden \glslink{ERD}{ERDs} eingeführt und ausführlich diskutiert.%
+\item<3-> Die Studenten müssen solche dann in Prüfungen malen können.%
+\item<4-> Aber wie malt man ERDs im richtigen Leben?%
+\item<5-> Sicher nicht auf Papier.%
+\item<6-> Dann versuchen die Studenten später, ERDs mit Grafikprogrammen wie \glsFull{inkscape} zu malen {\dots} und finden sie unpraktisch.%
+\item<7-> Weil sie nie die richtigen Werkzeuge kennengelernt haben.%
+\item<8-> \yEd\ ist ein richtiges Werzeug.%
+\item<9-> Und wenn wir nachher (nach ein paar anderen Diskussionen) anfangen, ERDs zu malen -- dann haben Sie das richtige Werkzeug zur Hand.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%

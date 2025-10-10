@@ -54,6 +54,7 @@ Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.gith
 23. [Fabrik-Datenbank: Aufräumen](https://thomasweise.github.io/databasesSlidesDE/23_fabrik_datenbank_aufräumen.pdf)
 24. [Entwicklung](https://thomasweise.github.io/databasesSlidesDE/24_entwicklung.pdf)
 25. [Anforderungen](https://thomasweise.github.io/databasesSlidesDE/25_anforderungen.pdf)
+26. [yEd Installieren](https://thomasweise.github.io/databasesSlidesDE/26_yed_installieren.pdf)
 
 
 ### 2.3. Die Beispiele
