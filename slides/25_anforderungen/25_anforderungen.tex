@@ -1,0 +1,604 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{25.~Anforderungen}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item Die Anforderungsanalyse ist einer der wichtigsten Schritte in der Datenbankentwicklung.%
+%
+\item<2-> An diesem Punkt bekommen wir ein Verständnis für das Projekt.%
+%
+\item<3-> Die Anforderungsanalyse vermittelt zwischen den Benutzern und Kunden des Projekts auf einer Seite und den Entwicklern und Zulieferern auf der anderen\cite{ISOIECIEEE2018SASELCPRE}.%
+%
+\item<4-> Das Ergebnis der Anforderungsanalyse sind so genannte Software Requirements Specification~(\glsShort{SRS}) Dokumente\cite{ISOIECIEEE2018SASELCPRE}\only<-4>{.}\uncover<5->{, die%
+\begin{itemize}%
+\item einen Konsens zwischen allen Stakeholders~(Einkäufer, Benutzer, Kunden, Operatoren, Entwicklern, und Zulieferern) bilden\only<-5>{.}\uncover<6->{,}%
+\item<6-> im Vergleich zu den echten Bedürfnissen validiert wurden\only<-6>{.}\uncover<7->{,}%
+\item<7-> implementiert werden können\only<7->{.}\uncover<8->{ und}%
+\item<8-> die Referenz bilden, an der Designs und Lösungen verifiziert werden können.%
+\end{itemize}%
+}%
+\item<9-> Und in dieser Einheit schauen wir uns das an.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Ziele und Wichtigkeit}%
+\begin{itemize}%
+\item Auf der einen Seite dient die Anforderungsanalyse dazu, ein klares Verständnis für den Zweck, die Ziele, und die Grenzen des Projekts zu gewinnen.%
+%
+\item<2-> Auf der anderen Seite müssen wir auch die Struktur und Prozesse der Organisation kennenlernen, die von der Datenbank und den Applikationen darauf verkörpert werden sollen.%
+%
+\item<3-> Studien zeigen, dass für viele Firmen, mehr als die Hälfte der Probleme von Systemen\cite{S2003ISA6P:RDARS} und der Kosten der Softwareentwicklung\cite{IC2009BAB2TPTS} durch schlechte Anforderungsanalyse ausgelöst werden.%
+%
+\item<4-> Schlechtes Anforderungsmanagement wird als wichtigster Grund für das Fehlschlagen von Projekten angesehen\cite{EDN2005RUIFACI}.%
+%
+\item<5-> Gute Anforderungsanalyse kann die Produktivität der Entwickler steigern und die Projektplanung verbessern\cite{DCVP2005READSDFFAC}.%
+%
+\item<6-> Fehler in den Anforderungen zu reparieren kostet 10 bis 200~Mal so viel, wenn die Applikation ausgerollt ist, als wenn man sie schon in der Anforderungsanalyse entdeckt\cite{BP1988UACSC,M2001FTEAOOP,RGJ2023EASARBFSAR}.%
+%
+\item<7-> Das Sammeln und Analysieren der Anforderungen ist also sehr wichtig.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Arten von Anforderungen}%
+%
+\begin{frame}%
+\frametitle{Arten von Anforderungen}%
+Anforderungen können unterteilt werden in Fachanforderungen\only<-1>{.}\uncover<2->{, funktionale Anforderungen\only<-2>{.}\uncover<3->{, nicht-funktionale Anforderungen\only<-3>{.}\uncover<4->{ und die Grenzen des Projekts.\cite{I2018SAH}}}}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Fachanforderungen}%
+\begin{itemize}%
+\item Die Fachanforderungen sind die high-level Ziele und die Wirkungen, die wir mit dem Projekt erzielen wollen.%
+%
+\item<2-> Sie definieren die Motivation der Organisation, warum das System entwickelt werden soll\cite{ISOIECIEEE2018SASELCPRE}.%
+%
+\item<3-> Eine Organisation hat normalerweise einen Plan, um ihre Metriken zu verbessern.%
+%
+\item<4-> Das Projekt wird gestartet, um diesen Plan zu unterstützen.%
+%
+\item<5-> Die Fachanforderungen werden also so definiert, dass das Projekt zum Verbessern der Organisation beiträgt.%
+%
+\item<6-> Sie sind deshalb eher allgemein und abstrakt.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Funktionale Anforderungen}%
+%
+\begin{itemize}%
+\item Die funktionalen Anforderungen sind konkret und definieren, was das System machen soll.%
+%
+\item<2-> Sie betreffen die Funktionen, Eigenschaften und das Verhalten, die das System bieten muss, um die Fachanforderungen zu erfüllen.%
+%
+\item<3-> Sie können \DEzB\ definiert werden als\uncover<3->{%
+\begin{itemize}%
+\item die Eingaben, die das System bekommt\only<-3>{.}\uncover<4->{,}%
+\item<4-> die erwarteten Operationen, die das System mit den Eingaben ausführen soll\only<-4>{.}\uncover<5->{ und}%
+\item<5-> die erwarteten Ausgaben, die dadurch produziert werden sollen.%
+\end{itemize}}%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Nicht-Funktionale Anforderungen}%
+%
+\begin{itemize}%
+\item Die nicht-funktionalen Anforderungen definieren, wie das System performen soll.%
+\item<2-> Sie definieren die Dienstqualität, die das System bieten soll, sowie die geforderte Performanz, die Benutzbarkeit, die Skalierbarkeit, die Verlässlichkeit, usw.%
+\item<3-> Sie beinhalten auch die Rechnerumgebung, in der das System ausgeführt werden muss.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Grenzen des Projekts}%
+%
+\begin{itemize}%
+\item Die Grenzen des Projekts definieren die Faktoren, die einschränken welche Lösungen machbar sind.%
+%
+\item<2-> Sie definieren die Bedingungen, unter denen wir arbeiten.%
+%
+\item<3-> Während die Anforderungen Eigenschaften definieren, die unser Projekt haben soll, \alert{schließen} die Projektgrenzen Methoden \alert{aus}, um diese Ziele zu erreichen.%
+%
+\item<4-> Sie können als Budgetbegrenzungen oder Zeitgrenzen definiert werden.%
+%
+\item<5-> Sie könnten auch in Formen von Anforderungen wie \emph{\inQuotes{Ihr System muss mit Version~XYZ von Software~ABC arbeiten können.}} auftreten.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Anforderungsspezifikation}%
+%
+\begin{frame}%
+\frametitle{Anforderungsspezifikation}%
+%
+\begin{itemize}%
+\item Nachdem die Anforderungen eingesammelt wurden, werden sie in einer formalen Spezifikation aufgeschrieben.%
+%
+\item<2-> Das ist das so genannte \emph{Software Requirements Specification}-Dokument~(\glsShort{SRS}).%
+%
+\item<3-> Das \glsShort{SRS} ist das wichtigste Dokument des Softwareentwicklungsprozesses.%
+%
+\item<4-> Seine Struktur sollte dem IEEE~830\nobreakdashes-1998 Standard\cite{IEEE1998IRPFSRS} der dem neueren ISO/IEC/IEEE~29148\nobreakdashes-2018 Standard folgen\cite{ISOIECIEEE2018SASELCPRE}.%
+%
+\item<5-> ISO/IEC/IEEE~29148\cite{ISOIECIEEE2018SASELCPRE} gibt uns die Richtlinien für alle Anforderungs-bezogenen Prozesse.%
+%
+\item<6-> Der Lebenszyklus von Software bzw.\ Systemen kann dann nach ISO/IEC/IEEE~15288\cite{ISOIECIEEE2023SASESLCP} bzw.\ ISO/IEC/IEEE~12207\cite{ISOIECIEEE2017SASESLCP} gemanaged werden.%
+%
+\item<7-> Es ist immer eine gute Idee, einfach diesen Standards zu folgen, wenn wir die Anforderungen für Software oder Datenbanken sammeln und analysieren.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Beispiel: Management der Lehre in einer Universität}%
+%
+\begin{frame}%
+\frametitle{Beispiel: Management der Lehre in einer Universität}%
+\begin{itemize}%
+\item Wir probieren nun das Sammeln und Analysieren von Anforderungen an einem Beispiel aus.%
+%
+\item<2-> Als Beispielprojekt nehmen wir das Entwickeln eines Managementsystems für die Lehre an einer Universität.%
+%
+\item<3-> Leider können wir das natürlich nicht auf einer realistischen Ebene durchziehen.%
+%
+\item<4-> Wir können nicht wirklich den ISO/IEC/IEEE~29148\nobreakdashes-2018 Standard\cite{ISOIECIEEE2018SASELCPRE} umsetzen.%
+%
+\item<5-> Wir können nicht mal die ganzen Anforderungen eines realistischen Systems aufschreiben, ohne eine vernünftige Länge für eine Vorlesung zu überschreiten.%
+%
+\item<6-> Wir werden daher die Anforderungen dieses Projekts nur teilweise diskutieren.%
+%
+\item<7-> Wir nehmen uns ein paar interessante Aspekte heraus und überlassen andere der Fantasie.%
+%
+\item<8-> Wir schreiben auch alles sehr informell auf. In richtigen Dokumenten, würde eine wesentlich formellere Sprache verwendet.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Fachanforderungen}%
+\begin{itemize}%
+\item Unsere Fantasie-Universität hat mehrere Ziele, die sie mit der neuen Plattform zum Management der Lehre erreichen will.%
+%
+\item<2-> Zu Beginn des Projekts haben wir uns mit der Universitätsleitung.%
+%
+\item<3-> Wir haben die fachlischen Ziele erforscht und verstanden.%
+%
+\item<4-> Wir wissen auch, welche Rollen die Stakeholders des Projekts haben.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{1. Fachliches Ziel}%
+\begin{itemize}%
+%
+\item Davon das wir Prozesse in eine Datenbank überführen und Applikationen entwickeln, die auf die Datenbank zugreifen, werden alle Stakeholders profitieren.%
+%
+\item<2-> Die Studenten können einfacher auf ihre Kurse zugreifen, Tanscripts bekommen, sich für Kurse registrieren, usw.%
+%
+\item<3-> Die Professoren können ihre Klassen effizienter managen.%
+%
+\item<4-> Die Arbeitslast des Managements der Universität kann reduziert und vereinfacht werden.%
+%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}%
+\frametitle{2. Fachliches Ziel}%
+\begin{itemize}%
+%
+\item Bisher führt die Administration das gesamte Management der Studenten mit \microsoftExcel-Sheets und Papier durch.%
+%
+\item<2-> Das ht viele Nachteile\only<-2>{.}\uncover<3->{, \DEzB, das Fehlen von zentralen Backups\only<-3>{.}\uncover<4->{, die Möglichkeit von Fehlern\only<-4>{.}\uncover<5->{, Prozesse sind sehr schwer nachzuvollziehen\only<-5>{.}\uncover<6->{, Probleme bei der Übergabe von Managementaufgaben von einem Lehrer an den nächsten, usw.}}}}%
+%
+\item<7-> Durch ein zentralisiertes System kann die Kontrolle und auch die Verantwortlichkeit, Nachvollziehbarkeit, und Dokumentation der Prozesse verbessert werden.%
+%
+\item<8-> Das könnte man auch als ein Werkzeug zum Qualitätsmanagement im Rahmen von ISO~9001\cite{ISO180912019,ISO90012015} verstehen.%
+%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}%
+\frametitle{3. Fachliches Ziel}%
+\begin{itemize}%
+%
+\item Das langfristige Ziel ist die digitale Transformation der gesamten Universität.%
+%
+\item<2-> Alle Prozesse in der Universität sollen durch Onlineplattformen gemanaged werden.%
+%
+\item<3-> Dadurch sollen der administrative Aufwand und die damit verbundenen Kosten massiv gesenkt werden.%
+%
+\item<4-> Alle Prozesse sollen automisch dokumentiert und durch Backups gesichert werden.%
+%
+\item<5-> Die Qualität der Dienste würde auch für die Studenten steigen.%
+%
+\item<6-> Das Nachprüfen von Vorgängen wird einfacher.%
+%
+\item<7-> Die Plattform zum Management der Lehre soll der erste Baustein dieser digitalen Transformation sein.%
+%
+\item<8-> Sie wird der Universität viel Erfahrung im Umgang mit solchen Systemen bieten, die eben nicht nur von wenigen Mitarbeiten benutzt werden, sondern von Tausenden von Benutzern in verschiedenen Rollen.%
+%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}%
+\frametitle{Fünf Gruppen von Stakeholders}%
+\begin{itemize}%
+\item Es gibt fünf Gruppen von Stakeholders für unser System.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Stakeholders~1: Students}%
+\begin{itemize}%
+\item Die ersten Stakeholders sind die Studenten.%
+\item<2-> Die Studenten wollen sich online für Module, Kurse, und Übungen registrieren.%
+\item<3-> Sie wollen ihren Studenplan ausdrucken, also die Kurse, die sie besuchen, arrangiert nach Tag und Uhrzeit und mit Rauminformation.%
+\item<4-> Die Studenten wollen auch ihre Noten und ihren Fortschritt sehen können.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Stakeholders~2: Lehrende}%
+\begin{itemize}%
+\item Die zweite Gruppe von Stakeholders sind die Lehrkräfte der Universität, also Professoren und Lehrer.%
+%
+\item<2-> Ein Professor kann ein Modul leiten und in diesem Kontext Kurse unterrichten.%
+%
+\item<3-> Andere Lehrkräfte, \DEzB\ Assistenzprofessoren oder TAs, können Übungen und Laborklassen unterrichten.%
+%
+\item<4-> Sie haben Zugriff auf die Liste der Studenten in ihren Modulen.%
+%
+\item<5-> Wie die Stundenten können Lehrkräfte ihren Stundenplan sehen.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Stakeholders~3: Univesitätsadministration}%
+\begin{itemize}%
+\item Die Administration der Universität kann Fakultäten im System erstellen und managen.%
+\item<2-> Sie managed auch Professoren, Lehrer, und Studenten.%
+\item<3-> Sie sind die einzigen, die neue Personen in das System einpflegen können.%
+\item<4-> Sie sind die einzigen, die neue Studiengänge für die Fakultäten in das System einpflegen können.%
+\item<5-> Sie weisen den Fakultäten Räume und Gebäude zu.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Stakeholders~4: Administration der Fakultäten}%
+\begin{itemize}%
+%
+\item Die vierten Stakeholders sind die Leitungen der verschiedenen Fakultäten.%
+%
+\item<2-> Die Administration einer Fakultät weist Professoren zu Modulen zu und Assitenzprofessoren zu Übungen.%
+%
+\item<3-> Sie können Prüfungen und Deliverables erstellen und zeitlich planen.%
+%
+\item<4-> Sie können Ihre Räume selber managen.%
+%
+\item<5-> Sie managen die Studenten, die zu ihrer Fakultät gehören.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Stakeholders~5: Systemadministratoren und DBAs}%
+\begin{itemize}%
+\item Die fünfte Gruppe von Stakeholders sind die Systemadministratoren und die \glslink{dba}{DBAs}.%
+%
+\item<2-> Ihre wichtigste Aufgabe ist es, das System am laufen zu halten.%
+%
+\item<3-> Sie machen regelmäßige Backups.%
+%
+\item<4-> Sie müssen regelmäßig üben, das System aus den Backups wieder herzustellen.%
+%
+\item<5-> Sie müssen alle Komponenten regelmäßig updaten, also das \glslink{OS}{Betriebssystem}, das \glslink{dbms}{DBMS}, die Web \glslink{server}{Server}, usw.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Fachanforderungen}%
+%
+\begin{frame}%
+\frametitle{Fachanforderungen Sammeln}%
+\begin{itemize}%
+\only<-12>{%
+\item Nachem die Stakeholders und die Motivation unseres Projekts klar sind, interviewen wir mehrere der involvierten Personen.%
+}%
+%
+\only<-13>{%
+\item<2-> Wir besuchen die Lehrabteilung unserer Universität.%
+}%
+%
+\only<-14>{%
+\item<3-> Wir interviewen die Dekane, Vizedekane for Lehre, und die Sekretäre von drei Fakultäten.%
+}%
+%
+\item<4-> Wir diskutieren mit fünf Professoren.%
+%
+\item<5-> Wir treffen uns auch mit den Studentenvertern und mit normalen Studenten.%
+%
+\item<6-> Unser Ziel ist es, die akademischen Prozesse aus verschiedenen Perspektiven zu verstehen.%
+%
+\item<7-> Wir wollen mehrere Fragen klären\only<-7>{.}\uncover<8->{: Was sind die grundlegenden Funktionen, die wir zur Verfügung stellen müssen?\uncover<9->{ Welche Funktionen können wir anbieten, die es aktuell noch nicht gibt?}}%
+%
+\item<10-> Basierend auf unseren Erkenntnissen erstellen wir verschiedene Fragebögen und verteilen sie an so viele Mitglieder der obigen Gruppen wir möglich.%
+%
+\item<11-> Am Ende sammeln wir alle Informationen ein und präsentieren sie in Workshops, bei denen wiederum Mitglieder der obigen Gruppen teilnehmen.%
+%
+\item<12-> Es ist unser Ziel eine Sicht auf die Anforderungen zu entwickeln, der alle Stakeholders zustimmen können.%
+%
+\item<13-> Dann schreiben wir das \glsShort{SRS}-Dokument.%
+%
+\item<14-> Es wird bestimmt, dass das System durch Webseiten erreichbar sein muss.%
+%
+\item<15-> Eine Menge von Prozessen muss bereitgestellt werden, nämlich\dots%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Personenmanagement}%
+\begin{itemize}%
+\item Nur die Universitätsadministration kann Studenten- oder Personaldatensätze in das System einpflegen.%
+%
+\item<2-> Solche Datensätze müssen Informationen speichern wie den Name, ID~(中国公民身份号码\cite{GB116431999CIN}), Mobiltelefonnummer, Geschlecht, höchster akademischer Grad, Rolle~(Student, Professor, \dots), usw.%
+%
+\item<3-> Die Universitätsadministration muss diese Informationen ändern können.%
+%
+\item<4-> Sie kann Leute Fakultäten zuweisen.%
+%
+\item<5-> Die Administration einer Fakultät kann nur auf die Datensätze der Leute zugreifen, die zu ihr gehören.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Datums-Management}%
+\begin{itemize}%
+\item Die Universitätsadministration setzt Daten wie \DEzB\ den Semesteranfang und das Semesterende, Anfange und Ende der Prüfungsperioden, Feiertage, usw.%
+%
+\item<2-> Die Universitätsadministration erstellt Zeiträume für spezielle Ereignisse, wie \DEzB\ den Anfang der Abschlussarbeiten~(开题), die Midterm-Bewertung des Abschlussprojekts~(中期), der die Verteitigung des Abschlussprojekts~(毕业).%
+%
+\item<3-> Die Fakultäten können diese Zeiträume dann an ihre Situation anpassen.%
+%
+\item<4-> Professoren, die ein Modul leiten, können dann \DEzB\ eine Prüfung in den Prüfungszeitraum legen, den ihre Fakultät definiert hat.%
+%
+\item<5-> Die Fakultät wiederum hat den Prüfungszeitraum basierend auf dem Rahmenzeitraum vorgegeben von der Universitätsadministration festgelegt.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Studiengangsmanagement}%
+%
+\begin{itemize}%
+\item Die Universitätsadministration kann Studiengänge erstellen und verändern.%
+\item<2-> Das machen sie natürlich in Zusammenarbeit mit den Fakultäten, aber nur sie haben das Recht dazu, Entscheidungen zu treffen.%
+%
+\item<3-> Jeder Studiengang besteht aus verschiedenen Modulen in verschiedenen Semestern.%
+%
+\item<4-> Module können Pflicht-\ oder Wahlfächer sein und zu verschiedenen Modultypen gehören, wie \DEzB\ Fachgrundlagenmodule~(学科基础课),
+Allgemeinbildende Pflichtfächer~(公共基础课), Fachspezifische Basismodule~(专业基础课), Fachspezifische Wahlpflichtmodule~(专业选修课), oder Allgemeinbildende Wahlfächer~(公共选修课) usw.%
+%
+\item<5-> Module können aus nur einer Vorlesung, aus Verlesungen und Übungen, nur aus praktischem Training, oder aus Deliverables~(wie BSc und MSc~Thesen) bestehen.%
+%
+\item<6-> Die Universitätsadministration kann Studiengänge den Fakultäten zuweisen.%
+%
+\item<7-> Die Administration der Fakultäten kann Studenten in die Studiengänge einsortieren.
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Modulmanagement}%
+\begin{itemize}%
+\item Die Administration einer Fakultät instantiiert die Module in jedem Semester.%
+%
+\item<2-> Jede Instanz eines Moduls hat einen Lehrer und eine Obergrenze der Studenten, die sich einschreiben können.%
+%
+\item<3-> Die Hochschullehrer werden über ihre Kurse informiert.%
+%
+\item<4-> Sie können sich ihren Lehrstundenplan ausdrucken.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Raummanagement}%
+\begin{itemize}%
+\item Die Universitätsadministration managed, erstellt, ändert, oder löscht Datensätze für Vorlesungszimmer.%
+%
+\item<2-> Jeder Raum hat einen Ort in einem Gebäude, eine Kapazität für Studenten, und Features wie Equipment~(Projektoren, Tafeln, Laborequipement, \dots)%
+%
+\item<3-> Die Universitätsadministration kann Räume an Fakultäten zuweisen.%
+%
+\item<4-> Die Fakultäten weisen dann Kurse zu Räumen und Zeitfenstern zu.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Moduleinschreibungen}%
+\begin{itemize}%
+\item Studenten können sich in die Module ihres Studiengangs einschreiben.%
+%
+\item<2-> Für Pflichtmodule die von nur einem Professor angeboten werden, werden sie automatisch eingeschrieben.%
+%
+\item<3-> Andernfalls kann das Fakultätsmanagement sie manuell einsortieren.%
+%
+\item<4-> Für jedes Modul ihres Studiengangs, für das sie nicht automatisch oder von der Schule eingeschrieben wurden, können die Studenten sich selbst einschreiben.%
+%
+\item<5-> Die Studenten werden automatisch über ihre Einschreibungsoptionen informiert.%
+%
+\item<6-> Die Studenten können sich ihren Studenplan ausdrucken.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Prüfungen und Deliverables}%
+\begin{itemize}%
+\item Die Administration einer Fakultät kann Prüfungen für jedes Modul definieren.%
+%
+\item<2-> Eine Prüfung bekommt jeweils einen Raum und eine Zeit in der Prüfungsperiode zugewiesen.%
+%
+\item<3-> Professoren können auch Mittsemesterprüfungen bei ihrer Fakultät beantragen.%
+%
+\item<4-> Solche Prüfungen haben einen Raum und eine Zeit außerhalb der Prüfungsperiode.%
+%
+\item<5-> Für jedes Modul, das sie lehren, können Professoren \emph{Deliverables} definieren, \DEzB\ Hausaufgaben.%
+%
+\item<6-> Die Studenten werden automatisch über die Zeit und den Ort der Prüfungen für ihre Module informiert.%
+%
+\item<7-> Die Studenten können ihre aktuellen Transcripts sowie alle Noten für alle Deliverables ausdrucken.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Kommunikation}%
+\begin{itemize}%
+\item Das System biete die Möglichkeit, dass Studenten, Lehrer, und Fakultäten miteinander komminizieren.%
+%
+\item<2-> Diese Kommunikationen sind unveränderlich und werden dauerhaft gespeichert.%
+%
+\item<3-> Dieser Kanal wird wahrscheinlich nicht oft verwendet, kann aber nützlich sein für Erinnerungen, Benachrichtigungen, Warnungen, oder Einsprüche.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Administration und Backup}%
+\begin{itemize}%
+\item Die \glslink{dba}{DBAs} der Universität können Backups der Platform erstellen.%
+%
+\item<2-> Sie können die Plattform updaten.%
+%
+\item<3-> Es gibt eine zweite Instanz der Plattform, auf der Updates und das Wiederherstellen der Backups ausprobiert werden kann.%
+%
+\item<4-> Die \glslink{dba}{DBAs} können das System auf einem neuen Computer installieren und die Backups hineinladen.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Nicht-Funktionale Anforderungen}%
+%
+\begin{frame}[t]%
+\frametitle{Nicht-Funktionale Anforderungen}%
+\begin{itemize}%
+%
+\only<-8>{%
+\item Die Webseite müssen korrekt angezeigt werden und sowohl auf Desktop-Computern als auch Mobiltelefonen nutzbar sein.%
+}%
+%
+\item<2-> Sie müssen mit den normalen Web Browsern von \microsoftWindows, \linux, \macOS, \appleIOS, \iPadOS, und \android\ funktionieren.%
+%
+\item<3-> Das System muss mit 50\decSep000~neuen Studentendatensätzen, 2000~neuen Mitarbeiterdatensätzen, 100~Studiengängen, 8000~Modulen, und 1\decSep000\decSep000~Prüfungs/Deliverable-Datensätzen pro Jahr umgehen können.%
+%
+\item<4-> Es muss diese Belastung über 20~Jahre aushalten können, also zwanzig mal die obigen Anforderungen.%
+%
+\item<5-> Nach zwanzig Jahren nehmen wir an dass entweder stärkere Hardware zur Verfügung steht oder dass alte Datensätze aus dem System genommen und woanders gespeichert werden.%
+%
+\item<6-> Die Antwortzeit auf jede Anfrage jeder Applikation darf niemals größer als zwei Sekunden sein.%
+%
+\item<7-> Die Kommunikation muss über das \pgls{HTTPS} abgesichert werden.%
+%
+\item<8-> Datenschutz muss gewährleistet werden.%
+%
+\item<9-> Personen dürfen nur auf Daten zugreifen, für die sie explizit Zugriffsrechte basierend auf ihrer Funktion erhalten haben.
+\end{itemize}%
+\end{frame}%
+%
+\section{Projektgrenzen}%
+%
+\begin{frame}%
+\frametitle{Projektgrenzen}%
+\begin{itemize}%
+\item Das System muss mit \docker-Kontainern im Rechenzentrum der Universität aufgesetzt werden.%
+%
+\item<2-> Das System muss komplett aus Open Source Software bestehen, um die Verlässichkeit und Verfügbarkeit zu erhöhen und die Kosten zu senken.%
+%
+\item<3-> Das Rechenzentrum der Universität wird drei Rechenknoten für das System zur Verfügung stellen, jeweils mit einen 32~Kern Prozessor mit 4~GHz und 64~GiB RAM.%
+%
+\item<4-> Das Rechenzentrum der Universität stellt 100~TiB zentralisierter Speicher zur Verfügung.%
+%
+\item<5-> Ein erster Prototyp muss in sechs Monaten entwickelt werden.%
+%
+\item<6-> Das System muss innerhalb eines Jahres test- und validierbar sein.%
+%
+\item<7-> Das Projekt-Budget beträgt 5\decSep000\decSep000~RMB.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+%
+\item Von dieser Anforderungsanalyse haben wir schon mal einiges gelernt.%
+%
+\item<2-> Unser Beispielsystem ist recht kompliziert.%
+%
+\item<3-> Es hat viele verschiedene Aspekte.%
+%
+\item<4-> Das ist bei vielen Datenbankprojekte so.%
+%
+\item<5-> Wie bei vielen Datenbankprojekten haben wir nicht nur eine Datenbank.%
+%
+\item<6-> Wir haben auch eine web-basierte \glsShort{GUI}.%
+%
+\item<7-> Unser Kurs ist aber nicht über \glsShort{GUI}-Design.%
+%
+\item<8-> Wir nehmen also an, dass jemand anders in unserem Team das macht.%
+%
+\item<9-> Ebenso mit dem \docker-Kontainern\dots%
+%
+\item<10-> Wir nehmen auch einfach an, dass die nicht-funktionalen Anforderungen OK sind und dass auch die Projektgrenzen passen.%
+%
+\item<11-> Stattdessen fokussieren wir uns auf den Datenbank-Aspekt.
+\end{itemize}%
+\end{frame}
+%
+\begin{frame}[t]%
+\frametitle{Was wir schon können}%
+\begin{itemize}%
+\only<-10>{%
+\item Dieses Projekt hier ist viel viel komplizierter als unser einfaches Fabrik-Datenbank-Beispiel.%
+}%
+%
+\only<-11>{%
+\item<2-> Wenn wir uns aber an die Dinge erinnern, die wir schon gelernt haben, also \glsShort{SQL}, Formulare und Berichte\dots\uncover<3->{ {\dots}Dann haben wir eigentlich eine grobe Vorstellung, wie wir das anpacken würden.}%
+}%
+%
+\item<4-> Klar, die Tabellen werden viel komplizierter werden.%
+%
+\item<5-> Aber es werden trotzdem einfache Tabellen sein.%
+%
+\item<6-> \sqlilIdx{JOIN} und \sqlilIdx{REFERENCES} werden auch hier funktionieren und unsere grundlegenden Werkzeuge sein, um Daten zu verbinden.%
+%
+\item<7-> Klar, wir würden eine web-basierte \pgls{GUI} brauchen -- aber wie gesagt, das ignorieren wir und stellen uns einfach vor, dass das irgendwie mit \python\ geht.%
+%
+\item<8-> Wir können uns auf jeden Fall vorstellen, mit \libreofficeBase\ einen Prototypen herzustellen, mit dem zumindest die Mitarbeiter der Uni Daten eingeben und auslesen können.%
+%
+\item<9-> Natürlich müssen wir viel mehr Gehirnschmalz einsetzen, um dieses Projekt zu schaffen.%
+%
+\item<10-> Aber wenn wir das Projekt auf eine wohlstrukturierte, planvolle Art angehen {\dots} dann haben wir bestimmt eine gute Chance.%
+%
+\item<11-> Und genau über planvolles Arbeiten haben wir ja die letzten beiden Einheiten gesprochen.%
+%
+\item<12-> Erst ein konzeptuelles Modell, dann ein logisches Modell {\dots} so machen wir das!%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
