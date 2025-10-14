@@ -1,0 +1,265 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{28.~Konzeptuelles Schema:~Schlüssel}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item In der vorigen Einheit haben wir gesagt, dass eine Entität von allen anderen Entitäten unterschieden werden kann.%
+%
+\item<2-> Das heist, dass sie \emph{einzigartig} seien muss.
+%
+\item<3-> Entitäten werden vollständig und ausschließlich von ihren Attributen characterisiert.%
+%
+\item<4-> Sie haben keine Eigenschaften außer ihren Attributen.%
+%
+\item<5-> Die einzige Art, wie sie einzigartig seien können, ist also durch ihre Attribute.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Schlüssel}%
+%
+\begin{frame}%
+\frametitle{Superschlüssel}%
+\begin{itemize}%
+\item Die Attribute, die als einzigartige Identifikatoren von Entitäten verwendet werden können, heißen Schlüssel~\inEN{keys}.
+\end{itemize}%
+\uncover<2->{%
+\begin{definition*}[Superschlüssel]%
+Ein Superschlüssel~\inEN{super key} ist ein Attribute oder eine Menge Attribute eines Entitätstypes, das eine Entität in einer Entitätsmenge eindeutig identifizieren kann\cite{S2024D:CDMERDE,G2011EW2ITDS:CMUTERM}.%
+\end{definition*}%
+%
+\uncover<3->{%
+\begin{itemize}%
+\item Eine Studenten-Entiät kann eindeutig durch ihre Studenten-ID identifiziert werden.%
+\item<4-> Sie kann auch durch die Kombination von Adresse und Mobiltelefonnummer(s) identifiziert werden.%
+\item<5-> Oder nur durch ie Mobiltelefonnummer(n) {\dots} also wenn diese nicht optional wären.%
+\item<6-> Oder vielleicht durch eine Email-Adresse.%
+\item<7-> Oder vielleicht durch eine Ausweisnummer~(中国公民身份号码\cite{GB116431999CIN}) {\dots} also wenn diese nicht optional wäre.%
+\item<8-> Oder durch die Kombination von Name, Adresse, und \glsShort{dateOfBirth}.%
+\end{itemize}%
+}}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Schlüsselkandidat}%
+\begin{definition*}[Schlüssel(kandidat)]%
+Ein \emph{Schlüssel} oder \emph{Schlüsselkandidat}~\inEN{(candidate) key} eines Entitätstyps ist ein minimaler Superschlüssel, also ein Superschlüssel der entweder nur aus einem Attribut besteht oder der seine Eindeutigkeit verlieren würde, wenn auch nur ein einziges Attribut von ihm entfernt werden würde\cite{S2024D:CDMERDE,G2011EW2ITDS:CMUTERM,SS2005EIDDDFDB:SDLDUTRDM}.%
+\end{definition*}%
+%
+\uncover<2->{%
+\begin{itemize}%
+\item Das bedeutet nicht, dass alle Schlüsselkandidaten die selbe Anzahl von Attributen haben.%
+%
+\only<-6>{%
+\item<3-> Wenn wir eine Person identifizieren, dann könnte ein Schlüsselkandidat die Ausweisnummer sein.%
+}%
+%
+\only<-7>{%
+\item<4-> Ein anderer Schlüsselkandidat könnte die Kombination aus Name, Geburtsort, und \glsShort{dateOfBirth} sein.%
+}%
+%
+\only<-8>{%
+\item<5-> Beide wären minimal im Sinner der Definition oben.%
+}%
+%
+\only<-9>{%
+\item<6-> Die Ausweisnummer wäre nur ein Attribut, der andere Schlüsselkandidat hätte drei.%
+}%
+%
+\only<-10>{%
+\item<7-> Die Kombination von allen vier Attributen wäre ein Superschlüssel, aber kein Schlüsselkandidat.%
+}%
+%
+\item<8-> Ein weiterer Superschlüssel wäre die Kombination aus Name, Geschlecht, Geburtsort, und \glsShort{dateOfBirth}.%
+%
+\item<9-> Das wäre kein Schlüsselkandidat, weil wir das Attribut \inQuotes{Geschlecht} weglassen können, ohne die Eindeutigkeit zu verlieren.
+%
+\item<10-> Wenn wir ignorieren, dass manche Attribute optional sind, dann haben wir mindestens drei mögliche Schlüsselkandidaten für Studenten\only<-10>{.}\uncover<11->{: die Studenten-ID\only<-11>{.}\uncover<12->{, die Ausweisnummer\only<-12>{.}\uncover<13->{ und die Mobiltelefonnummer.}}}%
+%
+\end{itemize}%
+}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Primärschlüssel}%
+%
+\begin{definition*}[Primärschlüssel]%
+Der Primärschlüssel~\inEN{primary key} eines Entitätstypes ist der Schlüsselkandidat der als \emph{das} identifizierende Attribute (oder Gruppe von Attributen) einer Entität verwendet wird, wenn Beziehungen zwischen verschiedenen Entitätstypen modelliert werden.%
+\end{definition*}%
+%
+\uncover<2->{%
+\begin{definition*}[Prim-Attribute]%
+Ein Attribut wird als prim~\inEN{prime} bezeichnet, wenn es Teil des Primärschlüssels ist.%
+\end{definition*}%
+%
+\uncover<3->{%
+%
+\begin{itemize}%
+%
+\item Eine Entität kann nicht an einer Stelle mit einer Gruppe Attributen identifiziert werden und an einer anderen Stelle mit einer anderen.%
+%
+\item<4-> Das würde zu allen möglichen Problemen und Inkonsistenzen führen.%
+%
+\item<5-> Es kann also nur einen Primärschlüssel für einen Entitätstyp gegen.%
+%
+\end{itemize}%
+%
+}}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Studenten-Entitäten}%
+\begin{itemize}%
+\item Später im Datenbankdesign werden wir modellieren, wie Studenten sich in Module einschreiben können.%
+%
+\item<2-> Dann werden wird also auch einen Entitätstyp für Module~(oder Modulinstanzen in spezifischen Semestern) haben.%
+%
+\item<3-> Es wird dann notwendig, Beziehungen zwischen Studenten und Modulinstanzen darzustellen.%
+%
+\item<4-> Wir haben so etwas schon in unserem Fabrik-Beispiel gemacht.%
+%
+\item<5-> Sie erinnern sich an die Schlüsselworte \sqlil{PRIMARY KEY} und \sqlil{REFERENCES} von damals.%
+%
+\item<6-> Die sind natürlich Technologie-spezifisch, was wir beim konzeptuellen Modellieren nicht wollen{\dots}%
+%
+\item<7-> Aber schon auf dieser Ebene müssen wir uns trotzdem entscheiden, welche Attribute wir \emph{wirklich} zum Identifizieren von Entitäten benutzen wollen.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Primärschlüssel für Studenten}%
+\begin{itemize}%
+\only<-34>{%
+\item Wir brauchen also einen Primärschlüssel, der Studenten eindeutig identifiziert.%
+%
+\item<2-> Welcher der Schlüsselkandidaten ergibt hier am meisten Sinn?%
+%
+\item<3-> Wie wäre es mit Mobiltelefnnummern?\only<4-11>{%
+\begin{itemize}%
+\item Mobiltelefonnummern können sich ändern.%
+%
+\item<5-> Primärschlüssel dürfen sich niemals ändern.%
+%
+\item<6-> Ein Student kann auch mehrere Mobiltelefonnummern haben.%
+%
+\item<7-> Das wäre also ein eigenartiger Primärschlüssel.%
+%
+\item<8-> Manch Studenten haben vielleicht auch keine Mobiltelefonnummer.%
+%
+\item<9-> Das ist vielleicht selten, aber es kann passieren.%
+%
+\item<10-> Primärschlüssel dürfen niemals \sqlilIdx{NULL} sein.%
+%
+\item<11-> OK, Mobiltelefonnummern sind als Primärschlüssel ungeeignet.%
+\end{itemize}%
+}%
+%
+\item<12-> Was ist mit der Ausweisnummer~(中国公民身份号码\cite{GB116431999CIN})?%
+\only<13-15>{%
+\begin{itemize}%
+\item Ausländische Austauschstudenten~(留学生) haben keine 中国公民身份号码.%
+\item<14-> Primärschlüssel dürfen nicht \sqlil{NULL} sein.%
+\item<15-> Das geht also auch nicht.%
+\end{itemize}%
+}%
+%
+\item<16-> Und die Kombination aus Name, Geburtsort, und Geburtstag?%
+\only<17-26>{%
+\begin{itemize}%
+\item Ein weiteres Kriterium für Primärschlossel ist, dass sie \emph{klein} seien sollten.%
+\item<18-> Zusammengesetzte Attribute oder lange Textstrings sind nicht geeignet.%
+\item<19-> Wenn wir Beziehungen zwischen Entitäten speichern, dann speichern wir immer deren Primärschlüssel.%
+\item<20-> Erinnern wir uns an unsere Tabelle \sqlil{demand} aus dem Fabrikbeispiel.%
+\item<21-> Primärschlüssel werden also nicht nur in Entitäten gespeichert, sondern auch dort, wo wir die Beziehungen darstellen.%
+\item<22-> Dieser technologische Aspekt ist nicht so zentral beim konzeptuellen Design\only<-14>{.}\uncover<15->{, aber\dots}%
+\item<23-> Große Primärschlüssel sind schlecht.%
+\item<24-> Und dieser Primärschlüssel wäre groß\only<-24>{.}\uncover<25->{ und ist daher schlecht\only<-25>{.}\uncover<26->{ und wir nehmen ihn nicht.}}%
+\end{itemize}}%
+%
+\item<26-> Bleibt also noch die von unserer Uni zugewiesene Studenten-ID.%
+\only<27-33>{%
+\begin{itemize}%
+\item Sagen wir, dass eine Studentin einen Studiengang beginnt, vielleicht das Bachelor-Program \inQuotes{Informatik}.%
+\item<28-> Dann bekommt sie eine Studenten-ID zugwiesen.%
+\item<29-> Diese repräsentiert sie nicht als Person, sondern in der Funktion\inQuotes{BSc-Student der Informatik}.%
+\item<30-> Wenn Sie nach dem Abschluss einen Master ranhängen will, dann bekommt sie eine andere Studenten-ID.%
+\item<31-> Das fühlt sich ein wenig komisch an.%
+\item<32-> Vielleiht sollten wir Studenten irgendwie anders modellieren(?)%
+\item<33-> Aber von den zur Verfügung stehenden Schlüsselkandidaten ist die Studenten-ID die beste Wahl.%
+\end{itemize}%
+}%
+%
+\item<34-> Wir nehmen die Studenten-ID als Primärschlüssel.%
+}%
+\item<35-> Wir können unser \glsShort{ERD} mit der Student-ID als Primärschlüssel updaten, in dem wir den Name des Attributs unterstrichen\cite{G2011EW2ITDS:CMUTERM}.%
+%
+\end{itemize}%
+\locateGraphic{35}{width=0.75\paperwidth}{graphics/erdStudent5}{0.2}{0.24}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Gute Praxis für Primärschlüssel}%
+\bestPractice{primaryKeys}{%
+Primärschlüssel sollen\uncover<2->{%
+\begin{enumerate}%
+\item einzigartig für jede Entität sein\only<-2>{.}\uncover<3->{,}%
+\item<3-> sich während nicht ändern, so lange die Entität existiert\only<-3>{.}\uncover<4->{,}%
+\item<4-> nicht optional sein, also niemals \sqlilIdx{NULL} sein\only<-4>{.}\uncover<5->{,}%
+\item<5-> keine abgeleiteten Attribute sein\only<-5>{.}\uncover<6->{,}%
+\item<6-> immer einwertige Attribute sein, also keine mehrwertigen\only<-6>{.}\uncover<7->{,}%
+\item<7-> aus einem einzigen Attribut bestehen, also nicht auf Schlüsselkandidaten basieren, die aus mehr als einem Attribut bestehen\only<-7>{.}\uncover<8->{,}%
+\item<8-> einfache Attribute sein, also keine zusammengsetzte Attribute\only<-8>{.}\uncover<9->{ und}%
+\item<9-> klein sein in Bezug auf ihren erwarteten benötigten Speicherplatz.%
+\end{enumerate}%
+}}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Ersatzschlüssel}%
+\begin{itemize}%
+\item Manchmal kann es passieren, dass wir einen Entitätstyp ohne einen passenden Primärschlüssel haben.%
+%
+\item<2-> Vielleicht sind alle Schlüsselkandidaten einfach zu lang.%
+%
+\item<3-> In diesem Fall nutzen wir eine Technik, die wir bereits im Fabrikbeispiel gelernt haben\only<-3>{.}\uncover<4->{:}%
+\end{itemize}%
+%
+\uncover<4->{%
+\begin{definition*}[Ersatzschlüssel]%
+Wenn kein passender Schlüsselkandidat für einen Entitätstypen existiert, dann kann ein künstlicher Schlüssel, vielleicht eine automatisch generierte Ganzzahl, als Ersatzschlüssel~\inEN{surrogate key} genutzt werden.%
+\end{definition*}%
+}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Schlüssel sind wichtig, wenn wir die reale Welt modellieren.%
+\item<2-> Jedes Objekt in der realen Welt ist auf irgendeine Art einzigartig.%
+\item<3-> Jedes Objekt ist daher durch einzigartige Eigenschaften identifizierbar.%
+\item<4-> Objekte werden als Entitäten repräsentiert.%
+\item<5-> Ihre Eigenschaften werden als Attribute repräsentiert.%
+\item<6-> Die Attribute, die wir verwenden \emph{können}, um sie zu identifizieren sind Schlüsselkandidaten.%
+\item<7-> Die Attribute, die wir \emph{schlussendlich verwenden}, um sie zu identifizieren, bilden den Primärschlüssel.%
+\item<8-> Primärschlüssel müssen einzigartig sein\only<-8>{.}\uncover<9->{ und klein.}%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%

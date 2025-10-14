@@ -102,7 +102,7 @@ Das sind also noch vier Zahlen, die wir speichern müssen.}}%
 \begin{itemize}%
 \item Diese Struktur ist im Grunde recht einfach.%
 \item<2-> Nun müssen wir sie in SQL-Kommandos übersetzen.%
-\item<3-> Wir müssen dazu Namen, Datentypen, und Einschränkungen für die Spalten festlegen.%
+\item<3-> Wir müssen dazu Namen, Datentypen, und Einschränkungen~\inEN{constraints} für die Spalten festlegen.%
 \item<4-> Das SQL-Kommando sieht in etwa so aus:%
 \end{itemize}%
 \sqlSyntax{4-}{syntax/create_table_de.sql}{0.05}{0.4}{0.9}{0.6}%
@@ -276,7 +276,7 @@ Geldwerte müssen mit dem Datentype \sqlilIdx{DECIMAL} gespeicher werden\cite{C2
 }%
 \item<8-> Damit das geht, müssen wir die Zeilen in der Kunden- und der Produkttabelle finden können.%
 \item<9-> Jede Zeile muss eindeutig identifiziert werden können.%
-\item<10-> Dafür gibt es \emph{Primärschlüssel}.%
+\item<10-> Dafür gibt es \emph{Primärschlüssel}~\inEN{primary keys}.%
 \end{itemize}%%
 \end{frame}%
 %
@@ -329,7 +329,7 @@ Geldwerte müssen mit dem Datentype \sqlilIdx{DECIMAL} gespeicher werden\cite{C2
 \frametitle{Ersatzschlüssel (Surrogate Keys)}%
 %
 \bestPractice{surrogatePrimaryKey}{%
-Es ist oftmals eine gute Idee, Ersatzschlüssel (Surrogate (Primary) Keys), die auf automatisch erhöhten Ganzzahlen basieren, als Primärschlüssel zu verwenden.\cite{B2025DS:SBPASG}.%
+Es ist oftmals eine gute Idee, Ersatzschlüssel~\inEN{surrogate (primary) keys}, die auf automatisch erhöhten Ganzzahlen basieren, als Primärschlüssel zu verwenden.\cite{B2025DS:SBPASG}.%
 }%
 %
 \uncover<2->{%

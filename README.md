@@ -56,6 +56,7 @@ Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.gith
 25. [Anforderungen](https://thomasweise.github.io/databasesSlidesDE/25_anforderungen.pdf)
 26. [yEd Installieren](https://thomasweise.github.io/databasesSlidesDE/26_yed_installieren.pdf)
 27. [Konzeptuelles Schema: Entitäten und Attribute](https://thomasweise.github.io/databasesSlidesDE/27_konzeptuelles_schema_entitäten_und_attribute.pdf)
+28. [Konzeptuelles Schema: Schlüssel](https://thomasweise.github.io/databasesSlidesDE/28_konzeptuelles_schema_schlüssel.pdf)
 
 
 ### 2.3. Die Beispiele
