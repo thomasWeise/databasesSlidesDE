@@ -1,0 +1,478 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{29.~Konzeptuelles Schema:~Beziehungen}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item Wenn wir nur einen Entitätstyp in unserer Datenbank hätten, dann würde es keinen Sinn ergeben, eine Datenbank zu benutzen.%
+%
+\item<2-> Dann würden wir eher einfache Dokumente wir \glsShort{CSV}\cite{RFC4180} oder \glsShort{XML}\cite{BPSMM2008EMLX1FE,K2019ITXJY,CH2013XFCAMLTMC} Dateien verwenden.%
+%
+\item<3-> Unserer Lehrmanagementplattform hat aber sicher verschiedene Entitätstypen.%
+%
+\item<4-> Wenn diese Entitätstypen nichts miteinander zu tun hätten, wie \DEzB\ \inQuotes{Studenten}, \inQuotes{Wetter} und \inQuotes{Produkt}, dann wäre es immer noch besser, diese einfach in mehreren Dateien zu speichern.%
+%
+\item<5-> Aber unsere Entitätstypen werden \emph{sehr viel} in Beziehung zueinander stehen.%
+%
+\item<6-> Wir modellieren wir also diese Beziehungen?%
+\end{itemize}%
+\end{frame}%
+%
+\section{Beziehungen}%
+%
+\begin{frame}%
+\frametitle{Beziehungen und Beziehungstypen}%
+%
+\begin{definition*}[Beziehung]%
+Eine Beziehung~\inEN{relationship (instance)} ist eine Verbindung von zwei oder mehr Entitäten.%
+\end{definition*}%
+%
+\uncover<2->{%
+\begin{itemize}%
+\item Ein Beispiel einer Beziehung ist \emph{Mr.~Bibbo schreibt sich in das Modul \citetitle{programmingWithPython} ein.}%
+\end{itemize}%
+%
+\uncover<3->{%
+\begin{definition*}[Beziehungstyp]%
+Ein Beziehungstyp~\inEN{relationship type} ist die Menge aller möglichen Beziehungen zwischen zwei oder mehr Entitätsmengen.%
+\end{definition*}%
+%
+\uncover<5->{%
+\begin{itemize}%
+\item Der \emph{schreibt-sich-ein} Beziehungstyp könnte zwischen dem Entitätstyp \emph{Student} und dem Entitätstyp \emph{Module} existieren.%%
+%
+\item<6-> Transitive Verben\cite{EOWM2025MWAMTD:TA} in den Anforderungen stehen oft für Beziehungstypen\cite{C1997ECAED}.%
+\end{itemize}}}}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Grad einer Beziehung}%
+%
+\begin{definition*}[Grad einer Beziehung]%
+Der Grad~\inEN{degree} einer Beziehung (oder eines Beziehungstyps) entspricht der Anzahl der daran teilnehmenden Entitäten (oder Entitätstypen).%
+\end{definition*}%
+%
+\uncover<2->{%
+\begin{itemize}%
+\item Es kann binäre Beziehungen gegebn, also solche, wo zwei Entitäten teilnehmen.\uncover<3->{ %
+\DEZB~ist die die Student-Modul Beziehung binär, also \emph{Student schreibt sich in Modul ein}.}%
+%
+\item<4-> Es kann auch ternäre Beziehungen geben, wo drei Entitäten teilnehmen.\uncover<5->{ %
+\DEZB~\emph{Student schreibt sich in Modul ein das von Professor gelehrt wird}.}%
+\item<5-> Und so weiter\dots%
+\end{itemize}}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Rollen in einer Beziehung}%
+%
+\begin{definition*}[Rollen in einer Beziehung]%
+Jede Entität, die an einer Beziehung teilnimmt, kann eine Rolle haben~\inEN{role}, welche die Art definiert, auf die die Entitäten in der Beziehung teilnimmt.%
+\end{definition*}%
+%
+\uncover<2->{%
+\begin{itemize}%
+\item Stellen wir uns nochmal die ternäre Beziehung \emph{Student schreibt sich in Modul ein das von Professor gelehrt wird}.%
+\item<3-> Dann hat der Student die Rolle \emph{schreibt sich ein}.%
+\item<4-> Der Professor hat die Rolle \emph{lehrt}.%
+\end{itemize}}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Beziehungsattribute}%
+\begin{definition*}[Beziehungsattribute]%
+Ein Beziehungstyp kann Attribute haben, die die Eigenschaften der Beziehungen, die er definiert, beschreiben.%
+\end{definition*}%
+%
+\uncover<2->{%
+\begin{itemize}%
+\item Wir könnten \DEzB\ schreiben \emph{Herr Bebbo schreibt sich in das Modul \citetitle{databases} im Sommersemester 2025 ein.}%
+%
+\item<3-> Das Attribut \emph{Semester} der Beziehung ist in diesem Kontext sinnvoll.%
+%
+\item<4-> Es gehört nämlich weder zum Student \emph{Herr Bebbo} noch zum Modul~\emph{\citetitle{databases}}.%
+%
+\item<5-> Anders als Entitäten haben Beziehungen aber keine Schlüsselattribute.%
+%
+\item<6-> Die Beziehungen werden durch die Primärschlüssel der teilnehmenden Entitäten definiert\cite{G2011EW2ITDS:CMUTERM}.%
+\end{itemize}}%
+\end{frame}%
+%
+\section{Beispiele}%
+%
+\begin{frame}[t]%
+\frametitle{Student-Modul Beziehung}%
+\begin{itemize}%
+\item Modellieren wir ein paar Beziehungen.%
+\item<2-> Beginnen wir damit, dass sich ein Student in ein Modul einschreiben kann.%
+\item<3-> In einem \glsShort{ERD} werden Beziehungen als Rauten~\inEN{diamonds} gemalt, die mit den in-Beziehung-stehenden Entitätstypen verbunden sind.%
+\item<5-> In dem \glsShort{ERD} hier sehen, dass der Entitätstyp \emph{Student} mit dem Entitätstyp \emph{Modul} über die Beziehung \emph{enrolls into} ~(also \emph{schreibt sich ein}) verbunden ist.%
+\item<6-> Das ist eine binäre Beziehung, weil immer zwei Entitäten teilnehmen.%
+\item<7-> Entitäten des Types \emph{Student} können sich also in Entitäten des Types \emph{Modul} einschreiben.%
+\end{itemize}%
+\locateGraphic{4-}{width=0.75\paperwidth}{graphics/erdStudentModule1}{0.125}{0.65}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Student-Modul Professor (1)}%
+\begin{itemize}%
+\only<-7>{%
+\item Entitäten des Types \emph{Student} können sich also in Entitäten des Types \emph{Modul} einschreiben.%
+}%
+\only<-8>{%
+\item<2-> Module werden von Professoren unterrichtet.%
+}%
+\only<-9>{%
+\item<3-> Das taucht hier nicht auf\only<-3>{.}\uncover<4->{ Das Diagramm sagt gar nichts über die Beziehung von Student, Professor, und Modul aus.}%
+}%
+\only<-10>{%
+\item<5-> Wir fügen die Beziehung \inQuotes{Professor teaches Module} hinzu.%
+}%
+\only<-11>{%
+\item<6-> Das löst das Problem leider überhaupt nicht.
+}%
+\only<-12>{%
+\item<7-> Wir können darstellen, dass sich eine Studentin in ein bestimmtes Modul einschreibt.%
+}%
+\item<8-> Viele Studentinnen können sich in das selbe Modul einschreiben.%
+\item<9-> Wir können auch darstellen, dass ein Professor dieses Modul lehrt.%
+\item<10-> Mehrere Professoren können ein Modul lehren.%
+\item<11-> Vielleicht unterrichtet dieses Jahr Professor \citeauthor{databases} das Modul \citetitle{databases} -- nächstes Jahr macht das vielleicht Professor~李.
+\item<12-> Wir können nicht darstellen, dass eine Studentin an einem Modul teilnimmt, das ein bestimmer Professor lehrt.%
+\item<13-> Denn die beiden binären Beziehungen, die wir gemalt haben, sind unabhängig von einander.%
+\end{itemize}%
+\locateGraphic{-4}{width=0.75\paperwidth}{graphics/erdStudentModule1}{0.125}{0.65}%
+\locateGraphic{5-}{width=0.95\paperwidth}{graphics/erdStudentModuleProf1}{0.025}{0.65}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Student-Modul Professor (2)}%
+\begin{itemize}%
+\only<-6>{%
+\item Das können wir reparieren, in dem wir eine ternäre Beziehung benutzen.%
+}\only<-7>{%
+\item<3-> In unserem \pgls{ERD} nehmen nun drei Entitätstypen an der Beziehung teil.%
+}\only<-7>{%
+\item<4-> Die Professorin lehrt das Modul, die Studentin schreibt sich in das Modul ein das die Professorin lehrt.%
+}\only<-9>{%
+\item<5-> Dieses Modell ist besser.%
+}%
+\item<6-> Wir sagen aber noch nicht, wann das Modul stattfindet.%
+\item<7-> Wir haben ja gesagt, dass eine Beziehung durch die Primärschlüssel der teilnehmen Entitäten bestimmt wird.%
+\item<8-> Was passiert, wenn ein Student am Modul teilnimmt, aber leider das Examen nicht besteht und das Modul wiederholen muss?%
+\item<9-> Was wenn die Professorin es nochmal unterrichtet?%
+\item<10-> Dann haben wir zwei Beziehungen, wo alle Entitäten gleich sind.
+\end{itemize}%
+\locateGraphic{-1}{width=0.95\paperwidth}{graphics/erdStudentModuleProf1}{0.025}{0.65}%
+\locateGraphic{2-}{width=0.75\paperwidth}{graphics/erdStudentModuleProf2}{0.125}{0.55}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Student-Modul Professor (3)}%
+\begin{itemize}%
+\item Wie können wir das Problem lösen?%
+\item<2-> In dem wir der Beziehung ein Attribut \emph{in Semester} geben.%
+\end{itemize}%
+\locateGraphic{-2}{width=0.75\paperwidth}{graphics/erdStudentModuleProf2}{0.125}{0.5}%
+\locateGraphic{3-}{width=0.75\paperwidth}{graphics/erdStudentModuleProf3}{0.125}{0.267}%
+\end{frame}%
+%
+\section{Modellieren von Personen, Studenten, und Mitarbeitern}%
+%
+\begin{frame}%
+\frametitle{Spaß mit Namen}%
+\begin{itemize}%
+\only<-13>{%
+\item Heute hatten wir wieder ein Treffen mit den Stakeholders in unserer Uni.%
+}\only<-14>{%
+\item<2-> Wir haben ihnen das \glsShort{ERD} mit dem Entitätstyp für Studenten gezeigt.%
+}\only<-15>{%
+\item<3-> Es sieht gut aus {\dots} aber es gibt Probleme.%
+}\only<-16>{%
+\item<4-> Es gibt Probleme mit Namen.%
+}\only<-17>{%
+\item<5-> Leute können nähmlich mehrere Namane haben.%
+}\only<-17>{%
+\item<6-> Ausländische Austauschstudenten haben \DEzB\ ihren originalen Namen.%
+}\only<-18>{%
+\item<7-> Sie können aber auch zusätzlich einen chinesischen Namen haben.%
+}\only<-18>{%
+\item<8-> Eine \emph{Frau Elizabeth Prudence McDouglas} könnte \DEzB\ auch als 邓小花女士 in unserer Uni bekannt sein.%
+}\only<-19>{%
+\item<9-> Natürlich würden wir in offiziellen Dokumenten nur den Originalname verwenden.%
+}\only<-20>{%
+\item<10-> In Uni-internen Dokumenten oder auf Platzkarten könnte aber der chinesifizierte Name verwendet werden.%
+}\only<-21>{%
+\item<11-> Wir sagen \emph{\inQuotes{Originalname}}?%
+}\only<-22>{%
+\item<12-> Im Westen ist es nicht ungewöhnlich, dass Leute ihre Namen \emph{ändern} wenn sie heiraten.%
+}\only<-23>{%
+\item<13-> Was passiert, wenn \emph{Elizabeth} nun \emph{Herrn Heinrich Gieselher von G{\"o}rlitz-Zittau} heiratet?%
+}\only<-23>{%
+\item<14-> Sie kann ihren Namen unverändert lassen.%
+}%
+\item<15-> Sie kann den Familiennamen ihres Ehemannes annehmen und zu\emph{Mrs.~Elizabeth Prudence von G{\"o}rlitz-Zittau} werden.%
+\item<16-> Oder ihr Ehemann kann ihren Familiennamen annehmen.%
+\item<17-> Oder das neue Ehepaar entscheidet sich für einen zusammengesetzten Familiennamen.%
+\item<18-> Vielleicht heißt sie dann \emph{Frau Elizabeth Prudence von G{\"o}rlitz-Zittau-McDouglas} der vielleicht \emph{Frau Elizabeth Prudence McDouglas-von-G{\"o}rlitz-Zittau}.
+\item<19-> Egal. Es kann viele Gründe geben, warum eine Person entweder mehrere Namen hat oder sich der Name einer Person ändert.%
+%
+\item<20-> Den Name einer Person in einer Datenbank zu \alert{ändern}, ist allerdings \alert{keine Option}.%
+\item<21-> Dann würde ja der alte Name verschwinden.%
+\item<22-> Dann hätten wir irgendwann alte Dokumente in der echten Welt die nicht mehr zu den geänderten Namen in der Datenbank passen.%
+\item<23-> Also müssen Namen ein \emph{mehrwertiges} Attribut werden.%
+\item<24-> Wir werden wahrscheinlich jedem Namen auch noch einen Gültigkeitszeitraum zuordnen müssen, um mit Namensänderungen vernünftig umgehen zu können.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Personen, Studenten, und Mitarbeiter}%
+\begin{itemize}%
+\only<-11>{%
+\item In dem Moment, wo wir anfangen, Namen zu modellieren, merken wir, dass das nicht nur ein Studenten-Problem ist.%
+}\only<-12>{%
+\item<2-> Das selbe Problem wird später wieder auftauchen, wenn wir die Mitarbeiter der Uni modellieren.%
+}\only<-13>{%
+\item<3-> Die können auch komische Namen haben.%
+}\only<-14>{%
+\item<4-> Die haben auch Mobiltelenfonnummern, Ausweisnummern, und Adressen.%
+}\only<-15>{%
+\item<5-> Wir wollen das aber nicht alles zweimal modellieren.%
+}\only<-16>{%
+\item<6-> Das würde unser System nur komplexer machen und wir könnten Inkonsistenzen bekommen.%
+\item<7-> Wir entscheiden uns, den neuen Entitätstyp \emph{Person} einzuführen.%
+\item<8-> Studenten und Mitarbeiter sind Personen.%
+\item<9-> Wir werden alle Attribute, die sowohl Studenten als auch Mitarbeiter haben, in die Personen-Datensätze.%
+\item<10-> Das ergibt sogar sehr viel Sinn.%
+\item<11-> Die selbe Person könnte sich \DEzB\ in mehrere Studiengänge einschreiben.%
+\item<12-> Vielleicht macht eine Person erstmal einen BSc in Informatik und hängt dann einen MSc dran.%
+\item<13-> Theoretisch könnte sogar ein Mitarbeiter einen Studiengang besuchen.%
+\item<14-> Vielleicht will ein Chemie-Lecturer noch einen MSc in Informatik machen.%
+\item<15-> Es wäre immer noch die selbe Person, und es ergibt wenig Sinn, all ihre Daten mehrfach zu speichern.%
+}%
+%
+\only<-20>{%
+\item<16-> Wir führen den neuen Entitätstype \emph{Person} ein.%
+}\only<-21>{%
+\item<18-> Später hängen wir alle gemeinsamen Attribute (wie die Namen) an diesen Entitätstyp.%
+}\only<-22>{%
+\item<19-> Wir denken erstmal nicht darüber nach, welchen Primärschlüssel wir für Personen verwenden werden.%
+}\only<-23>{%
+\item<20-> Der Entitätstyp \emph{Student} braucht jetzt erstmal nur noch das Primärschlüsselattribut \emph{Student ID}.%
+}\only<-24>{%
+\item<21-> Eine Person kann ein Student sein, was wir mit einem Beziehungstyp modellieren.%
+}\only<-25>{%
+\item<22-> So eine Beziehung hat ein Startdatum und ein optionales Enddatum.%
+}\only<-26>{%
+\item<23-> Das Enddatum ist \sqlilIdx{NULL} für alle Studenten, die aktuell eingeschrieben sind.%
+}%
+%
+\item<24-> Für Mitarbeiter~\inEN{Faculty Member} ist die Situation ähnlich.%
+\item<25-> Sie werden durch ihre Worker~ID identifiziert.%
+\item<26-> Sie haben auch eine Position, \DEzB\ Lecturer, Associate Professor, oder Full Professor.%
+\item<27-> Auch diese Funktion hat ein Startdatum und ein optionales Enddatum.%
+\end{itemize}%
+\locateGraphic{17-}{width=0.9\paperwidth}{graphics/erdPersonStudentFaculty1}{0.05}{0.476}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Namen und Personen}%
+%
+\begin{itemize}%
+\only<-5>{%
+\item Wir kopieren nun die Attribute aus dem alten Entitätstyp für Studenten in den neuen Entitätstyp für Personen.%
+}\only<-6>{%
+\item<2-> Natürlich nicht die Student~ID.%
+}\only<-6>{%
+\item<3-> Wir lösen auch das Problem mit dem Attribut \emph{Name}.%
+}\only<-7>{%
+\item<4-> Es ist jetzt mehrwertig.%
+}\only<-7>{%
+\item<5-> Jeder Name hat nun auch ein Startdatum und ein optionales Enddatum.%
+}\only<-8>{%
+\item<6-> Ein Name kann \emph{official} sein (Ja/Nein) -- dann wird er für Dokumente verwendet.%
+}\only<-8>{%
+\item<7-> Wir werden eine Einschränkung definieren, dass immer nur genau ein Name \emph{offical} sein kann, dass sein Startdatum nicht nach heute liegen muss, und dass er kein Enddatum haben kann.%
+}\only<-9>{%
+\item<8-> Wir stellen uns vor, dass das wir die Person, die die Daten in die Datenbank eingibt, nicht zu sehr mit diesen Optionen belasten werden.%
+}\only<-10>{%
+\item<9-> Sie kann dann einfach nur einen Name eingeben, dessen Startdatum dann als heute gesetzt wird und der automatisch als \emph{official} markiert wird.%
+}\only<-11>{%
+\item<10-> Das System wird auch erstmal die \emph{Salutation} und den \emph{Full Name} auf den selben Wert setzen.%
+}\only<-12>{%
+\item<11-> Die Daten können aber dann später nachbearbeitet werden.%
+}\only<-13>{%
+\item<12-> Dann macht das Eingeben von Daten wenig Arbeit aber wir haben alle notwendigen Optionen, um auch mit den komischsten Situationen klarzukommen.%
+}\only<-14>{%
+\item<13-> Beachten Sie, dass es wichtig, all solche Sonderfälle von Anfang an zu beachten.%
+}\only<-15>{%
+\item<14-> Wir bemerken, dass wir nun keinen vernünftigen Kandidaten für den Primärschlüssel mehr haben.%
+}\only<-16>{%
+\item<15-> \emph{Name} und \emph{Address} sind beides zusammengesetzte Attribute deren Werte nicht einzigartig seien müssen.%
+}\only<-17>{%
+\item<16-> Die Ausweisnummer \emph{ID} ist optional.%
+}\only<-18>{%
+\item<17-> \emph{Mobile Phone} ist sowohl optional als auch mehrwertig.%
+}\only<-19>{%
+\item<18-> \emph{Date of Birth} ist definitiv nicht einzigartig und \emph{Age} ist auch noch abgeleitet.%
+}\only<-20>{%
+\item<19-> Keine davon und auch keine Kombination davon ist nicht-optional \emph{und} einzigartig.%
+}\only<-21>{%
+\item<20-> Natürlich werden wir später andere ID-Werte wie Reisepassnummer und Emailadresse hinzufügen.%
+}\only<-22>{%
+\item<21-> Unsere Anwendung könnte erzwingen, dass jede Person entweder eine Reisepassnummer oder eine Ausweisnummer hat und das diese einzigartig seien müssen.%
+}\only<-23>{%
+\item<22-> Daraus einen Primärschlüssel zu bauen wäre aber sehr umständlich.%
+}\only<-24>{%
+\item<23-> Die einfachste Lösung ist also ein Ersatzschlüssel, ein so genannter~\inEN{surrogate key}.%
+}\only<-25>{%
+\item<24-> So nennen wir den Schlüssel auch gleich in unserem neuen Modell.%
+}\only<-26>{%
+\item<25-> Wir nehmen dazu an, dass das \glsShort{dbms}, was wir später verwenden werden, irgendwie einzigartige Werte generieren kann.%
+}%
+\item<26-> Damit sieht unser Entitätstyp \emph{Person} nun schon recht vernünftig aus.%
+%
+\end{itemize}%
+\locateGraphic{3-23}{width=0.75\paperwidth}{graphics/erdPerson1a}{0.125}{0.38}%
+\locateGraphic{24-}{width=0.75\paperwidth}{graphics/erdPerson1}{0.125}{0.38}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Spaß mit IDs}%
+\begin{itemize}%
+\only<-10>{%
+\item Nun, wo wir das Problem mit den Namen gelöst haben, wollen wir uns mit IDs und ID-Dokumenten beschäftigen.%
+}%
+%
+\only<-11>{%
+\item<2-> Bis jetzt haben wir die IDs als die von der Regierung ausgegebene Ausweisnummer~(中国公民身份号码\cite{GB116431999CIN}) modelliert.%
+}%
+%
+\only<-12>{%
+\item<3-> Das war ein optionales Attribut, weil ausländische Austauschstudenten und Mitarbeiter so etwas nicht haben.%
+}%
+%
+\item<4-> Gut, sie haben sicherlich schon ein Ausweisdokument, nur kein chinesisches.%
+%
+\item<5-> Diese ausländischen Dokumente wären für uns nutzlos.%
+%
+\item<6-> Andererseits haben Ausländer, die nach China kommen, einen Reisepass\cite{ICAO2021MRTDP3SCTAMEE}.%
+%
+\item<7-> Reisepässe haben auch eindeutige Nummern {\dots} die allerdings nicht dauerhaft sind.%
+%
+\item<8-> Chinesische Ausweisnummern eine Person identifizieren und gleich bleiben, identifizieren Reisepassnummern den Reisepass als Dokument.%
+%
+\item<9-> Ein Reisepass ist oftmals 10 Jahre gültig, danach bekommt die Person einen neuen Pass mit einer neuen Nummer.%
+%
+\item<10-> Wenn ein Ausländer China betritt, dann braucht sie Visum, welches wiederum eine einmalige Nummer hat und eine Gültigkeitsdauer\cite{CMOFA2019ITCV}.%
+%
+\item<11-> Es gibt viele verschiedene Typen für Visa für verschiedene Tätigkeiten, \DEzB\ sind X1-\ und X2-Visa zum Studieren und Z-Visa zum Arbeiten.%
+%
+\item<12-> Ausländer, die in China arbeiten (\DEzB\ an einer Uni) brauchen dann noch eine Arbeitserlaubnis\cite{BD2006BDBK:WOFFITOROC}, die wiederum eine einmalige Kennzahl hat und eine Gültigkeitsdauert.%
+%
+\item<13-> Wenn wir das als Attribute der Person-Entität modellieren wollen, kann das beliebig kompliziert werden.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Lösungsidee}%
+\begin{itemize}%
+\only<-10>{%
+\item Wie wäre es damit: Wir erstellen einen Entitätstyp für \emph{ID Type}s.%
+}%
+%
+\item<2-> Eine Entät dieses Typs speichert den Name des ID-Typs, welcher der Primärschlüssel ist.%
+%
+\item<3-> Das könnte \DEzB\ \inQuotes{Mobile Phone~(China)}, \inQuotes{Mobile Phone~(Intl)}, \inQuotes{ID~(中华人民共和国居民身份证)}, \inQuotes{Passport~(护照),} \inQuotes{Work Permit~(中华人民共和国外国人工作许可证)}, \inQuotes{X1-Visa}, \inQuotes{X2-Visa}, \inQuotes{Z-Visa}, \inQuotes{Email Address}, \inQuotes{\pgls{wechat} User Name}, usw.\ sein.%
+%
+\item<4-> Damit wird unser System gleich Zukunftssicher\only<-4>{.}\uncover<5->{:}%
+%
+\item<5-> Emails werden gerade langsam weniger wichtig und \pgls{wechat} wird die Hauptkommunikationsmethode {\dots} das könnte sich ja ändern.%
+%
+\item<6-> Oder vielleicht gibt es später andere Visa-Typen.%
+%
+\item<7-> Dann können wir einfach einen neuen ID-Typ hinzufügen.%
+%
+\item<8-> Wir können auch weitere Attribute an diesen Entitätstyp hänge, \DEzB\ \emph{is for communication}, \emph{is ID document}, usw., um mehr Kontext bereitzustellen.%
+%
+\item<9-> Damit haben wir nun alle Kommunikations- und Identifikationswerte in einen Entitätstyp vereinigt.%
+%
+\item<10-> Wir könnten nun mehrere ID-Werte und mehrere Telefonnummern oder mehrere Email-Adressen pro Person speichern.%
+%
+\item<11-> Jeder ID-Wert wäre mit einem ID-Typ assoziiert.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Verbesserte Lösungsidee}%
+\begin{itemize}%
+\only<-9>{%
+\item Aber wie können wir ID-Werte validieren?%
+}%
+%
+\item<2-> Wenn ein neuer ID-Wert eingegeben wird, dann sollte der zumindest rudimentär geprüft werden.%
+%
+\item<3-> Mobiltelefonnummern und Reisepassnummern sind sehr verschieden.%
+%
+\item<4-> Trotzdem müssen wir verhindern, dass irgendwie Buchstaben in einer Telefonnummer vorkommen.%
+%
+\item<5-> Nun, wir können das der App überlassen, die später für die Dateneingabe benutzt werden wird.%
+%
+\item<6-> Wir können aber auch ein paar grundlegende Tests gleich auf Ebene der Datenbank einführen.%
+%
+\item<7-> Wir haben ja schon \glslink{regex}{Regular Expressions} kennengelernt, also Text-Strings, die ein Format beschreiben, mit dem andere Text-Strings verglichen werden können.%
+%
+\item<8-> Wir speichern also zu jedem ID-Type auch ein \glsShort{regex} \inQuotes{Validation RegEx} als Attribut.%
+%
+\item<9-> Wenn die Administatorin eine ID eines bestimmten Typs eintippt, dann soll diese mit diesem Format verglichen werden.%
+%
+\item<10-> Wir können so zwar keine sehr genauen Überprüfungen durchführen, aber zumindest ein paar einfache Fehler verhindern.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Neues ERD}%
+\begin{itemize}%
+\item Wir können nun einen neuen Beziehungstyp zwischen  den Entitätstypen \emph{Person} und \emph{ID Type} einführen.%
+%
+\item<2-> Eine Person hat IDs.%
+%
+\item<3-> Jede ID hat ein Attribut \emph{Valid From} und optional ein \emph{Valid To}-Datum.
+\end{itemize}%
+\locateGraphic{}{width=0.75\paperwidth}{graphics/erdPerson2}{0.125}{0.38}%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Jetzt können wir Beziehungen modellieren.%
+\item<2-> Beziehungen verbinden zwei oder mehr Entitäten.%
+\item<3-> Ohne Beziehungen könnten wir unsere Daten genauso gut in Gruppen einfacher Dateien speichern.%
+\item<4-> Aber so bald Entitäten in Beziehung stehen, geht das nicht mehr.%
+\item<5-> Man kann nicht erlauben, dass eine Entität, die in einer Beziehung teilnimmt, gelöscht wird bevor die Beziehung gelöscht wird.%
+\item<6-> Beziehungen können nur zwischen Entitäten erzeugt werden, die auch existieren.%
+\item<7-> Deshalb erfordern unsere Modelle nun, das die Technologie, mit denen sie irgendwann implementiert werden, das auch unterstützen.%
+\item<8-> \glslink{rdb}{Relationale Datenbanken} tuen das.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
