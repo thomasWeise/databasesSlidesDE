@@ -58,6 +58,7 @@ Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.gith
 27. [Konzeptuelles Schema: Entitäten und Attribute](https://thomasweise.github.io/databasesSlidesDE/27_konzeptuelles_schema_entitäten_und_attribute.pdf)
 28. [Konzeptuelles Schema: Schlüssel](https://thomasweise.github.io/databasesSlidesDE/28_konzeptuelles_schema_schlüssel.pdf)
 29. [Konzeptuelles Schema: Beziehungen](https://thomasweise.github.io/databasesSlidesDE/29_konzeptuelles_schema_beziehungen.pdf)
+30. [Konzeptuelles Schema: Schwache Entitäten](https://thomasweise.github.io/databasesSlidesDE/30_konzeptuelles_schema_schwache_entitäten.pdf)
 
 
 ### 2.3. Die Beispiele

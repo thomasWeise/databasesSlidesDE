@@ -1,0 +1,175 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{30.~Konzeptuelles Schema:~Schwache Entitäten}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}[t]%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item In der letzten Einheit haben wir gute Fortschritte beim Modellieren unserer Lehre-Management-Plattform gemacht.%
+\item<2-> Besonders cool war, wie wir sowohl IDs als auch Kommunikationsmöglichkeiten mit Hilfe des neuen Entitätstyps \emph{ID~Type} modelliert haben.%
+\item<3-> Dann schauen wir uns das \glsShort{ERD} nochmal an.%
+%
+\item<4-> Und dann erinnern wir uns an etwas\only<-4>{\dots}\uncover<5->{: \emph{Beziehungstypen haben keine Schlüsselattribute.\uncover<6->{ Beziehungen werden durch die Primärschlüssel der teilnehmenden Entitäten identifiziert.}}}%
+\item<5-> Welche Entitäten nehmen denn an unserer \emph{Has ID}-Beziehung teil?%
+\item<6-> \emph{Person}-Entitäten, die durch ihren Ersatzschlüssel identifiziert werden, und \emph{ID Type}-Entitäten, die durch ihren Namen identifiziert werden.%
+\item<7-> Wenn wir die Regel von oben anwenden, dann kann jede Person nur eine ID eines bestimmten Typs haben.%
+\item<8-> Nur eine Mobiltelefonnummer.\uncover<9->{ Nur eine Reisepassnummer.\uncover<10->{ Nur eine Email-Adresse.}}%
+%
+\item<11-> Reisepässe laufen aber ab. Eine Person hat also wahrscheinlich verschiedene Reisepassnummern über die Zeit, die sie hier bleibt.%
+\item<12-> Wir haben das Problem also noch nicht ganz gelöst.%
+\end{itemize}%
+\locateGraphic{3}{width=0.65\paperwidth}{../29_konzeptuelles_schema_beziehungen/graphics/erdPerson2}{0.175}{0.45}%
+\end{frame}%
+%
+\section{Schwachte Entitäten}%
+%
+\begin{frame}%
+\frametitle{Konzeptuelles Problem}%
+\begin{itemize}%
+\item Das Problem existiert eher auf der konzeptuellen Ebene.%
+\item<2-> Natürlich könnten wir die Entitäten und Beziehungen auf der technischen Ebene so implementieren, wie wir sie \emph{meinen}.%
+\item<3-> Aber wir wollen das auch im konzeptuellen Modell richtig lösen.%
+\item<4-> Denn das konzeptuelle Modell definiert die Daten, die in unsere Datenbank kommen.%
+\item<5-> Es muss korrekt sein.%
+\item<6-> Das logische Modell, das wir später entwickeln, darf nicht davon abweichen.%
+\item<7-> Sonst bekommen wir irgendwann albtraumhafte Probleme, wenn das Projekt später gewartet und weiterentwickelt werden soll.%
+\item<8-> Glücklicherweise können wir eine Lösung für das Problem in verschiedenen Klassen von Entitätstypen finden\cite{S2024D:CDMERDE}.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Klassen von Entitätstypen}%
+\begin{definition*}[Starke Entität]%
+Eine \emph{starke Entität}~\inEN{strong Entity} existiert unabhängig von anderen Entitäten und hat ihren eigenen Primätschlüssel.%
+\end{definition*}%
+%
+\uncover<2->{%
+\only<-6>{%
+\begin{itemize}%
+\item Bisher haben wir alle unserer Daten als starke Entitäten modelliert.%
+\item<3-> Aber es gibt auch schwache Entitäten\cite{P2006CITRD:CERDTRM,SS2005EIDDDFDB:CDDICAMP,S2024D:CDMERDE}.%
+\end{itemize}%
+}%
+%
+\uncover<4->{%
+\begin{definition*}[Schwache Entität]%
+Eine \emph{schwache Entität}~\inEN{weak entity} wird nur durch ihre Attributwerte \emph{und} den/die Primärschlüssel von einer oder mehreren anderen Entitäten identifiziert.%
+\end{definition*}%
+%
+\uncover<5->{%
+\begin{itemize}%
+\item Eine schwache Entität kann nicht alleine existieren.%
+\item<6-> Ihre Existenz hängt von der Existenz mindestens einer anderen Entität ab, welche ihr \emph{Besitzer}~\inEN{owner} genannt wird.%
+\item<7-> Sie hat keinen Primärschlüssel.%
+\item<8-> Sie hat einen \emph{Teilschlüssel}~\inEN{partial key}, also eine Menge von Attributen, die sie zusammen mit den Primärschlüsseln ihrer Besitzern identifizieren.%
+\end{itemize}%
+}}}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Identifizierende Beziehungen}%
+%
+\begin{definition*}[Identifizierende Beziehung]%
+Eine \emph{identifizierende Beziehung}~\inEN{identifying relationship} verbindet eine starke Entität mit einer schwachen Entität.%
+\end{definition*}%
+%
+\uncover<2->{%
+\begin{itemize}%
+\item In einem \glsShort{ERD} werden starke Entitäten durch Rechtecke repräsentiert.%
+\item<3-> Bisher haben wir nur starke Entitäten modelliert.%
+\item<4-> Schwache Entitäten werden durch Rechtecke mit doppeltem Rand dargestellt.%
+\item<5-> Identifizierende Beziehungen, die sie mit anderen Entitäten verbinden, werden durch eine Raute~\inEN{diamond} mit doppeltem Rand dargestellt.%
+\item<6-> (Eigentlich sprechen wir hier von Entitätstypen und Beziehungstypen, aber das auszuschreiben macht den Text schwerer zu lesen\dots)%
+\end{itemize}%
+}%
+\end{frame}%
+%
+\section{Beispiel}%
+%
+\begin{frame}[t]%
+\frametitle{\emph{has ID} als Schwache Entität}%
+\begin{itemize}%
+\only<-2>{%
+\item Wenn wir unser \inQuotes{ID-Problem} nochmal anschauen, dann können wir die Beziehung \emph{has ID} als schwache Entität modellieren.%
+}\only<-3>{%
+\item<2-> Die schwache Entität würde durch ihren eigenen Attributwerte zusammen mit dem Primärschlüssel der entsprechenden \emph{Person}-Entität and den Primärschlüssel der entsprechenden \emph{ID type}-Entität identifiziert.%
+}\only<-4>{%
+\item<3-> Sie wäre eine schwache Entität die von zwei starken Entitäten abhängt.
+}\only<-5>{%
+\item<4-> Wir nennen die neue schwache Entität \emph{Personal ID}.%
+}\only<-6>{%
+\item<5-> Sie hat genau die selben Attribute, wie die Beziehung, die sie ersetzt.%
+}\only<-7>{%
+\item<6-> Sie ist mit einer identifizierenden Beziehung mit den Entitätstypen \emph{Person} und \emph{ID Type} verbunden.%
+}\only<-8>{%
+\item<7-> Jede \emph{Personal ID}-Entität wird identifiziert durch ihre Attribute \emph{Value}, \emph{Valid From}, und \emph{Valid To}~(die den Teilschlüssel bilden) zusammen mit den Primärschlüsseln \emph{Surrogate Key} der \emph{Person}-Entität und \emph{Name} der \emph{ID Type}-Entität.%
+}\only<-9>{%
+\item<8-> Jetzt kann eine Person beliebig viele Telefonnummern haben, so lange diese verschieden oder zumindest zu verschiedenen Zeiten gültig sind.%
+}\only<-10>{%
+\item<9-> Eine Person kann verschiedene Visa haben, welche verschiedene Kennzahlen haben.%
+}\only<-11>{%
+\item<10-> Nun haben wir wirklich die kommunikationsbezogenen identifikationsbezogenen IDs einheitlich modelliert.%
+}%
+%
+\item<11-> Und wir können neue ID-Formen kreieren, wann immer wir wollen.%
+\end{itemize}%
+%
+\locateGraphic{2-}{width=0.75\paperwidth}{graphics/erdPerson3}{0.125}{0.41}%
+\end{frame}%
+%
+\section{Assoziative Entitäten}%
+%
+\begin{frame}%
+\frametitle{Assoziative Entitäten}%
+\begin{definition*}[Assoziative Entität]%
+Eine \emph{assoziative Entität}~\inEN{associative entity} ist eine Entität die Attribute und einen Primärschlüssel hat, aber auch als Beziehung dient, die Entitäten verbinden kann.%
+\end{definition*}%
+%
+\uncover<2->{%
+\begin{itemize}%
+\item In einem \glsShort{ERD} sind assoziative Entitäten durch Rechtecke mit Rauten innen dargestellt.%
+%
+\item<2-> Sie werden hauptsächlich verwendet, um viele-zu-vielen Beziehungen zu normalisieren und zu vereinfachen.%
+%
+\item<3-> Sie verbinden oftmals Entitäten, die mehrere Interaktionen miteinander haben können.%
+%
+\item<4-> Wir gehen nicht weiter darauf ein.%
+%
+\item<5-> Ich verstehe sie eher als Möglichkeit, relationale Datenstrukturen darzustellen.%
+%
+\item<6-> Auf der konzeptuellen Ebene wollen wir das aber noch vermeiden {\dots} das kommt dann erst auf der logischen Ebene.%
+\end{itemize}}%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Und wieder sind wir einen Schritt voran gekommen.%
+\item<2-> Mit schwachen Entitäten können wir nun eins-zu-vielen und viele-zu-vielen Beziehungen sauber modellieren.%
+\item<3-> Als Beispiel hatten wir die \inQuotes{has ID}-Beziehung.%
+\item<4-> Durch das Ersetzen dieser Beziehung mit schwachen Entitäten kann eine Personen nun mehrere IDs vom selben Typ haben.%
+\item<5-> Da wir auch Emailadressen und Mobiltelefonnummern als IDs modellieren, ist das sehr wichtig.%
+\item<6-> Ein anderer Kandidat für schwache Entitäten wäre die Beziehung zwischen Professoren, Studenten und Module.%
+\item<7-> Damit könnten wir sauberer modellieren, dass ein Student sich in das selbe Module vom selben Professor in verschiedenen Semestern einschreibt.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
