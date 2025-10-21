@@ -1,0 +1,654 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{31.~Konzeptuelles Schema:~Beziehungskardinalität}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}[t]%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item Wir haben schon gelernt, dass Attribute verschiedene Kardinalitäten haben können\only<-1>{.}\uncover<2->{:%
+Sie können einwertig, mehrwertig und/oder optional sein.}%
+%
+\item<3-> Beziehungen können auch Kardinalitäten haben\only<-3>{.}\uncover<4->{: wir unterscheiden oft eins-zu-eins\only<5->{\only<-5>{ und}\only<6->{,} eins-zu-mehreren\only<6->{ und mehrere-zu-mehrere}} Beziehungen.}%
+%
+\item<7->  In \citeauthor{C1976TERMTAUVOD}'s ursprünglicher \pgls{ERD} Notation\cite{C1976TERMTAUVOD} werden die Enden einer Beziehung mit 1, N, oder M annotiert, umd 1:1, 1:N, oder M:N Beziehungen darzustellen.%
+%
+\item<8-> In der Notation von \citeauthor{B1969DSD}\cite{B1969DSD} aus \citeyear{B1969DSD} wird eine Beziehung mit einem Pfeil von einer Entität zu einer anderen dargestellt.\uncover<9->{ Die Entität, auf die der Pfeil zeigt, taucht N mal auf, die anderen einmal.}%
+\end{itemize}%
+%
+\locateGraphic{4-}{width=0.225\paperwidth}{graphics/1to1}{0.08125}{0.66}%
+\locateGraphic{5-}{width=0.225\paperwidth}{graphics/1ton}{0.3875}{0.66}%
+\locateGraphic{6-}{width=0.225\paperwidth}{graphics/ntom}{0.69375}{0.66}%
+%
+\end{frame}%
+%
+\section{Modalität und Kardinalität}%
+%
+\begin{frame}%
+\frametitle{Beziehungsmodalität~(1)}%
+\begin{itemize}%
+\item Wenn wir ein \glsShort{ERD} erstellen, wollen wir hohe Genauigkeit.%
+\item<2-> Wir wollen ausdrücken, ob Beziehungen optional oder zwingend~\inEN{mandatory, required} sind.%
+\item<3-> Deshalb werden die Enden von Beziehungen in \glsShort{ERD}s oft mit einer Modalität~\inEN{modality}~(optional?) und einer Kardinalität~\inEN{cardinality}~(wie viel?) annotiert.\cite{R2024CDS:E}.%
+\end{itemize}%
+%
+\uncover<4->{%
+\begin{definition*}[Beziehungsmodalität]%
+Die \emph{Modalität}~\inEN{modality} eines Beziehungendes definiert, ob die Teilnahme an der Beziehung optional oder erforerlich ist.\uncover<5->{ %
+Man kann das als die Minimalzahl der teilnehmenden Entities interpretieren.}%
+\end{definition*}%
+}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Beziehungsmodalität~(2)}%
+\begin{itemize}%
+\item Aus praktischer Sicht sind nur die Minimal-Teilnehmerzahlen 0 and 1 wirklich relevant.%
+%
+\item<2-> Eine Modalität von \inQuotes{optionale Teilnahme} bedeutet eine minimale Teilnehmerzahl von~0.%
+%
+\item<3-> Eine Modalität von \inQuotes{erforderliche Teilnahme} bedeutet eine minimale Teilnehmerzahl von~1.%
+%
+\item<4-> So können wir totale und partielle Beziehungen unterscheiden\cite{P2006CITRD:ERMI,V1999C5DMS:CDUTERM}.%
+%
+\item<5-> Wenn alle Entitäten einer Entitätsmenge an einer Beziehung teilnehmen \emph{müssen}, dann ist die Beziehung total.%
+%
+\item<6-> Wenn nur einige der Eintäten an der Beziehung teilnehmen, dann ist die Beziehung partiell.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Beziehungskardinalität}%
+\begin{definition*}[Beziehungskardinalität]%
+Die Maximalzahl der teilnehmenden Entitäten eines Beziehungendes wird als die \emph{Kardinalität}~\inEN{cardinality} bezeichnet.%
+\end{definition*}%
+%
+\uncover<2->{%
+\begin{itemize}%
+\item Praktisch wird meist nur zwischen den Kardinalitäten \emph{eins} und \emph{mehrere}, also unbegrenzt, unterschieden.%
+\item<2-> In der ähnlichen Modellierungssprache \pgls{UML} bezeichnet man die Kardinalität als Multiplizität~\inEN{multiplicity}.%
+\end{itemize}%
+}%
+\end{frame}%
+%
+\section{Modellierungskonventionen}%
+%
+\begin{frame}[t]%
+\frametitle{Modellierungskonventionen~(1)}%
+\begin{itemize}%
+\item Es gibt mehrere Konventionen, wie die Modalität und Kardinalität von Beziehungsenden in eine \glsShort{ERD} modelliert werden kann.%
+%
+\item<2-> Die Krähenfußnotation~\inEN{crow's foot notation} verwendet graphische Zeichen\cite{E1976BDSMEWACE,CM2000MDMAUDA,S2024D:CDMERDE}.%
+%
+\only<-3,6->{%
+\item<3-> Sie benutzt die vier Symbole \crowsFootOptionalOne, \crowsFootOptionalMany, \crowsFootMandatoryOne\ und \crowsFootMandatoryMany\ um optional-eins und -mehrere bzw.\ erzwungen-eins und -mehrere Teilnehmer darzustellen.%
+}%
+%
+\item<4-> Wir können die Minimal- und Maximalzahl der erlaubten Teilnehmer auch direkt als Labels hinschreiben\cite{P2006CITRD:ERMI}.%
+%
+\item<5-> Ein Ganzzahlintervall~\intRange{i}{j} bedeutet, dass mindestens~$i$ und höchstens~$j$ Entitäten teilnehmen, wobei $j=*$ für unbegrenzt steht.%
+%
+\item<6-> Die zweite Methode hat den Vorteil, dass wir damit mehr verschiedene Kardinalitäten modellieren können.%
+%
+\item<7-> Der Nachteil ist, dass sie etwas schwerer zu lesen ist, wenn man sie ausdruckt oder von weiter weg anguckt.%
+%
+\item<8-> Sie ist auch schwieriger zu malen, weil wir manuell Labels einfügen müssen.%
+%
+\item<9-> Dazu kommt, dass kompliziertere Kardinalitäten sowieso selten gebraucht werden.%
+%
+\item<10-> So etwas wie \intRange{7}{11} könnte auch später schwierig zu implementieren und durchzusetzen sein.%
+%
+\end{itemize}%
+%
+\locateGraphic{2-3}{width=0.576\paperwidth}{graphics/erdCardinalities1a}{0.25}{0.4}%
+\locateGraphic{4}{width=0.576\paperwidth}{graphics/erdCardinalities1b}{0.25}{0.4}%
+%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Modellierungskonventionen~(2)}%
+\begin{itemize}%
+\item Die ursprüngliche Krähenfußnotation von \citeauthor{E1976BDSMEWACE} aus \citeyear{E1976BDSMEWACE} hatte noch keine Symbole für optional/erforderlich\cite{E1976BDSMEWACE}.%
+\item<2-> Man kann sie immer noch verwenden, wenn die Modalität nicht so wichtig ist oder wenn man sie in Diskussionen später festlegen will.%
+%
+\item<3-> In \libreofficeBase\ kann man \glsShort{ERD}s malen, die direkt mit der darunterliegenden Datenbank verbunden sind.%
+%
+\item<4-> Hier benutzt man die 1:1/1:n Notation und ein kleines~\inQuotes{n} steht für \inQuotes{mehrere}.%
+%
+\item<5-> \microsoftAccess\ offers bietet eine ähnliche Funktionalität, abre die Beziehungsenden sind mit~1 oderr~$\infty$ annotiert.%
+%
+\item<6-> Wir werden die Krähenfußnotation für Beziehungsenden verwenden, weil sie in \yEd\ einfacher zu malen ist.%
+%
+\item<7-> Wir behalten aber \citeauthor{C1976TERMTAUVOD}'s Notation für die Symbole bei.%
+%
+\end{itemize}%
+%
+\locateGraphic{-2}{width=0.9\paperwidth}{graphics/erdCardinalities1c}{0.05}{0.5}%
+%
+\end{frame}%
+%
+\section{Krähenfußnotation}%
+%
+\begin{frame}%
+\frametitle{Krähenfußnotation}%
+\begin{itemize}%
+%
+\item Wie gesagt, wir nehmen die Krähenfußnotation.%
+%
+\item<2-> Wir werden uns alle möglichen Kombinationen von \inQuotes{Beziehungsenden} anschauen.%
+%
+\item<3-> Es gibt vier Möglichkeiten, ein Ende einer Beziehung zu annotieren\only<-3>{.}\uncover<4->{:%
+\begin{itemize}%
+\item Optional~1:~\crowsFootOptionalOne, äquivalent zu~\intRange{0}{1}\only<-4>{.}\uncover<5->{,}%
+\item<5-> Erforderlich~1:~\crowsFootMandatoryOne, äquivalent zu~\intRange{1}{1}\only<-5>{.}\uncover<6->{,}%
+\item<6-> Optional~Viele:~\crowsFootOptionalMany, äquivalent zu~\intRange{0}{*}, \intRange{0}{\textnormal{N}} und~\intRange{0}{\infty}\only<-6>{.}\uncover<7->{ und}%
+\item<7-> Erforderlich~Viele:~\crowsFootMandatoryMany, äquivalent zu~\intRange{1}{*}, \intRange{1}{\textnormal{N}}, und~\intRange{1}{\infty}.%
+\end{itemize}%
+}%
+%
+\item<8-> Jede Beziehung hat zwei Enden, also gibt es $10=\frac{\factorial{(4+2-1)}}{\factorial{2}*\factorial{4-1}}$ mögliche binäre Beziehungen.\uncover<9->{~(Es gibt $\frac{\factorial{(m+k-1)}}{\factorial{k}*\factorial{n-1}}$ verschiedene $k$-Kombinationen mit Wiederholungen von $n$~Elementen ohne Beachtung der Reihenfolge.)}%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Lesen einer Beziehung}%
+%
+\begin{itemize}%
+%
+\item Es ist wichtig, zu verstehen, wie man die Kardinalitäten und Modalitäten von Beziehungsenden interpretiert.%
+%
+\item<2-> Das kann man sehr leicht falsch machen!%
+%
+\item<3-> Die Teilnahme einer Entität an einer Beziehung basiert auf dem \emph{anderen} Ende.%
+%
+\item<4-> Schauen wir uns die Beziehung \crowsFoot{K}{M1}{L}{OM} als Beispiel an.%
+%
+\item<5-> Platzieren Sie zuerst den Finger auf dem~\inQuotes{K} und sagen:~\inQuotes{Jedes~K hat\dots}.%
+%
+\item<6-> Dann schieben wir den Finger zum~\inQuotes{L} und sagen~\inQuotes{{\dots}kein, ein, oder mehrere~L.}\cite{SE:DA:2016HDIRENCFTCTNL}.%
+%
+\item<7-> Nun platzieren wir den Finger auf dem \inQuotes{L} und sagen~\inQuotes{Jedes L hat\dots}.%
+%
+\item<8-> Wir schieben den Finger rüber zum~\inQuotes{K} und sagen~\inQuotes{{\dots}genau ein~K.}.%
+%
+\item<9-> Beachten Sie, dass das \crowsFootMandatoryOne\ am~K \alert{nicht} bedeutet, dass jedes~K mit einem~L in Beziehung steht!%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Mögliche Beziehungen in der Krähenfußnotation}%
+\begin{itemize}%
+%
+\only<-1>{%
+\item Schauen wir uns die zehn möglichen Beziehungen einmal an.%
+}%
+%
+\only<-6>{%
+\item<2-> \crowsFoot{A}{O1}{B}{O1}\uncover<3->{:%
+\begin{itemize}%
+\item Jede Entität vom Typ~A kann mit keiner oder einer Entität vom Typ~B verbunden sein.%
+\item<4-> Jede Entität vom Typ~B kann mit keiner oder einer Entität vom Typ~A verbunden sein.%
+\item<5-> \emph{Beispiel:} %
+Eine Kundin kann einen Discount-Kode eingeben, we sie etwas online bestellt\cite{BS2023G:CFNIERD}. %
+Jeder Discount-Kode kann höchstens einmal verwendet werden. %
+Höchstens ein Discount-Kode kann pro Bestellung verwendet werden.%
+\item<6-> \emph{Beispiel:} Eine Person kann mit höchstens einer anderen Person verheiratet sein\cite{R2024CDS:E}.%
+\end{itemize}%
+}}%
+%
+\only<-11>{%
+\item<7-> \crowsFoot{C}{O1}{D}{M1}\uncover<8->{:%
+\begin{itemize}%
+\item Jede Entität vom Typ~C muss mit genau einer Entität vom Typ~D verbunden sein.%
+\item<9-> Jede Entität vom Typ~D kann mit einer oder keiner Entität vom Typ~C verbunden sein.%
+\item<10-> \emph{Beispiel:} In jedem Büro des Bürogebäudes kann einem oder keinem Mitarbeiter zugewiesen sein.%
+Jeder Mitarbeiter hat genau ein Büro\cite{T2025CDBMS:ERM}.%
+\item<11-> \emph{Beispiel:} Ein Professor kann entweder Dekan einer Fakultät sein oder nicht. %
+Jede Fakultät hat genau einen Dekan\cite{R2024CDS:E}.%
+\end{itemize}%
+}}%
+%
+\only<-15>{%
+\item<12-> \crowsFoot{E}{O1}{F}{OM}\uncover<13->{:%
+\begin{itemize}%
+\item Jede Entität vom Typ~E kann mit keiner, einer, oder mehreren Entitäten vom Typ~F.%
+\item<14-> Jede Entität vom Typ~F kann mit keiner oder einer Entität vom Type~E verbunden sein\cite{MA2006MAC:DMERDED}.%
+\item<15-> \emph{Beispiel:} Jedem Bankkonto können zwei Addressen hinterlegt sein: %
+Eine Wohnadresse wird immer benötigt, was für dieses Beispiel egal ist. %
+Was wichtig ist, ist dass zusätzlich optional eine (also keine oder eine) Rechnungsadresse hinterlegt werden kann, %
+Jede Adresse kann die Rechnungsadresse von keinem, einem, oder mehreren Bankkonten sein\cite{MA2006MAC:DMERDED}.%
+\end{itemize}%
+}}%
+%
+\only<-19>{%
+\item<16-> \crowsFoot{G}{O1}{H}{MM}\uncover<17->{:%
+\begin{itemize}%
+\item Jede Entität vom Typ~G ist mit mindestens einer, möglicherweise aber auch mehreren Entitäten vom Type~H verbunden.%
+\item<18-> Jede Entität vom Typ~H ist mit keiner oder einer Entität vom Type~G verbunden.%
+\item<19-> \emph{Beispiel:} Ein Trainer einer Fußballmannschaft kann mehrere Klubmitglieder trainieren, aber immer mindestens eins, sonst ist er kein Trainer. %
+Ein Klubmitglied kann entweder von einem Trainer oder keinem Trainer trainiert werden~(\DEzB\ wenn das Mitglied andere Funktionen hat und nicht aktiv spielt)\cite{SE:DA:2020UTFBRTCACFE}.%
+\end{itemize}%
+}}%
+%
+\only<-25>{%
+\item<20-> \crowsFoot{I}{M1}{J}{M1}\uncover<21->{:%
+\begin{itemize}%
+\item Jede Entität vom Typ~I muss mit genau einer Entität vom Type~J verbunden sein.%
+\item<22-> Jede Entität vom Typ~J muss mit genau einer Entität vom Type~I verbunden sein.%
+\only<-24>{%
+\item<23-> \emph{Beispiel:} Polizeipatrouillen werden von Teams zweier Polizeibeamte durchgeführt~(zumindest in Filem\dots).%
+}%
+\item<24-> \emph{Beispiel:} Für lange Busfahrten könnten es immer Teams von zwei Busfahrern geben, die sich abwechseln.%
+\item<25-> \emph{Beispiel:} In einer Firma könnte ein Verkäufer immer als Notfallersatz für genau einen anderen Verkäufer eingetragen sein und umgekehrt\cite{T2025CDBMS:ERM}.%
+\end{itemize}%
+}}%
+%
+\only<-31>{%
+\item<26-> \crowsFoot{K}{M1}{L}{OM}\uncover<27->{:%
+\begin{itemize}%
+\item Jede Entität vom Typ~K kann mit keiner, einer, oder mehreren Entitäten vom Typ~L verbunden sein.%
+\item<28-> Jede Entität vom Typ~L muss mit genau einer Entität vom Typ~K verbunden sein\cite{MA2006MAC:DMERDED,BS2023G:CFNIERD}.%
+\only<-30>{%
+\item<29-> \emph{Beispiel:} Eine Kundin kann keine oder beliebig viele Bestellungen aufgeben. %
+Jede Bestellung muss aber mit genau einer Kundin verbunden sein\cite{BS2023G:CFNIERD}.%
+}%
+\item<30-> \emph{Beispiel:} Ein Bankkonto kann die Quelle von keiner, einer, oder mehreren Überweisungen sein. %
+Jede Überweisung muss aber genau ein Quell-Konto haben\cite{MA2006MAC:DMERDED}.%
+\item<31> \emph{Beispiel:} Ein Verkäufer hat entweder keinen, einen, oder mehrere Kunden. %
+Jeder Kunde wir aber von genau einem Verkäufer unterstützt\cite{T2025CDBMS:ERM}.%
+\end{itemize}%
+}}%
+%
+\only<-36>{%
+\item<32-> \crowsFoot{M}{M1}{N}{MM}\uncover<33->{:%
+\begin{itemize}%
+\item Jede Entität vom Typ~M ist mit mindestens einer und möglicherweise mehreren Entitäten vom Type~N verbunden.%
+\item<34-> Jede Entität vom Typ~N ist mit genau einer Entität vom Typ~M verbunden.\cite{BS2023G:EDFAHMSCFN}%
+\item<35-> \emph{Beispiel:} Ein Patient kann mehrere Termine mit Ärztinnen vereinbaren. %
+Jeder Termin ist mit genau einem Partienten verbunden.\cite{BS2023G:EDFAHMSCFN}%
+\item<36-> \emph{Beispiel:} Eine Fakultät einer Universität besteht aus mindestens einer, wahrscheinlich aber aus mehreren Abteilungen. %
+Jede Abteilung gehört zu genau einer Fakultät.\cite{R2024CDS:E}%
+\end{itemize}%
+}}%
+%
+\only<-40>{%
+\item<37-> \crowsFoot{O}{OM}{P}{OM}\uncover<38->{:%
+\begin{itemize}%
+\item Jede Entität vom Typ~O kann mit keiner, einer, oder mehreren Entitäten vom Typ~P verbunden sein.%
+\item<39-> Jede Entität vom Typ~P kann mit keiner, einer, oder mehreren Entitäten vom Typ~O verbunden sein.%
+\item<40-> \emph{Beispiel:} Ein Pizzarestaurant verkauft Pizzen an Kunden. %
+Eine Pizza kann von keinem, einem, oder mehreren Kunden bestellt werden. %
+Ein Kunde bestellt keine~(veielleicht will er ja Nudeln\dots), eine, oder mehrere Pizzen\cite{FCC2016D:CFNRSAHTRD}.%
+\end{itemize}%
+}}%
+%
+\only<-44>{%
+\item<41-> \crowsFoot{Q}{OM}{R}{MM}\uncover<42->{:%
+\begin{itemize}%
+\item Jede Entität vom Typ~Q ist mit mindestens einer, möglicherweise auch mehreren Entitäten vom Type~R verbunden.%
+\item<43-> Jede Entität vom Typ~R kann mit keiner, einer, oder mehreren Entitäten vom Typ~Q verbunden sein\cite{BS2023G:CFNIERD}.%
+\item<44-> \emph{Beispiel:} Wenn wir online Produkte bestellen, muss jede Bestellung aus mindestens einem Produkt bestehen. %
+Jedes Produkt kann von keiner, einer, oder mehreren Bestellungen referenziert werden\cite{BS2023G:CFNIERD}.%
+\end{itemize}%
+}}%
+%
+\item<45-> \crowsFoot{S}{MM}{T}{MM}\uncover<46->{:%
+\begin{itemize}%
+\item Jede Entität vom Typ~S ist mit mindestens einer, möglicherweise auch mehreren Entitäten vom Type~T verbunden.%
+\item<47-> Jede Entität vom Typ~T ist mit mindestens einer, möglicherweise auch mehreren Entitäten vom Type~S verbunden.%
+\item<48-> \emph{Beispiel:} Jede Verkäuferin verkauft mindestens ein Produkt, kann aber auch für mehrere Produkte zuständig sein. %
+Jedes Produkt wird von mindestens einer Verkäuferin verkauft, vielleicht aber auch von mehreren~\cite{T2025CDBMS:ERM}.%
+\end{itemize}%
+}%
+%
+\end{itemize}%
+%
+\locateGraphic{-1}{width=0.96\paperwidth}{graphics/erdCardinalities2}{0.02}{0.52}%
+%
+\locateGraphic{2,5-6}{width=0.96\paperwidth}{graphics/erdCardinalities2_ab}{0.02}{0.52}%
+\locateGraphic{3}{width=0.96\paperwidth}{graphics/erdCardinalities2_ab_a}{0.02}{0.52}%
+\locateGraphic{4}{width=0.96\paperwidth}{graphics/erdCardinalities2_ab_b}{0.02}{0.52}%
+%
+\locateGraphic{7,10-11}{width=0.96\paperwidth}{graphics/erdCardinalities2_cd}{0.02}{0.52}%
+\locateGraphic{8}{width=0.96\paperwidth}{graphics/erdCardinalities2_cd_c}{0.02}{0.52}%
+\locateGraphic{9}{width=0.96\paperwidth}{graphics/erdCardinalities2_cd_d}{0.02}{0.52}%
+%
+\locateGraphic{12,15}{width=0.96\paperwidth}{graphics/erdCardinalities2_ef}{0.02}{0.52}%
+\locateGraphic{13}{width=0.96\paperwidth}{graphics/erdCardinalities2_ef_e}{0.02}{0.52}%
+\locateGraphic{14}{width=0.96\paperwidth}{graphics/erdCardinalities2_ef_f}{0.02}{0.52}%
+%
+\locateGraphic{16,19}{width=0.96\paperwidth}{graphics/erdCardinalities2_gh}{0.02}{0.52}%
+\locateGraphic{17}{width=0.96\paperwidth}{graphics/erdCardinalities2_gh_g}{0.02}{0.52}%
+\locateGraphic{18}{width=0.96\paperwidth}{graphics/erdCardinalities2_gh_h}{0.02}{0.52}%
+%
+\locateGraphic{20,23-25}{width=0.96\paperwidth}{graphics/erdCardinalities2_ij}{0.02}{0.52}%
+\locateGraphic{21}{width=0.96\paperwidth}{graphics/erdCardinalities2_ij_i}{0.02}{0.52}%
+\locateGraphic{22}{width=0.96\paperwidth}{graphics/erdCardinalities2_ij_j}{0.02}{0.52}%
+%
+\locateGraphic{26,29-31}{width=0.96\paperwidth}{graphics/erdCardinalities2_kl}{0.02}{0.52}%
+\locateGraphic{27}{width=0.96\paperwidth}{graphics/erdCardinalities2_kl_k}{0.02}{0.52}%
+\locateGraphic{28}{width=0.96\paperwidth}{graphics/erdCardinalities2_kl_l}{0.02}{0.52}%
+%
+\locateGraphic{32,35-36}{width=0.96\paperwidth}{graphics/erdCardinalities2_mn}{0.02}{0.52}%
+\locateGraphic{33}{width=0.96\paperwidth}{graphics/erdCardinalities2_mn_m}{0.02}{0.52}%
+\locateGraphic{34}{width=0.96\paperwidth}{graphics/erdCardinalities2_mn_n}{0.02}{0.52}%
+%
+\locateGraphic{37,40}{width=0.96\paperwidth}{graphics/erdCardinalities2_op}{0.02}{0.52}%
+\locateGraphic{38}{width=0.96\paperwidth}{graphics/erdCardinalities2_op_o}{0.02}{0.52}%
+\locateGraphic{39}{width=0.96\paperwidth}{graphics/erdCardinalities2_op_p}{0.02}{0.52}%
+%
+\locateGraphic{41,44}{width=0.96\paperwidth}{graphics/erdCardinalities2_qr}{0.02}{0.52}%
+\locateGraphic{42}{width=0.96\paperwidth}{graphics/erdCardinalities2_qr_q}{0.02}{0.52}%
+\locateGraphic{43}{width=0.96\paperwidth}{graphics/erdCardinalities2_qr_r}{0.02}{0.52}%
+%
+\locateGraphic{45,48-}{width=0.96\paperwidth}{graphics/erdCardinalities2_st}{0.02}{0.52}%
+\locateGraphic{46}{width=0.96\paperwidth}{graphics/erdCardinalities2_st_s}{0.02}{0.52}%
+\locateGraphic{47}{width=0.96\paperwidth}{graphics/erdCardinalities2_st_t}{0.02}{0.52}%
+%
+\end{frame}%
+%
+\section{Beispiele}%
+%
+\begin{frame}[t]%
+\frametitle{Person}%
+\begin{itemize}%
+\only<-5>{%
+\item Annotieren wir nun unsere \emph{Person}-Entitätstypen mit \inQuotes{Krähenfüßen}.%
+}%
+%
+\only<-6>{%
+\item<2-> Die Idee war damals, dass wir mehrere ID-Typen haben.%
+}%
+%
+\only<-7>{%
+\item<3-> Jede \emph{Personal~ID} gehört zu genau einem~\emph{ID~Type}.%
+}%
+%
+\only<-8>{%
+\item<4-> Es kann beliebig viele \emph{Personal~ID}s für jeden \emph{ID~Type} in unserem System geben. Vielleicht keine, vielleicht viele.%
+}%
+%
+\only<-9>{%
+\item<5-> Die Beziehung ist also \crowsFoot{\emph{Personal~ID}}{OM}{\emph{ID~Type}}{M1}.%
+}%
+%
+\item<6-> Jede \emph{Personal~ID} gehört zu genau einer \emph{Person}.%
+%
+\item<7-> Zu jeder Zeit muss es mindestens eine \emph{Personal~ID} für jeden \emph{Person}-Datensatz geben.%
+%
+\item<8-> Wir können keine Person in unserem System haben, deren Identität nicht auf mindestens eine offizielle Art bestätigt wurde.%
+%
+\item<9-> Daher ist die Beziehung \crowsFoot{\emph{Person}}{M1}{\emph{Personal~ID}}{MM}.%
+\end{itemize}%
+\locateGraphic{2-}{width=0.66\paperwidth}{graphics/erdPerson4}{0.17}{0.535}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Bigger Picture}%
+%
+\parbox{0.4\paperwidth}{\small{%
+\begin{itemize}%
+%
+\only<-3>{%
+\item Machen wir nun ein \glsShort{ERD} eines viel größeren Ausschnitts unseres Systems.%
+}%
+%
+\only<-4>{%
+\item<2-> Jeder Studenten-Datensatz muss mit genau einem Personen-Datensatz assoziiert sind, denn jeder Student ist genau eine Person.%
+}%
+%
+\only<-5>{%
+\item<3-> Eine Person kann dagegen mit keinem Studenten-Datensatz assoziiert sein~(wenn die Person kein Student ist), mit einem Studenten-Datensatz~(wenn die Person ein Student is oder war), oder mit mehreren Studenten-Datensätzen~(wenn die Person \DEzB\ erst den Bachelor und dann den Master macht).%
+}%
+%
+\only<-7>{%
+\item<4-> Jeder Studenten-Datensatz hat eine eindeutige Student~ID, ein Start- und ein Enddatum.%
+}%
+%
+\only<-8>{%
+\item<5-> Jeder Student ist in genau eine Studiengang-Instanz~\inEN{curriculum instance} eingeschrieben.%
+}%
+%
+\only<-8>{%
+\item<6-> Zu einer Studiengang-Instanz gehören entweder keine, ein, oder viele Studenten.
+}%
+%
+\only<-9>{%
+\item<7-> Was ist eine Studiengang-Instanz?%
+}%
+%
+\only<-10>{%
+\item<8-> Wenn die Studenten sich in den Bachelor-Studiengang \inQuotes{Informatik} einschreiben, dann tun sie das in einer bestimmten Realisierung des Studiengangs~\inEN{curriculum}, die in einem bestimmten Semester anfängt -- sagen wir in den Informatikstudiengang der im Winter-Semester~2024 anfängt.%
+}%
+%
+\only<-11>{%
+\item<9-> Aus der Perspektive der \glsShort{ERD}-modellierung, könnten wir sagen~\emph{Ein Studiengang kann von der Universität null, einmal, oder mehrere Male als Studiengangs-Instanz ausgeführt werden.}
+}%
+%
+\only<-12>{%
+\item<10-> Diese Instanz ist meinem bestimmten Anfangssemester assoziiert.%
+}%
+%
+\only<-13>{%
+\item<11-> Weil Studiengangsinstanzen keine anderen identifizierenden Characteristika haben und nicht \inQuotes{losgelöst} existieren können, sind sie schwache Entitäten.%
+}%
+%
+\only<-15>{%
+\item<12-> Sie kommen nur in die Existenz durch ihre identifizierenden Beziehungen mit dem Studiengang, zu dem sie gehören und dem Semester, in dem sie anfangen.%
+}%
+%
+\only<-16>{%
+\item<13-> Wir haben uns entschieden, Semester als unabhängige Entitäten zu modellieren, denn so können wir Attribute da dran hängen.%
+}%
+%
+\only<-18>{%
+\item<14-> Ein Semester kann \DEzB\ ein Start- und ein End-Datum haben und auch eine Periode für Prüfungen.%
+}%
+%
+\only<-19>{%
+\item<15-> Aus Start- und End-Datum können wir ableiten, ob ein Semester ein Sommer- oder ein Winter-Semester ist.%
+}%
+%
+\only<-20>{%
+\item<16-> In jedem Semester kann unsere Universität keine, ein, oder viele Instanzen von Studiengängen starten.%
+}%
+%
+\only<-21>{%
+\item<17-> Ein Studiengang~\inEN{curriculum} hat einen einmaligen Name, der als Primärschlüssel dient.%
+}%
+%
+\only<-22>{%
+\item<18-> Studiengänge haben auch weitere Attribute, \DEzB\ ob sie Bachelor- oder Master-Programme sind.%
+}%
+%
+\only<-23>{%
+\item<19-> Jeder Studiengang gehört zu genau einer Fakultät~\inEN{school} unserer Universität.%
+}%
+%
+\only<-24>{%
+\item<20-> Jede Fakultät kann keinen, einen, oder mehrere Studiengänge haben.%
+}%
+%
+\only<-25>{%
+\item<21-> Dieses Modell beschreibt die Situation der Studenten schon recht gut.%
+}%
+%
+\only<-26>{%
+\item<22-> In dem wir die Beziehungen verfolgen, wissen wir, welchen Studiengang ein Student studiert.%
+}%
+%
+\only<-27>{%
+\item<23-> Wir haben das hier nicht modelliert, aber Sie können sich vorstellen, dass wir auch wissen können, welche Module zu welchem Studiengang gehören und im wievielten Semester des Studiengangs sie stattfinden.%
+}%
+%
+\only<-28>{%
+\item<24-> Daher wüssten wir, wann welcher Student welches Modul anhören muss.%
+}%
+%
+\only<-29>{%
+\item<25-> Wir wissen auch, zu welcher Fakultät der Student gehört.%
+}%
+%
+\only<-30>{%
+\item<26-> Daher können wir auch die Menge der Professoren, die ihn betreuen können konstruieren.%
+}%
+%
+\only<-31>{%
+\item<27-> Modellieren wir nun auch etwas die Situation der Mitarbeiter~\inEN{faculty members} der Uni.%
+}%
+%
+\only<-32>{%
+\item<28-> Jede Person kann höchstens ein Mitarbeiter sein.%
+}%
+%
+\only<-33>{%
+\item<29-> Jeder Mitarbeiter ist genau eine Person und hat eine einmalige Arbeiternummer~\inEN{worker's ID}.%
+}%
+%
+\only<-34>{%
+\item<30-> Das ist anders als die Situation der Studenten.%
+}%
+%
+\only<-35>{%
+\item<31-> Ein Student bekommt eine neue Studenten-ID, jedesmal, wenn er sich in einen Studiengang einschreibt.%
+}%
+%
+\only<-35>{%
+\item<32-> Normalerweise studiert ein Student nur einen Studiengang in unserer Uni.%
+}%
+%
+\only<-36>{%
+\item<33-> Ein Mitarbeiter wird immer die selbe Arbeiternummer behalten.%
+}%
+%
+\only<-37>{%
+\item<34-> Ein Mitarbeiter kann befördert werden oder seine Position ändern, behält aber die gleich Arbeiternummer.%
+}%
+%
+\only<-37>{%
+\item<35-> Es gibt verschiedene Arten von Positionen~\inEN{position types} in unserer Uni.%
+}%
+%
+\only<-37>{%
+\item<36-> \DEZB\ Lehrer~\inEN{lecturer}, Assitenzprofessor~\inEN{assistant professor}, außerordentlicher Professor~\inEN{associate professor}, Professor~\inEN{full professor} und vielleicht sogar verschiedene Level von Professor.%
+}%
+%
+\only<-39>{%
+\item<37-> Jede Position hat einen eindeutigen Namen und bestimmt die Dinge, die ein Mitarbeiter machen darf.%
+}%
+%
+\only<-40>{%
+\item<38-> Wir modellieren drei Arten von Modulen, \DEzB\ Fachgrundlagenmodule~(学科基础课),
+Allgemeinbildende Pflichtfächer~(公共基础课), Fachspezifische Basismodule~(专业基础课), Fachspezifische Wahlpflichtmodule~(专业选修课), oder Allgemeinbildende Wahlfächer~(公共选修课).%
+}%
+%
+\only<-43>{%
+\item<39-> Eine Position erlaubt einer Person in der Position, Module bestimmter Modultypen zu leiten.%
+}%
+%
+\only<-44>{%
+\item<40-> (Module jedes)~Modultyps können von Mitarbeitern von keinem, einem, oder mehreren Positionstypen geleitet werden.%
+}%
+%
+\only<-45>{%
+\item<41-> Wir führen die schwache Entität Position ein, um Mitarbeiter und Positionstypen zu verbinden.%
+}%
+%
+\only<-46>{%
+\item<42-> Jede Instanz dieses schwachen Entitätstyps gehört zu genau einem Mitarbeiter und genau einem Positionstyp.%
+}%
+%
+\only<-47>{%
+\item<43-> Jeder Mitarbeiter hat mindestens eine Position.%
+}%
+%
+\only<-48>{%
+\item<44-> Normalerweise hat ein Mitarbeiter genau eine Position zu einer Zeit.%
+}%
+%
+\only<-49>{%
+\item<45-> Deshalb hat jede Position ein Start- und End-Datum.%
+}%
+%
+\only<-50>{%
+\item<46-> Mitarbeiter können über die Zeit hinweg verschiedene Positionen begleiten.%
+}%
+%
+\only<-51>{%
+\item<47-> Vielleicht fangen sie 2022 als Lecturer an und werden 2025 zum außerordentlichen Professor befördert.%
+}%
+%
+\only<-52>{%
+\item<48-> Für jeden Positionstyp kann es beliebig viele assoziierte Positions-Datensätze geben.%
+}%
+%
+\only<-53>{%
+\item<49-> Interessanterweise hängt es nicht unbedingt von dem Position ab, ob ein Mitarbeiter bestimmte Studenten betreuen kann.%
+}%
+%
+\only<-54>{%
+\item<50-> Diese Fähigkeiten sind Attribute der Person.%
+}%
+%
+\only<-55>{%
+\item<51-> Es könnten bestimmte Positionen sein, wie \DEzB\ Professor für MSc~Studenten-Betreuung.%
+}%
+%
+\only<-56>{%
+\item<52-> Es kann zusätzliche Anforderungen geben, wie Publikationen, Lehre, usw.%
+}%
+%
+\only<-57>{%
+\item<53-> Zuletzt modellieren wir noch, dass ein Mitarbeiter zu genau einer Fakultät gehört.%
+}%
+%
+\item<54-> Eine Fakultät kann beliebig viele Mitarbeiter haben.%
+%
+\item<55-> Wenn wir unser neues \glsShort{ERD} anschauen, dann ist es wunderschön.%
+%
+\item<56-> Wir sehen aber auch, dass viele Dinge noch fehlen.%
+%
+\item<57-> Die Beziehungen zwischen Studenten, Vorlesungen, Modulen, Studiengängen, Räumen, Raumeigenschaften, Prüfungen, Abschlussanforderungen, usw.\ wurden noch nicht modelliert.%
+%
+\item<58-> Wir sind aber schon viel weiter als vorher.%
+\end{itemize}%
+}}%
+%
+\locateGraphic{2-}{width=0.53\paperwidth}{graphics/erdPersonStudentFaculty2}{0.47}{0.14}%
+%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Die Fähigkeit, Beziehungstypen mit Modalitäten und Kardinalitäten zu annotieren ist sehr wichtig.%
+%
+\item<2-> Sie macht unsere Modelle sowohl klarer als auch genauer.%
+%
+\item<3-> Ohne sie können wir nicht ausdrücken, ob eine Person mehrere Studiengänge studieren kann oder nicht.%
+%
+\item<4-> Ohne sie können wir nicht ausdrücken, dass eine Person beliebig viele IDs eines ID-Typs haben kann aber das jede ID zu genau einem ID-Typ gehört.%
+%
+\item<5-> Wir machen große Schritte in die Richtung, echte Realwelt-Szenarios modellieren zu können.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
