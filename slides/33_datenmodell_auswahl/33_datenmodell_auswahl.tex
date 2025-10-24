@@ -1,0 +1,157 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{33.~Auswahl des Datenmodells}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}[t]%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item Zwischen dem Entwurf des konzeputellen Schemas und dem Entwurf des logischen Schemas müssen wir ein \emph{Datenmodell} für unsere \glslink{db}{Datenbank} auswählen\cite{SS2005EIDDDFDB:I}.%
+\end{itemize}%
+%
+\uncover<2->{%
+\begin{definition*}[Datenmodell]%
+Das \emph{Datenmodell}~\inEN{data model} spezifiziert die Notation und Sprache zum Definieren von Datentypen und um auf die Datenbank zuzugreifen und diese zu verändern.%
+\end{definition*}%
+%
+\uncover<3->{%
+\begin{itemize}%
+\item Es gibt viele wichtige Datenmodelle.%
+\item<4-> Hier schauen wir uns einige davon an.%
+\end{itemize}%
+}}%
+%
+\end{frame}%
+%
+\section{Datenmodelle}%
+%
+\begin{frame}%
+\frametitle{Flache Unverbundene Tabellen}%
+\begin{itemize}%
+\item Wir könnten unsere Daten als einzelne oder nur schwach verbundene Tabellen darstellen.%
+%
+\item<2-> Diese könnten in Formaten wie Comma-Separated Values~(\glsShort{CSV})\cite{RFC4180} oder in den Dateiformaten von \microsoftExcel\cite{B2023DMWME,G2024ECRFMME,LF2022MOSBSO2AM3} oder \libreofficeCalc\cite{S2022L7PFEUU,DF2024LTDF} gespeichert werden.%
+%
+\item<3-> Diese Formate können tausende gleich-strukturierte Datensätze speichern und Berechnungen auf diesen ausführen.%
+%
+\item<4-> Sie sind ungeeignet, wenn Datensätze verschiedener Typen in Beziehung stehen und Einschränkungen auf diese Beziehungen oder die Daten festgelegt werden.%
+%
+\item<5-> Sie sind auch nicht wirklich geeignet in Szenarios wo mehrere Benutzer am selben Dokument arbeiten.%%
+%
+\item<6-> Für unser Lehre-Management-System sind sie also nicht geeignet.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Hierarchische Dokumente für Unverbundene Daten}%
+\begin{itemize}%
+\item Eine andere Möglichkeit sind hierarchisch strukturierte einzelne Dokumente, in Formation wie \glsFull{XML}\cite{BPSMM2008EMLX1FE,K2019ITXJY,CH2013XFCAMLTMC}, \glsFull{JSON}\cite{E2017SE4TJDIS,RFC8259} oder \glsFull{YAML}\cite{DNMAASBE2021YAMLYV1,K2019ITXJY,CGTYB2022YFFDCAIE}.%
+%
+\item<2-> Diese Formate können tausende Datensätze speichern, die entweder gleich oder verschiedenartig strukturiert sind.%
+%
+\item<3-> Sie sind ungeeignet, wenn Datensätze von verschiedenen Typen in Beziehungen stehen und Einschränkungen für die Beziehungen gelten.%
+%
+\item<4-> Sie sind auch nicht gut geeignet, wenn mehrere Benutzer gleichzeitig an den selben Daten arbeiten.%
+%
+\item<5-> Es gibt aber \glsShort{OSS} software wie \href{https://basex.org}{BaseX}\cite{GHS2010B,G2006PXMMDTTL} die Datenbankfunktionalität in dieses Gebiet bring.%
+%
+\item<6-> Trotzdem sind solche Formate für unser System ungeeignet.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Hierarchische Datenbanken}%
+\begin{itemize}%
+\item In der frühen Entwicklung des Gebiets der Datenbanken entstanden hierarchische Datenbanken wie IMS\cite{KLBGNLWBS2012ITIYCGTIIMS,BBP2007TBOI,KC2024DS:ITD}.%
+%
+\item<2-> Diese bieten die Vorteile der hierarchischen Dokumente mit der Fähigkeit von gleichzeitigem Zugriff.%
+%
+\item<3-> Die hierarchische Struktur erzeugt aber Redundanz\only<-3>{.}\uncover<4->{:}%
+%
+\item<4-> Wenn ein Professor zwei Kurse unterrichtet, dann werden die Daten des Professors zweimal gespeichert.%
+%
+\item<5-> Im Grunde ist dieser Ansatz zu Datenbanken veraltet.%
+%
+\item<6-> Es gibt aber noch open source hierarchische \glsShort{dbms}e wie \DEzB\ MUMPS\cite{O2008TMPL,O2025TMPL}.%
+%
+\item<7-> Der hierarchische Schlüssel-Wert-Speicher YottaDB ist auch eine Implementierung von MUMPS\cite{B2018THALOMMATFOY}.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Netzwerkdatenmodell}%
+\begin{itemize}%
+\item Ein weiterer historischer Ansatz ist das Netzwerkdatenmodell, das aus IDS\cite{B2009TOOTIDSITFDAD,B1965SFRAP,H2016HCBITDAFOODW} und CODASYL\cite{TF1976CDBMS} entstand.%
+%
+\item<2-> Auch heute gibt es noch CODASYL-\ und COBOL-basierte \glsShort{dbms}e\cite{O2022OCDDARM}.%
+%
+\item<3-> Diese Systeme werden oft als schwer zu bedienen angesehen.%
+%
+\item<4-> Wie bei hierarchischen Datenbanken kann man diese Systeme als veraltet betrachten.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Schlüssel-Wert Speicher}%
+\begin{itemize}%
+\item Ein weiteres Datenmodell sind Schlüssel-Wert-Speicher~\inEN{key-value stores}.%
+%
+\item<2-> Diese sind im Grunde Schema-los und geeignet, wenn die Daten eine Schlüssel-Wert-Struktur haben.%
+%
+\item<3-> Für unsere Lehre-Management-Plattform erscheinen sie ungeeignet.%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}%
+\frametitle{Relationales Datenmodell}%
+\begin{itemize}%
+\item Der Fokus unseres Kurses ist auf dem \glslink{rdb}{relationalen} Datenmodell, das \citeauthor{C1970ARMODFLSDB}\cite{C1970ARMODFLSDB} erfunden hat, und der Sprache \sql.%
+%
+\item<2-> Dieses Modell passt zu sehr vielen Anwendungsfällen.%
+%
+\item<3-> Wenn Sie Ihre Daten in einem der vorhin genannten Modelle ausdrücken können, dann können Sie es wahrscheinlich auch mit dem relationalen Modell.%
+%
+\item<4-> Im Vergleich zu den vorhin genannten Modellen gibt es einfach unendlich viel mehr open source oder kommerzielle relationale \glsShort{dbms}e.%
+%
+\item<5-> In diesen werden Entitäten als Relationen beschrieben und in Tabellen in der Datenbank gespeichert.%
+%
+\item<6-> Wie wir bereits ausprobiert haben, können Tabellen in Beziehungen stehen und Einschränkungen können sicherstellen, dass die Beziehungen zwischen ihnen konsistent bleiben.%
+%
+\item<7-> Die meisten unserer Entitätstypen können wahrscheinlich einfach in zweidimensionale Tabellen abgebildet werden.%
+%
+\item<8-> Die meisten unserer Attribute sind einfach.%
+%
+\item<9-> Die Beziehungen in den Diagrammen können wahrscheinlich direkt in Fremdschlüssel oder zusätzliche Tabellen überführt werden.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Wir entscheiden uns, unsere Lehre-Management-Plattform im \emph{relationalen Datenmodell} zu implementieren.%
+\item<2-> Und dieses Datenmodell schauen wir uns im Folgenden genauer an.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%

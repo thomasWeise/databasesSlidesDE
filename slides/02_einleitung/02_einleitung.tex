@@ -75,7 +75,7 @@
 \frametitle{Hierarchische Daten}%
 \begin{itemize}%
 \item Dann gibt es hierarchische Datenstrukturen.%
-\item<2-> Dafür gibt es Formate wie \glsreset{XML}\pgls{XML}\cite{BPSMM2008EMLX1FE,K2019ITXJY,CH2013XFCAMLTMC}\uncover<4->{, \glsreset{JSON}\pgls{JSON}\cite{E2017SE4TJDIS,RFC8259}\uncover<5->{, und \glsreset{YAML}\pgls{YAML}\cite{DNMAASBE2021YAMLYV1,K2019ITXJY,CGTYB2022YFFDCAIE}.}}%
+\item<2-> Dafür gibt es Formate wie \glsFull{XML}\cite{BPSMM2008EMLX1FE,K2019ITXJY,CH2013XFCAMLTMC}\uncover<4->{, \glsFull{JSON}\cite{E2017SE4TJDIS,RFC8259}\uncover<5->{, und \glsFull{YAML}\cite{DNMAASBE2021YAMLYV1,K2019ITXJY,CGTYB2022YFFDCAIE}.}}%
 \end{itemize}%
 %
 \locateGraphicTB{3}{width=0.9\paperwidth}{graphics/typesOfData/xmlexample}{0.05}{0.26}%
@@ -195,17 +195,17 @@ Es verwaltet auch die Zugriffsrechte auf die Datenbanken und Tabellen.%
 \begin{frame}%
 \frametitle{Anforderung: Datenintegrität}%
 \begin{itemize}%
-\item Ein DBMS muss es uns erlauben, Einschränkungen und Beziehungen für Daten zu spezifizieren.%
+\item Ein \glsShort{dbms} muss es uns erlauben, Einschränkungen~\inEN{constraints} und Beziehungen für Daten zu spezifizieren.%
 \item<2-> Vielleicht erlauben wir nur Geburtsdaten zwischen dem 1.~1.~1900 und dem 31.~12.~2020 für alle Studenten und Universitätsmitarbeiter.%
 \item<3-> Vielleicht wollen wir erzwingen, das jeder Universitätsmitarbeiter immer genau einer Fakultät zugeordnet ist.%
-\item<4-> Das DMBS muss es uns ermöglichen, solche Einschränkungen und Beziehungen zu definieren und muss dann dafür sorgen, dass diese immer eingehalten werden.
+\item<4-> Das \glsShort{dbms} muss es uns ermöglichen, solche Einschränkungen und Beziehungen zu definieren und muss dann dafür sorgen, dass diese immer eingehalten werden.
 \end{itemize}%
 \end{frame}%
 %
 \begin{frame}%
 \frametitle{Anforderung: Zugriffkontrolle}%
 \begin{itemize}%
-\item Ein DBMS muss es uns auch erlauben, Regeln für den Datenzugriff zu formulieren.%
+\item Ein \glsShort{dbms} muss es uns auch erlauben, Regeln für den Datenzugriff zu formulieren.%
 \item<2-> Vielleicht speichert unsere Datenbank alle Informationen über unsere Universität und darf von allen Studenten und Mitarbeitern genutzt werden.%
 \item<3-> Das bedeutet aber nicht, dass alle auch auf alle Daten zugreifen können.%
 \item<4-> Und nur weil jemand bestimmte Daten auslesen darf, bedeutet das noch nicht, dass sie diese Daten auch verändern darf.%
@@ -215,10 +215,10 @@ Es verwaltet auch die Zugriffsrechte auf die Datenbanken und Tabellen.%
 \begin{frame}%
 \frametitle{Anforderung: Gleichzeitiger Zugriff}%
 \begin{itemize}%
-\item Ein DBMS muss es mehreren Personen und Applikationen ermöglichen, gleichzeitig auf die Daten zuzugreifen.%
+\item Ein \glsShort{dbms} muss es mehreren Personen und Applikationen ermöglichen, gleichzeitig auf die Daten zuzugreifen.%
 \item<2-> Es muss verhindern, dass die Datenintegrität verletzt wird, wenn gleichzeitig mehrere Personen die Daten verändern.%
 \item<3-> Manche Datenbanken sind so große, dass sie über mehrere Computer in einem Cluster verteilt werden müssen.%
-\item<4-> Das DBMS muss dann die Datenintegrität über alle Datenbankteile hinweg sicherstellen.%
+\item<4-> Das \glsShort{dbms} muss dann die Datenintegrität über alle Datenbankteile hinweg sicherstellen.%
 \end{itemize}%
 \end{frame}%
 %
@@ -245,7 +245,7 @@ Datenbankadministratoren~(DBAs) sind die Person oder Gruppe von Personen, die f�
 \item Nun haben wir also eine grobe Idee, was Datenbanken sind.%
 \item<2-> In den nächsten Vorlesungen, schauen wir uns an, welche Anforderungen wir genau an Datenbanken haben.%
 \item<3-> Wir schauen uns die Geschichte von Datenbanken an.%
-\item<4-> Wir schauen uns an, welche DBMSes es so gibt.%
+\item<4-> Wir schauen uns an, welche \glsShort{dbms}e es so gibt.%
 \item<5-> Und dann legen wir richtig los.%
 \end{itemize}%
 \end{frame}%

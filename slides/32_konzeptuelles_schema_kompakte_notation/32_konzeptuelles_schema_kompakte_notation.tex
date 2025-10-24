@@ -1,0 +1,947 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{32.~Konzeptuelles Schema:~Kompakte Notation}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}[t]%
+\frametitle{Einleitung}%
+\uncover<2->{%
+\begin{itemize}%
+\item Wir können zwei generelle Schlussfolgerungen über die Notation, die wir zum Modellieren verwenden, von diesem Diagramm ziehen\only<-2>{.}\uncover<3->{:%
+\begin{enumerate}%
+\item Wir können damit Situationen aus der wirklichen Welt modellieren.%
+\item<4-> Unsere Syntax verbraucht viel Platz.%
+\end{enumerate}%
+}%
+%
+\item<5-> Wenn wir viele Attribute haben, werden die vielen Ellipsen schwer zu lesen.%
+%
+\item<6-> Wenn wir viele Beziehungen haben, dann verbrauchen die Rauten~\inEN{diamonds} viel Platz.%
+%
+\item<7-> Es gibt aber eine Methode, um (fast) die selbe Information platzsparender auszudrücken\only<-7>{.}\uncover<8->{:}%
+%
+\item<8-> Wir können \glsShort{UML} Klassendiagramme\cite{OMG2017OUMLOU,RMHOSMUUIIIIOPPTRS1997UNG,BRJ1999TUMLRM,F2003UDABGTTSOML} mit der Krähenfußnotation verbinden.%
+%
+\item<9-> Das ist eine Methode, die in vielen Werkzeugen verwendet wird.%
+%
+\item<10-> Und wir verwenden sie hier.%
+\end{itemize}}%
+%
+\locateGraphic{-1}{width=0.6\paperwidth}{graphics/erdPersonStudentFaculty2}{0.2}{0.03}%
+\locateGraphic{2-4}{width=0.4\paperwidth}{graphics/erdPersonStudentFaculty2}{0.57}{0.3}%
+\end{frame}%
+%
+\section{Beispiel: Messaging System}%
+%
+\begin{frame}%
+\frametitle{Messaging System}%
+\begin{itemize}%
+\item Ein Feature, das sowohl Lehrer als auch Studenten gerne in unserem System haben wollten, war ein \emph{Messaging System}.%
+%
+\item<2-> Lehrer wollen eine Möglichkeit, Studenten nachweisbar und nachvollziehbar über Anforderungen, Probleme, Aufgaben, und Erinnerungen zu informieren\only<-2>{.}\uncover<3->{:~\emph{\inQuotes{Sie haben Ihre Hausaufgaben jetzt zum zweiten Mal in Folge vergessen. Wenn das wieder vorkommt, muss ich Ihnen 10 Punkte von der Endnote abziehen!}}}%
+%
+\item<4-> Studenten wollen es auch, aus genau dem selben Grund -- um Lehrer über Probleme nachweisbar informieren zu können\only<-4>{.}\uncover<5->{~\emph{\inQuotes{Ich will die Hausaufgaben ja gerne machen, aber die \glsShort{formatPDF}-Datei, die Sie zum Download anbieten, ist beschädigt und lässt sich nicht öffnen. Können Sie die nochmal hochladen?}}}%
+%
+\item<6-> Es ist besser, wenn solche Nachrichten in unserem System beweisbar und nachvollziehbar gespeichert sind.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Messaging System: ERD}%
+%
+\locateGraphic{}{width=0.6\paperwidth}{graphics/erdMessage1}{0.266}{0.02}%
+%
+\locate{2-}{\parbox{0.91\paperwidth}{%
+\begin{itemize}%
+\only<-9>{%
+\item So sieht das Messaging System in der neuen, kompakten Notation aus.%
+}%
+%
+\only<-11>{%
+\item<3-> Entitätstypen werden immer noch als Rechtecke gezeichnet.%
+}%
+%
+\only<-11>{%
+\item<4-> In der Zeile oben im Rechteck wird der name des Entitätstyps geschrieben.%
+}%
+%
+\only<-12>{%
+\item<5-> Im zweiten Teil des Rechtecks wird die Liste von Attributen geschrieben.%
+}%
+%
+\only<-13>{%
+\item<6-> In unserem Model ist \emph{Person} ein starker Entitätstyp.%
+}%
+%
+\only<-14>{%
+\item<7-> Der neue Entitätstyp \emph{Message} ist auch eine starke Entität.%
+}%
+%
+\only<-15>{%
+\item<8-> Er hat drei Attribute\only<-8>{.}\uncover<9->{: \emph{Subject}, also den Titel der Nachricht\only<-9>{.}\uncover<10->{, \emph{Body}, also den Text der Nachricht\only<-10>{.}\uncover<11->{und \emph{When}, also Datum und Uhrzeit als die Nachricht abgeschickt wurde.}}}%
+}%
+%
+\only<-16>{%
+\item<12-> Beziehungen werden hier als einfache Linien dargestellt, die Entitätstypen direkt verbinden.%
+}%
+%
+\only<-17>{%
+\item<13-> Die Rauten werden nicht mehr verwendet, stattdessen werden die Beziehungsnamen direkt als Labels an die Linien geschrieben.%
+}%
+%
+\only<-18>{%
+\item<14-> Kardinalitäten und Modalitäten werden mit der Krähenfußnotation ausgedrückt.%
+}%
+%
+\only<-19>{%
+\item<15-> Jede Nachricht hat genau eine Person als Sender.%
+}%
+%
+\item<16-> Jede Person kann Sender beliebig vieler Nachrichten sein.%
+%
+\item<17-> Jede Nachricht hat mindestens einen aber möglicherweise auch mehrere Personen als Empfänger~\inEN{receiver}.%
+%
+\item<18-> Jede Person kann Empfänger keiner, einer, oder mehrerer Nachrichten sein.%
+%
+\item<19-> Jede Nachricht kann die Antwort~\inEN{answer} auf entweder keine oder genau eine vorherige Nachricht sein.%
+%
+\item<20-> Es kann beliebig viele Antworten auf eine Nachricht geben.%
+\end{itemize}%
+}}{0.03}{0.5}%
+\end{frame}%
+%
+\section{Starke und Schwache Beziehungen}%
+%
+\begin{frame}[t]%
+\frametitle{Starke und Schwache Beziehungen}%
+%
+\only<-7>{%
+\begin{itemize}%
+%
+\item Wir haben ursprünglich über schwache und starke Entitäten gesprochen, die wir mit normalen oder doppelten Rechtecken dargestellt haben.%
+%
+\item<2-> Nun können Beziehungen schwach~\inEN{weak} oder stark~\inEN{strong} sein\cite{P2024C6DS:EM}.%
+%
+\end{itemize}%
+}%
+%
+\uncover<3->{%
+\begin{definition*}[Identifizierende Beziehung]%
+Eine \emph{identifizierende} (starke) Beziehung ist mit mindestens einer schwachen Entität verbunden und ist notwendig um diese Entität zu identifizieren.%
+\end{definition*}%
+%
+\uncover<4->{%
+\begin{itemize}%
+\only<-9>{%
+\item Normalerweise verbindet eine starke Beziehung eine starke Entität mit einer schwachen Entität.%
+\item<5-> Die schwache Entität kann ohne die starke Entität nicht existieren.%
+}%
+\item<6-> Der Primärschlüssel der starken Entität ist teil des Schlüssels der schwachen Entität.%
+\item<7-> Starke Beziehungen werden durch durchgezogene Linien dargestellt.%
+\end{itemize}%
+%
+\uncover<8->{%
+%
+\begin{definition*}[Nicht-Identifizierende Beziehung]%
+Eine \emph{nicht-identifizierende}~(schwache) Beziehung wird nicht benötigt, um eine Entität zu identifizieren.%
+\end{definition*}%
+%
+\uncover<9->{%
+\begin{itemize}%
+\item Beispiele dafür sind Beziehungen, die zwei starke Entitäten verbinden.%
+\item<10-> Aber auch schwachte Entitäten können mit schwachen Beziehungen verbunden sein~(so lange diese Beziehungen nicht benötigt werden, um die Entitäten zu identifizieren.)%
+\end{itemize}%
+%
+}}}}%
+\end{frame}%
+%
+\section{Beispiele}%
+%
+%
+\begin{frame}%
+\frametitle{Raum-Management System}%
+%
+\locateGraphic{}{width=0.6\paperwidth}{graphics/erdRoom1}{0.2}{0.02}%
+%
+\locate{2-}{\parbox{0.91\paperwidth}{%
+\begin{itemize}%
+\only<-6>{%
+\item Wir entwickeln nun ein Raum-Management System für unserer Lehre-Management-Plattform.%
+}%
+%
+\only<-7>{%
+\item<3-> Kurse finden in Räumen statt, also müssen wir wissen, welche Räume existieren, wo sie sind, und welche Features sie haben.%
+}%
+%
+\only<-8>{%
+\item<4-> In unserem Modell sind Gebäude starke Entitäten.%
+}%
+%
+\only<-9>{%
+\item<5-> Sie können einen Namen~(wie \DEzB 合肥大学综合实验楼 haben) und eine Nummer~(wie \DEzB~53).%
+}%
+%
+\only<-10>{%
+\item<6-> Wir können auch eine Adresse speichern.%
+}%
+%
+\only<-11>{%
+\item<7-> Das muss jetzt keine so komplizierte Adresse wie bei Personen sein.%
+}%
+%
+\only<-12>{%
+\item<8-> Vielleicht würde man hier einfach die Kampusse unterscheiden, \DEzB\ 南一区 und 南二区 oder andere nützliche Information hinschreiben.%
+}%
+%
+\only<-13>{%
+\item<9-> Räume existieren in Gebäuden und niemals ohne Gebäude, deshalb sind sie schwache Entitäten.%
+}%
+%
+\only<-14>{%
+\item<10-> Sie haben eine Nummer und vielleicht einen Namen.%
+}%
+%
+\only<-14>{%
+\item<11-> Jeder Raum hat eine Kapazität für Studenten.%
+}%
+%
+\only<-15>{%
+\item<12-> Räume sie mit Gebäuden über identifizierende Beziehungen.%
+}%
+%
+\only<-15>{%
+\item<13-> Ein Raum muss in genau einem Gebäude sein und jedes Gebäude besteht aus mindestens einem Raum~(sonst brauchen wir es ja nicht in der Datenbank zu speichern).%
+}%
+%
+\only<-17>{%
+\item<14-> Räume sind auch über nicht-identifizierende Beziehungen mit Fakultäten~\inEN{schools} verbunden.%
+}%
+%
+\only<-19>{%
+\item<15-> Einer Fakultät ist es erlaubt, keinen, einen, oder mehrere Räume zum Lehren zu verwenden.%
+}%
+%
+\only<-20>{%
+\item<16-> Jeder Raum ist mindestens einer Fakultät zugeordnet -- sonst brauchen wir ihn nicht in der Datenbank zu speichern.%
+}%
+%
+\only<-21>{%
+\item<17-> Wir können erwarten, dass verschiedene Lehrmodule verschiedene Anforderungen an Räume haben.%
+}%
+%
+\only<-22>{%
+\item<18-> Für normales Lehren reicht wahrscheinlich ein Beamer~\inEN{overhead projector} aus.%
+}%
+%
+\only<-23>{%
+\item<19-> Wir könnten annehmen, dass das immer so ist.%
+}%
+%
+\only<-24>{%
+\item<20-> In einer Informatik-Lab-Einheiten brauchen wir aber einen Computer pro Tisch.%
+}%
+%
+\only<-25>{%
+\item<21-> Für Chemie-Experimentier-Einheiten braucht man einen Rauchabzug und irgendeine Vorrichtung für chemische Abfälle.%
+}%
+%
+\item<22-> Um solche Dinge zu modellieren, erstellen wir den starken Entitätstyp \emph{Room Feature}, der einfach nur einen erklärenden Namen speichert.%
+%
+\item<23-> Räume sind über nicht-identifizierende Beziehungen mit solchen Features verbunden.%
+%
+\item<24-> Jeder Raum kann kein, ein, oder viele solche Features haben.%
+%
+\item<25-> Jedes Raumfeature kann von keinem, einem, oder vielen Räumen bereitgestellt werden.%
+%
+\item<26-> Gleichzeitig können Lehrmodule beliebig viele Raumfeatures erfordern.%
+%
+\item<27-> Ein Raumfeature kann von beliebig vielen Raummodulen erfordert werden.%
+\end{itemize}%
+}}{0.03}{0.5}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Interessante Situation}%
+\begin{itemize}%
+%
+\only<-10>{%
+\item Halt.%
+}%
+%
+\only<-11>{%
+\item<2-> Plötzlich bemerken wir etwas interessantes.%
+}%
+%
+\only<-12>{%
+\item<3-> Wir haben gesagt:~\emph{\inQuotes{Ein Raum muss in genau einem Gebäude sein und jedes Gebäude besteht aus mindestens einem Raum.}}
+}%
+%
+\only<-13>{%
+\item<4-> Das ist ein interessanter Satz, weil er fast ein philosophisches Problem darstellt.%
+}%
+%
+\only<-14>{%
+\item<5-> Wenn wir diesen Satz aus technischer Sicht anschauen -- welche hier noch nicht wichtig ist -- dann macht er uns nachdenklich.%
+}%
+%
+\only<-15>{%
+\item<6-> Was wir hier haben ist ein \crowsFoot{Building}{M1}{Room}{MM}~Schema.%
+}%
+%
+\only<-16>{%
+\item<7-> Wir haben schon mehrere solcher Schemas gesehen.%
+}%
+%
+\only<-16>{%
+\item<8-> Wir sind noch nicht an der Stelle angekommen, wo wir ein Datenmodell und ein \glsShort{dbms} auswählen müssen.%
+}%
+%
+\only<-16>{%
+\item<9-> Aber egal welches Datenmodell wir wählen, wir werden gezwungen sein, die Datenstruktur \emph{Room} zu instantiieren um einen Raum in unserer \glsShort{db} zu repräsentieren.%
+}%
+%
+\only<-18>{%
+\item<10-> Wenn wir der formalen Definition oben folgen, dann brauchen wir dafür eine existierende Entität vom Typ \emph{Building}.%
+}%
+%
+\only<-18>{%
+\item<11-> Jeder Raum muss mit einem Gebäude verbunden sein.%
+}%
+%
+\only<-18>{%
+\item<12-> Daher müssen wir \emph{Building} instantiieren und dann können wir einen \emph{Room} instantiieren.%
+}%
+%
+\only<-18>{%
+\item<13-> Das geht aber nicht.%
+}%
+%
+\only<-18>{%
+\item<14-> Wenn wir das \glsShort{ERD} streng interpretieren, dann haben wir das Problem, dass jedes Gebäude mit mindestens einem Raum verbunden seien muss.%
+}%
+%
+\only<-19>{%
+\item<15-> Das bedeutet also, dass wir \emph{zuerst} einen \emph{Room} erzeugen müssen, bevor wir ein \emph{Building} erstellen können.%
+}%
+%
+\only<-20>{%
+\item<16-> Dieses philosophische Dilemma kann auf drei Arten gelöst werden.%
+}%
+%
+\only<-20>{%
+\item<17-> Zuerst könnten wir uns hinstellen und sagen:~\emph{\inQuotes{%
+Nun. Das konzeptuelle Modell repräsentiert die reale Welt. %
+In der realen Welt existiert jeder Raum in einem Gebäude und jedes Gebäude hat mindestens einen Raum. %
+Das ist wahr und das modellieren wir hier. %
+Ob man das praktisch implementieren kann oder nicht, spielt an dieser Stelle keine Rolle.}}%
+}%
+%
+\only<-23>{%
+\item<18-> Und das ist auch richtig, denn konzeptuelles Modellieren soll Technologieunabhängig sein.%
+}%
+%
+\only<-24>{%
+\item<19-> Zweitens könnten wir sagen:~\emph{\inQuotes{%
+Wenn es nicht anders geht, dann werden wir auf technischer Ebene einfach nicht erzwingen, dass jedes Gebäude mindestens einen Raum hat. %
+Wir wissen, dass die Benutzer Raum-Datensätze dann später erstellen werden. %
+Wir akzeptieren einfach, dass einen temporären Zustand der Datenbank gibt, wo diese gegenseitige Abhängigkeit verletzt wird. %
+Es wäre ja nur für eine kurze Zeit, zwischen dem Moment, wo der Gebäudedatensatz und dem Moment wo der erste Raumdatensatz erstellt wird. %
+We just accept that there may be a temporary state of the \db\ where one of the mutual dependency constraints is violated. %
+Das spielt keine Rolle.}}%
+}%
+%
+\only<-28>{%
+\item<20-> Die dritte Lösung ist, dass wir das tatsächlich so implementieren, wie es spezifiziert ist.%
+}%
+%
+\only<-29>{%
+\item<21-> Die meisten \glsShort{dbms}e unterstützen nämlich \emph{Transactionen}, also Gruppen von Befehlen die als eine unteilbare~\inEN{atomic} Einheit ausgeführt werden und entweder zusammen erfolgreich sind oder zusammen fehlschlagen.%
+}%
+%
+\only<-30>{%
+\item<22-> Es gibt keinen Zwischenzustand, weil Transactionen unteilbar sind.%
+}%
+%
+\only<-30>{%
+\item<23-> Wir könnten also erzwingen, dass beim Erstellen eines Gebäudes auch der erste Raum im Gebäue gleich miterstellt wird.%
+}%
+%
+\only<-31>{%
+\item<24-> Das wäre eine unteilbare Transaktion.%
+}%
+%
+\item<25-> Dann können wir die konzeptuelle Einschränkung auf eine logische~/~technische Einschränkung abgebildet.%
+%
+\item<26-> Wir würden dafür mit komplizierteren Operationen bezahlen, weil wir dann eben wirklich Transaktionen brauchen.%
+%
+\item<27-> \postgresql\ erlaubt es uns, das Überprüfen von Einschränkungen auf das Ende von Transaktionen zu verschieben\cite{PGDG:PD:SC:SC,N2016SSFA:DC}.%
+%
+\item<28-> Wir werden später lernen, dass wir sogar eine \postgresql-spezifische \glsShort{SQL}-Erweiterung benutzen können, um dieses Problem zu lösen.%
+%
+\item<29-> Egal.%
+%
+\item<30-> Der Punkt ist, dass konzeptuelle Beziehungen die schwierig technisch realisierbar erscheinen existieren können.%
+%
+\item<31-> Wir werden später sehen, dass wir alle (binären) Beziehungsmodelle, die wir mit der Krähenfußnotation darstellen können, auch in einem relationalen \glsShort{dbms} implementiert werden können.%
+%
+\item<32-> Ob das immer sinnvoll ist (es kann kompliziert werden) oder nicht, das soll uns her nicht interessieren.%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Bigger Picture, Part~2}%
+%
+\parbox{0.51\paperwidth}{\small{%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Wir re-designen nun die Interaktionen zwischen Studenten, Studiengängen, Mitarbeitern, und Modulen.%
+}%
+%
+\only<-6>{%
+\item<2-> Bevor wir unsere ursprünglichen Pläne für diese Systeme entwickelten, hatten wir mit den Stakeholders in der Uni diskutiert.%
+}%
+%
+\only<-8>{%
+\item<3-> Wir hatten gelernt, dass einige der Fähigkeiten der Lehrer an ihre Position gebunden sind, \DEzB\ welche Module sie unterrichten dürfen, und andere an ihre Person, \DEzB\ ob sie Masterarbeiten beaufsichtigen können.%
+}%
+%
+\only<-9>{%
+\item<4-> So hatten wir das ja auch modelliert.%
+}%
+%
+\only<-10>{%
+\item<5-> Es gibt auch zwei verschiedene Arten, wie Lehrer und Studenten interagieren können\only<-5>{.}\uncover<6->{:}%
+}%
+%
+\only<-11>{%
+\item<6-> Studenten können sich in Klassen von Professoren einschreiben und Professoren können MSc-\ und BSc-Arbeiten betreuen.%
+}%
+%
+\only<-12>{%
+\item<7-> Wir hätten also zwei Mengen von Interaktionen die von zwei verschiedenen Formen von Qualifikationen auf Seiten der Lehrer abhängen.%
+}%
+%
+\only<-13>{%
+\item<8-> Solche Situation sind immer schlecht.%
+}%
+%
+\only<-14>{%
+\item<9-> Sie machen unsere Modelle kompliziert.%
+}%
+%
+\only<-15>{%
+\item<10-> Sie riechen förmlich nach Redundanz.%
+}%
+%
+\only<-15>{%
+\item<11-> Wir haben also die Idee, beide Interaktionen zu vereinigen.%
+}%
+%
+\only<-16>{%
+\item<12-> Es ist klar, dass nicht alle Lehre alle Arten von Modulen unterrichten können.%
+}%
+%
+\only<-18>{%
+\item<13-> Vielleicht erlaubt unsere Universität nur Professoren, die Kernmodule eines Studiengangs zu unterichten, während jüngere Vorlesende Wahlfächer machen dürfen.%
+}%
+%
+\only<-19>{%
+\item<14-> Das kann man darstellen, in dem man Positions-Typen und Modul-Typen in Beziehung setzt.%
+}%
+%
+\only<-20>{%
+\item<15-> Es kann aber auch sein, dass manche Module bestimmte Zertifikate voraussetzen, vielleicht Chemnie-Sicherheits-Zertifikate oder so etwas.%
+}%
+%
+\only<-21>{%
+\item<16-> Das passt dann nicht so gut zu unserem Modell, weil \inQuotes{Chemie-Sicherheits-Zertifiziert} ist keine Position.%
+}%
+%
+\only<-22>{%
+\item<17-> Das selbe gilt für \inQuotes{Master-Betreuer}.%
+}%
+%
+\only<-23>{%
+\item<18-> Warum eigentlich nicht?%
+}%
+%
+\only<-23>{%
+\item<19-> Wir wäre es damit, wenn wir erlauben, dass eine Person mehrere Positionen gleichzeitig haben kann.%
+}%
+%
+\only<-24>{%
+\item<20-> Wir haben ja schon die traditionellen laufbahnbezogenen Positionen modelliert.%
+}%
+%
+\only<-25>{%
+\item<21-> Zusätzlich könnten wir Positionstypen wie \inQuotes{Chemie-Sicherheits-Zertifiziert} und \inQuotes{Master-Betreuer} und was auch immer wir brauchen einführen.%
+}%
+%
+\only<-26>{%
+\item<22-> Das Positionen durch Start- und Enddatum limitert sind ist kein Problem.%
+}%
+%
+\only<-27>{%
+\item<23-> Das ist genau das Feature, was wir sowieso wollen.%
+}%
+%
+\only<-28>{%
+\item<24-> Wenn wir unsere \emph{Position} und \emph{Position Type} Entitätstypen so verwenden, dann könnten wir auch andere Funktionen Dekan, Vizedekan für Lehre, Teamleiter, usw.\ ebenfalls mit abdecken.%
+}%
+%
+\only<-29>{%
+\item<25-> Diese Positionen könnten dann auch verwendet werden, um zu entscheiden, welche Daten eine Person ändern kann.%
+}%
+%
+\only<-30>{%
+\item<26-> Zurück zur Beziehung zwischen Lehre und Position.%
+}%
+%
+\only<-32>{%
+\item<27-> Jede \emph{Module Type}-Entität kann nun mit einer oder mehreren \emph{Position Type} Entitäten verbunden sein, die ein Lehrer haben muss, um sie zu unterrichten.%
+}%
+%
+\only<-33>{%
+\item<28-> Jeder Positionstyp kann die Voraussetzung zum Lehren beliebig vieler Modultypen sein.%
+}%
+%
+\only<-33>{%
+\item<29-> Dieser Ansatz funktioniert, weil MSc- und BSc-Projekte im Grunde nur Module sind, die zu besondere Modultypen gehören.%
+}%
+%
+\only<-35>{%
+\item<30-> Sie sind automatisch durch dieses System mit abgedeckt.%
+}%
+%
+\only<-36>{%
+\item<31-> Eine Fakultät unserer Universität kann verschiedene Studiengänge~\inEN{curricula} anbieten, \DEzB\ einen Master of Computer Science oder einen Bachelor of Engineering in Computer Science.%
+}%
+%
+\only<-36>{%
+\item<32-> Ursprünglich nahmen wir an, dass jeder Studiengang aus verschiedenen Modulen besteht und jedes Modul in einem bestimmten Semester des Studiengangs stattfindet.%
+}%
+%
+\only<-38>{%
+\item<33-> Wir stellen fest, dass das zu zwei Problemen führt\only<-33>{.}\uncover<34->{:}%
+}%
+%
+\only<-38>{%
+\item<34-> Erstens haben wir manchmal Wahlmodule, also Situationen, wo ein Student eine oder zwei Module aus einer Menge von drei oder vier Modulen auswählen muss.%
+}%
+%
+\only<-40>{%
+\item<35-> Zweitens kann es für einen Studiengang verschiedene Vertiefungsrichtungen geben.%
+}%
+%
+\only<-41>{%
+\item<36-> Ein Master in Computer Science könnte \DEzB\ die Vertiefungsrichtungen \glsFull{AI}, \glslink{db}{Datenbanken} und Computer Security anbieten.%
+}%
+%
+\only<-42>{%
+\item<37-> Jede Vertifungsrichtung kann (rekursiv) eigene andere Pflicht- und Wahlfächer anbieten.%
+}%
+%
+\only<-43>{%
+\item<38-> Wir versuchen das zu modellieren, in dem wir den Entitätstyp \emph{Component} einführen.%
+}%
+%
+\only<-44>{%
+\item<39-> Ein Studiengang besteht aus mindestens einer Komponente~\inEN{component} und jede Komponente gehört zu genau einem Studiengang.%
+}%
+%
+\only<-44>{%
+\item<40-> Eine Komponente kann ist Unter-Komponente von höchstens einer~(=~von einer oder von keiner) anderen Komponente.%
+}%
+%
+\only<-46>{%
+\item<41-> Jede Komponente kann eine beliebige Anzahl von Unter-Komponenten haben.%
+}%
+%
+\only<-47>{%
+\item<42-> Jede Komponente hat einen Namen und eine Menge von Semester-Indizies in denen sie stattfindet~(\DEzB\ im 7.\ und 8.\ Semester).%
+}%
+%
+\only<-48>{%
+\item<43-> Ein Modul kann nun in einer oder mehreren solcher Komponenten angeboten werden.%
+}%
+%
+\only<-49>{%
+\item<44-> Jede Komponente kann ein oder mehrere Module anbieten.%
+}%
+%
+\only<-52>{%
+\item<45-> Jede Komponente kann eine Zahl definierten, die festlegt wie viele ihrer angebotenen Module/Komponenten ein Student abschließen muss.%
+}%
+%
+\only<-54>{%
+\item<46-> \only<-53>{Wir könnten nun sagen das\only<-46>{\dots}}\uncover<47->{\only<-53>{:~}%
+\emph{\inQuotes{%
+Unter den Komponenten des Master of Computer Science Studiengangs gibt es die Komponente \inQuotes{Vertiefungsrichtung}.\only<48->{ %
+Diese beinhaltet wiederum die Komponenten \inQuotes{\glsShort{AI}}, \inQuotes{\glslink{db}{Datenbanken}} und \inQuotes{Computer Security}.\only<49->{ %
+Ein Student muss genau eine solche Komponente abschließen.\only<50->{ %
+In der Vertiefungsrichtung \inQuotes{\glslink{db}{Datenbanken}} wird das Pflichtfach \inQuotes{Databases} angeboten.\only<51->{ %
+Ebenso die Komponente \inQuotes{Wahlfächer}.\only<52->{ %
+Beide müssen von Studenten abgeschlossen werden.\only<53->{ %
+Die Komponente \inQuotes{Wahlfächer} bietet die Module \inQuotes{\postgresql,} \inQuotes{Systems Security} und \inQuotes{Datenbankdesign}, von denen zwei abgeschlossen werden müssen.%
+}}}}}}}}}%
+}%
+%
+\only<-59>{%
+\item<54-> OK, das sieht nicht sehr schön aus, aber es erlaubt uns, komplizierte Situationen in der Datenbank darzustellen.%
+}%
+%
+\only<-60>{%
+\item<55-> Das bringt uns auch zum Entitätstyp \emph{Module}.%
+}%
+%
+\only<-61>{%
+\item<56-> Module müssen von mindestens einer Komponente angeboten werden, denn sonst sind sie nutzlos.%
+}%
+%
+\only<-62>{%
+\item<57-> Sie gehören auch zu einem Modultyp, der sie zurück zu den Positions-bezogenen Qualifikationen der Lehrer verlinkt.%
+}%
+%
+\only<-63>{%
+\item<58-> Jedes Modul hat einen Namen, eine Anzahl Credits und eine Anzahl von Lehrstunden.%
+}%
+%
+\only<-63>{%
+\item<59-> Manche Module, wie Praktika und externe praktische Trainingseinheiten haben stattdessen Wochen als dauer.%
+}%
+%
+\only<-64>{%
+\item<60-> Module haben auch ein Inhaltsvereichnis, eine Zusammenfassung, und andere Informationen, die wir hier weglassen.%
+}%
+%
+\only<-65>{%
+\item<61-> Module bilden das Grundgerüst vom Lehrinhalt, der angeboten wird.%
+}%
+%
+\only<-66>{%
+\item<62-> Sie gehören zu bestimmten Semestern, gezählt vom Beginn eines Studiengangs.%
+}%
+%
+\only<-68>{%
+\item<63-> Eine Fakultät kann einen bestimmten Studiengang instantiieren und eine Entität vom Typ \emph{Curriculum Instance} erstellen.%
+}%
+%
+\only<-69>{%
+\item<64-> Diese Instanz ist immer mit einem Startsemester verbunden, \DEzB\ dem  Winter Semester 2025 oder vielleicht dem maybe dem Summer Semester 2026.%
+}%
+%
+\only<-70>{%
+\item<65-> Wir behalten den Entitätstyp \emph{Semester} aus diesem Grund.%
+}%
+%
+\only<-71>{%
+\item<66-> Er beinhaltet alle notwendigen Informationen eines Semesters, \DEzB\ die Zeitperiode, wie von der Uni definiert.%
+}%
+%
+\only<-72>{%
+\item<67-> In jedem Semester kann ein Mitarbeiter keinen, einen, oder mehrere Kurse~\inEN{classes} anbieten.%
+}%
+%
+\only<-73>{%
+\item<68-> Jeder Kurs ist eine Instanz eines Moduls.%
+}%
+%
+\only<-74>{%
+\item<69-> Jedes Modul kann beliebig oft als Kurs angeboten werden, vielleicht sogar mehrfach im selben Semester.%
+}%
+%
+\only<-75>{%
+\item<70-> Wir behandeln auch die Master- und Bachelor-Projekte als Module.%
+}%
+%
+\only<-76>{%
+\item<71-> Sie beginnen in einem Semester, aber es sagt ja niemand, das sie da auch enden müssen.%
+}%
+%
+\only<-77>{%
+\item<72-> Unser System kann nun leicht prüfen, ob ein Lehrer die notwendigen Qualifikationen hat, um einen Kurs anzubieten.%
+}%
+%
+\only<-78>{%
+\item<73-> Die Kurse werden natürlich von der Administration der Fakultäten eingegeben.%
+}%
+%
+\only<-79>{%
+\item<74-> Ein Student kann sich in einen Kurs einschreiben.%
+}%
+%
+\only<-80>{%
+\item<75-> Kurse und Einschreibungen~\inEN{enrollments} sind schwachte Entitäten.%
+}%
+%
+\only<-80>{%
+\item<76-> Jede Einschreibung ist mit genau einem Studenten verbunden.%
+}%
+%
+\only<-81>{%
+\item<77-> Ein Student kann mit beliebig vielen Einschreibungen verbunden sein.%
+}%
+%
+\only<-82>{%
+\item<78-> Der Einschreibungsdatensatz wird später um Informationen wie die Abschlussnote, ob der Student bestanden hat, und ggf.\ weitere Erklärungen ergänzt.%
+}%
+%
+\only<-83>{%
+\item<79-> Jeder Student ist in genau einen Studiengang eingeschrieben.%
+}%
+%
+\item<80-> Beliebig viele Studenten können in einen Studiengang eingeschrieben sein.%
+%
+\item<81-> Ok, vielleicht werden wir das begrenzen {\dots} jetzt nehmen wir erstmal an, dass die Administration der Fakultäten die Studenten in die Datenbank einpflegt und weiß was sie macht.%
+%
+\item<82-> Unsere Plattform kann nun Studenten automatisch in Kurse einschreiben, die sie nehmen müssen.%
+%
+\item<83-> Es kann ja den Studiengang sehen, zu dme die Studenten gehören, weiß welche Module Pflicht sind, und kann die Studenten dann automatisch eintragen, wenn es keine Auswahlmöglichkeit gibt.%
+%
+\item<84-> Basierend auf den angebotenen Kursen kann es ihnen auch Wahlmöglichkeiten über das Web-Portal anbieten.%
+\end{itemize}%
+}}%
+%
+\locateGraphic{2-}{width=0.415\paperwidth}{graphics/erdModules1b}{0.57}{0.05}%
+%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Deliverable System}%
+%
+\locateGraphic{2-}{width=0.58\paperwidth}{graphics/erdDeliverables1}{0.33}{0.02}%
+%
+\locate{}{\parbox{0.91\paperwidth}{%
+\begin{itemize}%
+\only<-4>{%
+\item Ein weiteres Subsystem unserer Plattform kümmert sich um die zu liefernden Leistungen~\inEN{deliverables}.%
+}%
+%
+\only<-6>{%
+\item<3-> Es gibt verschiedene Arten von Deliverables, \DEZB\ schriftliche Prüfungen, mündliche Prüfungen, Midterm-Prüfungen, Hausaufgaben, Praktikumsberichte, und Abschlussarbeiten.%
+}%
+%
+\only<-7>{%
+\item<4-> Jeder Modultyp kann eine beliebige Anzahl von Deliverable-Typen \emph{erfordern}.%
+}%
+%
+\only<-8>{%
+\item<5-> Jede Modultyp kann eine beliebige Anzahl von Deliverable-Typen \emph{erlauben}.%
+}%
+%
+\only<-9>{%
+\item<6-> Um Platz zu sparen, haben wir diese beiden Beziehungen als eine modelliert.%
+}%
+%
+\only<-9>{%
+\item<7-> Wir haben bereits festgelegt, das Kurse zu Modulen und Module zu Modultypen gehören.%
+}%
+%
+\only<-10>{%
+\item<8-> Aus den Beziehungen von Deliverable-Typen und Modultypen können wir ableiten, welche Deliverable-Typen für einen Kurs zulässig/erfordert sind.%
+}%
+%
+\only<-12>{%
+\item<9-> Für ein Master's-Projekt könnte eine MSc-These ein erfordertes Deliverable sein.%
+}%
+%
+\only<-13>{%
+\item<10-> Für einen Kurs \inQuotes{Datenbanken} könnte ein schriftliches Examen erforderlich und ein Midterm-Exam und Hausaufgaben erlaubt sein.%
+}%
+%
+\only<-14>{%
+\item<11-> Der entsprechende Lehrer wird dann eine (schwache) \emph{Deliverable} Entität erstellen, die einen Namen und eine Beschreibung hat.%
+}%
+%
+\only<-15>{%
+\item<12-> Jeder Student wird dann eine entsprechende Einreichung für das Deliverable machen.%
+}%
+%
+\only<-16>{%
+\item<13-> Diese Einreichungen werden nicht über unsere Plattform laufen.%
+}%
+%
+\only<-17>{%
+\item<14-> Sie werden von den Studenten dem Lehrer übergeben.%
+}%
+%
+\only<-18>{%
+\item<15-> Der Lehrer bewertet sie und erstellt ein entsprechende (schwache) \emph{Submission} Entitäten -- eine pro Student -- im System.%
+}%
+%
+\only<-19>{%
+\item<16-> Diese schwache Entität enthält das Ergebnis des Studenten und vielleicht ein Kommentar vom Lehrer.%
+}%
+%
+\item<17-> So kann der Lehrer Prüfungsergebnise, Midterm-Ergebnisse, usw.\ hochladen.%
+%
+\item<18-> Die Studenten sehen diese dann im Onlinesystem.%
+%
+\item<19-> Wir haben hier nur ein Attribut \emph{Score} hingeschrieben, aber wir können uns auch weitere Attribute wie \emph{Pass/Fail} vorstellen, die hier Sinn ergeben.%
+\end{itemize}%
+}}{0.03}{0.6}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Lehre-Management-System}%
+\locateGraphic{}{width=0.75\paperwidth}{graphics/erdPlatform1b}{0.05}{0.08}%
+%
+\locate{}{\parbox{0.36\paperwidth}{\small{%
+\begin{itemize}%
+\item Das sind alle Elemente des konzeptuellen Schemas unserer Plattform.%
+\item<2-> Das Model ist immer noch nicht sehr fortgeschritten.%
+\item<3-> Aber wir haben schon ein paar gute Features.%
+\item<4-> Es sieht schonmal benutzbar aus.%
+\end{itemize}%
+}}}{0.6}{0.475}%
+\end{frame}%
+%
+\section{Nur Einfügen}%
+%
+\begin{frame}[t]%
+\frametitle{Nur Einfügen}%
+%
+\only<-7>{%
+\begin{itemize}%
+\item Wir haben das vorher nicht explitiz gesagt, aber unser Model für eine Lehre-Plattform folgt dem Prinzip einer \inQuotes{Nur Einfügen Datenbank}~\inEN{Insert-Only Database}\cite{P2014ACIIMDMTIMOIMD:IO}\only<-1>{.}\uncover<2->{:}%
+\end{itemize}%
+}%
+%
+\only<2-10>{%
+\bestPractice{immutableData}{%
+In vielen Anwendungen wo historische Informationen bewahrt werden müssen, dürfen die Daten in der Datenbank niemals verändert oder gelöscht werden.\uncover<3->{ %
+Änderungen in der realen Welt werden stattdessen durch Anfügen von Daten an die Datenbank reflektiert.}}}%
+%
+\uncover<4->{%
+\begin{itemize}%
+\only<-15>{%
+\item Aus der \glsShort{SQL}-Perspektive würde man sagen, dass die Operationen \sqlil{UPDATE} und \sqlil{DELETE} dann nicht verwendet werden dürfen.%
+}\only<-16>{%
+\item<5-> Stattdessen werden nur neue Datensätze mit \sqlil{INSERT INTO} angehängt.%
+}\only<-17>{%
+\item<6-> Und in unserer Situation wollen wir natürlich alle Daten über die Vergangenheit bewahren.%
+}\only<-17>{%
+\item<7-> Ein Studiengang besteht \DEzB\ aus Modulen.%
+}\only<-18>{%
+\item<8-> Wir hätten das so modellieren können, das jedes Modul genau einem Lehrer zugewiesen ist.%
+}\only<-19>{%
+\item<9-> Wenn dieser Lehrer seinen Arbeitsplatz wechselt und ein anderer Lehrer übernimmt, dann könnten wir die Zuweisung des Moduls einfach ändern.%
+}\only<-20>{%
+\item<10-> Das wäre viel einfacher als unser aktuelles Modell.%
+}\only<-20>{%
+\item<11-> Aber es hätte einen entscheidenten Nachteil\only<-11>{.}\uncover<12->{:}%
+}\only<-21>{%
+\item<12-> Es wäre nicht mehr möglich, festzustellen, welcher Lehrer das Modul früher unterrichtet hat.%
+}\only<-23>{%
+\item<13-> Deshalb sind wir einen anderen Weg gegangen\only<-13>{.}\uncover<14->{:}%
+}\only<-23>{%
+\item<14-> Anstatt Module direkt Lehrern zuzuweisen, erstellen wir Instanzen von Modulen~(die \emph{Class} Entities), welche dann an Semester und Lehrer gebunden sind.%
+}%
+\item<15-> Diese Zuweisungen ändern sich nie.%
+\item<16-> Jedes Semester werden neue Class-Datensätze eingefügt.%
+\item<17-> Wir wissen immer, wer welchen Kurs wann unterrichtet hat.%
+\item<18-> Unsere Datenbank wird schrittweise wachsen und Änderungen entsprechen neuen Datensätzen und nicht Veränderungen existierender Datensätze.%
+\item<19-> Wenn ein Modul von einem neuen Professor übernommen wird, dann gibt es neue Class-Datensätze.%
+\item<20-> Aus diesem Grund hat der \emph{Address}-Entitätstyp auch die Attribute \emph{Valid From} und \emph{Valid To}.%
+\item<21-> Wenn sich die Addresse eines Studenten oder Mitarbeiters ändert, dann erstellen wir einen neuen Datensatz, setzen \emph{Valid From} auf jetzt, und \emph{Valid To} auf \sqlil{NULL}.%
+\item<22-> Wir können dann gestern als \emph{Valid To}-Wert für die alte Addresse speichern.%
+\item<23-> Genauso funktioniert das für die \emph{Personal ID} und \emph{Person Name} Entitätstypen.%
+\item<24-> Unsere Administratoren können daher immer sehen, welche Adresse, ID, oder Namen eine Person zu einem beliebigen Zeitpunkt hatte.%
+\end{itemize}}%
+\end{frame}%
+%
+\section{Schwachstellen}%
+%
+\begin{frame}%
+\frametitle{Schwachstellen}%
+\begin{itemize}%
+\only<-10>{%
+\item Das konzeptuelle Modell unseres Systems hat auch noch ein paar Schwachstellen.%
+}\only<-11>{%
+\item<2-> Wahrscheinlich gibt es mehr oganisatorische Ebenen in einer Uni als nur Fakultäten.%
+}\only<-12>{%
+\item<3-> Eine Fakultät kann sicherlich in Departments und Departments in Teams unterteilt werden.%
+}\only<-13>{%
+\item<4-> Außerdem sollten wir wohl Zeitstempel und Notizen an die meisten Datensätze mit anhängen, um nachvollziehen zu können, wann sie erstellt wurden.%
+}\only<-14>{%
+\item<5-> Diese Technik nennt man \pgls{timestamping} -- und wir haben das nicht mit modelliert.%
+}\only<-15>{%
+\item<6-> Wir haben auch das Rechtemanagement nicht mit modelliert.%
+}\only<-16>{%
+\item<7-> Wir brauchen wahrscheinlich eine Tabelle, um zu managen, wer Studenten in einen Studiengang einpflegen kann, wer neue Module erstellen darf, usw.%
+}\only<-17>{%
+\item<8-> Vielleicht kann man das auch über die \emph{Position}-Entitäten managen, die wir schon designed haben.%
+}\only<-18>{%
+\item<9-> Das wäre wohl eine gute Idee.%
+}%
+\item<10-> Vielleicht wollen wir auch eine Tabelle, um einen Audit-Trail\cite{K2010ATTDCID} zu erzeugen.%
+\item<11-> Diese Tabelle würde speichern, welcher Benutzer welchen Record zu welcher Zeit erstellt oder verändert hat.%
+%
+\item<12-> In unserer \emph{Address} sind Länder und Provinzen einfache Attribute.%
+\item<13-> Wir könnten wahrscheinlich einen weiteren Entitätstyp haben, der Länder und Länder-Teile~(wie Provinzen) basierend auf dem ISO~3166 Standard\cite{ISO3166,HD2025IISC} speichert, vielleicht sogar mit weiteren Informationen wir Telefonnumer-Vorwahl.%
+\item<14-> Jede Adresse könnte zu so einer Entität verlinkt sein.%
+%
+\item<15-> Jetzt lassen wir das aber erstmal weg.%
+\item<16-> Das ist hier ja nur ein Kurs und kein echtes Systemdesign.%
+\item<17-> Irgendwann müssen wir ja aufhören, um die Vorlesung nicht zu lange zu machen.%
+\item<18-> Das System sieht jetzt halbwegs vernünftig aus und unser Ziel ist nun ein logisches Modell zu erstellen.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung~(1)}%
+\begin{itemize}%
+\item Wir können nun wirklich fast beliebig komplexe Systeme auf konzeptueller Ebene modellieren.%
+%
+\item<2-> Wir können Entitätstypen, Beziehungstypen, Kardinalitäten, Modalitäten, usw.\ modellieren.%
+%
+\item<3-> Wir können eine kompakte Notation verwenden, mit der wir leicht zehn Entitätstypen in ein \glsShort{ERD} packen können, ohne die Lesbarkeit zu beeinträchtigen.%
+%
+\item<4-> In Sachen konzeptueller Modellierung habe wir jetzt alle Werkzeuge, die wir brauchen.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung~(2)}%
+\begin{itemize}%
+\item An diesem Punkt beenden wir also unsere spannede Reise in die wundersame Welt der konzeptuellen Modellierung.%
+%
+\item<2-> Dieser wichtige Schritt in der Datenbankentwicklung ist der Übergang von der Anforderungsanalyse hin zur Systemimplementierung.%
+%
+\item<3-> Wir haben die funktionalen Anforderungen in ein halb-formales Modell überführt.%
+%
+\item<4-> Wir können es immer noch mit den Stakeholders besprechen und verbessern.%
+%
+\item<5-> Konzeptuelle Modelle sind abstrakt.%
+%
+\item<6-> Sie sind nicht an eine bestimmte \glslink{db}{Datenbank}-Technologie gebunden und brauche auch noch nicht mal dem relationalen Modell zu gehorchen.%
+%
+\item<7-> Stattdessen stellen sie den Teil der Welt dar, der für unser System relevant ist -- und zwar so klar wie möglich.%
+%
+\item<8-> Das gibt uns viel Freiheit.%
+%
+\item<9-> Wir können Dinge viel natürlicher modellieren, ohne uns viele Gedanken über die praktische Implementierung zu machen.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%

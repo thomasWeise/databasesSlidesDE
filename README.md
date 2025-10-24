@@ -23,10 +23,20 @@ Sie sollten in der Lage sein, das gewaltige Ökosystem verschiedener Datenbankma
 ## 2. Ressourcen
 Die Webseite mit aktuellen Informationen über den Kurs ist <https://thomasweise.github.io/databases>.
 
+
 ### 2.1. Das Buch
 Das Kursbuch, in englischer Sprache geschrieben, findet such unter <https://thomasweise.github.io/databases/databases.pdf>.
 
-### 2.2. Die Slides in Deutsch
+
+### 2.2. Fragen und Übungen / Questions and Exercises
+Bei <https://thomasweise.github.io/databasesQuestions/databasesQuestions.pdf> stellen wir eine Liste von Fragen und Übungen zur Verfügung, die Sie verwenden können, um Ihre Datenbanken-Fähigkeiten zu testen.
+Die Fragen sind sowohl in Englisch als auch in Deutsch geschrieben.
+
+At <https://thomasweise.github.io/databasesQuestions/databasesQuestions.pdf>, we provide a list of questions and exercises that you can use to test your knowledge on databases.
+The questions are both in English and German language.
+
+
+### 2.3. Die Slides in Deutsch
 Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.github.io/databasesSlidesDE> gefunden werden und sind hier aufgelistet:
 
 1. [Organisation](https://thomasweise.github.io/databasesSlidesDE/01_organisation.pdf)
@@ -60,13 +70,16 @@ Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.gith
 29. [Konzeptuelles Schema: Beziehungen](https://thomasweise.github.io/databasesSlidesDE/29_konzeptuelles_schema_beziehungen.pdf)
 30. [Konzeptuelles Schema: Schwache Entitäten](https://thomasweise.github.io/databasesSlidesDE/30_konzeptuelles_schema_schwache_entitäten.pdf)
 31. [Konzeptuelles Schema: Beziehungskardinalität](https://thomasweise.github.io/databasesSlidesDE/31_konzeptuelles_schema_beziehungskardinalität.pdf)
+32. [Konzeptuelles Schema: Kompakte Notation](https://thomasweise.github.io/databasesSlidesDE/32_konzeptuelles_schema_kompakte_notation.pdf)
+33. [Auswahl des Datemodells](https://thomasweise.github.io/databasesSlidesDE/33_datenmodell_auswahl.pdf)
 
-### 2.3. Die Beispiele
+
+### 2.4. Die Beispiele
 Unser Kurs bietet sehr viele Beispiele.
 Sie können diese unter <https://github.com/thomasWeise/databasesCode> finde.
 
 
-### 2.4. LaTeX Quelltexte, Grafiken, die Bibliographie, etc.
+### 2.5. LaTeX Quelltexte, Grafiken, die Bibliographie, etc.
 Das Buch und die Slides zu diesem Kurs sind in LaTeX geschrieben.
 Sie können die Quelldateien unter <https://github.com/thomasWeise/databases>, <https://github.com/thomasWeise/databasesSlidesDE>, und <https://github.com/thomasWeise/databasesSlides> finden.
 Sie können diese unter der untenstehenden Lizenz nutzen.
