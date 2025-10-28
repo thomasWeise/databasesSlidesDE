@@ -41,8 +41,8 @@
 \frametitle{Daten}%
 \begin{itemize}%
 \item Daten sind überall.%
-\item<2-> Names, Adressen, Bankkonten und -transaktionen,  Onlineeinkäufe, Zugtickets, Mobiltelefonnummern, \pgls{wechat}-Chats, Webseiten, Bücker, Gebrauchsanleitungen, Programmquelltexte, Karten, Schulnoten, Untersuchungsergebnisse und medizinische Historien, Steuerdaten, berufliche Werdegänge, Spielergebnisse{\dots}\uncover<3->{ Alles sind Daten.}%
-\item<4-> Data sing vielleicht die wichtigste Ressource unseres digitalen Zeitalters.%
+\item<2-> Name, Adressen, Bankkonten und -transaktionen,  Onlineeinkäufe, Zugtickets, Mobiltelefonnummern, \pgls{wechat}-Chats, Webseiten, Bücher, Gebrauchsanleitungen, Programmquelltexte, Karten, Schulnoten, Untersuchungsergebnisse und medizinische Historien, Steuerdaten, berufliche Werdegänge, Spielergebnisse{\dots}\uncover<3->{ Alles sind Daten.}%
+\item<4-> Daten sind vielleicht die wichtigste Ressource unseres digitalen Zeitalters.%
 \item<5-> Daten müssen gespeichert werden, sortiert, wiedergefunden, gesichert, zusammengefasst, erneuert, und verwaltet werden.%
 \item<6-> Es gibt ganz verschiedene Arten von Daten.
 \end{itemize}%
@@ -129,20 +129,20 @@
 \end{itemize}%
 %
 \uncover<6->{\begin{definition*}[Datenbank]%
-Eine \emph{Datenbank}~(DB) ist eine Kollektion von  in gegenseiter Beziehung stehenden Daten, die in einem Computer gespeichert sind, potentiell viele verschiedene Typen haben können, und auf die viele Nutzern und Applikationen gleichzeitig zugreifen können.%
+Eine \emph{Datenbank}~(\glsShort{db}) ist eine Kollektion von  in gegenseiter Beziehung stehenden Daten, die in einem Computer gespeichert sind, potentiell viele verschiedene Typen haben können, und auf die viele Nutzern und Applikationen gleichzeitig zugreifen können.%
 \end{definition*}}%
 \end{frame}%
 %
 \begin{frame}%
 \frametitle{Datenbanken}
 \begin{itemize}%
-\item Es gibt viele verschiedene Datenbanken.%
-\item<2-> Datenbanken für Dokumente\uncover<3->{, für geographische Daten\uncover<4->{, für komplexe Objecte, usw.}}%
+\item Es gibt viele verschiedene \glslink{db}{Datenbanken}.%
+\item<2-> Datenbanken für Dokumente\uncover<3->{, für geographische Daten\uncover<4->{, für komplexe Objekte, usw.}}%
 \item<5-> Wir fokussieren uns auf Daten, die in (mehreren) Tabellen gespeichert werden, die in festen logischen Beziehungen (Relationen) zu einander stehen.
 \end{itemize}%
 %
 \uncover<6->{\begin{definition*}[Relationale Datenbank]%
-Eine relationale Datenbank~(RDB) ist eine Datenbank, die Daten in Zeilen~(Rows, Tupel, Datensätze, Records) und Spalten~(Columns, Attribute) organisiert, die zusammen Tabellen~(Relationen) bilden wobei die Datenpunkte zu einander in Beziehungen stehen\cite{I2021WIARDB,C1970ARMODFLSDB,SC1975OTPOARADI,T2018ISARD}.%
+Eine relationale Datenbank~(\glsShort{rdb}) ist eine Datenbank, die Daten in Zeilen~(Rows, Tupel, Datensätze, Records) und Spalten~(Columns, Attribute) organisiert, die zusammen Tabellen~(Relationen) bilden wobei die Datenpunkte zu einander in Beziehungen stehen\cite{I2021WIARDB,C1970ARMODFLSDB,SC1975OTPOARADI,T2018ISARD}.%
 \end{definition*}%
 %
 \uncover<7->{\begin{definition*}[Datensatz]%
@@ -151,7 +151,7 @@ Ein Datensatz~(Record) ist eine Gruppe von zusammenhängenden Datenelementen die
 \end{frame}%
 %
 \begin{frame}%
-\frametitle{Relational Data}%
+\frametitle{Relational Daten}%
 \begin{itemize}%
 \item Ein Studenten-Datensatz könnte \DEzB\ den Namen des Studenten/in speichern, seinen/ihren Geburtstag, die Ausweisnummer, und die Mobiltelefonnummer.%
 \item<2-> Datensätze sind die grundlegende Einheit von Daten, die in einer Datenbank gespeichert werden.%
@@ -170,7 +170,7 @@ Ein Datensatz~(Record) ist eine Gruppe von zusammenhängenden Datenelementen die
 \end{itemize}%
 \uncover<2->{%%
 \begin{definition*}[Datenbankmanagementsystem]%
-Ein Datenbankmanagementsystem~(DBMS) ist ein Softwaresystem um mit Daten arbeiten zu können.
+Ein Datenbankmanagementsystem~(\glsShort{dbms}) ist ein Softwaresystem um mit Daten arbeiten zu können.
 Es bietet die Möglichkeit, Datenbanken, Tabellen, und Datensätze zu erstellen, zu speichern, zu verändern, und zu löschen.
 Es verwaltet auch die Zugriffsrechte auf die Datenbanken und Tabellen.%
 \end{definition*}%
@@ -217,7 +217,7 @@ Es verwaltet auch die Zugriffsrechte auf die Datenbanken und Tabellen.%
 \begin{itemize}%
 \item Ein \glsShort{dbms} muss es mehreren Personen und Applikationen ermöglichen, gleichzeitig auf die Daten zuzugreifen.%
 \item<2-> Es muss verhindern, dass die Datenintegrität verletzt wird, wenn gleichzeitig mehrere Personen die Daten verändern.%
-\item<3-> Manche Datenbanken sind so große, dass sie über mehrere Computer in einem Cluster verteilt werden müssen.%
+\item<3-> Manche Datenbanken sind so groß, dass sie über mehrere Computer in einem Cluster verteilt werden müssen.%
 \item<4-> Das \glsShort{dbms} muss dann die Datenintegrität über alle Datenbankteile hinweg sicherstellen.%
 \end{itemize}%
 \end{frame}%
@@ -229,7 +229,7 @@ Es verwaltet auch die Zugriffsrechte auf die Datenbanken und Tabellen.%
 \end{itemize}%
 \uncover<2->{%
 \begin{definition*}[Datenbankadministrator]%
-Datenbankadministratoren~(DBAs) sind die Person oder Gruppe von Personen, die für die effektive Nutzung von Datenbanktechnologien in einer Organisation oder einem Unternehmen zuständig ist.%
+Datenbankadministratoren~(\glsShort{dba}s) sind die Person oder Gruppe von Personen, die für die effektive Nutzung von Datenbanktechnologien in einer Organisation oder einem Unternehmen zuständig ist.%
 \end{definition*}%
 \uncover<3->{%
 \begin{itemize}%

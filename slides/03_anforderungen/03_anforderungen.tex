@@ -22,9 +22,9 @@
 \item Wir haben nun eine ungefähre Idee, was eine Datenbank~(\glsShort{db}) und was ein Datenbankmanagementsystem~(\glsShort{dbms}) sind.%
 \item<2-> Lassen Sie uns nun zusammen erforschen, welche Anforderungen Organisationen haben könnten, die mit DBs bzw.\ DBMSes arbeiten.%
 \item<3-> Wir wollen jetzt also eine Vorstellung von den Features entwickeln, die ein DBMS haben soll und welche wir später nutzen werden.\bigskip%
-\item<3-> Stellen wir uns dafür vor, dass wir eine Datenbank für eine Bank entwickeln wollen.%
-\item<4-> Datenbank soll die Informationen über die Kunden, ihre Konten, und Transaktionen speichern, sowie die Daten über die Angestellten der Bank.%
-\item<5-> Davon ausgehend bauen wir uns eine Wunschliste von Features und Anforderungen zusammen.%
+\item<4-> Stellen wir uns dafür vor, dass wir eine Datenbank für eine Bank entwickeln wollen.%
+\item<5-> Datenbank soll die Informationen über die Kunden, ihre Konten, und Transaktionen speichern, sowie die Daten über die Angestellten der Bank.%
+\item<6-> Davon ausgehend bauen wir uns eine Wunschliste von Features und Anforderungen zusammen.%
 %
 \end{itemize}%
 \end{frame}%
@@ -37,7 +37,7 @@
 \item Zuerst muss uns das DBMS Werkzeuge bieten, mit dem wir ein Modell unserer Daten erstellen und implementieren können.%
 \item<2-> Wenn wir mit einer Programmiersprache wie \python\ programmieren, dann können wir Datenstrukturen erstellen.
 \item<3-> Wir können sagen:~\inQuotes{Das hier ist eine Liste mit Ganzzahlen.}\uncover<4->{ oder \inQuotes{Das hier ist eine Klasse, mit der Informationen über Studenten gespeichert werde. Jede Instanz davon speichert den Namen und die Ausweisnummer eines Studenten.}}%
-\item<4-> Also wir brauchen sowas auch für Datenbanken.%
+\item<5-> Also wir brauchen sowas auch für Datenbanken.%
 \end{itemize}%
 \end{frame}%
 %
@@ -136,7 +136,7 @@
 \item Ein DBMS stellt die Korrektheit under Integrität der Daten sicher.%
 \item<2-> Dies beinhaltet mehrere Aspekte\uncover<3->{%
 \begin{itemize}%
-\item \alert{Konsistenz}:~Das DBMS stellt sicher, dass die modellierten Beziehungen und Einschränkungen für die Daten immer eingehalten werden.\uncover<3->{ Wenn wir festgelegt haben, dass ein Bankkonte immer einem Kunden gehört, dann darf das DBMS nie zulassen, das irgendwie ein Bankkonte entsteht, das nicht einem Kunden gehört.}%
+\item \alert{Konsistenz}:~Das DBMS stellt sicher, dass die modellierten Beziehungen und Einschränkungen für die Daten immer eingehalten werden.\uncover<3->{ Wenn wir festgelegt haben, dass ein Bankkonto immer einem Kunden gehört, dann darf das DBMS nie zulassen, das irgendwie ein Bankkonto entsteht, das nicht einem Kunden gehört.}%
 \item<4-> \alert{Transaktionen}:~Eine Änderung der Daten, die ggf.\ mehrere Schritte erfordert, kann in eine Transaktion gruppiert werden.%
 \item<5-> \alert{Atomizität}:~Eine Transaktion findet entweder vollständig statt~(alle Schritte werden erfolgreich ausgeführt) oder gar nicht~(kein Schritt wird ausgeführt).
 \item<7-> Das DBMS stellt sicher, dass Transaktionen nur ausgeführt werden, wenn die Konsistenz vor und nach der Transaktion eingehalten wird.\uncover<8->{ Wenn wir Geld von einem Bankkonto auf ein anderes transferriern, dann muss es zuerst vom ersten Konto abgezogen werden und dann zum zweiten dazuaddiert werden. Entweder beides wird gemacht oder keines von beiden.}%
