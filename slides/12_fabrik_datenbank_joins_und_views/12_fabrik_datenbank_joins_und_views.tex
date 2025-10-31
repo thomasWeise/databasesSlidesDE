@@ -206,7 +206,7 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \frametitle{Problem mit unserer Anfrage}%
 \begin{itemize}%
 \item Wir brauchen unsere Anfrage also nur als Sicht zu speichern.%
-\item<2-> Als wir das tuen wollen, fällt uns ein Problem auf\only<-2>{.}\uncover<3->{Kundennamen sind nicht notwendigerweise eindeutig~(nicht~\sqlil{UNIQUE}).}%
+\item<2-> Als wir das tuen wollen, fällt uns ein Problem auf\only<-2>{.}\uncover<3->{: Kundennamen sind nicht notwendigerweise eindeutig~(nicht~\sqlil{UNIQUE}).}%
 \item<4-> Wenn wir unsere Anfrage später nutzen wollen, um Verkäufe pro Kunde aufzuaddieren, dann würden alle Verkäufe nach Kundennamen gruppiert und dann summiert.\uncover<5->{ Wenn zwei Kunden den selben Namen haben, werden ihre Bestellungen vermengt.}%
 \item<6-> Mobiltelefonnummern sind aber eindeutig in unserer Datenbank.%
 \item<7-> Als \sqlil{customer_name}, werden wir also \sqlil{customer.name || ', ' || customer.phone} benutzen.%

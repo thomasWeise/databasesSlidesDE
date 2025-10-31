@@ -1,0 +1,402 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{34.~Logisches Schema:~Relationales Datenmodell}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item Die nächste Phase des Datenbankdesigns ist die Transformation eines Entity-Relationship-Modells in ein logisches Schema passend zum selektierten Datenmodell\cite{SS2005EIDDDFDB:SDLDUTRDM}.%
+%
+\item<2-> Wir haben dafür das relationale Datenmodell ausgewählt.%
+%
+\item<3-> In den \glsShort{ERD}s die wir gemalt haben \emph{bevor} wir die kompakte Notation kennengelernt haben, hatten wir drei visuelle Komponenten\only<-3>{.}\uncover<4->{: Entitätstypen (Rechtecke)\only<-4>{.}}\uncover<5->{, Attribute (Ellipsen)\only<-5>{.}}\uncover<6->{, und Beziehungstypen (Rauten).}%
+%
+\item<7-> In der kompaktion Notation verschwanden dann die Beziehungstypen als Elemente und sie wurden zu einfachen geraden Linien.%
+%
+\item<8-> Das hat zwei Gründe\only<-8>{.}\uncover<9->{: Rauten verschwenden Platz\only<-9>{.}\uncover<10->{ und Beziehungen existieren nicht als einzelne Objekte im relationalen Modell.}}%
+%
+\item<11-> Beziehungen werden stattdessen als Fremdschlüssel (also spezielle Attribute) und Einschränkungen realisiert.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\section{Definitionen}%
+%
+\begin{frame}[t]%
+\frametitle{Definitionen}%
+\only<-5>{%
+\begin{itemize}%
+\only<-4>{%
+\item Im Kontext von relationalen Datebanken verwenden wir die selben Definitionen von Attributen und Domänen, die wir bereits diskutiert haben.%
+}%
+%
+\item<2-> Zusätzlich gibt es die folgenden Definitionen\cite{C1970ARMODFLSDB}\only<-2>{.}\uncover<3->{:}%
+\end{itemize}}%
+%
+\uncover<3->{%
+\begin{definition*}[Relationsschema]%
+\sloppy%
+\label{def:relationSchema}%
+Ein \emph{Relationsschema}~\inEN{relation schema}~\gls{relSchema} ist eine geordnete Sequenz von $n$~Attributen~$(a_1, a_2, \dots, a_n)$, also eine Sequenz von Attributnamen und Domänen.%
+\end{definition*}%
+\fussy%
+%
+\uncover<4->{%
+%
+\begin{definition*}[Relation]%
+Eine \emph{Relation}~$R$ ist eine Menge von $n$\nobreakdashes-Tupeln $R\subseteq\attrDomainb{a_1}\times\attrDomainb{a_2}\times\dots\times\attrDomainb{a_n}$ mit der ein Releationsschema~\relSchemab{R} das die Attribute~$(a_1, a_2, \dots, a_n)$ spezifiziert assoziiert ist\cite{SS2005EIDDDFDB:SDWSD2}.%
+\end{definition*}%
+%
+\uncover<5->{%
+\begin{itemize}%
+\item Die Definition eines Relationsschemas im relationalen Modell ist daher in etwa Äquivalent zur Definition eines Entitätstypes im Entitätsmodell.%
+%
+\item<6-> Wenn wir unser konzeptuelles Modell in ein logisches, relationales Modell übersetzen, dann wird ein Entitätstyp zu einem Relationsschema.%
+%
+\item<7.> Der Unterschied zum konzeptuellen Modell ist, dass wir Relationen sowohl für Entitäten als auch Beziehungen benutzen.%
+\end{itemize}%
+}}}%
+\end{frame}%
+%
+%
+\begin{frame}%
+\frametitle{Relationen: Mehr als Tabellen}%
+\begin{itemize}%
+\item Auf den ersten Blick könnte man nun denken \inQuotes{Relationen = Tabellen} in einer Datenbank.%
+%
+\item<2-> Wir könnten denken, das Relationen als Tabellen implementiert werden.%
+%
+\item<3-> Aber das stimmt nur zum Teil\only<-3>{.}\uncover<4->{:}%
+%
+\item<4-> Relationen können auch das Ergebnis von einem \sqlil{SELECT}-Statement in \glsShort{SQL} sein.%
+%
+\item<5-> Relationen können auch die Parameter eines \sqlilIdx{INSERT INTO}-Statements sein.%
+%
+\item<6-> Relationen sind also ein sehr allgemeines Konzept für Daten.%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}%
+\frametitle{Relationen: Mengen}%
+\begin{itemize}%
+%
+\item Beachten Sie, das eine Relation eine \emph{Menge} von Tupeln ist.%
+%
+\item<2-> Weil eine Menge das selbe Element nicht mehrfach enthalten kann, sind Duplikate, also gleiche Tupel~(Zeilen, Datensätze), nicht zulässig\cite{C20245YOQ}.%
+%
+\item<3-> Abweichend davon erlaubt die Sprache \glsShort{SQL} doch Duplikate in Tabellen und Abfrageergebnissen\cite{C20245YOQ}.%
+%
+\item<4-> Mengen sind auch ungeordnet, also gibt es keine Standardordnung für die Tupel in einer Relation.%
+%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}%
+\frametitle{Relationen: Spalten mit Namen, Ungeordnet, Attribute}%
+\begin{itemize}%
+%
+\item Alle Attribute~(Spalten) müssen Namen haben, es gibt also keine anonymen Spalten\cite{S2024D:LDMRMRA}.%
+%
+\item<2-> In den ersten Arbeiten über \glslink{rdb}{relationale Datenbanken}\cite{C1970ARMODFLSDB} war die Reihenfolge von Spalten in einer Relation noch wichtig und es war erlaubt, dass mehrere Spalten die selben Namen haben durften.%
+%
+\item<3-> Das ist heute \alert{nicht mehr so}.%
+%
+\item<4-> Heute ist die Reihenfolge der Spalten egal und jede Spalte einer Tabelle hat einen eindeutigen/einmaligen Namen\cite{S2024D:LDMRMRA}.%
+%
+\item<5-> Die Werte von Attributen sind atomar, also unteilbar.%
+%
+\item<6-> Es gibt keine mehrwertigen oder zusammengesetzten Attribute\cite{S2024D:LDMRMRA,SS2005EIDDDFDB:SDLDUTRDM}.%
+%
+\end{itemize}%
+\end{frame}%
+%
+%
+%
+%
+\begin{frame}%
+\frametitle{Relationen: Spalten mit Namen, Ungeordnet, Attribute}%
+\begin{itemize}%
+\item Der Grad einer Relation wird wie folgt definiert --- verwechseln Sie das nicht mit dem Grad einer Beziehung!%
+\end{itemize}%
+%
+\uncover<2->{%
+\begin{definition*}[Grad einer Relation]%
+Der Grad~\inEN{degree} einer Relation ist die Anzahl~$n$ ihrer Attribute.%
+\end{definition*}%
+%
+\uncover<3->{%
+\begin{itemize}%
+\item Relationen sind der Kern einer relationalen Datenbank.%
+\end{itemize}%
+%
+\uncover<4->{%
+%
+\cquotation{C1970ARMODFLSDB}{%
+The totality of data in a data bank may be viewed as a collection of time-varying relations. %
+These relations are of assorted degrees. %
+As time progresses, each $n$\nobreakdashes-ary relation may be subject to insertion of additional $n$\nobreakdashes-tuples, deletion of existing ones, and alteration of components of any of its existing $n$\nobreakdashes-tuples.}%
+%
+}}}%
+\end{frame}%
+%
+\section{Schlüssel}%
+%
+\begin{frame}[t]%
+\frametitle{Schlüssel}%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Wir haben Schlüssel bereits beim konzeptuellen Modellieren besprochen.%
+%
+\item<2-> Jetzt haben wir gesagt, dass Relationen Mengen von einmaligen Datensätzen sind.%
+}%
+%
+\item<3-> Schlüssel machen diese Datensätze eindeutig bzw.\ einmalig.%
+%
+\item<4-> Schlüssel spielen daher eine wichtige Rolle im relationalen Datenbankdesign.%
+%
+\item<5-> Wir haben schon gelernt, dass ein \emph{Schlüssel(kandidat)} ein minimaler Superschlüssel ist, also eine minimale Menge von Attributen, mit denen eine Entität identifiziert werden kann.%
+%
+\item<6-> Im relationalen Datenmodell kann man das auch so ausdrücken:\cite{SS2005EIDDDFDB:SDLDUTRDM}%
+\end{itemize}%
+%
+\uncover<6->{%
+\begin{definition*}[Schlüssel]%
+\label{def:key2}%
+Eine Menge von Attributen~$K\subseteq\relSchemab{R}$ gegeben als~$K=\{k_i:i\in\intRange{1}{m} \land k_i\in\relSchemab{R}\}$ einer Relation~$R$ ist ein \emph{Schlüssel}, wenn und nur wenn:%
+%
+\begin{enumerate}%
+%
+\item $K$~identifizierend~\inEN{identifying} wirkt: Definieren wir $v_{1,i}$ und~$v_{2,i}$ für alle~$i\in\intRange{1}{m}$ als die Werte der Attribute~$k_i$ für zwei Zeilen~$r_1$ und~$r_2$~in~$R$. Wenn gilt das~$r_1\neq r_2$, dann gibt es mindestens ein~$j\in\intRange{1}{m}$ mit~$v_{1,j}\neq v_{2,j}$. \alert{UND}%
+%
+\item Es gibt keine Untermenge~$\{k_1, \dots, k_m\}$ mit diese Eigenschaft, also der Schlüssel ist minimal.%
+%
+\end{enumerate}%
+\end{definition*}%
+}%
+%
+\end{frame}%
+%
+%
+\begin{frame}%
+\frametitle{Superschlüssel und Primärschlüssel}%
+\begin{itemize}%
+\item Für Superschlüssel~$S$ gilt dann einfach das $K\subseteq S\subseteq\relSchemab{R}$.%
+%
+\item<2-> Jede Relation muss mindestens einen Schlüssel haben, denn die Dateinsätze müssen ja eindeutig / einmalig sein.%
+%
+\item<3-> Einer der Schlüssel wird dann als Primärschlüssel ausgewählt.%
+%
+\item<4-> Wir benutzen oftmals aber einen Ersatzschlüssel~\inEN{surrogate key}, also einen Wert, der automatisch von \glsShort{dbms} für jeden Datensatz generiert wird, als Primärschlüssel.%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}%
+\frametitle{Fremdschlüssel}%
+\begin{itemize}%
+\item Wir wissen auch schon, dass die Datensätze einer Relation Datensätze in anderen Relationen referenzieren können.%
+%
+\item<2-> Das geht über Fremdschlüssel~\inEN{foreign keys}\cite{SS2005EIDDDFDB:SDLDUTRDM}.%
+\end{itemize}%
+%
+\uncover<3->{%
+\begin{definition*}[Fremdschlüssel]%
+\label{def:foreignKey}%
+Eine Menge von Attributen~$F$ im Schema~\relSchemab{R_1} der Relation~$R_1$ wird Fremdschlüssel~\inEN{foreign key} genannt, wenn%
+\begin{enumerate}%
+\item die Attribute von~$F$ die selben Domänen wie die Attribute des Primärschlüssels~$P$ einer anderen Relation~$R_2$ haben \alert{und}%
+\item jeder Wert~$F$ in einem Tupel~$r_1\in R_1$ entweder als Wert von $P$ für ein Tupel~$r_2\in R_2$ auftaucht oder \sqlilIdx{NULL}~ist.%
+\end{enumerate}%
+\end{definition*}%
+%
+\uncover<4->{%
+\begin{itemize}%
+\item Damit haben wir die Definitionen von Schlüssel(kandidaten), Primärschlüsseln, und Fremdschlüsseln aus der konzeptuellen Ebene in die logische Ebene für das relationale Modell gehoben.%
+\end{itemize}}}%
+%
+\end{frame}%
+%
+\section{Relationale Datenbankmanagementsysteme}%
+%
+\begin{frame}%
+\frametitle{Relationale Datenbankmanagementsysteme}%
+\begin{itemize}%
+\item In den 1980ern gab es viele Anbieter von \glsShort{dbms}en, die die Definition des relationalen Datenmodelss von \citeauthor{C1985IYDRR} nicht richtig implementiert hatten.%
+%
+\item<2-> Diese hatten oft Mechaniken eingebaut, mit denen die relationalen Eigenschaften umgehen werden konnten.%
+%
+\item<3-> Als Antwort datauf hat \citeauthor{C1985IYDRR} 13~Regeln definiert, die jedes relationale \glsShort{dbms} einhalten muss\cite{C1985IYDRR,C1986AESFDBMSTACTBR,S2024D:LDMRMRA,SP2002STYSI2D,SPMP1998SI2TDDASVEI12T}.%
+%
+\item<4-> Weil die erste Regel \emph{Rule~0} genannt wird, werden die 13~Regeln auch manchmal als \emph{the twelve rules} bezeichnet.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Die 13 Regeln}%
+\begin{enumerate}%
+%
+%
+\only<-20>{%
+\setcounter{enumi}{-1}%
+\item Ein relationales \glsShort{dbms} muss die Datenbank ausschließlich durch relationale Methoden verwalten.%
+%
+\setcounter{enumi}{0}%
+\item<2-> Alle Informationen in einer relationalen Datenbank wird explizit auf der logischen Ebene und genau auf eine Art repräsentiert:~Als Werte in Tabellen.\only<3-11>{%
+\begin{itemize}%
+\only<-10>{%
+\item Das beinhaltet auch die Namen von Tabellen und Spalten, die Spaltentypen, usw., die auch in Tabellen gespeichert werden müssen.%
+}\only<-11>{%
+\item<4-> Solche speziellen Tabellen speichern die Struktur einer Datenbank und sind normalerweise Teil eines fest eingebauten Systemkatalogs.%
+}%
+\item<5-> Dieser Systemkatalog speicher die Metadaten eines Systems und ist selbst eine (oder ist Teil einer) relationalen Datenbank.%
+%
+\item<6-> Erinnern Sie sich an unsere ersten einfachen Beispiele als wir mit \postgresql\ gerbeitet hatten?%
+%
+\item<7-> Wir hatten ein neues Benutzerkonto namens \sqlil{boss} für unser \glsShort{dbms} erstellt.%
+%
+\item<8-> Als wir die Liste existierender Benutzer geprüft haben, hatten wir \sqlil{SELECT usename FROM pg_catalog.pg_user} geschrieben.%
+%
+\item<9-> \sqlil{pg_catalog.pg_user} ist eine Tabelle im Systemkatalog.%
+%
+\item<10-> Als wir uns mit \libreofficeBase\ auf unsere Datenbank verbunden hatten, haben wir viele komische Tabellen gesehen.%
+%
+\item<11-> Sie gehörten zum Systemkatalog.%
+\end{itemize}}%
+%
+\setcounter{enumi}{1}%
+\item<12-> Jedes Datum in einer relationalen Datenbank muss zugreiffbar sein über eine Kombination von Tabellenname, Primärschlüsselwert, und Spaltenname.%
+%
+\setcounter{enumi}{2}%
+\item<13-> \sqlilIdx{NULL}-Werte werden unterstützt, um fehlende und unpassende Information auf eine systematische Art darstellen zu können, unabhängig vom Datentyp.\only<14-19>{%
+\begin{itemize}%
+\item Diese Regel hat über die Jahre zu vielen Diskussionen geführt\cite{C20245YOQ}.%
+%
+\item<15-> Echte Daten beinhalten unspezifizierten Elemente.%
+%
+\item<16-> Es kann Adressen ohne Hausnummern oder Leute ohne Telefonnummer geben.%
+%
+\item<17-> Also müssen wir mit diesen Situationen umgehen können.%
+%
+\item<18-> Allerdings verletzen undefinierte oder fehlende Werte auch die Definition von Tupeln in Relationen.%
+%
+\item<19-> Wir könnten uns aber zumindest vorstellen, dass jede Domäne jedes Attributs den zusätzlichen Wert~\sqlilIdx{NULL} beinhaltet.%
+\end{itemize}%
+}}%
+%
+\only<-35>{%
+\setcounter{enumi}{3}%
+\item<20-> Die Datenbankbeschreibung wird auf logischer Ebene genau wie normale Daten repräsentiert, so das autorisierte Benutzer mit der selben relationalen Sprache auf sie zugreifen können, die sie auch auf normale Daten anwenden würden.%
+%
+\setcounter{enumi}{4}%
+\item<21-> Ein relationales System muss mindestens eine Sprache unterstützen, deren Statements mit einer wohldefinierten Syntax als Text ausgedrückt werden können\only<-21,30->{.}\only<22-29>{, und die die folgenden Elemente unterstützt:%
+\begin{itemize}%
+\item Daten definieren~(\DEzB\ erstellen von Tabellen),%
+\item<23-> Sichten definieren,%
+\item<24-> Daten manipulieren~(\DEzB\ hinzufügen und löschen von Daten),%
+\item<25-> Einschränkungen definieren, um Datenintegrität sicherzustellen~(\DEzB~Grenzen für Wertebereiche, Fremdschlüssen, \dots),%
+\item<26-> Autorisation~(\DEzB~Benutzermanagement) und%
+\item<27-> Transaktionsgrenzen~(Beginn, Commit, und Rollback).%
+\end{itemize}%
+%
+\uncover<28->{%
+Im falle unseres Kurses ist die Sprache \glsShort{SQL}.\uncover<29->{ %
+Natürlich könnte man sich aber auch eine andere Sprache ausdenken.}}%
+}}%
+%
+\only<-39>{%
+\setcounter{enumi}{5}%
+\item<30-> Alle Sichten, die theoretisch upgedatet werden können, werden auch vom System upgedated.%
+}%
+%
+\only<-41>{%
+\setcounter{enumi}{6}%
+\item<31-> Die Fähigkeit eine Relation als Operand zu benutzen gilt nicht nur für das Auslesen von Daten, sondern auch für das Einfügen, Ändern, oder Löschen von Daten.\only<32>{ %
+Die Operationen gelten also nicht nur für einzelne Datensätze~(Zeilen), sondern können mehrere Zeilen auf einmal bearbeiten, denn ihre Eingabedaten sind auch Relationen~(Tabellen, Ergebnisse von \sqlil{SELECT}, \dots).}%
+}%
+%
+%
+\only<-46>{%
+\setcounter{enumi}{7}%
+\item<33-> Anwendungsprogramme und Terminalaktivitäten bleiben logisch unberührt von allen Veränderungen, die auf die physische Speicher- oder Zugrifssmethode angewendet werden.\only<34>{ %
+Die Art wie ein \glsShort{dbms} Daten speichert hat keinen Anfluss darauf, wie Anwendungen auf die Daten mit Hilfe der text-basierten Sprache zugreifen.%
+}}%
+%
+\setcounter{enumi}{8}%
+\item<35-> Anwendungsprogramme und Terminalaktivitäten bleiben logisch unberührt von allen Veränderungen der zugrundeliegenden Tabellen, die theoretisch ein Unberührtbleiben zulassen.\only<36-38>{%
+\begin{itemize}%
+\item Sagen wir, dass wir eine Tabelle in zwei Tabellen aufteilen und Zeilen auf beide verteilen, wobei wir Spalten und Primärschlüssel unberührt lassen.%
+\item<37-> Wir können eine Sicht entwickeln, die die beiden Tabellen~(mit \sqlilIdx{UNION}) zusammenführt.%
+\item<38-> Eine Applikation, die darauf zugreift, sieht keine Veränderung.%
+\end{itemize}}%
+%
+\setcounter{enumi}{9}%
+\item<39-> Integritäts-Einschränkungen für eine Datenbank müssen in einer Sprache definiert werden können und im Systemkatalog gespeichert werden~(nicht in Anwendungen).\only<40-41>{ %
+Wir haben das mehrmals gemacht, \DEzB\ mit der \sqlilIdx{PRIMARY KEY}-Einschränkung, der \sqlilIdx{REFERENCES}-Einschränkung, und der \sqlilIdx{CHECK}-Einschränkung.\only<41>{ %
+Alle wurden in \glsShort{SQL} definiert.}}%
+%
+\setcounter{enumi}{10}%
+\item<42-> Ein relationales \glsShort{dbms} hat Verteilungs-Unabhängigkeit.\only<43-46>{ %
+\begin{itemize}%
+\item Ein  \glsShort{dbms} \emph{kann} unterstützen, dass Daten über mehere Computer~(Knoten) oder einem Cluster verteilt gespeichert werden.%
+%
+\item<44-> \emph{Wenn} es das unterstützt, dann darf das keinen Einfluss auf die \glsShort{SQL}-Programme haben, die auf es zugreifen.%
+%
+\item<45-> In diesem Fall muss das \glsShort{dbms} die Anfragen auf die entsprechenden Knoten verteilen und die Ergebnisse wieder zusammensetzen.%
+%
+\item<46-> Wenn ein \glsShort{dbms} verteiltes Speichern nicht unterstützt, dann erfüllt es diese Bedingung automatisch.%
+\end{itemize}%
+}%
+%
+\setcounter{enumi}{11}%
+\item<47-> Falls ein relationales \glsShort{dbms} zusätzlich eine low-level Sprache unterstützt, dann darf es nicht möglich sein, damit die Integritätsregeln/Einschränkungen der high-level Sprache~(wie \glsShort{SQL}) zu umgehen.\only<48->{ %
+Ein \glsShort{dbms} muss mindestens eine relationale Sprache unerstützen, aber es kann auch weitere, andere Sprachen unterstützen, vielleicht aus Performancegründen.\only<49->{ Keine der Zugriffsmethoden darf aber die Integrität der relationalen Daten brechen.}}
+%
+\end{enumerate}%
+%
+\uncover<49->{%
+Diese Regeln werden zum größten Teil von modernen \glsShort{dbms}en implementiert.\uncover<50>{\\%
+Aus ihnen können wir auch bereits die Features lernen, die solche \glsShort{dbms}e unterstützen.%
+}}%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Wie haben nun ein gutes Verständnis davon, wie das relationale Datenmodell funktioniert.%
+%
+\item<2-> Wir kennen die grundlegenden Definitionen.%
+%
+\item<3-> Wir können diese Definitionen mit den Definitionen, die wir auf der konzeptuellen Ebene diskutiert haben, gut in Einklang bringen.%
+%
+\item<4-> Wir kennen auch die grundlegenden anforderungen an relationale \glsShort{dbms}e.%
+%
+\item<5-> Wenn wir das mit dem, was wir am Beispiel der Fabrikdatenbank gelernt haben, kombinieren, dann haben wir schon ein recht klares Verständnis davon, was ein relationales \glsShort{dbms} wie \postgresql\ uns bietet.%
+%
+\item<6-> Und wir können uns in etwa vorstellen, wie wir ein konzeptuelles Modell in ein logisches Modell überführen könnten.%
+%
+\item<7-> Und genau das machen wir als nächstes.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%

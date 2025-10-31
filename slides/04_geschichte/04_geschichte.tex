@@ -32,7 +32,7 @@
 \begin{itemize}%
 \item Informationen werden seit sehr langer Zeit gespeichert und verarbeitet.%
 \item<2-> Die treibende Kraft war dabei sicherlich das Verwalten von begrenzten Ressourcen.%
-\item<3-> Einige der ältesten schriftlichen Zeugnisse sind sumerische Buchhaltungs- und Steuerunterlagen auf Lehmtäfelchen mit einem Alter von mehr als 4000 Jaren, also von 2000~\pgls{BCE}.%
+\item<3-> Einige der ältesten schriftlichen Zeugnisse sind sumerische Buchhaltungs- und Steuerunterlagen auf Lehmtäfelchen mit einem Alter von mehr als 4000 Jahren, also von 2000~\pgls{BCE}.%
 \item<9-> Das Sammeln, Analysieren, und Verarbeiten von Informationen hat seitdem nicht aufgehört.%
 \end{itemize}%
 %
@@ -192,8 +192,8 @@ Sumerische Schulübung, Cuneiform tablet no.~10. Zwischen 2200 und 1900~\acrshor
 \begin{frame}%
 \frametitle{Integrated Data Store}%
 \begin{itemize}%
-\item Die erste Version des Integrated Data Store~(IDS) wurde 1961/62 von \citeauthor{B2009TOOTIDSITFDAD} in General Electric entwickelt\cite{B2009TOOTIDSITFDAD,B1965SFRAP}.%
-\item<2-> IDS war die erste Direktzugriffsdatenbank und hielt Daten im virtuellen Speicher.%
+\item Die erste Version des \glsFull{softIDS} wurde 1961/62 von \citeauthor{B2009TOOTIDSITFDAD} in General Electric entwickelt\cite{B2009TOOTIDSITFDAD,B1965SFRAP}.%
+\item<2-> \glsShort{IDS} war die erste Direktzugriffsdatenbank und hielt Daten im virtuellen Speicher.%
 \item<3-> Es war vielleicht sogar das erste echte DBMS überhaupt.%
 \item<4-> \Citeauthor{B2009TOOTIDSITFDAD} hat für seine Arbeit den 1973~A.M.~Turing Award gewonnen\cite{H2016HCBITDAFOODW}.%
 \end{itemize}%
@@ -202,12 +202,12 @@ Sumerische Schulübung, Cuneiform tablet no.~10. Zwischen 2200 und 1900~\acrshor
 \begin{frame}%
 \frametitle{IDS, CODASYL, und COBOL}%
 \begin{itemize}%
-\item IDS strukturiert Daten als ein Netzwerk und kann so komplexe Beziehungen abbilden.%
+\item \glsShort{IDS} strukturiert Daten als ein Netzwerk und kann so komplexe Beziehungen abbilden.%
 \item<2-> Der Programmierer agierte als ein Navigator durch die Daten.%
 \item<3-> Die Idee war, sich Schritt-für-Schritt durch das Netz aus verknüpften Daten zu hangeln und die Daten dabei gegebenenfalls zu ändern.%
 \item<4-> Dieses Netzwerkdatenmodel ist jedoch wesentlich komplexer und auch langsamer als das heute relationale Datenmodell.%
-\item<5-> IDS war also nicht so flexibel.%
-\item<6-> Die Database Task Group der Conference on Data Systems Languages~(CODASYL)\cite{TF1976CDBMS} war eine Standardisierungsgruppe der datenverarbeitenden Industry und übernahm \citeauthor{B2009TOOTIDSITFDAD}'s Ideen hinter dem IDS in den 1960ern.%
+\item<5-> \glsShort{IDS} war also nicht so flexibel.%
+\item<6-> Die Database Task Group der Conference on Data Systems Languages~(CODASYL)\cite{TF1976CDBMS} war eine Standardisierungsgruppe der datenverarbeitenden Industry und übernahm \citeauthor{B2009TOOTIDSITFDAD}'s Ideen hinter dem \glsShort{IDS} in den 1960ern.%
 \item<7-> CODASYL ist heute besonders für die Entwicklung der Programmiersprache COBOL bekannt\cite{H2016HCBITDAFOODW}.%
 \end{itemize}%
 \end{frame}%
@@ -215,23 +215,23 @@ Sumerische Schulübung, Cuneiform tablet no.~10. Zwischen 2200 und 1900~\acrshor
 \begin{frame}%
 \frametitle{Information Management System}%
 \begin{itemize}%
-\item Kurz nach IDS kam ein anderes System auf den Markt, das ebenfalls struturierte Daten speichern konnte.%
-\item<2-> IBM entwickelte das Information Management System~(IMS) für das Apollo Space Program\cite{KLBGNLWBS2012ITIYCGTIIMS}.%
+\item Kurz nach \glsShort{IDS} kam ein anderes System auf den Markt, das ebenfalls struturierte Daten speichern konnte.%
+\item<2-> IBM entwickelte das \glsFull{softIMS} für das Apollo Space Program\cite{KLBGNLWBS2012ITIYCGTIIMS}.%
 \item<3-> Das System wurde ab 1965/1967 produktiv genutzt\cite{BBP2007TBOI}.%
-\item<4-> IMS existiert heute noch als Produkt und wird in einer neueren Version immer noch verkauft.%
+\item<4-> \glsShort{IMS} existiert heute noch als Produkt und wird in einer neueren Version immer noch verkauft.%
 \end{itemize}%
 \end{frame}%
 %
 \begin{frame}%
 \frametitle{Information Management System}%
 \begin{itemize}%
-\item Wie IDS ist auch das IMS kein relationales Datenbankmanagementsystem.%
+\item Wie \glsShort{IDS} ist auch das \glsShort{IMS} kein relationales Datenbankmanagementsystem.%
 \item<2-> Es bot stattdessen hierarchisch strukturierte Datensätze an.%
 \item<3-> Ebenso wie das Netzwerkdatenmodell hat das hierarchische Datenmodell einige Nachteile\cite{KC2024DS:ITD}\uncover<4->{:%
 \begin{itemize}%
 \item Wenn Daten nicht streng hierarchisch strukturiert sind, dann müssen bestimmte Datensätze mehrfach gespeichert werden.%
 \item<5-> In einer Datenbank in der Studenten zu Kursen zugeordnet werden, müssten alle Daten einer Studentin in jedem Datensatz jedes Kurses, den sie besucht, gespeichert werden.%
-\item<6-> Die Programmiersprache, die das IMS zur Verfügung stellt, um den Datenzugriff zu implementieren, ist auch eher low-level.%
+\item<6-> Die Programmiersprache, die das \glsShort{IMS} zur Verfügung stellt, um den Datenzugriff zu implementieren, ist auch eher low-level.%
 \item<7-> So muss zum Beispiel die Strategie, mit der bestimmte Daten gesucht werden, selbst implementiert werden.%
 \item<8-> Und wenn sich das logische Schema der Datenbank ändert, dann führt das zu kaskadierenden Änderungen am Kode der auf die Daten zugreift.%
 \end{itemize}}%
@@ -241,7 +241,7 @@ Sumerische Schulübung, Cuneiform tablet no.~10. Zwischen 2200 und 1900~\acrshor
 \begin{frame}%
 \frametitle{Der Beitrag der Ersten Datenbankmanagementsysteme}%
 \begin{itemize}%
-\item Sowohl IDS als auch IMS haben wichtige Beiträge geleistet.%
+\item Sowohl \glsShort{IDS} als auch \glsShort{IMS} haben wichtige Beiträge geleistet.%
 \item<2-> Beide boten Programmiersprachen an, mit denen auf die Daten zugegriffen werden konnte.%
 \item<3-> Man konnte Typen von Datensätzen definieren und ebenso wie durch die Daten navigiert werden sollte.%
 \item<4-> Man musste sich nicht mehr um die effiziente physische Speicherung kümmern.%
@@ -293,7 +293,7 @@ Sumerische Schulübung, Cuneiform tablet no.~10. Zwischen 2200 und 1900~\acrshor
 \frametitle{Relationale Datenbanken}%
 \begin{itemize}%
 \item Dieses relationale Datenmodell ist einfach und besser zu implementieren.%
-\item<2-> Ende der 1970ern implementieren schon mehr als ein Duzend Datenbankmanagementsysteme diese Konzepte\cite{K1979RDS}.%
+\item<2-> Ende der 1970ern implementieren schon mehr als ein Dutzend Datenbankmanagementsysteme diese Konzepte\cite{K1979RDS}.%
 \item<3-> \Citeauthor{C1970ARMODFLSDB} gewinnt dafür den A.M.~Turing Award.%
 \end{itemize}%
 \end{frame}%

@@ -72,6 +72,7 @@ Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.gith
 31. [Konzeptuelles Schema: Beziehungskardinalität](https://thomasweise.github.io/databasesSlidesDE/31_konzeptuelles_schema_beziehungskardinalität.pdf)
 32. [Konzeptuelles Schema: Kompakte Notation](https://thomasweise.github.io/databasesSlidesDE/32_konzeptuelles_schema_kompakte_notation.pdf)
 33. [Auswahl des Datemodells](https://thomasweise.github.io/databasesSlidesDE/33_datenmodell_auswahl.pdf)
+34. [Logisches Schema: Relationales Datenmodell](https://thomasweise.github.io/databasesSlidesDE/34_logisches_schema_relationales_datenmodell.pdf)
 
 
 ### 2.4. Die Beispiele
