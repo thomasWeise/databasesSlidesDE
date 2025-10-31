@@ -44,7 +44,7 @@ Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.gith
 3. [Anforderungen an ein Datenbankmanagementsystem](https://thomasweise.github.io/databasesSlidesDE/03_anforderungen.pdf)
 4. [Geschichte](https://thomasweise.github.io/databasesSlidesDE/04_geschichte.pdf)
 5. [Software und Literatur](https://thomasweise.github.io/databasesSlidesDE/05_software_und_literatur.pdf)
-6. [Installation von PostgreSQL](https://thomasweise.github.io/databasesSlidesDE/06_installation_postgresql.pdf)
+6. [PostgreSQL Installieren](https://thomasweise.github.io/databasesSlidesDE/06_postgresql_installieren.pdf)
 7. [Beispiele Herunterladen](https://thomasweise.github.io/databasesSlidesDE/07_beispiele_herunterladen.pdf)
 8. [Fabrik-Datenbank: Benutzer und Datenbank](https://thomasweise.github.io/databasesSlidesDE/08_fabrik_datenbank_benutzer_und_db.pdf)
 9. [Fabrik-Datenbank: Tabelle `product`](https://thomasweise.github.io/databasesSlidesDE/08_fabrik_datenbank_tabelle_product.pdf)
@@ -73,6 +73,7 @@ Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.gith
 32. [Konzeptuelles Schema: Kompakte Notation](https://thomasweise.github.io/databasesSlidesDE/32_konzeptuelles_schema_kompakte_notation.pdf)
 33. [Auswahl des Datemodells](https://thomasweise.github.io/databasesSlidesDE/33_datenmodell_auswahl.pdf)
 34. [Logisches Schema: Relationales Datenmodell](https://thomasweise.github.io/databasesSlidesDE/34_logisches_schema_relationales_datenmodell.pdf)
+35. [PgModeler Installieren](https://thomasweise.github.io/databasesSlidesDE/35_pgmodeler_installieren.pdf)
 
 
 ### 2.4. Die Beispiele

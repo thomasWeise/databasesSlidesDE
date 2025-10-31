@@ -29,7 +29,7 @@
 \begin{itemize}%
 \item Wahrscheinlich kennen Sie bereits Tabellenkalkulationssoftware wie \microsoftExcel\cite{P2020MSS2ABG,A2024TSAFMSS2,W2018MSSDB} oder \libreofficeCalc\cite{DF2024LTDF,GL2012LTSOOSSCBAFACSOL,S2022L7PFEUU}.%
 \item<2-> Auch dort sind Daten in Tabellen organisiert.%
-\item<3-> In einer relationalen Datenbank sind die Spalten der Tabellen aber \emph{typisiert}\uncover<4->{: Sie können Text eingeben, der dem vorgegebenen Datentyp entspricht.}%
+\item<3-> In einer relationalen Datenbank sind die Spalten der Tabellen aber \emph{typisiert}\uncover<4->{: Sie können \alert{nur} Text eingeben, der dem vorgegebenen Datentyp entspricht.}%
 \item<5-> Und es kann mehrere verschiedene Tabellen geben.%
 \item<6-> Und die Datensätze in verschiedenen Tabellen können miteinander fest verbunden sein.%
 \end{itemize}%
@@ -100,7 +100,9 @@ Das sind also noch vier Zahlen, die wir speichern müssen.}}%
 \begin{frame}[t]
 \frametitle{\texttt{CREATE TABLE}}%
 \begin{itemize}%
+\only<-3>{%
 \item Diese Struktur ist im Grunde recht einfach.%
+}%
 \item<2-> Nun müssen wir sie in SQL-Kommandos übersetzen.%
 \item<3-> Wir müssen dazu Namen, Datentypen, und Einschränkungen~\inEN{constraints} für die Spalten festlegen.%
 \item<4-> Das SQL-Kommando sieht in etwa so aus:%
@@ -143,7 +145,7 @@ Diese sind von Klammern umrahmt~(\textil{(...)}) und durch Kommas~(\textil{,}) g
 \begin{itemize}%
 %
 \only<-4>{\item Wir legen eine Spalte \textil{name} für die Namen der Produkte an.%
-\uncover<2->{ Die Namen sind Text, haben aber keine feste Lände.%
+\uncover<2->{ Die Namen sind Text, haben aber keine feste Länge.%
 \uncover<3->{ Dafür gibt es den Datentyp \sqlil{VARCHAR}.%
 \uncover<4->{ In Klammern geben wir eine Maximallänge an. Hier ist 100 Zeichen eine vernünftige Wahl.%
 }}}}%
@@ -163,7 +165,7 @@ Diese sind von Klammern umrahmt~(\textil{(...)}) und durch Kommas~(\textil{,}) g
 \end{itemize}%
 \locateGraphic{-4}{width=0.8\paperwidth}{graphics/createTable3commandNameVarchar}{0.1}{0.33}%
 \locateGraphic{5-8}{width=0.8\paperwidth}{graphics/createTable3commandNameNotNull}{0.1}{0.33}%
-\locateGraphic{9-12}{width=0.8\paperwidth}{graphics/createTable3commandNameUnique}{0.1}{0.33}%
+\locateGraphic{9-12}{width=0.8\paperwidth}{graphics/createTable3commandNameUnique}{0.1}{0.35}%
 \end{frame}%
 %
 \begin{frame}[t]%
@@ -238,7 +240,7 @@ Geldwerte müssen mit dem Datentype \sqlilIdx{DECIMAL} gespeicher werden\cite{C2
 \only<-8>{\item Wir legen die Spalten für das Gewicht und die Dimensionen der Boxen für unsere Produkte an.%
 \only<2-5>{%
 \begin{itemize}%
-\item Das Gewicht soll in Gram in der Spalte \textil{weight} gespeichert werden.%
+\item Das Gewicht soll in Gramm in der Spalte \textil{weight} gespeichert werden.%
 \item<3-> Die Breite soll in Millimeter in der Spalte \textil{width} gespeichert werden.%
 \item<4-> Die Höhe soll in Millimeter in der Spalte \textil{height} gespeichert werden.%
 \item<5-> Die Tiefe soll in Millimeter in der Spalte \textil{depth} gespeichert werden.%
@@ -533,7 +535,7 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 \item<2-> Statistiken wie der Durchschnitt \sqlil{AVG(s)} über alle Zeilen können für eine Spalte~\sqlil{s} berechnet werden\cite{PGDG:PD:AF}.%
 \end{itemize}%
 \gitLoadAndExecSQL{factory:select_from_table_product_6}{}{factory}{select_from_table_product_6.sql}{factory}{boss}{superboss123}%
-\listingSQLandOutput{}{factory:select_from_table_product_6}{}{0.08}{0.3}{0.9}{0.67}
+\listingSQLandOutput{}{factory:select_from_table_product_6}{}{0.08}{0.32}{0.9}{0.67}
 \end{frame}
 %
 %

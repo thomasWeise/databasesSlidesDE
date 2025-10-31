@@ -1,0 +1,301 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{35.~PgModeler Installieren}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{PdModeler}%
+\bigskip\strut\bigskip%
+\begin{itemize}%
+\item Um konzeptuelle Modelle zu erstellen, hatten wir \yEd\ verwendet.%
+\item<2-> Konzeptuelle Modelle sind an keine Technologie gebunden, daher war ein allgemeiner Graphen-Editor wie \yEd\ genau richtig.%
+\item<3-> Logische Modelle sind oftmals an eine konkrete Datenbanktechnologie wie \postgresql\ gebunden.%
+\item<4-> Wir können sie in \glsShort{SQL} definieren {\dots} aber es gibt auch Werkzeuge, mit denen wir sie über eine \glsShort{GUI} erstellen können.%
+\item<5-> Wir verwenden den \pgmodeler\cite{AES2006PPDM}, mit dem logischen Modelle für \postgresql\ über eine \glsShort{GUI} entworfen werden können.%
+\end{itemize}%
+\locateGraphic[%
+The \href{https://pgmodeler.io}{\pgmodeler\ logo} is under the copyright of Raphael Araújo~e~Silva.%
+]{}{width=0.2\paperwidth}{../05_software_und_literatur/graphics/pgmodelerLogo}{0.75}{0.02}%
+\end{frame}%
+%
+\section{PgModeler unter Ubuntu Linux Installieren}%
+%
+\begin{frame}[t]%
+\frametitle{PgModeler unter Ubuntu Linux Installieren}%
+%
+\begin{itemize}%
+%
+\only<-1>{\item Installieren wir nun den \pgmodeler\ unter \ubuntu\ \linux.}%
+%
+\only<2-3>{%
+\item<2-> Öffnen Sie ein \bash\ \glslink{terminal}{Terminal} via with \ubuntuTerminal.%
+\item<3-> Schreiben Sie \bashil{sudo apt-get install pgmodeler} und drücken~\keys{\return}.%
+}%
+%
+\only<4>{%
+\item<4-> Wenn Sie nach dem \pgls{sudo}-Passwort gefragt werden, tippen Sie es ein und drücken~\keys{\return}.%
+}%
+%
+\only<-5>{%
+\item<5-> Das System sagt uns, dass Pakete installiert werden müssen und fragt uns, ob das OK ist.%
+}\only<-6>{%
+\item<6-> Das ist OK. Wir drücken~\keys{Y} und dann~\keys{\return}.%
+}%
+%
+\only<7>{%
+\item<7-> Der \pgmodeler\ wird installiert.%
+}%
+%
+\only<-8>{%
+\item<8-> Wir führen den \pgmodeler\ aus, in dem wir \bashil{pgmodeler} in das \bash\ \glslink{terminal}{Terminal} eintippen und \keys{\return}~drücken.%
+}%
+%
+\only<-10>{%
+\item<9-> Das Programm zeigt vielleicht ein Fehler-Fenster an.%
+\item<10-> Wenn das passiert, können wir das einfach ignorieren und auf \menu{OK} klicken.%
+}%
+%
+\only<11>{%
+\item<11-> Das \pgmodeler-Fenster öffnet sich.%
+}%
+%
+\only<-13>{%
+\item<12-> Ich verwende \pgmodeler\ im \inQuotes{Light Mode}.%
+\item<13-> Um den zu aktivieren, klicken wir auf \menu{\pgmodelerMainMenu>Edit>Settings}.%
+}%
+%
+\only<14>{%
+\item<14-> Im Menü \menu{Appearance} ändern wir das \inQuotes{Theme} zu \menu{Light}{\dots}%
+}%
+%
+\only<15>{%
+\item Wir klicken auf \menu{Apply}.%
+}%
+%
+\only<16>{%
+\item<16-> Im Register \menu{Relationships} stellen wir sicher, dass der \inQuotes{connection mode} auf \inQuotes{Crow's foot notation} gesetzt ist.%
+}%
+%
+\item<17-> Damit haben wir den \pgmodeler\ installiert.%
+%
+\end{itemize}%
+%
+\locateGraphic{2-3}{width=0.64\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu01aptGetInstall}{0.18}{0.33}%
+\locateGraphic{4}{width=0.64\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu02pw}{0.18}{0.33}%
+\locateGraphic{5}{width=0.4\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu03yn}{0.3}{0.21}%
+\locateGraphic{6}{width=0.4\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu04yny}{0.3}{0.21}%
+\locateGraphic{7}{width=0.64\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu05installed}{0.18}{0.33}%
+\locateGraphic{8}{width=0.64\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu06run}{0.18}{0.33}%
+\locateGraphicTB{9-10}{width=0.64\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu07error}{0.18}{0.3}%
+\locateGraphicTB{11}{width=0.64\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu08open}{0.18}{0.33}%
+\locateGraphicTB{12-13}{width=0.55\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu09openSettings}{0.225}{0.33}%
+\locateGraphicTB{14}{width=0.48\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu10themeLight}{0.26}{0.25}%
+\locateGraphicTB{15}{width=0.48\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu11themeLightSet}{0.26}{0.25}%
+\locateGraphicTB{16}{width=0.48\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu12connectionMode}{0.26}{0.25}%
+%
+\end{frame}%
+%
+%
+\section{PgModeler unter Microsoft Windows Installieren}%
+%
+\begin{frame}[t]%
+\frametitle{PgModeler unter Microsoft Windows Installieren}%
+%
+\begin{itemize}%
+%
+\only<-8>{%
+\item Installieren wir nun den \pgmodeler\ unter \microsoftWindows.%
+%
+\item<2-> Leider ist das nicht direkt möglich.%
+%
+\item<3-> Es geht, wenn man zuerst das \glsFull{MSYS2} unter \microsoftWindows\ installiert.%
+%
+\item<4-> \glsShort{MSYS2} ist eine Kollektion von Werkzeugen und Bibliotheken aus der \linux-Welt um eine Umgebung zum Compileren, Installieren, und Ausführen von nativer \microsoftWindows-Software zur Verfügung zu stellen\cite{TO2024BCCAIGTMCCAMC:MS}.%
+%
+\item<5-> Man könnte dann den \pgmodeler\ vom Quelltext compilieren.%
+%
+\item<6-> Das ist allerdings sehr umständlich.%
+%
+\item<7-> Wenn wir \glsShort{MSYS2} aber installiert haben, dann können wir den \pgmodeler\ auch über den Paketmanager \bashil{pacman}\cite{VGL2002:P,TOSID2025L:COMPMS} installieren.%
+%
+\item<8-> Und so werden wir das auch machen.%
+}%
+%
+\only<-10>{%
+\item<9-> Wir laden zuerst \glsShort{MSYS2} von der Webseite \url{https://repo.msys2.org/distrib} herunter.%
+\item<10-> Wir laden \textil{msys2-x86_64-latest.exe} herunter, wenn wir ein 64~Bit x86~System haben.%
+}%
+%
+\only<-11>{%
+\item<11-> Der Download beginnt.%
+}%
+%
+\only<-12>{%
+\item<12-> Nachdem der Download fertig ist, führen wir den Installer durch klick auf \menu{Open file} aus.%
+}%
+%
+\only<-13>{%
+\item<13-> Im Willkommensbildschrim klicken wir auf \menu{Next}.%
+}%
+%
+\only<-15>{%
+\item<14-> Der Installer will \glsShort{MSYS2} in \expandafter\batil{C:\\msys64} installieren.%
+\item<15-> Wir stimmen dem zu und klicken auf \menu{Next}.%
+}%
+%
+\only<-16>{%
+\item<16-> Wir lassen die Startmenüeinstellungen so wie sie sind und klicken auf \menu{Next}.%
+}%
+%
+\only<-17>{%
+\item<17-> Der Installationsprozess beginnt mit dem Entpacken des Archivs.%
+}%
+%
+\only<-19>{%
+\item<18-> Wenn der Installer etwa 50\% erreicht, dann kann es passieren, dass er für eine lange Zeit feststeckt.%
+\item<19-> Warten Sie dann einfach. Das ist OK. Brechen Sie die Installation \alert{NICHT} ab.%
+}%
+%
+\only<-21>{%
+\item<20-> Irgenwann ist die Installation fertig.%
+\item<21-> Wir können \inQuotes{Run \pgls{MSYS2} now.} markieren und auf \menu{Finish} klicken.%
+}%
+%
+\only<-22>{%
+\item<22-> Von jetzt an können wir \pgls{MSYS2} auch durch Eingabe von \batil{MSYS2} in den Startmenü-Launcher und/oder Klick auf das \pgls{MSYS2}-Icon starten.%
+}%
+%
+\only<-23>{%
+\item<23-> Das \glsFull{MSYS2} \glslink{terminal}{Terminal} läuft nun.%
+}%
+%
+\only<-25>{%
+\item<24-> \pgls{MSYS2} benutzt den Paketmanager \bashil{pacman}.%
+\item<25-> Wir können nach \pgmodeler-Paketen suchen, in dem wir \bashil{pacman -Ss pgmodeler} eintippen und \keys{\return} drücken.%
+}%
+%
+\only<-28>{%
+\only<-27>{%
+\item<26-> Wir finden sogar mehrere!
+}%
+\item<27-> Wir wollen das was mit \textil{mingw64} anfängt installieren -- aber nicht das mit plugins.%
+\item<28-> Wir selektieren also den Text \bashil{mingw64/mingw64-w64-x86_64-pgmodeler}.%
+}%
+%
+\only<-30>{%
+\item<29-> Wir selektieren den Text \bashil{mingw64/mingw64-w64-x86_64-pgmodeler}.%
+\item<30-> Dann rechts-klicken wir in das Terminal und klicken auf~\menu{Copy}.%
+}%
+%
+\only<-31>{%
+\item<31-> Dann tippen wir \bashil{pacman -S } ein, rechts-klicken in das Terminal, und klicken auf~\menu{Paste}.%
+}%
+%
+\only<-33>{%
+\item<32-> Insgesamt haben wir also geschrieben \bashil{pacman -S mingw64/mingw64-w64-x86_64-pgmodeler}.%
+\item<33-> Wir rücken~\keys{\return}.%
+}%
+%
+\only<-35>{%
+\item<34-> Wir sehen eine Liste von Paketen, die installiert und wir werden gefragt, ob wir das wollen.%
+\item<35-> Wir tippen auf~\keys{Y} und dann~\keys{\return}.%
+}%
+%
+\only<-37>{%
+\item<36-> Die Pakete werden heruntergeladen und installiert.%
+\item<37-> Wir kommen zurück zum Terminal prompt.%
+}%
+%
+\only<-39>{%
+\item<38-> Wir \alert{schließen} das \glsShort{MSYS2} Terminal und \alert{öffnen} es erneut.%
+\item<39-> Wir tippen \bashil{pgmodeler} in das Terminal ein und drücken~\keys{\return}.%
+}%
+%
+\only<-40>{%
+\item<40-> Der \pgmodeler\ startet.%
+}%
+%
+\only<-41>{%
+\item<41-> Der \pgmodeler\ läuft.%
+}%
+%
+\only<-43>{%
+\item<42-> Ich verwende \pgmodeler\ im \inQuotes{Light Mode}.%
+\item<43-> Um den zu aktivieren, klicken wir auf \menu{\pgmodelerMainMenu>Edit>Settings}.%
+}%
+%
+\only<44>{%
+\item<44-> Im Menü \menu{Appearance} ändern wir das \inQuotes{Theme} zu \menu{Light}{\dots}%
+}%
+%
+\only<45>{%
+\item Wir klicken auf \menu{Apply}.%
+}%
+%
+\only<46>{%
+\item<16-> Im Register \menu{Relationships} stellen wir sicher, dass der \inQuotes{connection mode} auf \inQuotes{Crow's foot notation} gesetzt ist.%
+}%
+%
+\item<47-> Damit haben wir den \pgmodeler\ installiert.%
+%
+\end{itemize}%
+%
+\locateGraphicTB{9-10}{width=0.5\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows01msys2Downloads}{0.25}{0.28}%
+\locateGraphicTB{11}{width=0.5\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows02msys2DownloadStarts}{0.25}{0.28}%
+\locateGraphicTB{12}{width=0.5\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows03msys2Downloaded}{0.25}{0.28}%
+\locateGraphicTB{13}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows04msys2InstallerWelcome}{0.18}{0.29}%
+\locateGraphicTB{14-15}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows05msys2InstallerDest}{0.18}{0.29}%
+\locateGraphicTB{16}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows06msys2InstallerStartMenu}{0.18}{0.29}%
+\locateGraphicTB{17}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows07msys2InstallerUnpacking}{0.18}{0.29}%
+\locateGraphicTB{18-19}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows08msys2InstallerWaiting}{0.18}{0.29}%
+\locateGraphicTB{20-21}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows09runMsys}{0.18}{0.29}%
+\locateGraphicTB{22}{width=0.55\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows10manuallyRunMsys}{0.225}{0.29}%
+\locateGraphicTB{23}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows11msysRunning}{0.18}{0.29}%
+\locateGraphicTB{24-25}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows12searchPgmodelerPackages}{0.18}{0.29}%
+\locateGraphicTB{26-28}{width=0.55\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows13pgmodelerPackages}{0.225}{0.29}%
+\locateGraphicTB{29-30}{width=0.55\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows14copyMingwPgmodeler}{0.225}{0.29}%
+\locateGraphicTB{31}{width=0.55\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows15pasteMingwPgmodeler}{0.225}{0.29}%
+\locateGraphicTB{32-33}{width=0.55\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows16installCommand}{0.225}{0.29}%
+\locateGraphicTB{34}{width=0.55\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows17installYesNo}{0.225}{0.29}%
+\locateGraphicTB{35}{width=0.55\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows18installYes}{0.225}{0.29}%
+\locateGraphicTB{36}{width=0.55\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows19download}{0.225}{0.29}%
+\locateGraphicTB{37}{width=0.55\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows20installed}{0.225}{0.29}%
+\locateGraphicTB{38-39}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows21restartMsys}{0.18}{0.33}%
+\locateGraphicTB{40}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows22pgmodelerLogo}{0.18}{0.27}%
+\locateGraphicTB{41}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows23pgmodelerMain}{0.18}{0.27}%
+%
+\locateGraphicTB{42-43}{width=0.55\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu09openSettings}{0.225}{0.33}%
+\locateGraphicTB{44}{width=0.48\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu10themeLight}{0.26}{0.25}%
+\locateGraphicTB{45}{width=0.48\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu11themeLightSet}{0.26}{0.25}%
+\locateGraphicTB{46}{width=0.48\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu12connectionMode}{0.26}{0.25}%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Nun haben wir den \pgmodeler\ installiert.%
+\item<2-> Damit können wir logische Modelle für \postgresql-Datenbanken entwerfen.%
+\item<3-> Mit dem \pgmodeler\ geht das wesentlich komfortabler als nur mit \glsShort{SQL}.%
+\item<4-> Das Coole ist, dass solche Modelle dann direkt nach \glsShort{SQL} übersetzt werden können.%
+\item<5-> Und das werden wir bald sehen.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
