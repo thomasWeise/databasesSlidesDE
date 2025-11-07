@@ -101,7 +101,7 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \item Jetzt wollen wir zählen, wie viele Bestellungen jeder Kunde bisher gemacht hat.%
 \item<2-> Wir kennen inzwischen alles, was wir dazu brauchen:%
 \item<3-> Mit \sqlil{LEFT JOIN} von der Tabelle~\sqlil{customer} auf die Tabelle~\sqlil{demand} bekommen wir die Bestellungen pro Kunde.%
-\item<4-> Alles, was dann zu tun ist, ist die Daten nache Kundenname zu gruppieren~(\sqlil{GROUP BY name}).%
+\item<4-> Alles, was dann zu tun ist, ist die Daten nach Kundenname zu gruppieren~(\sqlil{GROUP BY name}).%
 \item<5-> Dann können wir die Zeilen pro \sqlil{name}-Wert zählen, mit~\sqlil{COUNT(*)}.%
 \end{itemize}%
 \end{frame}%
@@ -120,7 +120,7 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \item Wir können nun Daten von verschiedenen Tabellen zusammenführen.%
 \item<2-> Erstellen wir eine Anfrage, die für jede Bestellung den Kundenname, Produktname, Preise, bestellte Anzahl, und Bestelldatum heraussucht.%
 \item<3-> Das Ergebnis dieser Anfrage wäre dann eine klare und lesbare Übersicht unserer Geschäftstransaktionen.%
-\item<4-> Basierend auf unserem vorigen Beispiel können wir erwarten, dass wir nun zwei~\inQuotes{Joins} brachen.%
+\item<4-> Basierend auf unserem vorigen Beispiel können wir erwarten, dass wir nun zwei~\inQuotes{Joins} brauchen.%
 \item<5-> Wir müssen ja Daten aus allen drei Tabellen -- \sqlil{demand}, \sqlil{customer}, und \sqlil{product} -- kombinieren.%
 \item<6-> Die Anfrage wid daher etwas komplizierter werden.%
 \end{itemize}%
@@ -132,11 +132,11 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \item Wir beginnen, die Anfrage zu konstruieren.%
 \item<2-> Was wir wollen ist das:~\emph{\inQuotes{Für jede Zeile in Tabelle~\sqlil{demand} brauchen wir die entsprechende Zeile in Tabelle~\sqlil{customer} und die entsprechende Zeile in Tabelle~\sqlil{product}.}}%
 \item<3-> Wir wissen, dass es immer eine entsprechende Zeile in der Tabelle~\sqlil{customer} geben muss, denn die \sqlilIdx{REFERENCES}-Einschränkung erzwingt das.%
-\item<3-> Wir wissen, dass es immer eine entsprechende Zeile in der Tabelle~\sqlil{product} geben muss, denn die \sqlilIdx{REFERENCES}-Einschränkung erzwingt das.%
-\item<4-> Es gibt keine Zeile in \sqlil{demand} ohne entsprechende Zeile in \sqlil{customer} oder \sqlil{product}.%
-\item<5-> Wir könnten wieder \sqlil{LEFT JOIN}\sqlIdx{JOIN!LEFT} verwenden, denn es könnte niemals~\sqlil{NULL} erzeugen.%
-\item<6-> Lassen Sie uns aber stattdessen \sqlil{INNER JOIN}\sqlIdx{JOIN!INNER}\cite{PGDG:PD:JT} nutzen.%
-\item<7-> Anders als \sqlil{LEFT JOIN} wird \sqlil{INNER JOIN} nur Zeilen ausgeben, wenn alle Tabellen zueinanderpassende Zeilen haben.%
+\item<4-> Wir wissen, dass es immer eine entsprechende Zeile in der Tabelle~\sqlil{product} geben muss, denn die \sqlilIdx{REFERENCES}-Einschränkung erzwingt das.%
+\item<5-> Es gibt keine Zeile in \sqlil{demand} ohne entsprechende Zeile in \sqlil{customer} oder \sqlil{product}.%
+\item<6-> Wir könnten wieder \sqlil{LEFT JOIN}\sqlIdx{JOIN!LEFT} verwenden, denn es könnte niemals~\sqlil{NULL} erzeugen.%
+\item<7-> Lassen Sie uns aber stattdessen \sqlil{INNER JOIN}\sqlIdx{JOIN!INNER}\cite{PGDG:PD:JT} nutzen.%
+\item<8-> Anders als \sqlil{LEFT JOIN} wird \sqlil{INNER JOIN} nur Zeilen ausgeben, wenn alle Tabellen zueinanderpassende Zeilen haben.%
 \end{itemize}%
 \end{frame}%
 %
@@ -208,10 +208,10 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \item Wir brauchen unsere Anfrage also nur als Sicht zu speichern.%
 \item<2-> Als wir das tuen wollen, fällt uns ein Problem auf\only<-2>{.}\uncover<3->{: Kundennamen sind nicht notwendigerweise eindeutig~(nicht~\sqlil{UNIQUE}).}%
 \item<4-> Wenn wir unsere Anfrage später nutzen wollen, um Verkäufe pro Kunde aufzuaddieren, dann würden alle Verkäufe nach Kundennamen gruppiert und dann summiert.\uncover<5->{ Wenn zwei Kunden den selben Namen haben, werden ihre Bestellungen vermengt.}%
-\item<6-> Mobiltelefonnummern sind aber eindeutig in unserer Datenbank.%
+\item<6-> Telefonnummern sind aber eindeutig in unserer Datenbank.%
 \item<7-> Als \sqlil{customer_name}, werden wir also \sqlil{customer.name || ', ' || customer.phone} benutzen.%
 \item<8-> Der doppelten Strich~\sqlil{||} steht für das aneinanderreihen von Zeichenketten.\uncover<9->{ \sqlil{'Hello ' || 'Word!'} ergibt \sqlil{'Hello World!'}.}%
-\item<10-> Problem gelöst: Da Mobiltelefonnummern eindeutig sind, sind Name + Mobiltelefonnummer auch eindeutig.%
+\item<10-> Problem gelöst: Da Telefonnummern eindeutig sind, sind Name + Telefonnummer auch eindeutig.%
 \end{itemize}%
 \end{frame}%
 %
@@ -222,8 +222,8 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \item Wir können unsere Anfrage nun als Sicht speichern.%
 \item<2-> Das geht sehr einfach: Wir schreiben~\sqlil{CREATE VIEW sale AS ...}, wobei \sqlil{...} durch unsere Anfrage zu ersetzen ist.
 \item<3-> Damit wird unsere Anfrage unter dem Namen~\sqlil{sale} gespeichert.%
-\item<4-> Sie kann dann wie eine Tabelle verwendet werden.%
-\item<5-> Wir können schreiben \sqlil{SELECT * from sale;}.%
+\item<4-> Sie kann dann wie eine Tabelle verwendet werden~(nur dass man keine Daten oder ändern anfügen kann).%
+\item<5-> Wir können schreiben \sqlil{SELECT * FROM sale;}.%
 \end{itemize}%
 \end{frame}%
 %
@@ -246,10 +246,10 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \end{itemize}%
 }%
 \item<4-> Wir können den Gesamtpreis jeder Bestellung einfach ausrechnen.\uncover<5->{ Wir kennen ja die Anzahl der bestellten Einheiten~(\sqlil{amount}) und den Preis pro Einheit~(\sqlil{price}).}%
-\item<5-> Pro Zeile müssen wir also einfach~\sqlil{amount * price} berechnen.%
-\item<6-> Da wir die Summe dieser Werte pro Kunde bzw.\ pro Produkt wollen, müssen wir die Zeilen jeweils nach \sqlil{customer_name} oder \sqlil{product_name} gruppieren.%
-\item<7-> Pro Gruppe berechnen wir dann~\sqlil{SUM(amount * price)}\cite{PGDG:PD:AF}.%
-\item<8-> Schließlich sortieren wir die Werte absteigend, weil wir ja die Bestseller am Anfang haben wollen.%
+\item<6-> Pro Zeile müssen wir also einfach~\sqlil{amount * price} berechnen.%
+\item<7-> Da wir die Summe dieser Werte pro Kunde bzw.\ pro Produkt wollen, müssen wir die Zeilen jeweils nach \sqlil{customer_name} oder \sqlil{product_name} gruppieren.%
+\item<8-> Pro Gruppe berechnen wir dann~\sqlil{SUM(amount * price)}\cite{PGDG:PD:AF}.%
+\item<9-> Schließlich sortieren wir die Werte absteigend, weil wir ja die Bestseller am Anfang haben wollen.%
 \end{itemize}%
 \end{frame}%
 %

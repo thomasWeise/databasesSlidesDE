@@ -177,7 +177,7 @@ Diese sind von Klammern umrahmt~(\textil{(...)}) und durch Kommas~(\textil{,}) g
 \only<3-15>{\begin{itemize}%
 \item Preise wie \inQuotes{1,34€} oder \inQuotes{12.99元} oder \inQuotes{\$3.99} sehen auf den ersten Blick wie Fließkommazahlen aus.\only<4-7>{%
 \begin{itemize}%
-\item Sie kennen Fließkommazahlen aus \python~(Datentype \pythonil{float}) oder \texttt{Java} und \textil{C}~(Datentypen \pythonil{float}, \pythonil{double}, \dots).%
+\item Sie kennen Fließkommazahlen aus \python~(Datentyp \pythonil{float}) oder \texttt{Java} und \textil{C}~(Datentypen \pythonil{float}, \pythonil{double}, \dots).%
 \item<5-> Aber Fließkommazahlen sind ungenau!%
 \item<6-> Beispiel:~\pythonil{0.1 + 0.1 + 0.1 - 0.3} ergiebt~\pythonil{5.551115123125783e-17} in \python\dots%
 \end{itemize}%
@@ -192,7 +192,7 @@ Diese sind von Klammern umrahmt~(\textil{(...)}) und durch Kommas~(\textil{,}) g
 }%
 \only<12->{ Preise sind aber keine Ganzzahlen.}%
 %
-\only<13-15>{\item Der Datentype \sqlil{DECIMAL(x, y)} erlaubt es uns, Zahlen mit \textil{x}~Stellen (\textil{y} davon nach dem Komma) exakt darzustellen.%
+\only<13-15>{\item Der Datentyp \sqlil{DECIMAL(x, y)} erlaubt es uns, Zahlen mit \textil{x}~Stellen (\textil{y} davon nach dem Komma) exakt darzustellen.%
 \only<15>{%
 \begin{itemize}%
 \item Mit \sqlil{price DECIMAL(10, 2)} können wir Zahlen mit 10~Ziffern, 2~davon nach dem Komma, exakt speichern\cite{PGDG:PD:NT}.%
@@ -225,7 +225,7 @@ Repräsentieren Sie niemals Geldwerte mit Fließkommazahlen\cite{SE:SO:WNUDOFTRC
 }}%
 \only<14-16>{%
 \bestPractice{moneyDecimal}{%
-Geldwerte müssen mit dem Datentype \sqlilIdx{DECIMAL} gespeicher werden\cite{C2024SCVDTCBP,W2020HSISCVISS}.%
+Geldwerte müssen mit dem Datentyp \sqlilIdx{DECIMAL} gespeicher werden\cite{C2024SCVDTCBP,W2020HSISCVISS}.%
 }}%
 %
 \locateGraphic{-3,17}{width=0.8\paperwidth}{graphics/createTable3commandPriceDecimal}{0.1}{0.343}%
@@ -246,7 +246,7 @@ Geldwerte müssen mit dem Datentype \sqlilIdx{DECIMAL} gespeicher werden\cite{C2
 \item<5-> Die Tiefe soll in Millimeter in der Spalte \textil{depth} gespeichert werden.%
 \end{itemize}%
 \uncover<6->{ Alle Dimensionen sind Ganzzahlen.
-\uncover<7->{ Der Datentype \sqlil{INT} stellt Werte von -2\decSep147\decSep483\decSep648 bis +2\decSep147\decSep483\decSep647 dar.
+\uncover<7->{ Der Datentyp \sqlil{INT} stellt Werte von -2\decSep147\decSep483\decSep648 bis +2\decSep147\decSep483\decSep647 dar.
 \uncover<8->{ Das reicht.}}}%
 }%
 }%
@@ -445,7 +445,7 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 \uncover<3->{%
 \begin{itemize}%
 \item Tatsächlich: Der Versuch, die Einschränkung zu brechen, schlägt fehl.%
-\item<4-> In einer \microsoftExcel\ or \libreofficeCalc-Tabelle hätten wir das nicht herhindern können\dots%
+\item<4-> In einer \microsoftExcel\ or \libreofficeCalc-Tabelle hätten wir das nicht verhindern können\dots%
 \end{itemize}\smallskip%
 }%
 \gitLoadAndExecSQL{factory:insert_into_table_product_error}{}{factory}{insert_into_table_product_error.sql}{factory}{boss}{superboss123}%
@@ -567,10 +567,10 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 \frametitle{Zusammenfassung}%
 \begin{itemize}%
 \item In dieser Einheit haben wir sehr, sehr viel gelernt.%
-\item<2-> Wir haben gelernt, wie man eine Tabelle in einem SQL-basierten relationalen DBMS erzeugt, nämlich mit \sqlil{CREATE TABLE}.%
+\item<2-> Wir haben gelernt, wie man eine Tabelle in einem \glsShort{SQL}-basierten relationalen \glsShort{dbms} erzeugt, nämlich mit \sqlil{CREATE TABLE}.%
 \item<3-> Wir haben mehrere Datentypen kennengelernt, von \sqlil{INT} über \sqlil{VARCHAR} bis \sqlil{DECIMAL}.%
 \item<4-> Wir haben gelernt, wie man die möglichen Werte für eine Spalte einschränkt, \DEzB~mit \sqlil{UNIQUE}, \sqlil{NOT NULL}, or \sqlil{PRIMARY KEY}.%
-\item<5-> Wir haben gelernt, was ein Primärschlüssel~(\sqlil{PRIMARY KEY}) ist, nämlich die Spalte(n), durch deren Wert jede Zeile in einer Tabelle eindeutig identifiziert (und von anderen Tabellen referenziert) werden kann.%
+\item<5-> Wir haben gelernt, was ein Primärschlüssel~(\sqlil{PRIMARY KEY}) ist, nämlich die Spalte(n), durch deren Wert jede Zeile in einer Tabelle eindeutig identifiziert~(und von anderen Tabellen referenziert) werden kann.%
 \item<5-> Wir haben gelernt, dass man mit \sqlil{INSERT INTO} Zeilen an eine Tabelle anhängen kann.%
 \item<6-> Und wir haben gelernt, wie man mit \sqlil{SELECT FROM} Werte aus einer Tabelle ausliest.%
 \item<7-> Wir wissen nun auch, dass man \sqlil{SELECT FROM} mit weitere Befehle zur Auswahl~(\sqlil{WHERE}, \sqlil{LIKE}, \sqlil{LIMIT}), Benennung~(\sqlil{AS}), und Sortierung~(\sqlil{ORDER BY}) sowie zur Berechnung von Statistiken~(\sqlil{AVG}) kombinieren kann.%

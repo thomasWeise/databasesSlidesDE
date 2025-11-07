@@ -121,7 +121,7 @@ Wir müssen die Spalte also \emph{nicht} mit \sqlil{UNIQUE} annotieren.%
 \begin{frame}%
 \frametitle{Die Spalte \texttt{name}:~\texttt{CONSTRAINT}}%
 \begin{itemize}%
-\item Wir wollen die Werte in der Spalte \sqlil{name} so einschränken, dass sie mit einem \inQuotes{Wort-Zeichen}, \DEzB~ \inQuotes{A}, \inQuotes{b}, oder~\inQuotes{张}, beginning und enden müssen.\uncover<2->{ Dazwischen erlauben wir beliebige Zeichen.}%
+\item Wir wollen die Werte in der Spalte \sqlil{name} so einschränken, dass sie mit einem \inQuotes{Wort-Zeichen}, \DEzB~\inQuotes{A}, \inQuotes{b}, oder~\inQuotes{张}, beginnen und enden müssen.\uncover<2->{ Dazwischen erlauben wir beliebige Zeichen.}%
 \item<3-> Man kann natürlich immer noch \inQuotes{sgjw9345 s熊猫fki345Q} als Name eingeben\only<3>{.}\uncover<4->{ {\dots} aber Leerzeichen oder Zahlen am Anfang und Ende sind unmöglich und leere Zeichenketten auch.}%
 \item<5-> Bisher haben wir keine Möglichkeit, so eine Einschränkung zu formulieren.%
 \item<6-> Mit \sqlil{LIKE} (wie in unsere SQL-Anfrage nach Schuhen\dots) geht es leider nicht.%
@@ -154,10 +154,10 @@ Wir müssen die Spalte also \emph{nicht} mit \sqlil{UNIQUE} annotieren.%
 \item<7-> \textil{.*} nach dem \textil{^\\w} bedeutet also, dass nach dem anfänglichen Wort-Zeichen beliebig viele andere Zeichen beliebiger Art im Namen vorkommen dürfen.
 \only<-9>{\item<8-> Das Dollarzeichen~\textil{\$} passt zum Ende einer Zeichenkette.}%
 \item<9-> Wenn wir also schreiben~\textil{\\w\$}, dann bedeutet das, dass am Ende der Zeichenkette wieder ein Wort-Zeichen kommen muss.%
-\item<10-> \sqlil{'^\\w.*\\w\$'} passt also zu \inQuotes{Thomas Weise} oder \inQuotes{李白}, nicht aber zu \inQuotes{ Bibbo}, \inQuotes{熊猫3}, oder~\inQuotes{李}.}%
+\item<10-> \sqlil{'^\\w.*\\w\$'} passt also zu \inQuotes{Thomas Weise} oder \inQuotes{李白}, \alert{nicht} aber zu \inQuotes{ Bibbo}, \inQuotes{熊猫3}, oder~\inQuotes{李}.}%
 \item<11-> Wir schreiben~\sqlil{CONSTRAINT customer_name_ok  CHECK (name ~ '^\\w.*\\w\$')}, wobei \sqlil{name ~ '^\\w.*\\w\$'} bedeutet, dass der Wert für \sqlil{name} dem gegebenen \pgls{regex} entsprechen muss.
 \end{itemize}%
-\listingSQL{12}{factory:create_table_customer}{0.075}{0.18}{0.9}{0.84}
+\listingSQL{12}{factory:create_table_customer}{0.075}{0.22}{0.9}{0.84}
 \end{frame}
 %
 \begin{frame}[t]
@@ -165,14 +165,14 @@ Wir müssen die Spalte also \emph{nicht} mit \sqlil{UNIQUE} annotieren.%
 \begin{itemize}%
 \item Jeder Kunde \alert<5>{muss} eine Telefonnummer haben.\uncover<2->{ Wir nennen die Spalte dafür~\sqlil{phone}.}%
 \item<3-> In China haben Hausanschlüsse 10~Ziffern und Mobiltelefonnummern~11\cite{BD2006BDBK:MPNANSBTTMDFMP}.%
-\item<4-> Als Datentype nutzen wir daher \sqlil{VARCHAR(11)}.%
+\item<4-> Als Datentyp nutzen wir daher \sqlil{VARCHAR(11)}.%
 \item<5-> Da jeder Kunde eine eine Telefonnummer haben \alert<5>{muss}, ist die Spalte auch~\sqlil{NOT NULL}.%
 \item<6-> Jede Telefonnummer kann auch nur von einem Kunden verwendet werden, also spezifizieren die \sqlil{UNIQUE}-Einschränkung.%
 \item<7-> \sqlil{VARCHAR(11)} lässt beliebige Zeichenketten mit maximal 11~Zeichen zu.%
 \item<8-> Wir wollen aber nur Telefonnummern zulassen.%
 \item<9-> \Pglspl{regex} to the rescue!%
 \end{itemize}%
-\listingSQL{-2}{factory:create_table_customer}{0.075}{0.18}{0.9}{0.84}
+\listingSQL{-2}{factory:create_table_customer}{0.075}{0.22}{0.9}{0.84}
 \end{frame}
 %
 \begin{frame}[t,fragile]
@@ -195,14 +195,14 @@ Wir müssen die Spalte also \emph{nicht} mit \sqlil{UNIQUE} annotieren.%
 \begin{itemize}%
 \item Fügen wir nun die Spalte \sqlil{address} für die Kundenadresse hinzu.%
 \only<-5>{%
-\item<2-> Wir nehmen wieder \sqlil{VARCHAR(100)}.%
+\item<2-> Wir nehmen wieder \sqlil{VARCHAR(255)}.%
 \item<3-> Wir markieren die Spalte as \sqlil{NOT NULL}.%
 \item<4-> Wir markieren sie \emph{nicht} als \sqlil{UNIQUE}.%
 \item<5-> Sie können sich selbst ein \sqlil{CONSTRAINT} als Übung ausdenken.%
 }%
 \item<7-> Damit sind wir mit dem Erstellen der Tabelle~\sqlil{customer} fertig.%
 \end{itemize}%
-\listingSQL{6}{factory:create_table_customer}{0.075}{0.18}{0.9}{0.84}
+\listingSQL{6}{factory:create_table_customer}{0.075}{0.22}{0.9}{0.84}
 \end{frame}
 %
 \section{Einfügen von Daten}%
@@ -261,7 +261,7 @@ Wir müssen die Spalte also \emph{nicht} mit \sqlil{UNIQUE} annotieren.%
 \end{itemize}%
 %
 \gitLoadAndExecSQL{factory:select_from_table_customer_1}{}{factory}{select_from_table_customer_1.sql}{factory}{boss}{superboss123}%
-\listingSQLandOutput{4}{factory:select_from_table_customer_1}{}{0.05}{0.33}{0.9}{0.665}
+\listingSQLandOutput{4}{factory:select_from_table_customer_1}{}{0.05}{0.36}{0.9}{0.665}
 \end{frame}
 %
 \begin{frame}[t,fragile]
@@ -270,7 +270,7 @@ Wir müssen die Spalte also \emph{nicht} mit \sqlil{UNIQUE} annotieren.%
 \only<-6>{%
 \item Als nächstes wollen wir wissen, wie viele inländische Kunden, also Kunden mit chinesischer Adresse, wir haben -- im Vergleich zur Zahl der ausländischen Kunden.%
 }%
-\item<2-> Im ersten Schritt erstellen wir ein synthetisches Attribute \sqlil{domestic}~(Englisch für inländisch), dass wahr~(\sqlil{TRUE}) seien soll, wenn ein Kunde in China wohnt und falsch~(\sqlil{FALSE}) wenn nicht.%
+\item<2-> Zuerst erstellen wir ein synthetisches Attribute \sqlil{domestic}~\inDE{inländisch}, dass wahr~(\sqlil{TRUE}) ist, wenn ein Kunde in China wohnt und sonst falsch~(\sqlil{FALSE}).%
 \only<-6>{%
 \item<3-> Das können wir mit \sqlil{address LIKE '\%China\%' AS domestic} machen.%
 \item<4-> Wir wollen aber diesmal lieber \sqlil{ILIKE} nehmen: \sqlil{LIKE} beachtet Groß- und Kleinschreibung, \sqlil{ILIKE} nicht.%

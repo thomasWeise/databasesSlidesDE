@@ -1,0 +1,954 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{36.~Logisches Schema:~Entitäten zu Tabellen}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item Wir wollen nun unser konzeptuelles Modell des Lehre-Management-Systems als eine relationale \glslink{rdb}{Datenbank} implementieren.%
+%
+\item<2-> Das erfordert, dass wir Entitäten, Beziehungen, und Einschränkungen auf Objekte aus der relationalen Welt abbilden.%
+%
+\item<3-> Wir werden Sicheten, Anfragen, und Einfüge-Regeln für unsere Daten entwerfen müssen.%
+%
+\item<4-> Natürlich wählen wir \postgresql\ als der \glsShort{dbms}.%
+%
+\item<5-> \postgresql\ unterstützt \glsShort{SQL}, also können wir die meiste Funktonalität, die wir benutzen, 1:1 auch in Systemen wie \mysql, \mariadb, oder \sqlite\ verwenden.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Übersetzung}%
+\begin{itemize}%
+\item Aber wie übersetzen wir ein konzeptuelles Model in ein logisches?%
+%
+\item<2-> Viele Literaturquellen sagen, dass Entity-Relationship-Modelle einfach in logisches Schemas des relationalen Datenmodells übersetzt werden können und das Werkzeuge das automatisch können\cite{SS2005EIDDDFDB:SDLDUTRDM}.%
+%
+\item<3-> Ich denke, das hängt schon sehr davon ab, wie abstrakt die \glsShort{ERD}s sind \alert{und} davon, wie genau die Übersetzung seien soll.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Werkzeuge}%
+\begin{itemize}%
+\item Es gibt verschiedene Werkzeuge, um \glsShort{ERD}s zu malen.%
+%
+\item<2-> Wir benutzen \yEd, welcher von Datenbanktechnologien völlig unabhängig ist.%
+%
+\item<3-> Solche Modelle zu logischen Modellen zu übersetzen erfortet schon Denkarbeit, obwohl es oft nicht so schwer ist.%
+%
+\item<4-> Wir hätten auch den \pgmodeler\ verwenden können, um unsere \glsShort{ERD}s zu zeichnen.%
+%
+\item<5-> Der \pgmodeler\ kann \glsShort{SQL} produzieren bzw.\ sogar direkt mit dem \postgresql\ \glsShort{dbms} verbunden werden.%
+%
+\item<6-> Dann hätten wir aber kein abstraktes konzeptuelles Modell gehabt.%
+%
+\item<7-> Sondern direkt ein logisches Modell.%
+%
+\item<8-> Aber wir haben ein abstraktes konzeptuelles Modell.%
+%
+\item<9-> Und nun lernen wir, wie man diese in logische Modelle übersetzt.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Entitäten und Tabellen}%
+%
+\begin{frame}%
+\frametitle{Entitäten zu Tabellen}%
+\begin{itemize}%
+\item Entitätstypen vom konzeptuellen Modell in das logische Modell zu übersetzen ist sehr einfach.%
+%
+\item<2-> Jeder Entitätstyp wird eine Tabelle.%
+%
+\item<3-> Der Entitätstyp \emph{Student} wird die Tabelle~\sqlil{student}.%
+%
+\item<4-> Jedes einfache, ein-wertige Attribut wird eine Spalte in der Tabelle.%
+%
+\item<5-> Das Attribut~\emph{Name} wird zur Spalte~\sqlil{name}\only<-5>{.}\uncover<6->{ mit einem \glsShort{SQL}-Datentyp für Text\only<-6>{.}\uncover<7->{, vielleicht mit zusätzlichen Einschränkungen wie \DEzB\ das Namen mit druckbaren Zeichen anfangen und enden müssen.}}%
+%
+\item<8-> Abgeleitete Attribute werden normalerweise gar nicht gespeichert.
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Zusammengesetzte Attribute~(Teil~1)}%
+\begin{itemize}%
+\item Jede Komponente eines zusammengesetzten Attributs wird eine Spalte der Tabelle.%
+\item<2-> Nehmen wir an, \emph{Name} ist kein einfaches Attribut ist, sondern ein zusammengesetztes Attribut.%
+\item<3-> Sagen wir, es besteht aus den beiden Komponenten \emph{Full Name} und \emph{Salutation}.%
+\item<4-> Dann haben wir die beiden Spalten~\sqlil{full_name} und~\sqlil{saluation}.%
+\item<5-> Beide hätten passende Datentypen und Einschränkungen.%
+\item<6-> Das zusammengesetzte Attribute~\emph{Name} selber hat keine Spalte in der Tabelle.%
+\item<7-> Stattdessen haben seine Komponenten Spalten.%
+\item<8-> Wenn die Komponenten selber zusammengesetzte Attribute sind, dann wird der Prozess rekursiv angewandt.%
+\item<9-> Die Kompontenten werden dann heruntergebrochen und zwar so lange, bis wir bei einfachen Attributen ankommen, die dann Spalten bekommen.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Mehrwertige Attribute~(Teil~1)}%
+\begin{itemize}%
+\item Mehrwertige Attribute werden separate Tabellen.%
+\item<2-> Jede derer Zeilen referenziert eine Zeile in er Tabelle des Entitätstyps~(durch Speicheren von deren Primärschlüssel als Fremdschlüssel).%
+\item<3-> Wenn der Entitätstyp \emph{Student} im konzeptuellen Modell ein mehrwertiges Attribut \emph{Mobile Phone} hat, dann kann jede Entität vom Typ \emph{Student} mehrere \emph{Mobile Phone} Werte habe.%
+%
+\item<4-> Im relationalen Datenmodell sind alle Datentypen atomisch, wir können also keine Spalte vom Typ \inQuotes{Liste von (irgendwas)}  haben.%
+%
+\item<5-> Jedes Attribut kann nur einen Wert in jedem Datensatz haben.%
+%
+\item<6-> Daher müssen mehrwertige Attribute selber Tabellen werden.%
+%
+\item<7-> Also würden wir die Tabelle~\sqlil{mobile} für Mobiltelefonnummern erstellen.%
+%
+\item<8-> Diese Tabelle hätte eine Spalte für die Telefonnummer und eine Spalte die den entsprechenden \emph{Student}-Datensatz über einen Fremdschlüssel referenziert.%
+%
+\item<9-> Es könnte auch noch einen Ersatzschlüssel geben, aber das lernen wir später.%
+%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}%
+\frametitle{Konzeptuelles ERD zu Logisches ERD}%
+\begin{itemize}%
+\only<-10>{%
+\item Wir haben konzeptuelle Modelle mit \yEd\ gemalt.%
+}\only<-11>{%
+\item<2-> Diese sind an keinerlei Technologie gebunden.%
+}\only<-12>{%
+\item<3-> Logische Modelle sind aber an technologien gebunden.%
+}%
+\item<4-> Hier \yEd\ zu verwenden ergibt wenig Sinn.%
+\item<5-> Stattdessen nimmt man oft Werkzeuge, die zumindest \glsShort{SQL} beherrschen oder direkt an \glsShort{dbms}e gebunden sind.%
+\item<6-> \mysqlWorkbench\cite{M2013MWDM}, \DEzB, kann sich mit dem \mysql\ \glsShort{dbms} verbinden und erlaubt uns, Tabellen in einer \glsShort{ERD}\nobreakdashes-artigen Syntax zu erstellen.%
+\item<7-> \pgmodeler\cite{AES2006PPDM} erlaubt uns das selbe für das \postgresql\ \glsShort{dbms}.%
+\item<8-> Die Idee ist, dass wir nun eine klarere und eingeschränktere Syntax zur visuellen Repräsentieren einer \glslink{db}{Datenbank} verwenden.%
+\item<9-> Diese Syntax kann direkt nach \glsShort{SQL} übersetzt werden, welches wir dann an den \postgresql\ \glslink{server}{Server} über \DEzB\ den \psql-\glslink{client}{Klienten} schicken können.%
+%
+\item<10-> So eine \glsShort{GUI} zu verwenden hat zwei große Vorteile\only<-10>{.}\uncover<11->{%
+\begin{enumerate}%
+\item Die Diagramme sind intuitiv und schneller verständlich als \glsShort{SQL}-Skripte.%
+\item<12-> Die verschiedenen Dialoge, die wir beim Bauen des \glsShort{ERD}s verwenden, helfen uns, korrektes \glsShort{SQL} zu erstellen.
+\end{enumerate}}%
+%
+\item<13-> Und genau das probieren wir jetzt aus.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Logisches ERD Erstellen mit PgModeler}%%
+%
+\begin{frame}[t]%
+\frametitle{Logisches ERD erstellen mit PgModeler}%
+%
+\begin{itemize}%
+%
+\only<-3>{%
+\item Wir übersetzen nun ein konzeptuelles \glsShort{ERD} in ein logisches Modell.%
+%
+\item<2-> Wir nehmen dafür das allererste \glsShort{ERD} was wir gemalt hatten.%
+%
+\item<3-> Es hat nur genau einen Entitätstyp.
+}%
+%
+\only<-5>{%
+\item<4-> Wir starten den \pgmodeler.%
+%
+\item<5-> Unter \ubuntu\ \linux\ gegen wir dafür \bashil{pgmodler} im \glslink{terminal}{Terminal} ein drücken~\keys{\return}.%
+}%
+%
+\only<-6>{%
+\item<6-> Im \pgmodeler\ klicken wir auf \menu{New Model}.%
+}%
+%
+\only<-9>{%
+\item<7-> Ein leeres \glsShort{ERD} öffnet sich.%
+\item<8-> Wir klicken irgendwo in es hinein.%
+\item<9-> In dem Kontextmenü, dass sich öffnet, klicken wir auf \menu{Properties}.%
+}%
+%
+\only<-12>{%
+\item<10-> Der \inQuotes{Database Properties}-Dialog öffnet sich.%
+\item<11-> Wir wollen einen passenden Namen für unsere Datenbank auswählen.%
+\item<12-> Wir wählen \sqlil{student_database} und klicken auf~\menu{Apply}.%
+}%
+%
+\only<-14>{%
+\item<13-> Zurück in der \glsShort{ERD}-Ansicht rechts-klicken wir nochmal in das leere Diagramm. %
+\item<14-> In dem sich öffnenen Popup-Menü klicken wir auf~\menu{New>Schema Object>Table}.%
+}%
+%
+\only<-17>{%
+\item<15-> Der Dialog \inQuotes{Table properties} öffnet sich.%
+\item<16-> Als Tabellenname geben wir \sqlil{student} ein.%
+\item<17-> Wir klicken auf den Register~\menu{Columns}.%
+}%
+%
+\only<-18>{%
+\item<18-> Im Register Columns klicken wir auf das \menu{Add Item}-Symbol~\pgmodelerAddItem.%
+}%
+%
+\only<-21>{%
+\only<-20>{%
+\item<19-> Wir wollen eine Spalte einfügen für die Studenten-ID, die von der Uni ausgegeben wird.%
+}%
+\item<20-> Als Name für die Spalte wählen wir~\sqlil{student_id}.%
+\item<21-> Als Type wählen wir~\sqlil{character}, also den \glsShort{SQL}-Datentyp für Zeichenketten fester Länge~(denn alle Studenten-IDs haben die selbe Länge).%
+}%
+%
+\only<-24>{%
+\only<-23>{%
+\item<22-> Als~(feste) Länge geben wir~11 in das \menu{L:}-Feld ein.%
+\item<23-> Wir markieren die Spalte als \sqlilIdx{NOT NULL}, was bedeutet, dass es niemals einen Studenten-Datensatz ohne Studenten-ID geben kann.%
+}%
+\item<24-> Wir klicken auf~\menu{Apply}.%
+}%
+%
+\only<-26>{%
+\item<25-> Die neue Spalte erscheint im Dialog.%
+\item<26-> Wir klicken nochmal auf~\menu{Add Item}~\pgmodelerAddItem.%
+}%
+%
+\only<-30>{%
+\only<-28>{%
+\item<27-> Wir fügen die Spalte \sqlil{national_id} zum Speichern der chinesischen Ausweisnummern~(中国公民身份号码) an.%
+}\only<-29>{%
+\item<28-> Solche Nummern sind Zeichenketten~(\sqlil{character}\sqlIdx{CHARACTER}) der festen Länge~18\cite{GB116431999CIN}.%
+}%
+\item<29-> Wir markieren auch diese Spalte als \sqlilIdx{NOT NULL}, denn jeder Datensatz muss so einen Wert speichern.%
+\item<30-> Wir klicken auf~\menu{Apply}.%
+}%
+%
+\only<-31>{%
+\item<31-> Die neue Spalte erscheint und wir klicken auf \menu{Add Item}~\pgmodelerAddItem.%
+}%
+%
+\only<-35>{%
+\only<-33>{
+\item<32-> Wir definieren die Spalte \sqlil{name} für Studentennamen.%
+}%
+\only<-34>{
+\item<33-> Namen haben eine variable Länge~(Typ \sqlil{varchar}\sqlIdx{VARCHAR}).%
+}%
+\item<34-> Wir setzen die \emph{maximale} Länge auf~255.%
+\item<35-> Jeder Student muss einen Namen haben, also spezifizieren wir wieder \sqlil{NOT NULL} und klicken~\menu{Apply}.%
+}%
+%
+\only<-37>{%
+\item<36-> Die neue Spalte erscheint im Dialog.%
+\item<37-> Wir klicken nochmal auf ~\menu{Add Item}~\pgmodelerAddItem.%
+}%
+%
+\only<-39>{%
+\item<38-> Auch Adressen sind Zeichenketten variabler Länge~(Typ \sqlil{varchar}\sqlIdx{VARCHAR}).%
+}\only<-40>{%
+\item<39-> Wir setzen die maximale Länge wieder auf~255 und setzten das Feld auf~\sqlilIdx{NOT NULL}.%
+\item<40-> Wir klicken~\menu{Apply}.%
+}%%
+%
+\only<-42>{%
+\item<41-> Die neue Spalte erscheint im Dialog.%
+\item<42-> Wir klicken nochmal auf ~\menu{Add Item}~\pgmodelerAddItem.%
+}%
+%
+\only<-45>{%
+\only<-44>{%
+\item<43-> Wir fügen eine Spalte \sqlil{mobile} für Mobiltelefonnummern ein.%
+}%
+\item<44-> In China sind diese Zeichenketten~(\sqlil{character}\sqlIdx{CHARACTER}) der festen Länge~11\cite{BD2006BDBK:MPNANSBTTMDFMP}.%
+\item<45-> Wir verlangen dass diese angegeben werden müssen~(\sqlilIdx{NOT NULL}) und klicken~\menu{Apply}.%
+}%
+%
+\only<-47>{%
+\item<46-> Die neue Spalte erscheint im Dialog.%
+\item<47-> Wir klicken nochmal auf ~\menu{Add Item}~\pgmodelerAddItem.%
+}%
+%
+\only<-50>{%
+\only<-49>{%
+\item<48-> Zuletzt fügen wir eine Spalte für das \glslink{dateOfBirth}{Geburtsdatum}, genannt \sqlil{date_of_birth}, hinzu.%
+}%
+\item<49-> Der Datentyp ist \sqlil{date}\sqlIdx{DATE} und wir verlangen, dass es \sqlilIdx{NOT NULL} ist.%
+\item<50-> Wir klicken auf~\menu{Apply}.%
+}%
+%
+\only<-52>{%
+\item<51-> Die neue Spalte erscheint.%
+\item<52-> Wir klicken auf den Register \menu{Constraints}, denn wir wollen nun Einschränkungen für die Gültigkeit der Daten definieren.%
+}%
+%
+\only<-53>{%
+\item<53-> Im Register \menu{Constraints} klicken wir auf~\menu{Add Item}~\pgmodelerAddItem.%
+}%
+%
+\only<-57>{%
+\only<-55>{%
+\item<54-> Als erste Einschränkung definieren wir, dass \sqlil{student_id} der Primärschlüssel der Tabelle seien soll.%
+}\only<-56>{%
+\item<55-> Wir nennen diese Einschränkung \sqlil{student_student_id_pk} und wählen \sqlilIdx{PRIMARY KEY} als Typ.%
+}%
+\item<56-> Ein Primärschlüssel-Constraint impliziert immer \sqlil{NOT NULL} und \sqlil{UNIQUE}.%
+\item<57-> Wir wählen die Spalte \sqlil{student_id} in der Drop-Down-Box \menu{Column} und klicken auf~\menu{Add Item}~\pgmodelerAddItem.%
+}%
+%
+\only<-59>{%
+\item<58-> Die Spalte \sqlil{student_id} erscheint in der Liste \menu{Columns}.%
+\item<59-> Wir klicken auf~\menu{Apply}.%
+}%
+%
+\only<-60>{%
+\item<60-> Die neue Einschränkung erscheint und wir klicken auf \menu{Add Item}~\pgmodelerAddItem.%
+}%
+%
+\only<-62>{%
+\item<61-> Wir wollen nun eine Einschränkung für korrekte Ausweisnummern erstellen.%
+\item<62-> Wir nennen sie \sqlil{student_national_id_check} und wählen \sqlilIdx{CHECK}\sqlIdx{CONSTRAINT!CHECK} in der Drop-Down-Box \menu{Type}.%
+}%
+%
+\only<-78>{%
+\only<-77>{%
+\item<63-> \sqlilIdx{CHECK}\sqlIdx{CONSTRAINT!CHECK}-Einschränkungen werden in \glsShort{SQL} im \menu{Expression} definiert.%
+}%
+\item<64-> Um das Feld~\sqlil{national_id} zu validieren, spezifizieren wir den \glslink{regex}{Regulären Ausdruck}~(\glsShort{regex}) \sqlil{national_id~\'^\\d\{6\}((19)|(20))\\d\{9\}[0-9X]\$\'}.%
+\only<-72>{%
+\item<65-> \sqlil{national_id ~ xxx} bedeutet, dass der Wert von \sqlil{national_id} zu der \glsShort{regex} \textil{xxx} passen muss.%
+}\only<-73>{%
+\item<66-> In der \glsShort{regex}, steht \textil{^} für den Anfang des Textes.%
+}\only<-74>{%
+\item<67-> \textil{^\\d\{6\}}~bedeutet, das 6~Ziffern sofort auf \textil{^} folgen müssen, also genau am Start des Textes stehen müssen.%
+}\only<-75>{%
+\item<68-> Dann kommt \textil{((19)|(20))}, was bedeutet, dass die nächsten beiden Zeichen entweder \inQuotes{19} oder \inQuotes{20} seien müssen.%
+}\only<-76>{%
+\item<69-> Diese beiden Zeichen sind die ersten beiden Ziffern des Geburtsjahrs.%
+}\only<-77>{%
+\item<70-> Wir lassen also keine \glsShort{dateOfBirth}s vor 19\textcolor{gray}{00} oder nach 20\textcolor{gray}{99} zu.%
+\item<71-> Wir verlangen dann mit \textil{\\d\{9\}} dass neun Ziffern folgen.%
+\item<72-> OK, wir könnten auch prüfen das die nächsten zwei Ziffern gültige Monate und die zwei Ziffern danach gültige Tage sind.%
+\item<73-> In einer echten Anwendung würde ich das tun, hier lassen wir das als Übung für die interessierten Studenten.%
+\item<74-> So oder so, wir haben jetzt $6+2+9=17$~Ziffern.%
+\item<75-> Nur das letzte Zeichen -- eine Prüfsumme -- ist übrig, welche entweder 0~to~9 oder~X seien kann.%
+\item<76-> Das wird mit \textil{[0-9X]} ausgedrückt.%
+\item<77-> Das folgende \textil{\$} markiert das Ende der Zeichenkette, welche also direkt nach der Prüfsumme enden muss.%
+}%
+\item<78-> Wir klicken auf~\menu{Apply}.%
+}%
+%
+\only<-79>{%
+\item<79-> Die neue Einschränkung erscheint und wir klicken auf~\menu{Add Item}~\pgmodelerAddItem.%
+}%
+%
+\only<-82>{%
+\only<-81>{%
+\item<80-> Wir erstellen eine \sqlilIdx{CHECK}\sqlIdx{CONSTRAINT!CHECK}-Einschränkung für die Spalte~\sqlil{mobile}.%
+}%
+\item<81-> Als Ausdruck wählen wir~\sqlil{mobile ~ '^\\d\{11\}\$'}, was einen Text aus genau 11~Ziffern erfordert.%
+\item<82-> Wir klicken auf~\menu{Apply}.%
+}%
+%
+\only<-83>{%
+\item<83-> Die neue Einschränkung erscheint und wir klicken auf~\menu{Add Item}~\pgmodelerAddItem.%
+}%
+%
+\only<-88>{%
+\only<-84>{%
+\item<84-> Wir definieren die \sqlilIdx{CHECK}\sqlIdx{CONSTRAINT!CHECK}-Einschränkung für das \glsShort{dateOfBirth} und nennen sie~\sqlil{student_date_of_birth_check}.%
+}\only<-85>{%
+\item<85-> Eine Bedingung ist \sqlil{date_of_birth > '1900-01-01'}, also Studenten können nicht vor 1900 geboren sein.%
+}\only<-87>{%
+\item<86-> Eine zweite Bedingung ist \sqlil{date_of_birth < '2100-01-01'}, was Studenten aus dem 22.~Jahrhundert verbietet.%
+}%
+\item<87-> Wir verbinden beide Bedingungen mit~\sqlilIdx{AND}.%
+\item<88-> Wir klicken auf~\menu{Apply}.%
+}%
+%
+\only<-93>{%
+\item<89-> Die neue Einschränkung erscheint.%
+\only<-92>{%
+\item<90-> Wir \emph{könnten} nun eine Einschränkung definieren, die prüft, ob die acht Ziffern des Geburtsdatums in der Ausweisnummer mit dem Geburtsdatum hier übereinstimmen.%
+\item<91-> Das wäre ein ziemlich cooler Schutz gegen Tippfehler.%
+\item<92-> Vielleicht wäre es eine gute Übung, das auszuprobieren {\dots} hier machen wir das nicht.%
+}%
+\item<93-> Egal. Wir klicken auf~\menu{Add Item}~\pgmodelerAddItem.%
+}%
+%
+\only<-106>{%
+\item<94-> Wir erstellen eine \sqlilIdx{CHECK}-Einschränkung für die Spalte~\sqlil{name}\only<-105>{ und nennen sie~\sqlil{student_name_check}}.%
+\only<-105>{%
+\item<95-> Wir verwenden die \glsShort{regex}~\expandafter\sqlil{name ~ \'^\\S+.*\\S+\$\'}.%
+}%
+\only<-103>{%
+\item<96-> Hier ist \textil{^} wieder der Anfang des Strings.%
+}\only<-104>{%
+\item<97-> \textil{\\S} steht für \inQuotes{druckbares Zeichen}, also kein Leerzeichen oder Tabulator.%
+}\only<-105>{%
+\item<98-> \textil{+} bedeutet \inQuotes{mindestens eins}.%
+\item<99-> \textil{^\\S+} bedeutet also, dass die Zeichenkette mit mindestens einem druckbaren Zeichen anfangen muss.%
+\item<100-> \textil{.} steht für ein beliebiges Zeichen.%
+\item<101-> \textil{*} bedeutet \inQuotes{beliebig viele}.%
+\item<102-> \textil{.*} bedeutet also, dass beliebig viele beliebige Zeichen auf die druckbaren Zeichen am Anfang folgen können.%
+\item<103-> Dann kommt \textil{\\S+\$}, wobei \textil{\$} für das Ende der Zeichenkette steht.%
+\item<104-> \textil{\\S+\$} bedeutet also, dass die Zeichenkette mit mindestens einem durckbaren Zeichen enden muss.%
+\item<105-> Jeder Name muss also mit druckbaren Zeichen anfangen und enden.%
+}%
+\item<106-> Wir klicken auf~\menu{Apply}.%
+}%
+%
+\only<-108>{%
+\item<107-> Die neue Einschränkung erscheint.%
+\item<108-> Wir find soweit fertig und erstellen die Tabelle durch Klick auf~\menu{Apply}.%
+}%
+%
+\only<-110>{%
+\item<109-> Eine neue Tabelle erscheint in unserem \glsShort{ERD} fast in unserer kompakten Syntax.%
+\item<110-> Wir klicken auf das Hauptmenü~\pgmodelerMainMenu.
+}%
+%
+\only<-112>{%
+\item<111-> Wir wollen das Modell nun in eine Datei speichern.%
+\item<112-> Wir klicken auf~\menu{\pgmodelerMainMenu>File>Save as}.
+}%
+%
+\only<-114>{%
+\item<113-> Weil das Modell neu und ungeprüft ist, werden wir gefragt, es zu validieren.%
+\item<114-> Wir klicken auf~\menu{Validate}.%
+}%
+%
+\only<-116>{%
+\item<115-> Wir können nun einen Dateiname und ein Verzeichnis auswählen, wo das Modell gespeichert werden soll.%
+\item<116-> Wir wählen den Name \sqlil{student_database_1} und klicken auf \menu{Save}.%
+}%
+%
+\only<-119>{%
+\item<117-> Wir sind wieder im Hauptfenster.%
+\item<118-> Wir sehen einen Balken mit Knöpfen, einer ist~\menu{Validate}.%
+\item<119-> Wir klicken darauf.%
+}%
+%
+\only<-122>{%
+\item<120-> Unser Modell wird validiert.%
+\item<121-> Es ist OK.%
+\item<122-> Wir schließen das Log-Fenster.%
+}%
+%
+\only<-123>{%
+\item<123-> Wir wollen das Modell nun exportieren und klicken auf~\menu{Export}.%
+}%
+%
+\only<-126>{%
+\only<-125>{%
+\item<124-> Wir wollen es als Grafik speichern.%
+}%
+\item<125-> Wir klicken auf \menu{Graphics file} und wählen \menu{Vectorial~(SVG)}, wodurch unser Modell im \glsShort{SVG}-Format gespeichert werden wird. %
+\item<126-> Dann klicken wir auf den \menu{File}~Balken.
+}%
+%
+\only<-128>{%
+\item<127-> Wir wählen wieder einen Dateiname und bleiben bei \sqlil{student_database_1}.%
+\item<128-> Wir klicken auf~\menu{Save}.%
+}%
+%
+\only<-129>{%
+\item<129-> Wir können nun auf \menu{Export} klicken.%
+}%
+%
+\only<-130>{%
+\item<130-> Das Modell wird exportiert.%
+}%
+%
+\only<-133>{%
+\only<-132>{%
+\item<131-> Das ist die exportierte Vektorgrafik.%
+}%
+\item<132-> Sie sieht ganz nett aus.%
+\item<133-> Wenn wir ein Modell mit mehr Tabellen gemacht hätten, würde es cooler aussehen.%
+}%
+%
+%
+\only<-138>{%
+\only<-136>{%
+\item<134-> Wir öffnen den \menu{Export}-Dialog nochmal.%
+}\only<-137>{%
+\item<135-> Dieses Mal exportieren wir unser Modell nach \glsShort{SQL}.%
+}\only<-137>{%
+\item<136-> Wir klicken auf~\menu{SQL file}.%
+}%
+\item<137-> \alert{Wichtig:~Markieren Sie die Ausgabe als \emph{Split}!}%
+\item<138-> Dann klicken wir auf den File-Balken.%
+}%
+%
+\only<-141>{%
+\only<-140>{%
+\item<139-> Weil wir unser Modell mit der \emph{split}-Methode exportieren, erzeugen wir mehrere \glsShort{SQL}-Dateien.%
+}%
+\item<140-> Anstelle eines Dateinamens geben wir einen Ordnername an.%
+\item<141-> Wir erzeugen einen neuen Ordner und nennen ihn~\sqlil{generated_sql}.%
+}%
+%
+\only<-142>{%
+\item<142-> Der Ordner wird erstellt. Wir klicken auf~\menu{Open}.%
+}%
+%
+\only<-143>{%
+\item<143-> Das bringt uns zurück zum \emph{Export model}-Dialog, wo wir auf \menu{Export} klicken.%
+}%
+%
+\only<-145>{%
+\item<144-> Das logische Modell wird nach \glsShort{SQL} exportiert.%
+\item<145-> Wir schließen den Dialog mit Klick auf~\menu{Close}.%
+}%
+%
+\only<-148>{%
+\only<-147>{%
+\item<146-> Wir können uns den Ordner nun mit einem Dateibrowser unserers \glsShort{OS} anschauen.%
+}%
+\item<147-> Wir finden, dass mehrere Dateien drin sind, die wir uns im Folgenden anschauen werden.%
+\item<148-> Wir können und werden sie auf dem \postgresql\ \glslink{server}{Server} via \psql\ ausführen.%
+}%
+%
+\end{itemize}%
+%
+\locateGraphic{2-3}{width=0.5\paperwidth}{graphics/yedErdEntitiesA21erd}{0.25}{0.3}%
+\locateGraphic{4-5}{width=0.5\paperwidth}{graphics/makeStudentTable/makeStudentTable01startPgmodeler}{0.25}{0.3}%
+\locateGraphic{6}{width=0.5\paperwidth}{graphics/makeStudentTable/makeStudentTable02newModel}{0.25}{0.3}%
+\locateGraphic{7-9}{width=0.5\paperwidth}{graphics/makeStudentTable/makeStudentTable03rightClickProperties}{0.25}{0.3}%
+\locateGraphic{10-12}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable04propertiesNameApply}{0.275}{0.3}%
+\locateGraphic{13-14}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable05newTable}{0.275}{0.3}%
+\locateGraphic{15-17}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable06tableNameColumns}{0.275}{0.3}%
+\locateGraphic{18}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable07newColumn}{0.275}{0.3}%
+\locateGraphic{19-21}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable08studentIdNameAndType}{0.275}{0.3}%
+\locateGraphic{22-24}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable09studentIdLenNotNullApply}{0.275}{0.3}%
+\locateGraphic{25-26}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable10studentIdAddedNewColumn}{0.275}{0.3}%
+\locateGraphic{27-30}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable11nationalIdNameTypeLenNotNullApply}{0.275}{0.3}%
+\locateGraphic{31}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable12nationalIdAddedNewColumn}{0.275}{0.3}%
+\locateGraphic{32-35}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable13nameNameTypeLenNotNullApply}{0.275}{0.3}%
+\locateGraphic{36-37}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable14nameAddedNewColumn}{0.275}{0.3}%
+\locateGraphic{38-40}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable15addressNameTypeLenNotNullApply}{0.275}{0.3}%
+\locateGraphic{41-42}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable16addressAddedNewColumn}{0.275}{0.3}%
+\locateGraphic{43-45}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable17mobileNameTypeLenNotNullApply}{0.275}{0.3}%
+\locateGraphic{46-47}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable18mobileAddedNewColumn}{0.275}{0.3}%
+\locateGraphic{48-50}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable19dateOfBirthNameTypeNotNullApply}{0.275}{0.3}%
+\locateGraphic{51-52}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable20dateOfBirthAddedConstraints}{0.275}{0.3}%
+\locateGraphic{53}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable21newConstraint}{0.275}{0.3}%
+\locateGraphic{54-57}{width=0.55\paperwidth}{graphics/makeStudentTable/makeStudentTable22studentIdPkData}{0.225}{0.3}%
+\locateGraphic{58-59}{width=0.55\paperwidth}{graphics/makeStudentTable/makeStudentTable23studentIdColAddedApply}{0.225}{0.3}%
+\locateGraphic{60}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable24studentIdAddedNewConstraint}{0.275}{0.3}%
+\locateGraphic{61-62}{width=0.55\paperwidth}{graphics/makeStudentTable/makeStudentTable25nationalIdCheck}{0.225}{0.3}%
+\locateGraphic{63-64,78}{width=0.55\paperwidth}{graphics/makeStudentTable/makeStudentTable26nationalIdConstraintApply}{0.225}{0.3}%
+\locateGraphic{79}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable27nationalIdAddedNewConstraint}{0.275}{0.3}%
+\locateGraphic{80-82}{width=0.55\paperwidth}{graphics/makeStudentTable/makeStudentTable28mobileCheck}{0.225}{0.3}%
+\locateGraphic{83}{width=0.55\paperwidth}{graphics/makeStudentTable/makeStudentTable29mobileAddedNewConstraint}{0.225}{0.3}%
+\locateGraphic{84-88}{width=0.55\paperwidth}{graphics/makeStudentTable/makeStudentTable30dateOfBirthCheck}{0.225}{0.3}%
+\locateGraphic{89,93}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable31dateOfBirthAddedNewConstraint}{0.275}{0.3}%
+\locateGraphic{94-95,106}{width=0.55\paperwidth}{graphics/makeStudentTable/makeStudentTable32nameCheck}{0.225}{0.3}%
+\locateGraphic{107-108}{width=0.45\paperwidth}{graphics/makeStudentTable/makeStudentTable33nameCheckAddedApply}{0.275}{0.3}%
+%
+\locateGraphic{109-110}{width=0.5\paperwidth}{graphics/makeStudentTable/makeStudentTable34modelMenu}{0.25}{0.3}%
+\locateGraphic{111-112}{width=0.5\paperwidth}{graphics/makeStudentTable/makeStudentTable35saveAs}{0.25}{0.3}%
+\locateGraphic{113-114}{width=0.5\paperwidth}{graphics/makeStudentTable/makeStudentTable36shouldValidate}{0.25}{0.3}%
+\locateGraphic{115-116}{width=0.5\paperwidth}{graphics/makeStudentTable/makeStudentTable37saveAsWhere}{0.25}{0.3}%
+\locateGraphic{117-119}{width=0.5\paperwidth}{graphics/makeStudentTable/makeStudentTable38validate}{0.25}{0.3}%
+\locateGraphic{120-122}{width=0.5\paperwidth}{graphics/makeStudentTable/makeStudentTable39validated}{0.25}{0.3}%
+\locateGraphic{123}{width=0.5\paperwidth}{graphics/makeStudentTable/makeStudentTable40export}{0.25}{0.3}%
+\locateGraphic{124-126}{width=0.4\paperwidth}{graphics/makeStudentTable/makeStudentTable41exportAsSvg}{0.3}{0.3}%
+\locateGraphic{127-128}{width=0.4\paperwidth}{graphics/makeStudentTable/makeStudentTable42fileName}{0.3}{0.3}%
+\locateGraphic{129}{width=0.4\paperwidth}{graphics/makeStudentTable/makeStudentTable43exportToSvgExport}{0.3}{0.3}%
+\locateGraphic{130}{width=0.4\paperwidth}{graphics/makeStudentTable/makeStudentTable44exportToSvgExported}{0.3}{0.3}%
+\locateGraphic{131-133}{width=0.3\paperwidth}{graphics/makeStudentTable/makeStudentTable45svg}{0.35}{0.27}%
+%
+\locateGraphic{134-138}{width=0.4\paperwidth}{graphics/makeStudentTable/makeStudentTable46exportToSql}{0.3}{0.3}%
+\locateGraphic{139-141}{width=0.7\paperwidth}{graphics/makeStudentTable/makeStudentTable47folderName}{0.15}{0.33}%
+\locateGraphic{142}{width=0.7\paperwidth}{graphics/makeStudentTable/makeStudentTable48folderOpen}{0.15}{0.33}%
+\locateGraphic{143}{width=0.4\paperwidth}{graphics/makeStudentTable/makeStudentTable49export}{0.3}{0.3}%
+\locateGraphic{144-145}{width=0.4\paperwidth}{graphics/makeStudentTable/makeStudentTable50exported}{0.3}{0.3}%
+\locateGraphic{146-148}{width=0.7\paperwidth}{graphics/makeStudentTable/makeStudentTable51explorer}{0.15}{0.33}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Datenbank Erstellen}%
+\begin{itemize}%
+\item Es wurde ein Skript \programUrl{logical:teachingManagment:student_database_1:01_student_database_database_2001} zum Erstellen der Datenbank generiert.%
+\end{itemize}%
+\gitLoadAndExecSQL{logical:teachingManagment:student_database_1:01_student_database_database_2001}{}{teachingManagement/logical/student_database_1/generated_sql}{01_student_database_database_2001.sql}{}{}{}%
+%
+\listingSQLandOutput{}{logical:teachingManagment:student_database_1:01_student_database_database_2001}{}{0.05}{0.3}{0.9}{0.65}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle}%
+\parbox{0.225\paperwidth}{\small\begin{itemize}%
+\item Das auto-generierte Script \scalebox{0.6}{\programUrl{logical:teachingManagment:student_database_1:03_public_student_table_5071}} erstellt die Tabelle \sqlil{student}.%
+\end{itemize}}%
+%
+\gitLoadAndExecSQL{logical:teachingManagment:student_database_1:03_public_student_table_5071}{}{teachingManagement/logical/student_database_1/generated_sql}{03_public_student_table_5071.sql}{student_database}{}{}%
+%
+\listingSQLandOutput{}{logical:teachingManagment:student_database_1:03_public_student_table_5071}{}{0.3}{0.05}{0.7}{0.9}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Daten Einfügen}%
+\parbox{0.45\paperwidth}{%
+\begin{itemize}%
+\only<-5>{%
+\item Wir probieren die Tabelle aus, in dem wir ein paar Daten einfügen.%
+\item<2-> Dazu schreiben wir selbst die \glsShort{SQL}-Befehle rechts.
+\item<3-> Die ersten beiden Datensätze sind OK.%
+\item<4-> Der dritte Datensatz verletzt Einschränkungen und kann nicht eingefügt werden.%
+}%
+\only<-6>{%
+\item<5-> Im Ergebnis sehen wir genau, was wir erwartet haben: Die ersten beiden Datensätze wurden erfolgreich eingefügt, der dritte nicht.%
+}%
+\item<6-> Der Mathematiker LIU Hui~(刘徽), der eine Methode zur Annäherung der Kreiszahl~\numberPi\ erfunden und in seinen Kommentaren zum Buch \emph{Jiu Zhang Suanshu}~(九章算术)\cite{OR2003LH,SCL1999TNCOTMACAC,S1998LHATFGAOCM,D2010AALHOCAS,C2002LFLHADWTDM} veröffentlichte, lebte im 3.~Jahrhundert~\glsShort{CE}\cite{OR2003LH,Y2024COACMMLHFHTIOMACE} {\dots} wurde also zu früh geboren, um sich als Student der 合肥大学 einzuschreiben.%
+\item<7-> (Dieses Skript haben wir selber gemacht, das ist nicht von \pgmodeler.)
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{logical:teachingManagment:student_database_1:insert}{}{teachingManagement/logical/student_database_1}{insert.sql}{student_database}{}{}%
+%
+\listingSQLandOutput{}{logical:teachingManagment:student_database_1:insert}{}{0.5}{0.05}{0.48}{0.9}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Datenbank Löschen}%
+\begin{itemize}%
+\item Zu guter Letzt löschen wir die Datenbank wieder.%
+\item<2-> Beachten Sie, dass wir uns in der Connection-\glsShort{URI} nicht auf die Datenbank verbinden {\dots} sonst könnten wir sie ja nicht löschen.%
+\item<3-> (Dieses Skript haben wir selber gemacht, das ist nicht von \pgmodeler.)
+\end{itemize}%
+\gitLoadAndExecSQL{logical:teachingManagement:student_database_1:cleanup}{}{teachingManagement/logical/student_database_1}{cleanup.sql}{}{}{}%
+%
+\listingSQLandOutput{}{logical:teachingManagement:student_database_1:cleanup}{}{0.05}{0.4}{0.9}{0.55}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Was wir gelernt haben}%
+\usefulTool{pgmodeler}{%
+Mit dem \pgmodeler\ haben wir ein Werkzeug, das es uns erlaubt, logische Modelle für Datenbanken im Grunde als \glsShort{ERD}s zu malen.\only<-5>{\uncover<2->{\only<-5>{ %
+Diese Modelle sind leicht zu verstehende Grafiken in der Krähenfußnotation.}\uncover<3->{\only<-5>{ %
+Der \pgmodeler\ kann sich direkt auf den \postgresql\ \glslink{server}{Server} verbinden und die Modelle direkt dorthin schicken.}\uncover<4->{ %
+Es kann die logischen Modelle auch in \glsShort{SQL}-Skripte exportieren, die wir dann ausführen können.\uncover<5->{ %
+Er ist eine nützliche \glsShort{GUI}, um logische Schemas für Datenbanken zu erstellen.%
+}}}}}%
+}%
+%
+\uncover<6->{%
+\bestPractice{defenseInDepth}{%
+Daten sollten auf allen Ebenen einer Applikation geprüft werden\only<-6>{.}\uncover<7->{: %
+in den Formularen, wo sie eingegeben werden, in der Datenbank mit Einschränkungen, und in den Applikationen, die sie wieder aus der Datenbank laden.\uncover<8->{ %
+Je mehr Verteidigungslinien wir durch Einschränkungen sowie statische und dynamische Überprüfungen erzeugen, desto größer ist unsere Chance, Fehler früh zu entdecken, ihren Grund zu finden, und zu verhindern, dass sie sich weiter fortpflanzen.\uncover<9->{ %
+Dadurch bekommen wir die beste Chance, Fehler zu korrigieren und zu verhindern, dass Fehler andere Daten beschmutzen.\uncover<10->{ %
+Daher sind auch einfache Einschränkungen immer sinnvoll.}}}}%
+}}%
+\end{frame}%
+%
+\section{Zusammengesetzte und Mehrwertige Attribute~(Teil~2)}%
+%
+\begin{frame}[t]%
+\frametitle{Zusammengesetzte und Mehrwertige Attribute~(Teil~2)}%
+\begin{itemize}%
+\only<-3>{%
+\item Wir sind dabei, Entitätstypen zum relatinalen Datenmodell zu übersetzen.%
+}%
+\item<2-> Dabei werden zusammengesetzte Attribute in ihre Komponenten zerlegt, die dann einzelne Spalten werden.%
+\item<3-> Mehrwertige Attribute werden eigene Tabellen.%
+\item<4-> Als wir angefangen hatten, konzeptuelle Modelle zu erstellen, hatten wir eine Variante des Studenten-Entitätstyps, die sowohl zusammengesetzte als auch mehrwertige Attribute hatte.%
+\item<5-> Wir benutzen nun dieses Beispiel und erstellen ein passendes logisches Modell.%
+\item<6-> Wir haben gerade erst ein logisches Modell für einen (anderen) \emph{Student}-Entitätstyp erstellt.%
+\item<7-> Der hatte ein einfaches Attribut~\sqlil{name} und ein einwertiges \sqlil{mobile}-Attribut.%
+\item<8-> Wenn wir diese beiden Spalten und entsprechenden Einschränkungen weglassen, dann ist dieses alte Modell ein guter Startpunkt.%
+\item<9-> Sie können es entweder nochmal malen oder die entsprechenden Spalten/Einschränkungen löschen.
+\end{itemize}%
+\locateGraphic{4}{width=0.4\paperwidth}{graphics/erdStudent2}{0.3}{0.42}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Student Entitätstyp~2}%
+\begin{itemize}%
+%
+\only<-2>{%
+\only<-1>{%
+\item Wir wollen nun ein Modell erstellen, in dem es sowohl zusammengesetzte als auch mehrwertige Attribute gibt.%
+}%
+\item<2-> Hier ist ein entsprechendes konzeptuelles Modell, dass wir ein ein logisches Modell basierend auf dem relationalen Datenmodell umsetzen wollen.%
+}%
+%
+\only<-5>{%
+\item<3-> Im \pgmodeler\ fangen wir mit dem selben Modell wie vorhin an.%
+\item<4-> Allerdings ohne die Spalten \sqlil{name} und \sqlil{mobile} und ihre entsprechenden Einschränkungen.%
+\item<5-> Wir doppel-klicken auf die Tabelle \sqlil{student}, um sie zu bearbeiten.%
+}%
+%
+\only<-6>{%
+\item<6-> Wir wollen zuerst die Spalten \sqlil{full_name} und \sqlil{saltulation} einfügen, die das zusammengesetzte Attribut \sqlil{name} repräsentieren.%
+}%
+%
+\only<-9>{%
+\item<7-> Wir fügen eine Spalte \sqlil{full_name} hinzu\only<-7>{, die ein beliebig-langer String mit der Maximallänge~255 ist und \sqlil{NOT NULL} seien muss}.%
+\item<8-> Wir fügen die Spalte \sqlil{saltulation} hinzu\only<-8>{, die ein beliebig-langer String mit der Maximallänge~255 ist}.%
+\item<9-> Wir klicken auf~\menu{Apply}.%
+}%
+%
+\only<-11>{%
+\item<10-> Jedes mehrwertige Attribut wandert in eine eigene Tabelle.%
+\item<11-> Also erstellen wir eine neue Tabelle mit rechts-Klick in unser Modell und Auswahl von \menu{New>Schema object>Table}.%
+}%
+%
+\only<-13>{%
+\item<12-> Wir nennen die Tabelle \sqlil{mobile}.%
+\item<13-> Wir klicken auf \menu{Columns} um Spalten zu definieren.%
+}%
+%
+\only<-19>{%
+\only<-14>{%
+\item<14-> Wir wollen jeweils eine Mobiltelefonnummer und eine Referenz auf den Studenten-Datensatz speichern, zu dem sie gehört.%
+}\only<-16>{%
+\item<15-> Keines von beiden muss unbedingt einmalig (\sqlil{UNIQUE}) sein, weil ja die selbe Person sich nacheinander in mehrere Studiengänge einschreiben kann.%
+}\only<-17>{%
+\item<16-> Wir brauchen also einen Ersatzschlüssel.%
+}\only<-18>{%
+\item<17-> Wr erstellen die Spalte \sqlil{id} vom Typ \sqlil{integer} und markieren sie als \menu{Identiy}, die \menu{BY DEFAULT} generiert wird.%
+}%
+\item<18-> Das ist in etwa das gleiche, wie was wir im Fabrik-Beispiel gemacht haben.%
+\item<19-> Wir klicken auf~\menu{Apply}.%
+}%
+%
+\only<-20>{%
+\item<20-> Wir erstellen eine Spalte \sqlil{phone} genauso, wie wir das vorhin auch schon gemacht haben.%
+}%
+%
+\only<-21>{%
+\item<21-> Wir erstellen eine Spalte~\sqlil{student} die genau den selben Datentyp wie die \sqlil{student_id}-Spalte mit dem Primärschlüssel der Tabelle \sqlil{student} haben muss.%
+}%
+%
+\only<-22>{%
+\item<22-> Wir haben unsere drei Spalten erstellt und machen jetzt mit den \menu{Constraints} weiter.%
+}%
+%
+\only<-23>{%
+\item<23-> Zuerst erstellen wir ein Primärschlüssel-Constraint für die Spalte~\sqlil{id}.%
+}%
+%
+\only<-24>{%
+\item<24-> Dann erstellen wir nochmal die selbe Mobiltelefonnummer-Überprüf-Einschrängung wie vorhin.%
+}%
+%
+\only<-28>{%
+\only<-26>{%
+\item<25-> Nun wollen wir die Zeilen dieser Tabelle mit den Zeilen der Tabelle \sqlil{student} verbinden.%
+}\only<-27>{%
+\item<26-> Wir erstellen eine \sqlilIdx{FOREIGN KEY}-Einschränkung und nennen sie \sqlil{mobile_student_id_fk}.%
+}%
+\item<27-> Wir wählen \sqlilIdx{FOREIGN KEY} als \menu{Type:}.%
+\item<28-> Dann fügen wir die Spalte~\sqlil{student} unter \menu{Columns} hinzu und klicken auf \menu{Referenced Columns}.%
+}%
+%
+\only<-29>{%
+\item<29-> Dort klicken wir auf \menu{Table} und wählen die Tabelle \sqlil{student} in dem Dialog, der sich öffnet, aus.%
+}%
+%
+\only<-30>{%
+\item<30-> Dann klicken wir auf \menu{Column:}, wählen \sqlil{student_id}, und fügen sie über \pgmodelerAddItem\ hinzu.%
+}%
+%
+\only<-32>{%
+\item<31-> Sie erscheint in der Spalten-Liste.%
+\item<32-> Wir klicken auf \menu{Apply}.%
+}%
+%
+\only<-34>{%
+\item<33-> Wir haben drei Spalten und drei Einschränkungen erstellt.%
+\item<34-> Wir klicken auf \menu{Apply} um die Tabelle zu erstellen.%
+}%
+%
+\only<-38>{%
+\only<-36>{%
+\item<35-> Wir sehen das Modell in der Krähenfußnotation.%
+}\only<-37>{%
+\item<36-> Wie sehen beide Tabellen.%
+}%
+\only<-37>{%
+\item<37-> Wir sehen, dass jede Zeile der Tabelle \sqlil{mobile} mit genau einer Zeile der Tabelle \sqlil{student} verbunden sein muss.%
+}%
+\item<38-> Wir sehen, dass jede Zeile der Tabelle \sqlil{student} mit beliebig vielen Zeilen der Tabelle \sqlil{mobile} verbunden sein kann.%
+}%
+%
+\only<-39>{%
+\item<39-> Wenn wir das Modell als \glsShort{SVG}-Grafik exportieren, dann sieht das so aus.%
+}%
+%
+\only<-40>{%
+\item<40-> Um mehr Details sehen zu können, drücken wir auf den \pgmodelerToggleCompact-Button in der Werkzeugleiste oben rechts.%
+}%
+%
+\only<-42>{%
+\item<41-> Mehr Details, wie die Spaltentypen, tauchen auf, so dass die Tabellen sich jetzt teilweise verdecken.%
+\item<42-> Wir ziehen sie mit der Maus ein wenig auseinander.%
+}%
+%
+\only<-43>{%
+\item<43-> Das neue Layout sieht viel klarer aus.%
+}%
+%
+%\only<-45>{%
+\item<44-> Wir exportieren es wieder nach \glsShort{SVG} exportieren.%
+\item<45-> Diese Grafik hat dann auch mehr Details.%
+%}%
+%
+\item<46-> Nun exportieren wir das Modell wieder in mehrere \glsShort{SQL}-Dateien.%
+\end{itemize}%
+%%
+\locateGraphic{-2}{width=0.55\paperwidth}{graphics/erdStudent2}{0.225}{0.27}%
+\locateGraphic{3-5}{width=0.58\paperwidth}{graphics/newStudentDb/newStudentDb01openProperties}{0.21}{0.3}%
+\locateGraphic{6}{width=0.45\paperwidth}{graphics/newStudentDb/newStudentDb02addColumns}{0.275}{0.3}%
+\locateGraphic{7-9}{width=0.45\paperwidth}{graphics/newStudentDb/newStudentDb03columnsAdded}{0.275}{0.3}%
+\locateGraphic{10-11}{width=0.7\paperwidth}{graphics/newStudentDb/newStudentDb04newTable}{0.15}{0.3}%
+\locateGraphic{12-13}{width=0.45\paperwidth}{graphics/newStudentDb/newStudentDb05newTableMobile}{0.275}{0.3}%
+\locateGraphic{14-19}{width=0.45\paperwidth}{graphics/newStudentDb/newStudentDb06idGenerated}{0.275}{0.3}%
+\locateGraphic{20}{width=0.45\paperwidth}{graphics/newStudentDb/newStudentDb07phone}{0.275}{0.3}%
+\locateGraphic{21}{width=0.45\paperwidth}{graphics/newStudentDb/newStudentDb08student}{0.275}{0.3}%
+\locateGraphic{22}{width=0.45\paperwidth}{graphics/newStudentDb/newStudentDb09columns}{0.275}{0.3}%
+\locateGraphic{23}{width=0.6\paperwidth}{graphics/newStudentDb/newStudentDb10idPk}{0.2}{0.24}%
+\locateGraphic{24}{width=0.6\paperwidth}{graphics/newStudentDb/newStudentDb11phoneCheck}{0.2}{0.24}%
+\locateGraphic{25-28}{width=0.6\paperwidth}{graphics/newStudentDb/newStudentDb12studentIdFk1}{0.2}{0.3}%
+\locateGraphic{29}{width=0.6\paperwidth}{graphics/newStudentDb/newStudentDb13studentIdFkSelectTable}{0.2}{0.28}%
+\locateGraphic{30}{width=0.6\paperwidth}{graphics/newStudentDb/newStudentDb14studentIdFkSelectCol}{0.2}{0.28}%
+\locateGraphic{31-32}{width=0.6\paperwidth}{graphics/newStudentDb/newStudentDb15studentIdFk2}{0.2}{0.28}%
+\locateGraphic{33-34}{width=0.45\paperwidth}{graphics/newStudentDb/newStudentDb16mobileConstraints}{0.275}{0.28}%
+\locateGraphic{35-38}{width=0.6\paperwidth}{graphics/newStudentDb/newStudentDb17model}{0.2}{0.3}%
+\locateGraphic{39}{width=0.6\paperwidth}{graphics/newStudentDb/newStudentDb18model}{0.2}{0.3}%
+\locateGraphic{40}{width=0.8\paperwidth}{graphics/newStudentDb/newStudentDb19toggleCompact}{0.1}{0.27}%
+\locateGraphic{41-42}{width=0.65\paperwidth}{graphics/newStudentDb/newStudentDb20notCompactViewDragTables}{0.175}{0.31}%
+\locateGraphic{43}{width=0.7\paperwidth}{graphics/newStudentDb/newStudentDb21tablesDragged}{0.15}{0.3}%
+\locateGraphic{44-}{width=0.75\paperwidth}{graphics/newStudentDb/newStudentDb22model}{0.125}{0.38}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Datenbank Erstellen}%
+\begin{itemize}%
+\item Es wurde ein Skript \programUrl{logical:teachingManagment:student_database_2:01_student_database_database_2001} zum Erstellen der Datenbank generiert.%
+\end{itemize}%
+\gitLoadAndExecSQL{logical:teachingManagment:student_database_2:01_student_database_database_2001}{}{teachingManagement/logical/student_database_2/generated_sql}{01_student_database_database_2001.sql}{}{}{}%
+%
+\listingSQLandOutput{}{logical:teachingManagment:student_database_2:01_student_database_database_2001}{}{0.05}{0.3}{0.9}{0.6}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle}%
+\parbox{0.225\paperwidth}{\small\begin{itemize}%
+\item Das auto-generierte Script \scalebox{0.6}{\programUrl{logical:teachingManagment:student_database_2:03_public_student_table_5071}} erstellt die Tabelle \sqlil{student}.%
+\end{itemize}}%
+%
+\gitLoadAndExecSQL{logical:teachingManagment:student_database_2:03_public_student_table_5071}{}{teachingManagement/logical/student_database_2/generated_sql}{03_public_student_table_5071.sql}{student_database}{}{}%
+%
+\listingSQLandOutput{}{logical:teachingManagment:student_database_2:03_public_student_table_5071}{}{0.3}{0.05}{0.65}{0.9}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle}%
+\begin{itemize}%
+\item Das auto-generierte Script \scalebox{0.6}{\programUrl{logical:teachingManagment:student_database_2:04_public_mobile_table_5081}} erstellt die Tabelle \sqlil{mobile}.%
+\end{itemize}%
+%
+\gitLoadAndExecSQL{logical:teachingManagment:student_database_2:04_public_mobile_table_5081}{}{teachingManagement/logical/student_database_2/generated_sql}{04_public_mobile_table_5081.sql}{student_database}{}{}%
+%
+\listingSQLandOutput{}{logical:teachingManagment:student_database_2:04_public_mobile_table_5081}{}{0.15}{0.26}{0.7}{0.9}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{References Einschränkung}%
+\begin{itemize}%
+\item Es wurde ein Skript \programUrl{logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087} zum Erstellen der Fremdschlüssel-\sqlil{REFERENCES}-Einschränkung generiert.%
+\end{itemize}%
+\gitLoadAndExecSQL{logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087}{}{teachingManagement/logical/student_database_2/generated_sql}{05_public_mobile_mobile_student_id_fk_constraint_5087.sql}{student_database}{}{}%
+%
+\listingSQLandOutput{}{logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087}{}{0.05}{0.31}{0.9}{0.65}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Daten Einfügen}%
+\parbox{0.45\paperwidth}{%
+\begin{itemize}%
+\item Wir probieren die Tabellen aus, in dem wir ein paar Daten einfügen.%
+\item<2-> Zuerst fügen wir zwei Datensätze in die Tabelle \sqlil{student} ein.%
+\item<3-> Danach fügen wir drei Telefonnummern in die Tabelle \sqlil{mobile} ein.%
+\item<4-> Danach holen lesen wir die Daten wieder aus%
+\item<5-> Wir verknüfen beide Tabellen über \sqlil{INNER JOIN}.%
+\item<6-> (Dieses Skript haben wir selber gemacht, das ist nicht von \pgmodeler.)
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{logical:teachingManagment:student_database_2:insert_and_select}{}{teachingManagement/logical/student_database_2}{insert_and_select.sql}{student_database}{}{}%
+%
+\listingSQLandOutput{}{logical:teachingManagment:student_database_2:insert_and_select}{}{0.5}{0.05}{0.48}{0.9}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Datenbank Löschen}%
+\begin{itemize}%
+\item Zu guter Letzt löschen wir die Datenbank wieder.%
+\item<2-> Beachten Sie, dass wir uns in der Connection-\glsShort{URI} nicht auf die Datenbank verbinden {\dots} sonst könnten wir sie ja nicht löschen.%
+\item<3-> (Dieses Skript haben wir selber gemacht, das ist nicht von \pgmodeler.)
+\end{itemize}%
+\gitLoadAndExecSQL{logical:teachingManagment:student_database_2:cleanup}{}{teachingManagement/logical/student_database_2}{cleanup.sql}{}{}{}%
+%
+\listingSQLandOutput{}{logical:teachingManagment:student_database_2:cleanup}{}{0.05}{0.4}{0.9}{0.55}%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung: Modellieren}%
+\begin{itemize}%
+\only<-9>{%
+\item Wow, das war viel.%
+}\only<-10>{%
+\item<2-> Wir haben gelernt, wie wir Entitätstypen vom konzeptuellen Modell in logische Schemas des relationalen Datenmodells übersetzen können.%
+}%
+\item<3-> Jeder Entitätstyp wird eine Relation, also eine Tabelle.%
+\item<4-> Seine Attribute werden Spalten dieser Tabelle.%
+\item<5-> Das gilt allerdings nur für einfache ein-wertige Attribute.%
+\item<6-> Zusammengesetzte Attribute werden auf ihre unteilbaren Komponenten heruntergebrochen und diese Werden dann Spalten.%
+\item<7-> Mehrwertige Attribute müssen ganz aus der Tabelle herausgezogen werden.%
+\item<8-> In relationalen Datenbanken sind alle Attribute einwertig.%
+\item<9-> Wir ziehen die mehrwertigen Attribute also in jeweils eine eigene Tabelle.%
+\item<10-> Diese Tabellen sind dann über Fremdschlüssel mit der \inQuotes{Haupttabelle} des Entitätstyps verbunden.%
+\item<11-> Mehrere Zeilen dieser Tabelle können auf eine Zeile in der Haupttabelle verweise, wodurch die mehrwertigkeit realisiert wird.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{PgModeler}%
+\begin{itemize}%
+\item Zum Glück haben wir das neue Werkzeug \pgmodeler\ kennen gelernt.%
+\item<2-> Es erlaubt es uns, logische Modelle für das \postgresql\ \glsShort{dbms} fast genauso zu malen, wie wir es aus \yEd\ gewohnt sind.%
+\item<3-> Die Modelle, die wir mit \yEd\ gemacht haben, waren Technologie-unabhängige konzeptuelle Modelle.%
+\item<4-> Mit \pgmodeler\ machen wir logische Modelle, die an \glsShort{SQL} und das \postgresql\ \glsShort{dbms} gebunden sind.%
+\item<5-> Wir können sie wieder als \glsShort{SVG}-Grafiken exportieren, genauso, wie wir das mit \yEd\ gemacht haben.%
+\item<6-> Wir können sie aber auch nach \glsShort{SQL} exportieren.%
+\item<7-> Und das ist total cool.%
+\item<8-> Wir können unser Datenbankschema mit einer komfortablen \glsShort{GUI} zeichnen.%
+\item<9-> Und dann laden wir es in \postgresql.%
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
