@@ -49,29 +49,29 @@
 \item<3-> Mit der \postgresql-spezifischen \sqlil{RETURNING}-Anweisung geht es noch besser\cite{SE:DA:2020WDSSOAOTNPSDIOR}.%
 \end{itemize}%
 \gitLoadAndExecSQL{factory:update_table_product_1}{}{factory}{update_table_product_1.sql}{factory}{boss}{superboss123}%
-\listingSQLandOutput{1}{factory:update_table_product_1}{}{0.12}{0.17}{0.9}{0.81}
+\listingSQLandOutput{1}{factory:update_table_product_1}{}{0.13}{0.17}{0.9}{0.81}
 \gitLoadAndExecSQL{factory:update_table_product_2}{}{factory}{update_table_product_2.sql}{factory}{boss}{superboss123}%
-\listingSQLandOutput{2}{factory:update_table_product_2}{}{0.12}{0.17}{0.9}{0.81}
+\listingSQLandOutput{2}{factory:update_table_product_2}{}{0.13}{0.17}{0.9}{0.81}
 \gitLoadAndExecSQL{factory:update_table_product_3}{}{factory}{update_table_product_3.sql}{factory}{boss}{superboss123}%
 \gitLoadAndExecSQL{factory:update_table_product_4}{}{factory}{update_table_product_4.sql}{factory}{boss}{superboss123}%
-\listingSQLandOutput{3}{factory:update_table_product_4}{}{0.12}{0.17}{0.9}{0.81}
+\listingSQLandOutput{3}{factory:update_table_product_4}{}{0.13}{0.17}{0.9}{0.81}
 \end{frame}
 %
 \begin{frame}[t]
 \frametitle{Referentielle Integrität während Updates}%
 \begin{itemize}%
-\only<-6>{%
+\only<-7>{%
 \item Wir hatten herausgefunden, dass wir keine Zeilen in die Tabelle~\sqlil{demand} eintragen können, für die es keine entsprechenden Zeilen in den Tabellen~\sqlil{customer} und~\sqlil{product} gibt.%
 \item<2-> Aber was passiert, wenn wir den \sqlil{id}-Wert einer Zeile in der Tabelle~\sqlil{product} \emph{ändern}, so dass die entsprechenden Bestellungen nicht mehr \inQuotes{passen}?%
 \item<3-> Wir wissen:~Herr~Bibbo hat 12 Einheiten des Produkts \inQuotes{Shoe, Size 42} bestellt.\uncover<4->{ %
 \inQuotes{Shoe, Size 42} hat \sqlil{id = 7}.}%
-\item<4-> Was passiert, wenn wir die \sqlil{product}~Tabelle so ändern, dass \inQuotes{Shoe, Size 42} dann \sqlil{id = 20} hat?\uncover<5->{ Die Zeile mit der Bestellung in Tabelle~\sqlil{demand} würde dann ja nicht mehr auf ein existierendes Produkt verweisen\dots}}%
-\item<6-> Wir fragen also: Können wir mit \sqlil{UPDATE} die referentielle Integrität unserer Daten verletzen?%
-\item<9-> Wir können es offenbar nicht.\uncover<10->{~Und das ist gut so!}%
+\item<5-> Was passiert, wenn wir die \sqlil{product}~Tabelle so ändern, dass \inQuotes{Shoe, Size 42} dann \sqlil{id = 20} hat?\uncover<6->{ Die Zeile mit der Bestellung in Tabelle~\sqlil{demand} würde dann ja nicht mehr auf ein existierendes Produkt verweisen\dots}}%
+\item<7-> Wir fragen also: Können wir mit \sqlil{UPDATE} die referentielle Integrität unserer Daten verletzen?%
+\item<10-> Wir können es offenbar nicht.\uncover<11->{~Und das ist gut so!}%
 \end{itemize}%
 \gitLoadAndExecSQL{factory:update_table_product_error}{}{factory}{update_table_product_error.sql}{factory}{boss}{superboss123}%
-\listingSQL{7}{factory:update_table_product_error}{0.05}{0.3}{0.9}{0.79}
-\listingOutput{8}{factory:update_table_product_error}{style=tool_style_sql}{0.05}{0.3}{0.9}{0.79}
+\listingSQL{8}{factory:update_table_product_error}{0.05}{0.3}{0.9}{0.79}
+\listingOutput{9}{factory:update_table_product_error}{style=tool_style_sql}{0.05}{0.3}{0.9}{0.79}
 \end{frame}
 %
 \section{Daten Löschen}%
@@ -106,7 +106,7 @@
 \item<2-> Aber was passiert, wenn wir eine Zeile aus der Tabelle~\sqlil{customer} löschen, auf die Zeilen in der Tabelle~\sqlil{demand} verweisen?%
 \item<3-> Wir wissen:~Herr~Bebbo hat vier Bestellungen aufgegeben.\uncover<4->{ %
 Herr~Bebbo hat \sqlil{id = 2} Tabelle~\sqlil{customer}.}%
-\item<5-> Was passiert, wenn wir diesen Eintrag aus der Tabelle~\sqlil{customer} löschen?\uncover<6->{ Die Zeilen mit seinen Bestellungen in Tabelle~\sqlil{demand} würde dann ja nicht mehr auf einen existierendes Kunden verweisen\dots}}%
+\item<5-> Was passiert, wenn wir diesen Eintrag aus der Tabelle~\sqlil{customer} löschen?\uncover<6->{ Die Zeilen mit seinen Bestellungen in Tabelle~\sqlil{demand} würde dann ja nicht mehr auf einen existierenden Kunden verweisen\dots}}%
 \item<7-> Wir fragen also: Können wir mit \sqlil{DELETE} die referentielle Integrität unserer Daten verletzen?%
 \item<10-> Wir können es offenbar nicht.\uncover<11->{~Und das ist gut so!}%
 \end{itemize}%
