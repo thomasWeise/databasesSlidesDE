@@ -39,7 +39,7 @@
 %
 \item<8-> Das ist viel besser, als so etwas wie ein \microsoftExcel-Sheet zu verwenden.%
 %
-\item<9-> Mehrere Leute können gleichzeitig an der \glslink{db}{Datenbank} mit dem \glslink{client}{Client} von mehreren Computern aus arbeiten. on multiple computers.%
+\item<9-> Mehrere Leute können gleichzeitig an der \glslink{db}{Datenbank} mit dem \glslink{client}{Client} von mehreren Computern aus arbeiten.%
 %
 \item<10-> Verschiedene Arten von zusammenhängenden Daten können gleichzeitig eingegeben werden.%
 %
@@ -59,11 +59,11 @@
 %
 \item<4-> Er muss die Kunden-IDs und die Produkt-IDs nachschlagen und manuell benutzen.%
 %
-\item<5-> Es gibt keinen Schutz dagegen, die ID es falschen Kunden oder des falschen Produkts einzugeben.%
+\item<5-> Es gibt keinen Schutz dagegen, die ID des falschen Kunden oder des falschen Produkts einzugeben.%
 %
 \item<6-> Wir können Daten inzwischen sehr schön mit der Sicht \sqlil{sale} zusammensetzen, nachdem wir sie eingegeben haben{\dots}%
 %
-\item<7-> {\dots}wir haben aber noch keine möglichkeit, sie komfortabel einzugeben.%
+\item<7-> {\dots}wir haben aber noch keine Möglichkeit, sie komfortabel einzugeben.%
 %
 \item<8-> Noch nicht.%
 %
@@ -224,7 +224,7 @@
 %
 \only<-39>{%
 \item<38-> Der erste Wert ist der, der in der Tabelle angezeigt wird.\only<39>{ %
-We wählen \sqlil{name || \', \' || phone}, also das Aneinanderhängen des Namen under der Telefonnummer, getrennt von Komma~(denn Namen sind nicht unbedingt eindeutig\dots).%
+Wir wählen \sqlil{name || \', \' || phone}, also das Aneinanderhängen des Namen under der Telefonnummer, getrennt von Komma~(denn Namen sind nicht unbedingt eindeutig\dots).%
 }}%
 %
 \only<-41>{%
@@ -285,7 +285,7 @@ Wir nehmen dazu die Kunden-\sqlil{id}.%
 }%
 %
 \only<-60>{%
-\item<59-> Die \sqlil{id} des ausgrwählten \sqlil{product} soll in dem Feld \sqlil{product} des \sqlil{demand}-Datensatzes gespeichert werden.%
+\item<59-> Die \sqlil{id} des ausgewählten \sqlil{product} soll in dem Feld \sqlil{product} des \sqlil{demand}-Datensatzes gespeichert werden.%
 %
 \item<60-> Deshalb wählen wir \sqlil{product} als \emph{Data field\dots} aus.%
 }%
@@ -520,13 +520,13 @@ Wir nehmen dazu die Kunden-\sqlil{id}.%
 \begin{frame}%
 \frametitle{Zusammenfassung: Vorher}%
 \begin{itemize}%
-\item Die Stärke von \glsShort{rdb} ist, dass wir mehrere Tabellen mit zusammenhängenden Daten erstellen können.%
+\item Die Stärke von \glslink{rdb}{relationalen Datenbanken} ist, dass wir mehrere Tabellen mit zusammenhängenden Daten erstellen können.%
 %
 \item<2-> Eine Tabelle kann existierende Datensätze in einer anderen Tabelle über Fremdschlüssel referenzieren.%
 %
 \item<3-> Das \glsShort{dbms} stellt sicher, dass die referenzielle Integrität immer sichergestellt wird.%
 %
-\item<4-> Allerdings wird das einfügen Daten dadurch sehr unangenehm.%
+\item<4-> Allerdings wird das Einfügen von Daten dadurch sehr unangenehm.%
 %
 \item<5-> Selbst nachdem wir von \glsShort{SQL} auf die einfache tabellen-basierten Ansichten in Werkzeugen wie \microsoftAccess\ und \libreofficeBase\ umgestiegen sind, mussten wir immer noch die IDs der Kunden und Produkte kennen, um korrekt Daten in die Tabelle \sqlil{demand} eingeben zu können.%
 %
@@ -539,7 +539,7 @@ Wir nehmen dazu die Kunden-\sqlil{id}.%
 \begin{itemize}%
 \item Jetzt haben wir etwas sehr schönes geschafft.%
 \item<2-> Jetzt können wir strukturierte Formulare für die Dateneingabe entwerfen.%
-\item<3-> Natürlich haben wir nur an der Oberfläche dieses Themas gekrazt.%
+\item<3-> Natürlich haben wir nur an der Oberfläche dieses Themas gekratzt.%
 \item<4-> Wir haben nur ein Formular, das wie eine Tabelle aussieht, entworfen.%
 \item<6-> Mit diesem Formular konnten wir die Daten allerdings schon so ähnlich wie mit unserer Sicht \sqlil{sale} verlinken.%
 \item<7-> Es wurde unnötig, Kunden- und Produkt-IDs zu kennen.%

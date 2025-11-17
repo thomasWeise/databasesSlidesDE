@@ -71,15 +71,13 @@
 %
 \item<2-> Warum erwähnen wir dann die Option \sqlilIdx{IF EXISTS}\sqlIdx{DROP!IF EXISTS} explizit?%
 %
-\item<3-> Weil sie einige interessante Verwendungen hat.%
+\item<3-> Weil sie einige interessante Verwendungen hat.\cite{PGDG:PD:SD}%
 %
 \item<4-> Wenn wir \DEzB\ ein Backup unserer gesamten \glsShort{db} machen wollen, dann könnten wir die ganze \glsShort{db} als ein großes \glsShort{SQL}-Skript exportieren.%
-Because it has some interesting use cases\cite{PGDG:PD:SD}.%
 %
 \item<5-> Dieses Skript wäre im Grunde eine Aneinanderreihung aller unserer Listings, mit den \sqlil{CREATE ...}- und \sqlil{INSERT INTO...}-Kommandos und allem.%
 %
 \item<6-> Wenn wir dieses Skript ausführen, würden wir im Grunde die Datenbank wiederherstellen.%
-Running this script would re-create the \glsShort{db} in exactly its present state.
 \end{itemize}%
 \end{frame}%
 %
@@ -166,7 +164,7 @@ Running this script would re-create the \glsShort{db} in exactly its present sta
 \item<14-> Wir benutzen die selbe Methode, um alle drei Tabellen zu löschen.%
 }%
 %
-\only<-19>{%
+\only<-18>{%
 \item<15-> Wir führen aus \sqlil{DROP TABLE IF EXISTS demand;}, \sqlil{DROP TABLE IF EXISTS product;} und dann \sqlil{DROP TABLE IF EXISTS customer;}\cite{PGDG:PD:DT}.%
 }%
 %
@@ -332,7 +330,9 @@ Wenn uns jemand sagen würde, wir dass wir eine \glsShort{db} für eine bestimmt
 \begin{frame}%
 \frametitle{Zusammenfassung: Datenbankzugriff via GUI}%
 \begin{itemize}%
+\only<-7>{%
 \item Vielleicht arbeiten wir auch in einer kleinen Firma, in der nur drei, vier Leute mit der Datenbank arbeiten.%
+}%
 %
 \item<2-> Wir wollen wahrscheinlich trotzdem die Power von \postgresql\ nutzen.%
 %
@@ -353,7 +353,9 @@ Wenn uns jemand sagen würde, wir dass wir eine \glsShort{db} für eine bestimmt
 \begin{frame}%
 \frametitle{Zusammenfassung}%
 \begin{itemize}%
+\only<-9>{%
 \item An dieser Stelle in unserem Kurs haben Sie also mehrere Standardwerkzeuge und Abstraktionen kennengelernt, und zwar während Sie mit einer echten Datenbank auf einem professionellen \glsShort{dbms} gearbeitet haben.%
+}%
 %
 \item<2-> Sie haben noch keine tiefen theoretischen Kenntnisse.%
 %

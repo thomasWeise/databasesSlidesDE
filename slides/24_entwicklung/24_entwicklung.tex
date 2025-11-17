@@ -18,7 +18,7 @@
 \begin{frame}%
 \frametitle{Einleitung}%
 \begin{itemize}%
-\item In unserem einführenden Fabrik-Beispiel hatten wir eine einfache Idee, wie unsere \glslink{db}{Datenbank} aussehen sollten.%
+\item In unserem einführenden Fabrik-Beispiel hatten wir eine einfache Idee, wie unsere \glslink{db}{Datenbank} aussehen sollte.%
 %
 \item<2-> Diese Idee haben wir dann einfach implementiert.%
 %
@@ -30,7 +30,7 @@
 %
 \item<6-> Die Interaktionen zwischen Objekten, Prozessen, und Menschen sind viel komplizierter.%
 %
-\item<7-> Wir haben eine grobe Idee, welche technologische Werkzeuge wir zur Verfügung haben, wenn wir mit \pglspl{db} haben.%
+\item<7-> Wir haben eine grobe Idee, welche technologische Werkzeuge wir zur Verfügung haben, wenn wir mit \pglspl{db} arbeiten.%
 %
 \item<8-> Aber wir verstehen den praktischen Prozess des Datenbankentwurfs nicht so wirklich.%
 %
@@ -46,7 +46,7 @@
 %
 \item<2-> Wir wissen, was Räder sind und wie sie funktionieren.%
 %
-\item<3-> Wir wissen, dass die Batterie macht und wie wir mit ihr den Motor zum Laufen bringen.%
+\item<3-> Wir wissen, was die Batterie macht und wie wir mit ihr den Motor zum Laufen bringen.%
 %
 \item<4-> Wir wissen, dass normale Leute im Auto auf Sitzen sitzen wollen und wie man Sitze einbaut.%
 %
@@ -115,7 +115,7 @@ Das \emph{konzeptuelle Model}~(oder auch \emph{konzeputelle Schema}) einer Daten
 %
 \begin{definition*}[Logisches Modell]%
 Das \emph{logische Modell}~(oder \emph{logische Schema}) einer Datenbank ist ein Modell der Daten, das auf einer spezifischen Datenbanktechnologie basiert, \DEzB\ \glslink{rdb}{relationale Datenbank}, hierarchische Datenbank, NoSQL Datenbank, usw.\uncover<2->{ %
-Es representiert die Entitäten, ihre Attribute und Beziehungen sowie Einscharänkungen mit konkreten Datentypen in einem strukturierten formalen Format.}%
+Es representiert die Entitäten, ihre Attribute und Beziehungen sowie Einschränkungen mit konkreten Datentypen in einem strukturierten formalen Format.}%
 \end{definition*}%
 %
 \uncover<3->{%
@@ -123,7 +123,7 @@ Es representiert die Entitäten, ihre Attribute und Beziehungen sowie Einscharä
 %
 \item Das logische Model ist die Ebene, auf der die Benutzer und Applikationen mit der Datenbank interagieren.%
 %
-\item<2-> Das konzeptuelle Model wird in eine technschie Spezifikation übersetzt.%
+\item<2-> Das konzeptuelle Model wird in eine technische Spezifikation übersetzt.%
 %
 \item<3-> Es kann oft auch in einer formalen Datenbanksprache wie \glsShort{SQL} spezifiziert werden.%
 %
@@ -223,7 +223,7 @@ Das physische Modell bestimmt die Performanz und die Systemanforderungen, aber n
 %
 \item<3-> Wir müssen entscheiden, welche Tabellen und Beziehungen gebraucht werden.%
 %
-\item<4-> Dieses konzeptionelle Modell muss letztendlich auf ein physisches Modell abgebildet werden.%
+\item<4-> Dieses konzeptuelle Modell muss letztendlich auf ein physisches Modell abgebildet werden.%
 %
 \item<5-> Irgendwann wird man eine Art Prototyp brauchen, wo die Benutzer Testdaten eingeben können, um auszuprobieren, ob alles mehr oder weniger so funktioniert, wie es soll.%
 %
@@ -246,7 +246,7 @@ Das physische Modell bestimmt die Performanz und die Systemanforderungen, aber n
 }%
 %
 \only<-11>{%
-\item<2-> Anders als normale Softwareprojekte scheinen Datenbankapplikationen überide Jahre \emph{nicht} komplexer zu werden, sie entwickeln sich aber trotzdem immer weiter\cite{SVZ2014OSD}.%
+\item<2-> Anders als normale Softwareprojekte scheinen Datenbankapplikationen über die Jahre \emph{nicht} komplexer zu werden, sie entwickeln sich aber trotzdem immer weiter\cite{SVZ2014OSD}.%
 }%
 %
 \only<-12>{%
@@ -376,7 +376,7 @@ Das physische Modell bestimmt die Performanz und die Systemanforderungen, aber n
 %
 \item<11-> Ein Datenbankdesignprozess sollte es uns erlauben, unser Design schrittweise und in Antwort auf entdeckte Probleme anzupassen\cite{GMTM2011DDLC,WK1989DKBSRTSDLC}.%
 %
-\item<12-> Gleichzeitig sollte verhindern, dass iterative Veränderungen die Projektstruktur immer weiter verändern und das Projekt durch immer neue Features immer weiter vom Originalziel wegdriftet\cite{GMTM2011DDLC,WK1989DKBSRTSDLC}.%
+\item<12-> Gleichzeitig sollte verhindert werden, dass iterative Veränderungen die Projektstruktur immer weiter verändern und das Projekt durch immer neue Features immer weiter vom Originalziel wegdriftet\cite{GMTM2011DDLC,WK1989DKBSRTSDLC}.%
 \end{itemize}%
 \end{frame}%
 %
@@ -398,7 +398,7 @@ Das physische Modell bestimmt die Performanz und die Systemanforderungen, aber n
 \item<3-> Das Wasserfallmodell ist ein sequentieller Prozess aus Planung, Anforderungsanalyse, Design, Entwicklung, Testen, und Installation und produktivem Einsatz.%
 }%
 %
-\only<-7>{%
+\only<-6>{%
 \item<4-> Jeder Schritt produziert Artefakte als Ergebnis, die dann die Eingabe für die nächste Phase werden.%
 }%
 %
@@ -431,7 +431,7 @@ Das physische Modell bestimmt die Performanz und die Systemanforderungen, aber n
 }%
 %
 \only<-14>{%
-\item<12-> Wenn wir es wirklich streng sequentiell anwenden würden, dann würde wir nicht verstehen, dass wir in jeder Phase fehler machen können und dass es unerwartete Probleme geben kann.%
+\item<12-> Wenn wir es wirklich streng sequentiell anwenden würden, dann würde wir nicht verstehen, dass wir in jeder Phase Fehler machen können und dass es unerwartete Probleme geben kann.%
 }%
 %
 \only<-15>{%
@@ -486,7 +486,7 @@ Das physische Modell bestimmt die Performanz und die Systemanforderungen, aber n
 %
 \item<6-> Er dient als Basis für Diskussionen und wir müssen ihn wahrscheinlich mehrfach neu entwickeln.%
 %
-\item<7-> In manchen Varianten des Ansatzes werden die Projektanforderungen für festgelegt\cite{PA2009SETAP,GMTM2011DDLC}, in anderen können sie später bearbeitet werden\cite{L1989SETRP}.%
+\item<7-> In manchen Varianten des Ansatzes werden die Projektanforderungen früh festgelegt\cite{PA2009SETAP,GMTM2011DDLC}, in anderen können sie später bearbeitet werden\cite{L1989SETRP}.%
 %
 \item<8-> Prototyping erlaubt es uns, schrittweise die Projektspezifikation zu verbessern.%
 %
@@ -630,7 +630,7 @@ Das physische Modell bestimmt die Performanz und die Systemanforderungen, aber n
 %
 \item<12-> Am Ende kann ein physisches Schema stehen, dass mit zusätzlichen Konfigurationen die Performanz verbessert.%
 %
-\item<13-> Drittens müssen wir immer beachten, dass Datenbanken sehr langlebige Artefakte sind, die über viele Jahre gewartet und verbessert werden müssen.%
+\item<13-> \alert{Drittens} müssen wir immer beachten, dass Datenbanken sehr langlebige Artefakte sind, die über viele Jahre gewartet und verbessert werden müssen.%
 %
 \item<14-> Aus diesem Grund wurden verschiedene Lebenszyklus-Strukturen für Datenbanken entwickelt.%
 \end{itemize}%
@@ -667,7 +667,7 @@ Das physische Modell bestimmt die Performanz und die Systemanforderungen, aber n
 }%
 %
 \only<-12>{%
-\item<9-> Die Entwickler und Designer arbeiten mit allen Stakeholders des Projekts auf allen ebenen zusammen, von den späteren Benutzern der Datenbank bis hin zum Management der Organisation.%
+\item<9-> Die Entwickler und Designer arbeiten mit allen Stakeholdern des Projekts auf allen Ebenen zusammen, von den späteren Benutzern der Datenbank bis hin zum Management der Organisation.%
 }%
 %
 \only<-13>{%
@@ -695,7 +695,7 @@ Das physische Modell bestimmt die Performanz und die Systemanforderungen, aber n
 }%
 %
 \only<-20>{%
-\item<16-> In der Anforderungsanalyse untersichen wir die gsammelten Daten um zu entscheiden, ob das Projekt durchführbar ist und um seine Kosten abzuschätzen.%
+\item<16-> In der Anforderungsanalyse untersuchen wir die gsammelten Daten um zu entscheiden, ob das Projekt durchführbar ist und um seine Kosten abzuschätzen.%
 }%
 %
 \only<-21>{%
@@ -779,7 +779,7 @@ Das physische Modell bestimmt die Performanz und die Systemanforderungen, aber n
 }%
 %
 \only<-41>{%
-\item<37-> Lassen Sie uns trotzdem annehmen, dass wir uns für eine \glslink{rdb}{relationales} Datenbank entschieden haben.%
+\item<37-> Lassen Sie uns trotzdem annehmen, dass wir uns für eine \glslink{rdb}{relationale} Datenbank entschieden haben.%
 }%
 %
 \only<-42>{%
@@ -787,7 +787,7 @@ Das physische Modell bestimmt die Performanz und die Systemanforderungen, aber n
 }%
 %
 \only<-43>{%
-\item<39-> Die Entscheidung wird getroffen basierend auf Kosten, Wrtung, Lizensen, und Trainingsmöglichkeiten.
+\item<39-> Die Entscheidung wird getroffen basierend auf Kosten, Wartung, Lizensen, und Trainingsmöglichkeiten.
 }%
 %
 \only<-43>{%
