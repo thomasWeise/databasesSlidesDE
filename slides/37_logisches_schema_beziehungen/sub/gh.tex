@@ -1,0 +1,210 @@
+%
+\section{\crowsFoot{G}{O1}{H}{MM}}%
+%
+\begin{frame}[t]%
+\frametitle{\crowsFoot{G}{O1}{H}{MM}}%
+\begin{itemize}%
+\item Es gibt zwei Entitätstypen~G und~H.%
+\item<2-> Jede Entität vom Typ~G muss mit mindestens einer aber vielleicht vielen Entitäten vom Typ~H verbunden sein.%
+\item<3-> Jede Entität vom Typ~H ist mit keiner oder einer Entität vom Typ~G verbunden.
+\item<4-> Beispiel:\uncover<5->{%
+\begin{itemize}%
+%
+\item In einem Fußballklub trainiert jeder Trainer mehrere Mitglieder.
+\uncover<6->{ %
+Jedes Mitglied kann von einem Trainer trainiert werden oder auch gar nicht trainiert werden.}%
+\end{itemize}%
+}%
+\end{itemize}%
+%
+\locateGraphic{4-}{width=0.9\paperwidth}{graphics/GH}{0.05}{0.6}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Lösung}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Wir erstellen wieder zwei Tabellen und nennen sie diesmal \sqlil{g} und~\sqlil{h}.%
+}%
+%
+\only<-6>{%
+\item<2-> Sie haben die Primärschlüssel~\sqlil{gid} und~\sqlil{hid}, sowie die Beispielattribute~\sqlil{x} und~\sqlil{y}.%
+}%
+%
+\only<-7>{%
+\item<3-> Wir können die Situation so ähnlich anpacken wie die \crowsFoot{E}{O1}{F}{OM}-Situation.%
+}%
+%
+\only<-8>{%
+\item<4-> Allerdings ist es schwerer, dieses Beziehungsschema zu erzwingen.%
+}%
+%
+\only<-9>{%
+\item<5-> Wir fangen damit an, Tabelle~\sqlil{g} vorzubereiten.%
+}%
+%
+\only<-10>{%
+\item<6-> Jede Entität vom Typ~G muss mit mindestens einer Entität vom Typ~H in Beziehung stehen.%
+}%
+%
+\only<-11>{%
+\item<7-> Wir lösen das Problem in zwei Schritten.%
+}%
+%
+\only<-12>{%
+\item<8-> Erst erzwingen wir, dass jede Zeile in Tabelle~\sqlil{g} mit einer Zeile in Tabelle~\sqlil{h} verbunden ist.%
+}%
+%
+\only<-12>{%
+\item<9-> Später erlauben wir, dass sie mit mehr als einer Zeile verbunden ist.%
+}%
+%
+\only<-13>{%
+\item<10-> Wir fangen also mit dem Hinzufpgen eines Attributs~\sqlil{fkhid} an, welches \sqlil{NOT NULL} sein muss.%
+}%
+%
+\only<-14>{%
+\item<11-> Diese Spalte sollte immer auf die Zeile in Tabelle~\sqlil{h} mit dem selben Wert in~\sqlil{hid} zeigen.%
+}%
+%
+\only<-16>{%
+\item<12-> Später setzen wir eine passende \sqlil{REFERENCE}-Einschränkung über~\sqlil{ALTER TABLE}~(noch können wir as nicht, es gibt die Tabelle~\sqlil{h} ja noch nicht).%
+}%
+%
+\only<-16>{%
+\item<13-> Stellen Sie sich erstmal vor, wir hätten das schon gemacht und dass das Attribut immer eine Zeile in Tabelle~\sqlil{h} referenziert.%
+}%
+%
+\only<-17>{%
+\item<14-> Über dieses Attribut~\sqlil{fkhid} soll immer die \inQuotes{erste} H-Entität referenzieren, zu der die Zeile in Tabelle~\sqlil{g} in Beziehung steht.%
+}%
+%
+\only<-19>{%
+\item<15-> Wir machen diese Spalte \sqlil{UNIQUE}, denn keine Zeile in Tabelle~\sqlil{h} kann mit mehr als einer Zeile in Tabelle~\sqlil{g} verbunden sein.%
+}%
+%
+\only<-20>{%
+\item<16-> Deshalb kann kein Primärschlüsselwert~\sqlil{hid} mehr als einmal in der Spalte~\sqlil{fkhid} auftauchen.%
+}%
+%
+\only<-21>{%
+\item<17-> Nun bearbeiten wir die Tabelle für den Entitätstyp~H.%
+}%
+%
+\only<-21>{%
+\item<18-> Weil jede Entität vom Typ~H mit keiner oder einer Entität vom Typ~G in Verbindung steht, fügen wir die Spalte~\sqlil{fkgid} zur Tabelle~\sqlil{h} hinzu.%
+}%
+%
+\only<-22>{%
+\item<19-> Die Werte in dieser Spalte können \sqlil{NULL} sein.%
+}%
+%
+\only<-23>{%
+\item<20-> In diesem Fall ist die entsprechende Zeile in~\sqlil{h} mit keiner Entität vom Typ~G verbunden.%
+}%
+%
+\only<-23>{%
+\item<21-> Wenn der Wert nicht \sqlil{NULL} ist, dann muss es ein passender Fremdschlüsselverweis auf eine Zeile in Tabelle~\sqlil{g} sein.%
+}%
+%
+\only<-24>{%
+\item<22-> Die Werte in dieser Spalte brauchen nicht \sqlil{UNIQUE} zu sein, weil mehrere Entitäten vom Typ~H mit der selben Entität vom Typ~G in Verbindung stehen können.%
+}%
+%
+\only<-25>{%
+\item<23-> Jetzt haben wir sichergestellt, dass jede Entität vom Typ~H mit keiner oder genau einer Entität vom Typ~G verbunden ist.%
+}%
+%
+\only<-28>{%
+\item<24-> Wir könnten jetzt eine Einschränkung~\sqlil{g_fkhid_fk} als~\sqlil{FOREIGN KEY (fkhid)} \sqlil{REFERENCES h (hid)} zur Tabelle~\sqlil{g} mit~\sqlil{ALTER TABLE g} \sqlil{ADD CONSTRAINT...} hinzufügen.%
+}%
+%
+\only<-28>{%
+\item<25-> Das würde erzwingen, dass jede Entität vom Typ~G mit mindestens einer Entität vom Typ~H verbunden sein muss.%
+}%
+%
+\only<-29>{%
+\item<26-> Damit stellen wir aber \emph{nicht} sicher, dass wenn eine Entität vom Typ~G mit einer Entität vom Typ~H verunden ist~(als ihre \inQuotes{erste} H-Entität) {\dots} dass diese H-Entität auch mit der G-Entität verbunden ist.%
+}%
+%
+\only<-31>{%
+\item<27-> Wir können das auf eine etwas komische Art sicherstellen.%
+}%
+%
+\only<-31>{%
+\item<28-> Wir erstellen eine \sqlil{REFERENCES}-Einschränkung nicht auf \emph{eine einzelne} Spalte~\sqlil{hid}\dots%
+}%
+%
+\only<-32>{%
+\item<29-> {\dots}sondern wir erzwingen, dass das Paar~\sqlil{(fkhid, gid)} in Tabelle~\sqlil{g} genauso als Paar~\sqlil{(hid, fkgid)} in Tabelle~\sqlil{h} auftauchen muss!%
+}%
+%
+\only<-33>{%
+\item<30-> Wir wissen, dass jeder Wert von~\sqlil{gid} nur einmal in Tabelle~\sqlil{g} existiert.%
+}%
+%
+\only<-35>{%
+\item<31-> Wir wissen auch, dass jeder Wert von~\sqlil{hid} nur einmal in Tabelle~\sqlil{h} existiert.%
+}%
+%
+\only<-35>{%
+\item<32-> Der erste Teil des Spaltenpaares in der Einschränkung -- \sqlil{fkhid} oder von der anderen Seite kommend,~\sqlil{hid} --  selektiert also immer eine eindeutige Zeile in Tabelle~\sqlil{h}.%
+}%
+%
+\only<-36>{%
+\item<33-> Es kann niemals eine andere Zeile mit dem selben \sqlil{hid}-Wert geben, denn das ist der Primärschlüssel der Tabelle~\sqlil{h}.%
+}%
+%
+\only<-36>{%
+\item<34-> Das zweite Element des Paares -- also \sqlil{gid} oder von der anderen Seite kommend,~\sqlil{fkgid}) -- erzwingt darum, dass diese einzelne Zeile in Tabelle~\sqlil{h} den passenden Wert~\sqlil{gid} in~\sqlil{fkgid} gespeichert hat.%
+}%
+%
+\only<-37>{%
+\item<35-> Weil Fremdschlüssel-\sqlil{REFERENCES}-Einschränkungen nur Spalten referenzieren können, die \sqlil{UNIQUE} sind, müssen wir die Einschränkung~\sqlil{UNIQUE (hid, fkgid)} zur Tabelle~\sqlil{h} hinzufügen.%
+}%
+%
+\only<-39>{%
+\item<36-> Überlegen wir uns das noch einmal.%
+}%
+%
+\only<-39>{%
+\item<37-> Wir haben die Einschränkung \sqlil{g_fkhid_gid_fk} als \sqlil{FOREIGN KEY (fkhid, gid)} \sqlil{REFERENCES h (hid, fkgid)}.%
+}%
+%
+\only<-41>{%
+\item<38-> Auf der Seite der Tabelle~\sqlil{g} schaut diese Einschränkung auf eine Zeile und nimmt den Wert des Fremdschlüssels~\sqlil{fkhid} zur Tabelle~\sqlil{h} zusammen mit dem eigenen Primärschlüssel~\sqlil{gid} als ein Tuple~\sqlil{(fkhid, gid)}.%
+}%
+%
+\only<-42>{%
+\item<39-> Auf Seiten der Tabelle~\sqlil{h} muss es ein passendes Tupel mit dem Primärschlüssel~\sqlil{hid} und dem dazugehörigen Wert des Fremdschlüssels~\sqlil{fkgid} geben.%
+}%
+%
+\only<-44>{%
+\item<40-> Es wird also erzwungen, dass die Paare \sqlil{(fkhi, gid) == (hid, fkgid)} immer passen.%
+}%
+%
+\only<-45>{%
+\item<41-> Natürlich sind die Primärschlüsselwerte beider Tabellen immer einzigartig.%
+}%
+%
+\only<-46>{%
+\item<42-> Sagen wir, Tabelle~\sqlil{g} hat Primärschlüsselwert~\sqlil{gid=u} und Fremdschlüssel~\sqlil{fkhid=v}.%
+}%
+%
+\item<43-> Dann muss die Zeile in Tabelle~\sqlil{h} mit Primärschlüsselwert~\sqlil{hid=v} den Fremdschlüssel~\sqlil{fkgid=u} haben.%
+%
+\item<44-> Natürlich kann es auch andere Zeilen in Tabelle~\sqlil{h} geben, die auch den Fremdschlüssel~\sqlil{fkgid=u} haben.%
+%
+\item<45-> Das ist OK, denn mehrere Entitäten vom Typ~H können die selbe Entität vom Typ~G referenzieren.%
+%
+\item<46-> Jetzt haben wir also diese Beziehung exakt implementiert.%
+%
+\item<47-> Schauen wir uns mal an, was wir gemacht haben.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{GH_tables}{}{conceptualToRelational}{GH_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{}{GH_tables}{}{0.47}{0.1}{0.529}{0.87}
+\end{frame}%

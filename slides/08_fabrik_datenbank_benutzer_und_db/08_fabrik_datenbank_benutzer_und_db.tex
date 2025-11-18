@@ -228,7 +228,7 @@ Von der \psql-Konsole\ können wir SQL-Befehle an den \postgresql-Server schicke
 }%
 \end{frame}%
 %
-\begin{frame}[fragile]
+\begin{frame}%
 \frametitle{Erstellen des Benutzers via Script}%
 \gitLoadAndExecSQL{factory:create_user}{}{factory}{create_user.sql}{}{}{}
 \listingSQLandOutput{1}{factory:create_user}{}{0.17}{0.07}{0.9}{0.92}
@@ -305,7 +305,7 @@ SQL-Schlüsselworte (wie \sqlil{SELECT}, \sqlil{CREATE}, \dots) sollten immer du
 \locateGraphic{12}{width=0.85\paperwidth}{graphics/db/createDB11done}{0.075}{0.25}%
 \end{frame}%
 %
-\begin{frame}[fragile]
+\begin{frame}%
 \frametitle{Erstellen der Datenbank via Script}%
 \gitLoadAndExecSQL{factory:create_database}{}{factory}{create_database.sql}{}{}{}
 \listingSQLandOutput{1}{factory:create_database}{}{0.225}{0.07}{0.9}{0.92}

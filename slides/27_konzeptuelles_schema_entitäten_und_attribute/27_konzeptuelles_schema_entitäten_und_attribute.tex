@@ -46,7 +46,7 @@
 \frametitle{Entitäten}%
 %
 \begin{itemize}%
-\item Die erste wichtige Komponente, die wir modellierne müssen, sind die Datenstrukturen, die wir in der Datenbank speichern wollen.%
+\item Die erste wichtige Komponente, die wir modellieren müssen, sind die Datenstrukturen, die wir in der Datenbank speichern wollen.%
 %
 \item<2-> Es gibt dafür drei grundlegende Elemente für konzeptuelle Modelle: Entitäten, Attribute, und Entitätstypen.%
 \end{itemize}%
@@ -54,7 +54,7 @@
 \uncover<3->{%
 \begin{definition*}[Entität]%
 Eine \emph{Entität}~\inEN{entity} ist ein Objekt oder Ding das für sich selbst in der Welt existiert.\uncover<4->{ %
-Sie kann von allen anderen Ojekten unterschieden werden.}%
+Sie kann von allen anderen Objekten unterschieden werden.}%
 \end{definition*}%
 %
 \uncover<5->{%
@@ -70,12 +70,12 @@ Sie entsprechen Eigennamen bzw.\ Hauptwörtern~\inEN{proper nouns}\cite{C1997ECA
 \frametitle{Attribute}%
 \begin{definition*}[Attribut]%
 \label{def:attribute}%
-Ein \emph{Attribut}~\inEN{attribute}~$a$ ist charakterisiert by einem Namen und einer Domäne~\attrDomainb{a} mit Werten die es annehmen kann.%
+Ein \emph{Attribut}~\inEN{attribute}~$a$ ist charakterisiert mit einem Namen und einer Domäne~\attrDomainb{a} mit Werten die es annehmen kann.%
 \end{definition*}%
 %
 \uncover<2->{%
 \begin{itemize}%
-\item Attribute are sind Features und Characteristiken von Entitäten.%
+\item Attribute are sind Features und Charakteristiken von Entitäten.%
 %
 \item<3-> Die Entitäten in unserem Modell werden durch die Werte ihrer Attribute definiert.%
 %
@@ -246,7 +246,7 @@ Sie ist eine Menge von einigen Entitäten eines Entitätstypes, die zu einer Zei
 \begin{itemize}%
 \item Wenn Sie schon einen Kurs über Programmieren (wie \DEzB~\cite{programmingWithPython}) gehabt haben, dann wird sich diese Art zu modellieren etwas wie Objekt-orientierte Programmierung~(\glsShort{OOP}) anfühlen.%
 %
-\item<2-> Wir könnten uns Entitätstypen wir Klassen vorstellen und Entitäten wir deren Instanzen.%
+\item<2-> Wir könnten uns Entitätstypen wie Klassen vorstellen und Entitäten wir deren Instanzen.%
 %
 \item<3-> Attribute wären dann, naja, Attribute.%
 %
@@ -285,7 +285,7 @@ Entity-Relationship Diagramme~(\glsShort{ERD}s)\cite{C2002ERMHEFTALL,C1975TRMTAU
 \item<3-> Es gibt eine Vielzahl von Notationen, die für \glsShort{ERD}s genutzt werden kann\only<-3,9->{.}\uncover<4->{:%
 \begin{itemize}%
 %
-\item die ursprüngliche Noatationen von \citeauthor{B1969DSD}\cite{B1969DSD} und \citeauthor{C1975TRMTAUVOD}\cite{C1975TRMTAUVOD,C1976TERMTAUVOD} werden noch immer verwendet\only<-4>{.}\uncover<5->{,}%
+\item die ursprüngliche Notationen von \citeauthor{B1969DSD}\cite{B1969DSD} und \citeauthor{C1975TRMTAUVOD}\cite{C1975TRMTAUVOD,C1976TERMTAUVOD} werden noch immer verwendet\only<-4>{.}\uncover<5->{,}%
 %
 \item<5-> die Krähenfußnotation~\inEN{Crow's Foot} wird sehr häufig eingesetzt\cite{E1976BDSMEWACE,CM2000MDMAUDA}\only<-5>{.}\uncover<6->{,}%
  %
@@ -410,7 +410,7 @@ Sie sind daher für die Arbeit auf der konzeptuellen Ebene, die eben gerade tech
 \only<-14>{%
 \item<13-> Wir haben den Attributname geändert.%
 %
-\item<14-> Jetzt klicken wir auf das Verbindungs-Symbol in der Palette un ziehen es auf das Attribut.%
+\item<14-> Jetzt klicken wir auf das Verbindungs-Symbol in der Palette und ziehen es auf das Attribut.%
 }%
 %
 \only<-15>{%
@@ -512,9 +512,9 @@ Sie sind daher für die Arbeit auf der konzeptuellen Ebene, die eben gerade tech
 %
 \item<3-> Zum Beispiele ist der Name von \inQuotes{Herr Bebbo} eigentlich \inQuotes{Herr Fred Bebbo}\only<-3>{.}\uncover<4->{, wobei \inQuotes{Bebbo} der Familienname und \inQuotes{Fred} der Vorname sind.}%
 }%
-\item<4-> Um dem Rechnung zu tragen, sollte das \emph{Name}-Attribute kein einzelnes Attribut sein.%
+\item<4-> Um dem Rechnung zu tragen, sollte das \emph{Name}-Attribut kein einzelnes Attribut sein.%
 %
-\item<5-> Wir könnten es in ein \emph{zusammengesetztes Attribut} umbauen, dass aus einem Vorname~\inEN{given name}, Familienname~\inEN{family name} und einer Anrede~(engl.\ Salutation) besteht.%
+\item<5-> Wir könnten es in ein \emph{zusammengesetztes Attribut} umbauen, dass aus einem Vorname~\inEN{given name}, Familienname~\inEN{family name} und einer Anrede~\inEN{salutation} besteht.%
 %
 \item<6-> Das System kann diese dann vernünftig zusammensetzen, wenn Studenten angesprochen oder Dokumente ausgestellt werden sollen.%
 \end{itemize}%
@@ -606,7 +606,7 @@ Eine Entität kann mehrere Werte für eine mehrwertiges~\inEN{multivalued} Attri
 \uncover<2->{%
 \only<-9>{%
 \begin{definition*}[Einwertiges Attribut]%
-Eine Entität hat (höchstens) einen Wert für ein einwertiges~(\inEN{single-valued}) Attribut.%
+Eine Entität hat (höchstens) einen Wert für ein einwertiges~\inEN{single-valued} Attribut.%
 \end{definition*}%
 }%
 \uncover<3->{%
@@ -621,8 +621,8 @@ Wenn ein Attribut keinen Wert hat, dann wird das oft durch \sqlilIdx{NULL} darge
 \item<6-> Ein nicht-optionales einwertiges Attribut hat immer genau einen Wert.%
 \item<7-> Ein optionales mehrwertiges Attribut hat entweder keinen Wert, einen Wert, oder mehrere Werte.%
 \item<8-> Ein nicht-optionales mehrwertiges Attribut hat entweder einen Wert oder mehrere Werte.%
-\item<9-> Ein mehrwertiges Attribut wird in \glsShort{ERD} durch zwei ineinanderliegende Ellipsen dargstellt.%
-\item<10-> Optionale Attribute werden durch kleine kreise am Ende der Linie die sie mit den Entitätstypen verbinden dargestellt.%
+\item<9-> Ein mehrwertiges Attribut wird in \glsShort{ERD}s durch zwei ineinanderliegende Ellipsen dargstellt.%
+\item<10-> Optionale Attribute werden durch kleine Kreise am Ende der Linie die sie mit den Entitätstypen verbinden dargestellt.%
 \end{itemize}%
 }}}%
 \end{frame}%
@@ -648,7 +648,7 @@ Wenn ein Attribut keinen Wert hat, dann wird das oft durch \sqlilIdx{NULL} darge
 \begin{itemize}%
 \item Und wo wir gerade bei dem Thema Austauschstudenten sind\dots%
 %
-\item<2-> They probably do not have a Chinese~ID~(中国公民身份号码\cite{GB116431999CIN}).%
+\item<2-> Sie haben wahrscheinlich keine chinesische Ausweisnummer~(中国公民身份号码\cite{GB116431999CIN}).%
 %
 \item<3-> Deshalb sollte auch ID ein optionales Attribut sein.
 %
@@ -666,12 +666,12 @@ Wir bekommen das folgende neue \glsShort{ERD}.%
 \frametitle{Adressen}%
 \begin{itemize}%
 \only<-7>{%
-\item Wir benerken auch, dass \emph{Address} wahrscheinlich auch ein zusammengesetztes Attribut seien sollte.%
+\item Wir bemerken auch, dass \emph{Address} wahrscheinlich auch ein zusammengesetztes Attribut seien sollte.%
 \item<2-> Eine Adresse ist ja nicht nur eine Zeile Text.%
 \item<3-> Sie besteht aus Land, Provinz, Stadt, Distrikt, Postleitzahl, Straße und Hausnummer.%
 \item<4-> Das zu modellieren wäre umständlich.%
 \item<5-> Wir entscheiden uns dafür, dass alles nach der Postleitzahl~\inEN{postal code} einfach eine Zeichenkette mit Namen \emph{street address} werden soll.%
-\item<6-> Ein automatisches kann Informationen die feiner auflöst als eine Postleitzahl wahrscheinlich sowieso nicht sinnvoll verarbeiten.%
+\item<6-> Ein automatisches System kann Informationen die feiner auflöst als eine Postleitzahl wahrscheinlich sowieso nicht sinnvoll verarbeiten.%
 %
 \item<7-> Während wir diese Adressverarbeitung mit unseren Partnern diskutieren, stellen wir fest, dass Studenten auch mehrere Adressen haben können.%
 }%
@@ -721,7 +721,7 @@ Ein abgeleitetes Attribut~\inEN{derived attribute} wird aus den Werten anderer A
 %
 \item<3-> Eine Entität existiert nicht einfach so.%
 %
-\item<4-> Sie ist ein Tupel aus ihren Attributwerden.%
+\item<4-> Sie ist ein Tupel aus ihren Attributwerten.%
 %
 \item<5-> Während Entitäten einzelne Objekte beschreiben, beschreiben Entitätstypen Gruppen von Objekten, wie Personen, Dinge, Orte, eine Klasse von Ereignissen, usw.%
 \end{itemize}%
@@ -730,41 +730,41 @@ Ein abgeleitetes Attribut~\inEN{derived attribute} wird aus den Werten anderer A
 \begin{frame}%
 \frametitle{Zusammenfassung: Attribute}%
 \begin{itemize}%
-\only<-11>{%
+\only<-12>{%
 \item Attribute können ebenfalls verschiedene Eigenschaften haben.%
 }%
 %
-\only<-12>{%
+\only<-13>{%
 \item<2-> Sie können einfach sein, also einen Wert haben, der nicht weiter unterteilt werden kann\only<-2>{.}\uncover<3->{, wie eine Telefonnummer.}%
 }%
 %
-\only<-13>{%
+\only<-14>{%
 \item<4-> Sie können zusammengesetzt sein, also Teilen bestehen\only<-4>{.}\uncover<5->{, wie Adressen, die aus Land, Provinz, Stadt, usw.\ bestehen.}%
 }%
 %
-\only<-14>{%
-\item<5-> Es ist nicht immer klar, wie ein Attribut modelliert werden soll.%
+\only<-15>{%
+\item<6-> Es ist nicht immer klar, wie ein Attribut modelliert werden soll.%
 }%
 %
-\item<6-> Zum Beispiel haben unsere Studenten ein Attribut \glsFull{dateOfBirth}.%
+\item<7-> Zum Beispiel haben unsere Studenten ein Attribut \glsFull{dateOfBirth}.%
 %%
-\item<7-> Technisch haben wir bereits gelernt, dass ein Datum ein atomarer Datentyp in \glsShort{SQL} ist.%
+\item<8-> Technisch haben wir bereits gelernt, dass ein Datum ein atomarer Datentyp in \glsShort{SQL} ist.%
 %
-\item<8-> Wir können \glsShort{dateOfBirth} also durchaus als einfaches Attribut modellieren.%
+\item<9-> Wir können \glsShort{dateOfBirth} also durchaus als einfaches Attribut modellieren.%
 %
-\item<9-> Wir könnten es aber auch als zusammengesetztes Attribut aus Jahr, Monat, und Tag modellieren.%
+\item<10-> Wir könnten es aber auch als zusammengesetztes Attribut aus Jahr, Monat, und Tag modellieren.%
 %
-\item<10-> Das würde allerdings kein vernünftig denkender Mensch machen, denn dann muss man ja auch Dinge wie Zeitzonen und verschiedene Kalender beachten\dots%
+\item<11-> Das würde allerdings kein vernünftig denkender Mensch machen, denn dann muss man ja auch Dinge wie Zeitzonen und verschiedene Kalender beachten\dots%
 %
-\item<11-> Eine Adresse kann ein einfach Textstring oder ein zusammengesetztes Attribut sein.%
+\item<12-> Eine Adresse kann ein einfach Textstring oder ein zusammengesetztes Attribut sein.%
 %
-\item<12-> Die Entscheidung, wie wir Attribute modellieren, hängt oft von den Daten ab, die wir brauchen.%
+\item<13-> Die Entscheidung, wie wir Attribute modellieren, hängt oft von den Daten ab, die wir brauchen.%
 %
-\item<13-> Wenn wir das Geburtsdatum als einfaches Attribut vom Datentyp \inQuotes{Datum} speichern, dann kann wir sehr einfach das Geburtsjahr oder das Alter einer Person berechnen.%
+\item<14-> Wenn wir das Geburtsdatum als einfaches Attribut vom Datentyp \inQuotes{Datum} speichern, dann kann wir sehr einfach das Geburtsjahr oder das Alter einer Person berechnen.%
 %
-\item<14-> Speichern wir die Adresse jedoch als einfaches Attribut, dann wird es eben sehr schwer, das Land, die Provinz, oder die Stadt automatisch zu extrahieren.%
+\item<15-> Speichern wir die Adresse jedoch als einfaches Attribut, dann wird es eben sehr schwer, das Land, die Provinz, oder die Stadt automatisch zu extrahieren.%
 %
-\item<15-> Attribute können zusätzlich noch einwertig oder mehrwertig sein, optional oder nicht-optional.%
+\item<16-> Attribute können zusätzlich noch einwertig oder mehrwertig sein, optional oder nicht-optional.%
 \end{itemize}%
 \end{frame}%
 %
@@ -775,7 +775,7 @@ Ein abgeleitetes Attribut~\inEN{derived attribute} wird aus den Werten anderer A
 %
 \item<2-> In einer Datenbank geht es aber nicht nur um Daten.%
 %
-\item<3-> Es geht auch um Einschränken der Daten und die Beziehungen zwischen Daten.%
+\item<3-> Es geht auch um das Einschränken der Daten und die Beziehungen zwischen den Daten.%
 %
 \item<4-> Und als nächstest lernen wir eine bestimmte Einschränkung kennen\dots%
 \end{itemize}%

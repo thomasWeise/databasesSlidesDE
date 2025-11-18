@@ -131,7 +131,7 @@ Never use \sql\ keywords or reserved words as names, e.g., for columns or tables
 \listingSQL{8}{factory:create_table_demand}{0.175}{0.34}{0.65}{0.63}
 \end{frame}
 %
-\begin{frame}[t,fragile]
+\begin{frame}[t]
 \frametitle{Die Spalte \texttt{amount}}%
 \begin{itemize}%
 \item Nun wollen wir noch speichern, wie viele Einheiten der Kunde von dem Produkt bestellt hat.%
@@ -147,7 +147,7 @@ Never use \sql\ keywords or reserved words as names, e.g., for columns or tables
 \listingSQL{8}{factory:create_table_demand}{0.175}{0.365}{0.65}{0.63}
 \end{frame}
 %
-\begin{frame}[t,fragile]
+\begin{frame}[t]
 \frametitle{Die Spalte \texttt{ordered}}%
 \begin{itemize}%
 \item Wir müssen auch das Bestelldatum speichern.%
@@ -185,7 +185,7 @@ der ein Datum nach unserem (dem Gregorianischen) Kalender darstellt\cite{PGDG:PD
 \listingOutput{2}{factory:insert_into_table_demand}{style=tool_style_sql}{0.05}{0.13}{0.9}{0.91}
 \end{frame}
 %
-\begin{frame}[t,fragile]
+\begin{frame}[t]
 \frametitle{Schutz vor Fehlern}%
 \begin{itemize}%
 \item Schützt das DBMS uns auch wirklich vor Fehlern?%%
@@ -206,7 +206,7 @@ Wir können kein ungültiges Datum eingeben.}%
 \listingSQLandOutput{5-}{factory:insert_into_table_demand_error_2}{}{0.05}{0.33}{0.9}{0.665}
 \end{frame}
 %
-\begin{frame}[t,fragile]
+\begin{frame}[t]
 \frametitle{Understanding the Data}%
 \begin{itemize}%
 \item Wenn wir uns die Daten in unserer skizzierten Tabelle anschauen, dann können wir sie ganz gut verstehen, weil wir die Bedeutungen der IDs mit rangeschrieben haben.%
@@ -215,8 +215,8 @@ Wir können kein ungültiges Datum eingeben.}%
 \end{itemize}%
 \locateGraphic{1}{width=0.7\paperwidth}{graphics/dbStructureDemand}{0.15}{0.25}%
 \listingOutput{2}{factory:insert_into_table_demand}{style=tool_style_sql}{0.05}{0.34}{0.9}{0.65}
-\end{frame}
-
+\end{frame}%
+%
 \section{Zusammenfassung}%
 %
 \begin{frame}%

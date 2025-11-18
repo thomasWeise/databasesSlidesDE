@@ -22,7 +22,7 @@
 %
 \item<2-> Das heist, dass sie \emph{einzigartig} seien muss.
 %
-\item<3-> Entitäten werden vollständig und ausschließlich von ihren Attributen characterisiert.%
+\item<3-> Entitäten werden vollständig und ausschließlich von ihren Attributen charakterisiert.%
 %
 \item<4-> Sie haben keine Eigenschaften außer ihren Attributen.%
 %
@@ -46,7 +46,7 @@ Ein Superschlüssel~\inEN{super key} ist ein Attribute oder eine Menge Attribute
 \begin{itemize}%
 \item Eine Studenten-Entiät kann eindeutig durch ihre Studenten-ID identifiziert werden.%
 \item<4-> Sie kann auch durch die Kombination von Adresse und Mobiltelefonnummer(s) identifiziert werden.%
-\item<5-> Oder nur durch ie Mobiltelefonnummer(n) {\dots} also wenn diese nicht optional wären.%
+\item<5-> Oder nur durch die Mobiltelefonnummer(n) {\dots} also wenn diese nicht optional wären.%
 \item<6-> Oder vielleicht durch eine Email-Adresse.%
 \item<7-> Oder vielleicht durch eine Ausweisnummer~(中国公民身份号码\cite{GB116431999CIN}) {\dots} also wenn diese nicht optional wäre.%
 \item<8-> Oder durch die Kombination von Name, Adresse, und \glsShort{dateOfBirth}.%
@@ -102,8 +102,8 @@ Der Primärschlüssel~\inEN{primary key} eines Entitätstypes ist der Schlüssel
 \end{definition*}%
 %
 \uncover<2->{%
-\begin{definition*}[Prim-Attribute]%
-Ein Attribut wird als prim~\inEN{prime} bezeichnet, wenn es Teil des Primärschlüssels ist.%
+\begin{definition*}[Primär-Attribut]%
+Ein Attribut wird als primär~\inEN{prime} bezeichnet, wenn es Teil des Primärschlüssels ist.%
 \end{definition*}%
 %
 \uncover<3->{%
@@ -180,7 +180,7 @@ Ein Attribut wird als prim~\inEN{prime} bezeichnet, wenn es Teil des Primärschl
 \item<16-> Und die Kombination aus Name, Geburtsort, und Geburtstag?%
 \only<17-26>{%
 \begin{itemize}%
-\item Ein weiteres Kriterium für Primärschlossel ist, dass sie \emph{klein} seien sollten.%
+\item Ein weiteres Kriterium für Primärschlüssel ist, dass sie \emph{klein} seien sollten.%
 \item<18-> Zusammengesetzte Attribute oder lange Textstrings sind nicht geeignet.%
 \item<19-> Wenn wir Beziehungen zwischen Entitäten speichern, dann speichern wir immer deren Primärschlüssel.%
 \item<20-> Erinnern wir uns an unsere Tabelle \sqlil{demand} aus dem Fabrikbeispiel.%
@@ -190,22 +190,22 @@ Ein Attribut wird als prim~\inEN{prime} bezeichnet, wenn es Teil des Primärschl
 \item<24-> Und dieser Primärschlüssel wäre groß\only<-24>{.}\uncover<25->{ und ist daher schlecht\only<-25>{.}\uncover<26->{ und wir nehmen ihn nicht.}}%
 \end{itemize}}%
 %
-\item<26-> Bleibt also noch die von unserer Uni zugewiesene Studenten-ID.%
-\only<27-33>{%
+\item<27-> Bleibt also noch die von unserer Uni zugewiesene Studenten-ID.%
+\only<28-34>{%
 \begin{itemize}%
 \item Sagen wir, dass eine Studentin einen Studiengang beginnt, vielleicht das Bachelor-Program \inQuotes{Informatik}.%
-\item<28-> Dann bekommt sie eine Studenten-ID zugwiesen.%
-\item<29-> Diese repräsentiert sie nicht als Person, sondern in der Funktion\inQuotes{BSc-Student der Informatik}.%
-\item<30-> Wenn Sie nach dem Abschluss einen Master ranhängen will, dann bekommt sie eine andere Studenten-ID.%
-\item<31-> Das fühlt sich ein wenig komisch an.%
-\item<32-> Vielleiht sollten wir Studenten irgendwie anders modellieren(?)%
-\item<33-> Aber von den zur Verfügung stehenden Schlüsselkandidaten ist die Studenten-ID die beste Wahl.%
+\item<29-> Dann bekommt sie eine Studenten-ID zugwiesen.%
+\item<30-> Diese repräsentiert sie nicht als Person, sondern in der Funktion~\inQuotes{BSc-Student der Informatik}.%
+\item<31-> Wenn Sie nach dem Abschluss einen Master ranhängen will, dann bekommt sie eine andere Studenten-ID.%
+\item<32-> Das fühlt sich ein wenig komisch an.%
+\item<33-> Vielleicht sollten wir Studenten irgendwie anders modellieren(?)%
+\item<34-> Aber von den zur Verfügung stehenden Schlüsselkandidaten ist die Studenten-ID die beste Wahl.%
 \end{itemize}%
 }%
 %
-\item<34-> Wir nehmen die Studenten-ID als Primärschlüssel.%
+\item<35-> Wir nehmen die Studenten-ID als Primärschlüssel.%
 }%
-\item<35-> Wir können unser \glsShort{ERD} mit der Student-ID als Primärschlüssel updaten, in dem wir den Name des Attributs unterstrichen\cite{G2011EW2ITDS:CMUTERM}.%
+\item<36-> Wir können unser \glsShort{ERD} mit der Student-ID als Primärschlüssel updaten, in dem wir den Name des Attributs unterstrichen\cite{G2011EW2ITDS:CMUTERM}.%
 %
 \end{itemize}%
 \locateGraphic{35}{width=0.75\paperwidth}{graphics/erdStudent5}{0.2}{0.24}%
@@ -217,7 +217,7 @@ Ein Attribut wird als prim~\inEN{prime} bezeichnet, wenn es Teil des Primärschl
 Primärschlüssel sollen\uncover<2->{%
 \begin{enumerate}%
 \item einzigartig für jede Entität sein\only<-2>{.}\uncover<3->{,}%
-\item<3-> sich während nicht ändern, so lange die Entität existiert\only<-3>{.}\uncover<4->{,}%
+\item<3-> sich nicht ändern, so lange die Entität existiert\only<-3>{.}\uncover<4->{,}%
 \item<4-> nicht optional sein, also niemals \sqlilIdx{NULL} sein\only<-4>{.}\uncover<5->{,}%
 \item<5-> keine abgeleiteten Attribute sein\only<-5>{.}\uncover<6->{,}%
 \item<6-> immer einwertige Attribute sein, also keine mehrwertigen\only<-6>{.}\uncover<7->{,}%

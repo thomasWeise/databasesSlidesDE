@@ -1,0 +1,122 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{37.~Logisches Schema:~Beziehungen}%
+%
+\begin{document}%
+%
+\gitExec{setup}{\databasesCodeRepo}{.}{python -m pip install --no-input -r requirements.txt}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+%
+\item In Einheit~\unitRelationshipCardinalities\ haben wir die verschiedenen Arten von binären Beziehungen zwischen zwei Entitätstypen diskutiert, die in einem \glsShort{ERD} auftreten können.%
+%
+\item<2-> Damals haben wir unseren Weg durch alle diese Typen gearbeitet und Beispiele von existierenen Quellen gefunden.%
+%
+\item<3-> Wir können binäre Beziehungen als Anforderungen verstehen, die auf zwei Entitätstypen definiert wurden.%
+%
+\item<4-> In einer \crowsFoot{C}{O1}{D}{M1}-Beziehung, \DEzB, ist es erforderlich, dass jede Entität von Typ~C immer mit genau einer Entität vom Typ~D verbunden seien \emph{muss}.%
+%
+\item<5-> Beziehungen sind bi-direktional, also wenn eine Entität vom Typ~C mit einer Entität vom Typ~D verbunden ist, dann gilt das auch andersherum.%
+%
+\item<6-> Das Beziehungsmuster \crowsFoot{C}{O1}{D}{M1} erlaubt, dass eine Entität vom Type~D entweder mit einer oder keiner Entität vom Typ~C verbunden ist.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Referentielle Integrität}%
+%
+\begin{definition*}[Referentielle Integrität]%
+Eine \glslink{db}{Datenbank} wo die Beziehungseinschränkungen korrekt implementiert sind und durchgesetzt werden hat die Eigenschaft \emph{referentielle Integrität}~\inEN{referential integrity}.%
+\end{definition*}%
+%
+\uncover<2->{%
+\begin{itemize}%
+%
+\item Wenn wir ein konzeptuelles Modell in das relationale Datenmodell übersetzen, dann müssen wir auch die Beziehungsmuster mit übersetzen.%
+%
+\item<3-> Das bedeutet, dass wir im Grunde die Krähenfußnotation nach \glsShort{SQL} übersetzen müssen.%
+%
+\item<4-> \glsShort{SQL} bietet uns die folgenden Werkzeuge, um die Beziehungen korrekt darzustellen\only<-4>{.}\uncover<5->{%
+%
+\begin{itemize}%
+%
+\item die Primärschlüssel-Einschränkung~\sqlil{PRIMARY KEY}\only<-5>{.}\uncover<6->{,}%
+%
+\item<6-> die Fremdschlüssel-Einschränkung~\sqlil{REFERENCES}\only<-6>{.}\uncover<7->{,}%
+%
+\item<7-> die \sqlil{NOT NULL}-Einschränkung, die verhindert, dass ein Attribut undefiniert~(\sqlil{NULL}) bleibt\only<-7>{.}\uncover<8->{ und}%%
+%
+\item<8-> die \sqlil{UNIQUE}-Einschränkung, die verhindert, dass ein Wert mehrmals in einer Spalte vorkommt.%
+%
+\end{itemize}%
+}%
+\end{itemize}%
+}%
+\end{frame}%
+%
+%
+\begin{frame}%
+\frametitle{Was jetzt kommt}%
+\begin{itemize}%
+\item Wir werden jetzt schauen, wie \emph{jeder} der zehn binären Beziehungstypen in \glsShort{SQL} implementiert werden kann.%
+%
+\item<2-> Wir machen das direkt in \glsShort{SQL} und benutzen den \pgmodeler\ nicht, denn wir fangen ja schon mit einer visuellen Notation als Ausgangspunkt an und wollen diese nach \glsShort{SQL} übersetzen.%
+%
+\item<3-> Der \pgmodeler\ bietet hier keinen zusätzlichen Nutzen. Er ist für größere Modelle gedacht, wohingegen wir uns hier durch viele kleine Modelle durchkämpfen.%
+%
+\item<4-> Betrachten Sie das gleichzeitig als eine Übung in \glsShort{SQL}.%
+%
+\item<5-> Es geht nicht darum, sich genau zu merken, wie welcher Beziehungstyp dargestellt wird.%
+%
+\item<6-> Es geht mehr darum, die Werkzeuge, die \glsShort{SQL} uns bietet, besser zu verstehen.%
+%
+\item<7-> Wir gucken uns genau an, wie~\sqlil{NOT NULL}, \sqlil{REFERENCES}, \sqlil{UNIQUE} und \sqlil{PRIMARY KEY}\cite{PGDG:PD:C} zusammen mit \sqlil{INNER JOIN}\cite{PGDG:PD:JT} verwendet werden, um die referentielle Integrität von Tabellen sicherzustellen.%
+%
+\item<8-> Für manche komplizierten Beziehungen macht es auch Spaß, auszuknobeln, wie man sie implementieren könnte.%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{In Aktion}%
+\begin{itemize}%
+\item Natürlich schreiben wir nicht nur \glsShort{SQL} irgendwie hin {\dots} wir probieren es aus!%
+%
+\item<2-> Dazu erstellen wir eine neue Datenbank.%
+\end{itemize}%
+\gitLoadAndExecSQL{conceptualToRelational:init}{}{conceptualToRelational}{init.sql}{}{}{}%
+\listingSQLandOutput{2}{conceptualToRelational:init}{}{0.05}{0.25}{0.9}{0.72}
+\end{frame}%
+%
+\hinput{sub}{ab.tex}%
+\hinput{sub}{cd.tex}%
+\hinput{sub}{ef.tex}%
+\hinput{sub}{gh.tex}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Fertig
+\end{itemize}%
+\end{frame}%
+%
+\endPresentation%
+\end{document}%%
+\endinput%
+%

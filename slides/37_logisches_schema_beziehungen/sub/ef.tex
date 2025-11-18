@@ -1,0 +1,228 @@
+%
+\section{\crowsFoot{E}{O1}{F}{OM}}%
+%
+\begin{frame}[t]%
+\frametitle{\crowsFoot{E}{O1}{F}{OM}}%
+\begin{itemize}%
+\item Es gibt zwei Entitätstypen~E und~F.%
+\item<2-> Jede Entität vom Typ~E kann mit keiner, einer, oder mehreren Entitäten vom Typ~F verbunden sein.
+\item<3-> Jede Entität vom Typ~F ist mit keiner oder einer Entität vom Typ~E verbunden.
+\item<4-> Beispiel:\uncover<5->{%
+\begin{itemize}%
+%
+\item Eine Nachricht kann entweder eine neue Nachricht sein, oder die Antwort auf eine existierende Nachricht.\uncover<6->{ %
+Es kann keine, eine, oder beliebig viele Antworten auf jede Nachricht geben.}%
+\end{itemize}%
+}%
+\end{itemize}%
+%
+\locateGraphic{4-}{width=0.8\paperwidth}{graphics/EF}{0.1}{0.6}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Lösungen}%
+\begin{itemize}%
+\item Wir brauchen eine Tabelle~\sqlil{e} für die Entitäten vom Typ~E.%
+%
+\item<2->  Wir brauchen auch eine Tabelle~\sqlil{f} für die Entitäten vom Typ~F.%
+%
+\item<3-> Beide haben ihre Ersatz-Primärschlüssel~\sqlil{eid} und~\sqlil{fid}.%
+%
+\item<4-> Wir fügen auch wieder die Beispielattribute~\sqlil{x} und~\sqlil{y} hinzu.%
+%
+\item<5-> Wieder gibt es zwei mögliche Lösungen für dieses Szenario\only<-5>{.}\uncover<6->{:%
+\begin{enumerate}%
+\item Wir können drei Tabellen nehmen, wobei die dritte Tabelle wieder die \inQuotes{Verbindungen} speichert\only<-6>{.}\uncover<7->{ oder}%
+\item<7-> wir können zwei Tabellen nehmen, wobei die \inQuotes{Verbindungsdaten} diesmal in Tabelle~\sqlil{f} gehen müssen.%
+\end{enumerate}%
+}%
+%
+\item<8-> Welche Lösung besser ist, hängt wieder mit der Anzahl der verbundenen Datensätze zusammen.
+\end{itemize}%
+\end{frame}%
+%
+
+\begin{frame}[t]%
+\frametitle{Mit Drei Tabellen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-4>{%
+\item Wir benutzen eine dritte Tabelle~\sqlil{relate_e_and_f}, die die Entitäten vom Typ~E mit denen vom Typ~F in Verbindung setzt.%
+}%
+\only<-5>{%
+\item<2-> In der Tabelle gibt es zwei Spalten.%
+}%
+\only<-6>{%
+\item<3-> Die erste, \sqlil{fkeid}, speichert die Werte der Primärschlüssel~\sqlil{eid} der E-Entitäten.%
+}%
+\only<-7>{%
+\item<4-> Die zweite, \sqlil{fkfid}, speichert die Werte der Primärschlüssel~\sqlil{fid} der F-Entitäten.%
+}%
+%
+\only<-7>{%
+\item<5-> Da wir nur Paare speichern, die existieren, sind beide Spalten~\sqlil{NOT NULL} und haben \sqlil{REFERENCES}-Einschränkungen auf ihre entsprechenden Fremdschlüssel.%
+}%
+%
+\item<6-> Da jede Entität vom Typ~F nur mit höchstens einer Entität vom Type~E verbunden sein kann, gibt es eine \sqlil{UNIQUE}-Einschränkung auf Spalte~\sqlil{fkfid}.%
+%
+\item<7-> Wir machen sie auch zum Primärschlüssel der Tabelle~\sqlil{relate_e_and_f}.%
+%
+\item<8-> Sie muss der Primärschlüssel sein, denn die Werte in Spalte~\sqlil{fkeid} müssen nicht einmalig sein {\dots} eine Entität vom Typ~E kann mit vielen Entitäten vom Typ~F verbunden sein.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{EF_1_tables}{}{conceptualToRelational}{EF_1_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{}{EF_1_tables}{}{0.47}{0.1}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Befüllen mit Daten}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Wir füllen nun einige Daten in die Tabellen.%
+%
+\item<2-> Weil beide Enden der Beziehung optional sind, können wir erstmal die Tabellen~\sqlil{e} und~\sqlil{f} befüllen.%
+%
+\item<3-> Dann erstellen wir die Beziehungen, in dem wir Zeilen in die Tabelle~\sqlil{relate_e_and_f} einfügen.
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{EF_1_insert_and_select}{}{conceptualToRelational}{EF_1_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{}{EF_1_insert_and_select}{}{0.47}{0.1}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Der Inhalt der Drei Tabellen}%
+%
+\gitExec{cdtrmTableEO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships e eid;x}%
+\gitExec{cdtrmTableFO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships f fid;y}%
+\gitExec{cdtrmTableREF}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_e_and_f fkeid;fkfid}%
+%
+\vfill%
+%
+\begin{itemize}%
+\item Dies sind die Daten in den drei Tabellen.%
+\end{itemize}%
+\vfill%
+%
+\begin{center}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableEO}}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableFO}}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableREF}}%
+\strut\hfill\strut%
+\end{center}%
+%
+\hfill%
+\end{frame}%
+%%
+\begin{frame}%
+\frametitle{Probleme mit der Drei-Tabellen-Methode}%
+\begin{itemize}%
+\item Dieser Ansatz wird \DEzB\ in \bracketCite{S2024D:MEDTRDM} empfohlen.%
+%
+\item<2-> Er hat aber wieder genau die selben Probleme, wie der drei-Tabellen-Ansatz für die Entitätstypen~A und~B.
+%
+\item<3-> Der Ansatz hat nur dann Sinn, wenn es relativ wenig Paare von verbundenen E~und F~Entitäten gibt.%
+%
+\item<4-> Wenn fast alle Entitäten vom Typ~F mit einer Entität vom Typ~E verbunden sind, dann ist die Tabelle~\sqlil{relate_e_and_f} fast genauso groß wie Tabelle~\sqlil{f}.%
+%
+\item<5-> Anstatt einfach die Schlüssel der verbundenen E-Entitäten mit in Tabelle~\sqlil{f} zu speichern, haben wir dann eine weitere Tabelle, die diese Schlüssel \emph{und} die Primärschlüssel von Tabelle~\sqlil{f} speichert.%
+%
+\item<6-> Und wir brauchen auch zwei \sqlil{INNER JOIN}s.
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Zwei-Tabellen Lösung}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Probieren wir also eine Lösung mit zwei Tabellen.%
+}%
+%
+\only<-6>{%
+\item<2-> Dazu löschen wir erstmal wieder unsere Tabellen.%
+}%
+%
+\only<-7>{%
+\item<3-> Diesmal müssen wir eine Fremdschlüssel-Spalte~\sqlil{fkeid} zur Tabelle~\sqlil{f} hinzufügen.%
+}%
+%
+\item<4-> Diese Spalte bekommt eine \sqlil{REFERENCES}-Einschränkung, die auf Spalte~\sqlil{eid} der Tabelle~\sqlil{e} zeigt.%
+%
+\item<5-> Ein Wert in dieser Spalte darf \sqlil{NULL} sein, denn nicht alle Zeilen in Tabelle~\sqlil{f} müssen mit Zeilen in Tabelle~\sqlil{e} verbunden sein.%
+%
+\item<6-> Anders als in der \crowsFoot{A}{O1}{B}{O1}-Situation darf hier keine \sqlil{UNIQUE}-Einschränkung verwendet werden.%
+%
+\item<7-> Jede Zeile von Tabelle~\sqlil{e} kann mit mehreren Zeilen in Tabelle~\sqlil{f} verbunden sein.%
+%
+\item<8-> Die Primärschlüsselwerte von Tabelle~\sqlil{e} dürfen mehrmals als Fremdschlüsselwerte in Spalte~\sqlil{fkeid} in Tabelle~\sqlil{f} auftauchen.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{EF_cleanup}{}{conceptualToRelational}{EF_cleanup.sql}{relationships}{}{}%
+\listingSQLandOutput{2}{EF_cleanup}{}{0.47}{0.1}{0.529}{0.87}
+\gitLoadAndExecSQL{EF_2_tables}{}{conceptualToRelational}{EF_2_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{3-}{EF_2_tables}{}{0.47}{0.1}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Befüllen mit Daten}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+\only<-5>{%
+\item Wir speichern nun Daten in die beiden Tabellen.%
+}%
+%
+\only<-6>{%
+\item<2-> Wir fügen zuerst Zeilen in die Tabelle~\sqlil{e} ein.%
+}%
+%
+\only<-7>{%
+\item<3-> Dann fügen wir Zeilen in die Tabelle~\sqlil{f} ein.%
+}%
+%
+\item<4-> Für jede dieser Zeilen können wir einen gültigen Fremdschlüsselwert~\sqlil{fkeid} auf eine Zeile in Tabelle~\sqlil{e}~(identifiziert vom Primärschlüssel~\sqlil{eid}) angeben.%
+%
+\item<5-> Wenn wir das machen, dann ist die neue Zeile in Tabelle~\sqlil{f} mit einer existierenden Zeile in Tabelle~\sqlil{e} verbunden.%
+%
+\item<6-> Wir können auch \sqlil{NULL} als \sqlil{fkeid} speichern.%
+%
+\item<7-> Dann ist die Zeile in Tabelle~\sqlil{f} nicht mit einer Zeile in Tabelle~\sqlil{e} verbunden.%
+%
+\item<8-> Mit einem einzelnen \sqlil{INNER JOIN} können wir die Daten wieder zusammensetzen.%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{EF_2_insert_and_select}{}{conceptualToRelational}{EF_2_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{}{EF_2_insert_and_select}{}{0.47}{0.1}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Der Inhalt der Zwei Tabellen}%
+%
+\gitExec{cdtrmTableET}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships e eid;x}%
+\gitExec{cdtrmTableFT}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships f fid;fkeid;y}%
+%
+\vfill%
+%
+\begin{itemize}%
+\item Dies sind die Daten in den zwei Tabellen.%
+\end{itemize}%
+\vfill%
+%
+\begin{center}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableET}}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableFT}}%
+\strut\hfill\strut%
+\end{center}%
+%
+\hfill%
+\end{frame}%
+%

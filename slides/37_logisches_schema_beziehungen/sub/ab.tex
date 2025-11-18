@@ -1,0 +1,319 @@
+%
+\section{\crowsFoot{A}{O1}{B}{O1}}%
+%
+\begin{frame}[t]%
+\frametitle{\crowsFoot{A}{O1}{B}{O1}}%
+\begin{itemize}%
+\item Es gibt zwei Entitätstypen~A und~B.%
+\item<2-> Jede Entität vom Typ~A ist mit keiner oder einer Entität vom Typ~B verbunden.
+\item<3-> Jede Entität vom Typ~B ist mit keiner oder einer Entität vom Typ~A verbunden.
+\item<4-> Beispiele:\uncover<5->{%
+\begin{itemize}%
+%
+\item Wir haben eine Pizzaria bei der Kunden online bestellen können.\uncover<6->{ %
+Wir geben Gutscheine heraus, die die Bestellkostem um 20\% reduzieren.\uncover<7->{ %
+Jeder Gutschein kann für genau eine Bestellung eingelöst werden~(oder auch gar nicht).\uncover<8->{ %
+Für jede Bestellung kann maximal ein Gutschein eingelöst werden~(oder auch keiner).%
+}}}%
+%
+\item<9-> Jede Person kann mit keiner oder genau einer (anderen) Person verheiratet sein.%
+\end{itemize}%
+}%
+\end{itemize}%
+%
+\locateGraphic{4-}{width=0.9\paperwidth}{graphics/AB}{0.05}{0.65}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Zwei Realisierungen}%
+\begin{itemize}%
+\item Es gibt zwei Möglichkeiten, das zu realisieren\only<1>{.}\uncover<2->{:%
+\begin{enumerate}%
+\item Wir können eine Lösung mit drei Tabellen bauen.\uncover<3->{%
+\begin{itemize}%
+\item Jeder Entitätstyp bekommt eine eigene Tabelle.%
+\item<4-> Die Beziehungen werden in einer dritten Tabelle gemanaged.%
+\end{itemize}%
+\uncover<5->{%
+Diese Lösung ist sehr sinnvoll, wenn es nicht so viele verbundene Paare von A~und B~Entitäten gibt.%
+}}%
+%
+\item<6-> Wie können eine Lösung mit zwei Tabellen bauen, wo die Beziehung in einer zusätzlichen Spalte in einer der Tabellen gemanaged wird.\uncover<7->{ Diese Lösung ist besser, wenn viele A~und~B-Paare verbunden sind.}%
+\end{enumerate}%
+}%
+%
+\item<8-> So oder so, wir brauchen mindestens die folgenden beiden Tabellen\only<-8>{.}\uncover<9->{:%
+\begin{enumerate}%
+\item Tabelle~\sqlil{a} steht für Entitätstyp~A.\uncover<10->{ %
+Ihr Ersatz-Primärschlüssel soll hier~\sqlil{aid} sein.\uncover<11->{ %
+Wir geben ihr eine weitere Spalte~\sqlil{x}, in der wir einen Text aus drei Zeichen speichern.}}%
+%
+\item<12-> Tabelle~\sqlil{b} steht für Entitätstyp~B.\uncover<13->{ %
+Ihr Ersatz-Primärschlüssel soll hier~\sqlil{bid} sein.\uncover<14->{ %
+Wir geben ihr eine weitere Spalte~\sqlil{y}, in der wir einen Text aus zwei Zeichen speichern.}}%
+\end{enumerate}%
+}%
+%
+\item<15-> In den folgenden Beispielen, wir verwenden immer so eine Struktur.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Mit Drei Tabellen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+\only<-5>{%
+\item Fangen wir mit dem drei-Tabellen-Ansatz an\cite{S2024D:MEDTRDM}.%
+}%
+%
+\only<-5>{%
+\item<2-> Wir brauchen eine dritte Tabelle, \sqlil{relate_a_and_b}, die die Entitäten der Typen~A und~B in Verbindung setzt.%
+}%
+%
+\only<-6>{%
+\item<3-> Sie hat zwei Spalten: \sqlil{fkaid}~speichert den Primärschlüssel der A-Entitäten als Fremdschlüssel und \sqlil{fkbid}~speichert die Primärsclüssel der B-Entitäten als Fremdschlüssel.%
+}%
+%
+\only<-8>{%
+\item<4-> Wir speichern nur existierende Paare, daher müssen beide Spalten \sqlil{NOT NULL} sein.%
+}%
+%
+\only<-9>{%
+\item<5-> Beide Spalten haben \sqlil{REFERENCES}-Einschränkungen für ihre Fremdschlüssel.%
+}%
+%
+\only<-10>{%
+\item<6-> Weil jede Entität jeder Tabelle nur mit maximal einer Entität der anderen Tabelle verbunden seien kann, darf jeder Wert in \sqlil{fkaid} höchstens einmal vorkommen\only<7->{~(und das selbe gilt auch für~\sqlil{fkbid})}.%
+}%
+%
+\item<8-> Beide Spalten sind daher \sqlil{UNIQUE}.%
+%
+\item<9-> Beide können als \sqlil{PRIMARY KEY} verwendet werden.%
+%
+\item<10-> Wir würden wahrscheinlich den Schlüssel wählen, der zu der \inQuotes{Richtung} gehört, aus der wir am häufigsten zugreifen.%
+%
+\item<11-> Wenn wir häufig die passende B-Entitäten zu einer gegebenen A-Entität suchen würden, dann würden wir \sqlil{fkaid} als \sqlil{PRIMARY KEY} benutzen.%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{AB_1_tables}{}{conceptualToRelational}{AB_1_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{}{AB_1_tables}{}{0.47}{0.1}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Befüllen mit Daten}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+\only<-5>{%
+\item Wir füllen nun einige Daten in die Tabellen.%
+}\only<-5>{%
+\item<2-> Wir können zuerst Daten in die Tabellen~\sqlil{a} und~\sqlil{b} füllen.%
+}\only<-6>{%
+\item<3-> Die Primärschlüsselwerte werden dabei automatisch generiert.
+}\only<-7>{%
+\item<4-> Wir geben also nur Werte für die Attribute~\sqlil{x} und~\sqlil{y} an.%
+}\only<-8>{%
+\item<5-> Danach können wir die Beziehungen zwischen den Zeilen dieser beiden Tabellen herstellen, in dem wir Einträge in die Tabelle \sqlil{relate_a_and_b} mit den Primärschlüsseln der entsprechenden Zeilen eingeben.%
+}\only<-9>{%
+\item<6-> \sqlil{INSERT INTO relate_a_and_b} \sqlil{(fkaid, fkbid)} \sqlil{VALUES (2, 3);}, \DEzB, setzt die Zeile~\sqlil{aid = 2} in Tabelle~\sqlil{a} mit der Zeile mit~\sqlil{bid = 3} in Tabelle~\sqlil{b} in Beziehung.%
+}%
+\item<7-> Wenn wir Informationen über eine A~Entität via~\sqlil{SELECT} holen, brauchen aber auch Informationen über die eventuell existierende zugehörige B~Entität.%
+%
+\item<8-> Wir benutzen ein \sqlil{INNER JOIN} aus Richtung Tabelle~\sqlil{a} auf die dritte Tabelle \sqlil{relate_a_and_b} basierend auf dem Primärschlüssel~\sqlil{aid} von Tabelle~\sqlil{a}.%
+%
+\item<9-> Dann brauchen wir noch ein \sqlil{INNER JOIN} mit der Tabelle~\sqlil{b} auf ihren Primärschlüssel~\sqlil{bid}.%
+%
+\item<10-> Wir bekommen die zusammengehörigen Daten in zwei Schritten.%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{AB_1_insert_and_select}{}{conceptualToRelational}{AB_1_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{}{AB_1_insert_and_select}{}{0.47}{0.1}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Der Inhalt der Drei Tabellen}%
+\gitExec{cdtrmTableAO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships a aid;x}%
+\gitExec{cdtrmTableBO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships b bid;y}%
+\gitExec{cdtrmTableRAB}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_a_and_b fkaid;fkbid}%
+%
+\vfill%
+%
+\begin{itemize}%
+\item Dies sind die Daten in den drei Tabellen.%
+\end{itemize}%
+\vfill%
+%
+\begin{center}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableAO}}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableBO}}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableRAB}}%
+\strut\hfill\strut%
+\end{center}%
+%
+\hfill%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Testen der Einschränkungen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Es ist unmöglich, eine Zeile in Tabelle~\sqlil{a} zu haben, die mit mehr als einer Zeile in Tabelle~\sqlil{b} in Beziehung steht.%
+\item<2-> Die \sqlil{UNIQUE}-Einschränkung auf Spalte~\sqlil{fkaid} in \sqlil{relate_a_and_b} verbietet das.%
+%
+\item<3-> Es ist auch unmöglich, eine Zeile in Tabelle~\sqlil{b} zu haben, die mit mehr als einer Zeile in Tabelle~\sqlil{a} in Beziehung steht.%
+\item<4-> Die \sqlil{UNIQUE}-Einschränkung auf Spalte~\sqlil{fkbid} in Tabelle~\sqlil{relate_a_and_b} verbietet das.%
+%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{AB_1_insert_error_1}{}{conceptualToRelational}{AB_1_insert_error_1.sql}{relationships}{}{}%
+\gitLoadAndExecSQL{AB_1_insert_error_2}{}{conceptualToRelational}{AB_1_insert_error_2.sql}{relationships}{}{}%
+\listingSQLandOutput{-2}{AB_1_insert_error_1}{}{0.47}{0.1}{0.529}{0.87}
+\listingSQLandOutput{3-}{AB_1_insert_error_2}{}{0.47}{0.1}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Probleme mit der Drei-Tabellen-Methode}%
+\begin{itemize}%
+\item Es gibt zwei Probleme mit dieser Drei-Tabellen-Methode\only<-1>{.}\uncover<2->{:%
+\begin{enumerate}
+\item Wir brauchen zwei \sqlil{INNER JOIN}-Statements, um die Daten der Entitäten~A und~B zu verbinden.%
+%
+\item<3-> Der Ansatz hat nur dann Sinn, wenn es relativ wenig Paare von verbundenen A~und B~Entitäten gibt.\uncover<4->{%
+\begin{itemize}
+\item Im schlimmsten Fall sind alle Entitäten von Typ~A mit Entitäten von Typ~B verbunden~(oder umgekehrt).%
+\item<5-> Dann ist die dritte Tabelle so groß wie die kleiner der Tabellen~\sqlil{a} und~\sqlil{b}.%
+\end{itemize}}%
+\end{enumerate}}%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Zwei-Tabellen Lösung}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+\only<-5>{%
+\item Wenn die meisten Entitäten von Typ~A mit solchen von Typ~B verbunden sind {\dots} dann könnten wir genauso gut einfach die Fremdschlüssel direkt in Tabelle~\sqlil{a} speichern\dots%
+}%
+%
+\only<-6>{%
+\item<2-> Das probieren wir jetzt aus.%
+}%
+%
+\only<-7>{%
+\item<3-> Dafür löschen wir die Tabellen erstmal wieder.%
+}%
+%
+\only<-8>{%
+\item<4-> Und jetzt erstellen wir sie neu.%
+}%
+%
+\only<-9>{%
+\item<5-> Die neue Spalte~\sqlil{fkbid} wird zu Tabelle~\sqlil{a} hinzugefügt.%
+}%
+%
+\only<-10>{%
+\item<6-> Sie darf \sqlil{NULL} sein, weil ja nicht alle Entitäten vom Typ~A mit Entitäten vom Typ~B verbunden seien müssen~(und umgekehrt).%
+}%
+%
+\only<-11>{%
+\item<7-> Sie muss \sqlilIdx{UNIQUE} sein, denn keine Entität vom Typ~B kann mit mehr als einer Entität vom Typ~A verbunden sein.%
+}%
+%
+\only<-12>{%
+\item<8-> Diese Einschränkung gilt aber nur für die \sqlil{fkbid}-Einträge, die nicht \sqlil{NULL} sind.%
+}%
+%
+\only<-13>{%
+\item<9-> Sie braucht auch eine \sqlil{REFERENCES}-Einschränkung.%
+}%
+%
+\only<-14>{%
+\item<10-> Das fügen wir später mit \sqlil{ALTER TABLE}\sqlIdx{ALTER!TABLE}\sqlIdx{TABLE}\cite{PGDG:PD:AT} hinzu~(\pgmodeler\ macht das ja auch so).%
+}%
+%
+\only<-14>{%
+\item<11-> Sonst müssten wie die Tabelle~\sqlil{b} vor Tabelle~\sqlil{a} erstellen.%
+}%
+%
+\item<12-> Wenn wir viele Tabellen hätten, müssten wir die immer in einer bestimmten Reihenfolge sortieren, was alles komplizierter und daher fehleranfälliger macht.%
+%
+\item<13-> Deshalb werden wir immer zuerst die Tabellen erstellen und danach die Einschränkungen, die nicht sofort erstellt weren können.%
+%
+\item<14-> So oder so, wir können mit zwei Tabellen auskommen.%
+%
+\item<15-> Wir hätten es auch andersherum machen können, in dem wir Tabelle~\sqlil{b} einen Fremdschlüssel~\sqlil{fkaid} auf Tabelle~\sqlil{a} geben.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{AB_cleanup}{}{conceptualToRelational}{AB_cleanup.sql}{relationships}{}{}%
+\listingSQLandOutput{3}{AB_cleanup}{}{0.47}{0.1}{0.529}{0.87}
+\gitLoadAndExecSQL{AB_2_tables}{}{conceptualToRelational}{AB_2_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{4-}{AB_2_tables}{}{0.47}{0.1}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Befüllen mit Daten}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+\item Wir können nun Daten genauso wie vorher in die Tabellen einfügen.%
+%
+\item<2-> Anders als vorher kommen die Beziehungen nicht in eine zusätzliche Tabelle.%
+%
+\item<3-> Stattdessen benutzen wir \sqlilIdx{UPDATE}-Statements\cite{PGDG:PD:U}.%
+%
+\item<4-> \sqlil{UPDATE a SET} \sqlil{fkbid = 3 WHERE aid = 2;}, \DEzB, setzt die Zeile mit~\sqlil{aid = 2} in Tabelle~\sqlil{a} mit der Zeile mit \sqlil{bid = 3} in Tabelle~\sqlil{b} in Beziehung.%
+%
+\item<5-> Wir können die Daten nun über ein einzelnes \sqlil{INNER JOIN} zusammenführen.%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{AB_2_insert_and_select}{}{conceptualToRelational}{AB_2_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{}{AB_2_insert_and_select}{}{0.47}{0.1}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Der Inhalt der Zwei Tabellen}%
+%
+\gitExec{cdtrmTableAT}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships a aid;fkbid;x}%
+\gitExec{cdtrmTableBT}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships b bid;y}%
+%
+\vfill%
+%
+\begin{itemize}%
+\item Dies sind die Daten in den zwei Tabellen.%
+\end{itemize}%
+\vfill%
+%
+\begin{center}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableAT}}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableBT}}%
+\strut\hfill\strut%
+\end{center}%
+%
+\hfill%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Testen der Einschränkungen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Es ist unmöglich, eine Zeile in Tabelle~\sqlil{a} zu haben, die mit mehr als einer Zeile in Tabelle~\sqlil{b} in Beziehung steht.%
+\item<2-> Das Feld~\sqlil{fkbid} kann ja nur maximal einen Wert haben~(\sqlil{NULL} oder ein gültiger Fremdschlüssel).%
+%
+\item<3-> Es ist auch unmöglich, eine Zeile in Tabelle~\sqlil{b} zu haben, die mit mehr als einer Zeile in Tabelle~\sqlil{a} in Beziehung steht.%
+\item<4-> Die \sqlil{UNIQUE}-Einschränkung auf Spalte~\sqlil{fkbid} in Tabelle~\sqlil{a} verbietet das.%
+%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{AB_2_insert_error_2}{}{conceptualToRelational}{AB_2_insert_error_2.sql}{relationships}{}{}%
+\listingSQLandOutput{3-}{AB_2_insert_error_2}{}{0.47}{0.1}{0.529}{0.87}
+\end{frame}%
