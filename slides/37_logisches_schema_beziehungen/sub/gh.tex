@@ -208,3 +208,325 @@ Jedes Mitglied kann von einem Trainer trainiert werden oder auch gar nicht train
 \gitLoadAndExecSQL{GH_tables}{}{conceptualToRelational}{GH_tables.sql}{relationships}{}{}%
 \listingSQLandOutput{}{GH_tables}{}{0.47}{0.1}{0.529}{0.87}
 \end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Testen der Einschränkungen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Probieren wir mal aus, was wir da gemacht haben.%
+}%
+\only<-6>{%
+\item<2-> Können wir eine Zeile in Tabelle~\sqlil{g} einfügen, die nicht mit einer Zeile in Tabelle~\sqlil{h} in Beziehung steht?%
+}%
+\only<-7>{%
+\item<3-> Nein, können wir nicht.%
+}%
+\only<-8>{%
+\item<4-> Damit wir eine Zeile in Tabelle~\sqlil{g} einfügen können, müssen wir den Fremdschlüssel~\sqlil{fkhid} angeben und die entsprechende Zeile in Tabelle~\sqlil{h} muss es geben.%
+}%
+%
+\item<5-> Können wir Zeilen in Tabelle~\sqlil{h} einfügen, die nicht mit Zeilen in Tabelle~\sqlil{g} in Beziehung stehen?%
+%
+\item<6-> Ja, das würde gehen. Und das ist OK.%
+%
+\item<7-> Entitäten vom Typ~H sind mit entweder einer oder keiner Entität vom Tyb~G verbunden.%
+%
+\item<8-> Aber können wir eine Zeile in Tabelle~\sqlil{g} einfügen, die eine Zeile in Tabelle~\sqlil{h} referenziert, die \emph{nicht} mit einer Entität vom Typ~G verbunden ist?%
+%
+\item<9-> Nein, denn die Einschränkung~\sqlil{g_fkhid_gid_fk} verlangt, dass die Zeile in Tabelle~\sqlil{h} zurück auf die Zeile in Tabelle~\sqlil{g} verweist.%
+%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{GH_insert_error_1}{}{conceptualToRelational}{GH_insert_error_1.sql}{relationships}{}{}%
+\gitLoadAndExecSQL{GH_insert_error_2}{}{conceptualToRelational}{GH_insert_error_2.sql}{relationships}{}{}%
+\listingSQLandOutput{2-4}{GH_insert_error_1}{}{0.47}{0.1}{0.529}{0.87}
+\listingSQLandOutput{8-9}{GH_insert_error_2}{}{0.47}{0.1}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Wie können wir überhaupt Daten einfügen?}%
+\begin{itemize}%
+\item Aber wie können wir überhaupt Zeilen in Tabelle~\sqlil{g} einfügen?%
+%
+\item<2-> Wie können keine Zeile einfügen, die keine existierende Zeile in Tabelle~\sqlil{h} referenziert.%
+%
+\item<3-> Wir können auch keine Zeile einfügen, die gar eine existierende Zeile in Tabelle~\sqlil{h} referenziert, die noch mit keiner Zeile in Tabelle~\sqlil{g} verbunden ist.%
+%
+\item<4-> Und wenn wir eine Zeile in Tabelle~\sqlil{g} einfügen wollen würden, die eine Zeile in Tabelle~\sqlil{h} referenziert welche bereits eine andere Zeile in Tabelle~\sqlil{q} referenziert {\dots} dann müsste diese andere Zeile in Tabelle~\sqlil{g} erstmal existieren.%
+%
+\item<5-> Was sie nicht tut.%
+%
+\item<6-> Nun haben wir also unsere beiden Tabellen erzeugt und ihre referenzielle Integrität mit starken Einschränkungen geschützt{\dots}%
+%
+\item<7-> {\dots}und die \emph{müssen} ja auch so sein, denn wir wollen ja gerade \crowsFoot{G}{O1}{H}{MM} implementieren
+%
+\item<8->{\dots}aber wie bekommen wir überhaupt Daten in Tabelle~\sqlil{g}?%
+%
+\item<9-> Wir müssen dieses komische Henne-Ei-Problem lösen.%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Befüllen mit Daten}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+\only<-4>{%
+\item Wir fangen damit an, erstmal Zeilen in die Tabelle~\sqlil{h} zu schreiben.%
+}%
+%
+\only<-6>{%
+\item<2-> Da die Entitäten vom Typ~H nicht unbedingt mit denen vom Typ~G in Beziehung stehen müssen, brauchen wir uns um die Einschränkungen keine Gedanken zu machen.%
+}%
+%
+\only<-7>{%
+\item<3-> Wenn wir aber eine Entität vom Typ~G in die Tabelle~\sqlil{g} einfügen, dann müssen wir \alert{gleichzeitig} eine Bezihung zu einer H-Entität in der Tabelle~\sqlil{h} erstellen.%
+}%
+%
+\only<-8>{%
+\item<4-> Das klingt unmöglich, geht aber problemlos\only<-4>{.}\uncover<5->{, weil:}%
+}%
+%
+\only<6->{%
+\only<-9>{%
+\item<6-> In \postgresql\ und wahrscheinlich vielen anderen \glsShort{dbms}en werden Einschränkungen zur referentiellen Integrität am Ende einer Transaktion überprüft.%
+}%
+%
+\only<-10>{%
+\item<7-> Eine Transaktion kann mehrere Kommandos gruppieren, die dann entweder alle zusammen erfolgreich sind oder alle zusammen fehlschlagen~(wobei dann die \glsShort{db} nicht verändert wird).%
+}%
+%
+\only<-11>{%
+\item<8-> Ein einzelnes Kommando in \postgresql\ ist auch eine Transaktion\cite{PGDG:T}.%
+}%
+%
+\only<-12>{%
+\item<9-> Das heist, dass Einschränkungen zur referentiellen Integriät erst \emph{am Ende} des Kommandos überprüft werden.%
+}%
+%
+\only<-13>{%
+\item<10-> Die Änderungen werden dann zur Datenbank committed, wenn alle Einschränkungen \inQuotes{passen} und ansonsten zurückgerollt.%
+}%
+%
+\only<-14>{%
+\item<11-> Um nun eine Zeile in Tabelle~\sqlil{g} einzufügen, dann müssen wir auch einen Datensatz in Tabelle~\sqlil{h} verändern, der aktuell noch auf keine Zeile in Tabelle~\sqlil{g} verweist.%
+}%
+%
+\only<-15>{%
+\item<12-> Wir müssen diese Zeile in Tabelle~\sqlil{h} dann mit der neuen Zeile in Tabelle~\sqlil{g} verbinden.%
+}%
+%
+\only<-16>{%
+\item<13-> Wenn wir die Einfügung und die Veränderung in ein einziges \glsShort{SQL}-Kommando packen können, dann wird es einfach.%
+}%
+%
+\only<-17>{%
+\item<14-> Sonst müssen wir eben lernen, wie man explizit Transaktionen verwendet. Das geht auch.%
+}%
+%
+\only<-18>{%
+\item<15-> Um eine den \sqlil{fkgid}-Wert einer Zeile in Tabelle~\sqlil{h} zu verändern, müssen wir den Wert des Primärschlüssels~\sqlil{gid} der neuen Zeile in Tabelle~\sqlil{g} kennen.%
+}%
+%
+\only<-19>{%
+\item<16-> Wir haben den Primärschlüssel~\sqlil{gid} der Tabelle~\sqlil{g} als \sqlil{INT GENERATED} \sqlil{BY DEFAULT} \sqlil{AS IDENTITY} \sqlil{PRIMARY KEY} deklariert.%
+}%
+%
+\only<-20>{%
+\item<17-> Das bedeutet, dass der Wert dieses Schlüssels erst erzeugt wird, wenn die Zeile generiert wird.%
+}%
+%
+\only<-21>{%
+\item<18-> Das heist wiederum, dass wir den Wert nicht kennen können, bevor wir die Zeile in Tabelle~\sqlil{g} einfügen.%
+}%
+%
+\only<-21>{%
+\item<19-> Zum Glück ist das ein sehr normales Problem:~\inQuotes{Was, wenn wir Daten in eine Tabelle mit einem automatisch generierten Primärschlüssel einfügen und wir dann den Schlüssel wissen müssen?}%
+}%
+%
+\only<-22>{%
+\item<20-> In \postgresql, das geht mit dem \sqlilIdx{RETURNING}-Schlüsselwort\cite{SE:DA:2020WDSSOAOTNPSDIOR,PGDG:PD:RDFMR}.%
+}%
+%
+\only<-23>{%
+\item<21-> Das geht nicht bei allen \glsShort{dbms}en, aber bei \mariadb\cite{M:MSD:IR} und \sqlite\cite{HWACIS:R} geht es auch.%
+}%
+%
+\only<-24>{%
+\item<22-> Mit \sqlil{INSERT INTO g} \sqlil{(fkhid, x)} \sqlil{VALUES (1, '123')} \sqlil{RETURNING gid, fkhid} würden wir eine Zeile in Tabelle~\sqlil{g} einfügen, wo der Wert des Attributs~\sqlil{x} gleich~\sqlil{'123'} ist und der Wert des Attributs~\sqlil{fkhid} gleich~\sqlil{1}.%
+}%
+%
+\only<-26>{%
+\item<23-> Das Kommando würde den Wert des automatisch erzeugten Primärschlüssels~\sqlil{gid} zurückliefern und auch den Wert von \sqlil{fkhid}, welcher in diesem Fall \sqlil{1} wären.%
+}%
+%
+\only<-28>{%
+\item<24-> Das Kommando würde natürlich fehlschlagen, denn es verletzt die Einschränkung \sqlil{g_fkhid_gid_fk}.%
+}%
+%
+\only<-29>{%
+\item<25-> Aber wir sind schon mal einen Schritt weiter.%
+}%
+%
+\only<-30>{%
+\item<26-> Eine Idee wäre es, zu versuchen eine Anfrage wie folgt zu bauen: \sqlil{UPDATE h} \sqlil{SET gid =} \sqlil{(INSERT INTO g} \sqlil{(fkhid, x)} \sqlil{VALUES (1, '123')} \sqlil{RETURNING gid, fkhid)} \sqlil{WHERE h.hid = fkhid;}.%
+}%
+%
+\only<-31>{%
+\item<27-> Das funktioniert aber nicht.%
+}%
+%
+\only<-31>{%
+\item<28-> Was aber geht ist ein sogenannter \glsFull{CTE}.%
+}%
+%
+\only<-32>{%
+\item<29-> Ein \glsShort{CTE} erlaubt es uns, einem Unterausdruck einer Anfrage einen Namen zuzuweisen.%
+}%
+%
+\only<-32>{%
+\item<30-> Dann funktioniert der Unterausdruck in etwa wie eine temporäre Tabelle.%
+}%
+%
+\only<-33>{%
+\item<31-> Der Unterausdruck wird genau einmal ausgeführt und kann wie eine read-only Tabelle in den anderen Teilen der Anfrage verwendet werden.%
+}%
+%
+\only<-35>{%
+\item<32-> Mit \sqlil{WITH cats AS} \sqlil{(SELECT age, name} \sqlil{FROM animals} \sqlil{WHERE type='cat')} würden wir das Ergebnis der Anfrage \sqlil{SELECT age, name} \sqlil{FROM animals} \sqlil{WHERE type='cat'} dem \glsShort{CTE}~\sqlil{cats} zu weisen.%
+}%
+%
+\only<-37>{%
+\item<33-> Wir könnten dann \sqlil{cats} verwenden, so als wäre es eine read-only Tabelle, und \DEzB\ mit \sqlil{SELECT name FROM cats;} die Katzennamen abfragen.%
+}%
+%
+\only<-38>{%
+\item<34-> Es ist ein wenig so wie ein \sqlilIdx{VIEW}, aber es ist Teil eines einzelnen \glsShort{SQL}-Kommandos.%
+}%
+%
+\only<-39>{%
+\item<35-> Nun setzen wir alles zusammen.%
+}%
+%
+\only<-39>{%
+\item<36-> Nehmen wir an, wir haben bereits eine Zeile in Tabelle~\sqlil{h} mit Primärschlüssel~1 eingefügt.%
+}%
+%
+\only<-40>{%
+\item<37-> Wir können das Jederzeit, denn diese Zeilen müssen nicht mit den Zeilen in Tabelle~\sqlil{g} verbunden sein.%
+}%
+%
+\only<-41>{%
+\item<38-> Dann tun wir das Kommando zum Einfügen einer Zeile in Tabelle~\sqlil{g} in einen \glsShort{CTE}~\sqlil{g_new} in dem wir schreiben \sqlil{WITH g_new AS} \sqlil{(INSERT INTO g} \sqlil{(fkhid, x) VALUES} \sqlil{(1, '123')} \sqlil{RETURNING id, fkhid)}\sqlIdx{WITH}.%
+}%
+%
+\only<-43>{%
+\item<39-> Dieser \glsShort{CTE} fügt eine Zeile in Tabelle~\sqlil{g} ein, die die Zeile in Tabelle~\sqlil{h} mit Primärschlüssel~1 referenziert.%
+}%
+%
+\only<-43>{%
+\item<40-> Er liefert auch den Primärschlüssel der neuen Zeile in Tabelle~\sqlil{g} als~\sqlil{gid} zurück, ebenso den Fremdschlüssel \sqlil{fkhid}~(mit Wert~1).%
+}%
+%
+\only<-45>{%
+\item<41-> Dann benutzen wir diesen \glsShort{CTE} um die Zeile mit Primärschlüssel \sqlil{hid = fkhid} in Tabelle~\sqlil{h} upzudaten.%
+}%
+%
+\only<-46>{%
+\item<42-> Wir machen \sqlil{UPDATE h SET} \sqlil{fkgid = g_new.gid} \sqlil{FROM g_new} \sqlil{WHERE h.gid = g_new.fkhid;}.%
+}%
+%
+\only<-47>{%
+\item<43-> Dadurch zeigt der Fremdschlüssel, der in dieser Zeile gespeichert ist, auf unsere neue Zeile in Tabelle~\sqlil{g}.%
+}%
+%
+\item<44-> Weil beide Unterausdrücke Teil des selben Kommandos sind, wird die referentielle Integrität -- also die \sqlil{REFERENCES}-Einschränkung -- erst am Ende geprüft, wenn das~\sqlil{;} erreicht wird.%
+%
+\item<45-> Zu dieser Zeit stimmt es wieder und die referentielle Integrität ist intakt.%
+%
+\item<46-> Wir haben eine Zeile in Tabelle~\sqlil{g} eingefügt und die passende Zeile in Tabelle~\sqlil{h} referenziert sie auch.%
+%
+\item<47-> Es ist dann viel einfacher, existierende Zeilen in~\sqlil{g} mit neuen Zeilen in~\sqlil{h} zu verbinden.%
+%
+\item<48-> Das geht mit einem einfachen \sqlilIdx{UPDATE}~Statement auf Tabelle~\sqlil{h}.
+}\end{itemize}%
+}%
+%
+\only<5>{%
+\cquotation{PGDG:PD:CT2}{%
+A constraint that is not deferrable will be checked immediately after every command. %
+Checking of constraints that are deferrable can be postponed until the end of the transaction\dots%
+}%
+}%
+%
+\gitLoadAndExecSQL{GH_insert_and_select}{}{conceptualToRelational}{GH_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{-4,6-}{GH_insert_and_select}{}{0.47}{0.01}{0.529}{0.995}
+\end{frame}%
+
+\begin{frame}[t]%
+\frametitle{Der Inhalt der Zwei Tabellen}%
+%
+%
+\gitExec{cdtrmTableG}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships g gid;fkhid;x}%
+\gitExec{cdtrmTableH}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships h hid;fkgid;y}%
+%
+\vfill%
+%
+\begin{itemize}%
+\item Dies sind die Daten in den zwei Tabellen.%
+\end{itemize}%
+\vfill%
+%
+\begin{center}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableG}}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableH}}%
+\strut\hfill\strut%
+\end{center}%
+%
+\hfill%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Testen der Einschränkungen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Können wir eine zweite Zeile in Tabelle~\sqlil{g} auf eine Zeile in Tabelle~\sqlil{h} zeigen lassen, die schon mit einer anderen Zeile in Tabelle~\sqlil{g} verbunden ist?%
+}%
+%
+\only<-6>{%
+\item<2-> Unser Modell erlaubt das nicht.%
+}%
+%
+\only<-7>{%
+\item<3-> Und es geht auch nicht.%
+}%
+%
+\item<4-> Können wir eine Zeile in Tabelle~\sqlil{h} auf eine andere Zeile in Tabelle~\sqlil{g} verweisen lassen?%
+%
+\item<5-> Nein, das geht auch nicht.%
+%
+\item<6-> Können wir eine Zeile in Tabelle~\sqlil{h}, die aktuell mit einer Zeile in Tabelle~\sqlil{g} verbunden ist, auf eine andere Zeile zeigen lassen~(via \sqlil{UPDATE})?%
+%
+\item<7-> Nein, geht auch nicht.%
+%
+\item<8-> Unsere Einschränkungen sind ziemlich stark und schützen unsere Daten.%
+%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{GH_insert_error_3}{}{conceptualToRelational}{GH_insert_error_3.sql}{relationships}{}{}%
+\gitLoadAndExecSQL{GH_insert_error_4}{}{conceptualToRelational}{GH_insert_error_4.sql}{relationships}{}{}%
+\gitLoadAndExecSQL{GH_insert_error_5}{}{conceptualToRelational}{GH_insert_error_5.sql}{relationships}{}{}%
+\listingSQLandOutput{-3}{GH_insert_error_3}{}{0.47}{0.1}{0.529}{0.87}%
+\listingSQLandOutput{4-5}{GH_insert_error_4}{}{0.47}{0.1}{0.529}{0.87}%
+\listingSQLandOutput{8-9}{GH_insert_error_5}{}{0.47}{0.1}{0.529}{0.87}%
+\end{frame}%

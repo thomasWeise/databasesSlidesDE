@@ -18,7 +18,7 @@
 \begin{frame}[t]%
 \frametitle{Einleitung}%
 \begin{itemize}%
-\item Wir haben schon gelernt, dass Attribute verschiedene Kardinalitäten haben können\only<-1>{.}\uncover<2->{:%
+\item Wir haben schon gelernt, dass Attribute verschiedene Kardinalitäten haben können\only<-1>{.}\uncover<2->{: %
 Sie können einwertig, mehrwertig und/oder optional sein.}%
 %
 \item<3-> Beziehungen können auch Kardinalitäten haben\only<-3>{.}\uncover<4->{: wir unterscheiden oft eins-zu-eins\only<5->{\only<-5>{ und}\only<6->{,} eins-zu-mehreren\only<6->{ und mehrere-zu-mehrere}} Beziehungen.}%
@@ -78,7 +78,7 @@ Die Maximalzahl der teilnehmenden Entitäten eines Beziehungendes wird als die \
 \uncover<2->{%
 \begin{itemize}%
 \item Praktisch wird meist nur zwischen den Kardinalitäten \emph{eins} und \emph{mehrere}, also unbegrenzt, unterschieden.%
-\item<2-> In der ähnlichen Modellierungssprache \pgls{UML} bezeichnet man die Kardinalität als Multiplizität~\inEN{multiplicity}.%
+\item<3-> In der ähnlichen Modellierungssprache \pgls{UML} bezeichnet man die Kardinalität als Multiplizität~\inEN{multiplicity}.%
 \end{itemize}%
 }%
 \end{frame}%
@@ -127,7 +127,7 @@ Die Maximalzahl der teilnehmenden Entitäten eines Beziehungendes wird als die \
 %
 \item<4-> Hier benutzt man die 1:1/1:n Notation und ein kleines~\inQuotes{n} steht für \inQuotes{mehrere}.%
 %
-\item<5-> \microsoftAccess\ offers bietet eine ähnliche Funktionalität, abre die Beziehungsenden sind mit~1 oderr~$\infty$ annotiert.%
+\item<5-> \microsoftAccess\ offers bietet eine ähnliche Funktionalität, aber die Beziehungsenden sind mit~1 oder~$\infty$ annotiert.%
 %
 \item<6-> Wir werden die Krähenfußnotation für Beziehungsenden verwenden, weil sie in \yEd\ einfacher zu malen ist.%
 %
@@ -158,7 +158,7 @@ Die Maximalzahl der teilnehmenden Entitäten eines Beziehungendes wird als die \
 \end{itemize}%
 }%
 %
-\item<8-> Jede Beziehung hat zwei Enden, also gibt es $10=\frac{\factorial{(4+2-1)}}{\factorial{2}*\factorial{4-1}}$ mögliche binäre Beziehungen.\uncover<9->{~(Es gibt $\frac{\factorial{(m+k-1)}}{\factorial{k}*\factorial{n-1}}$ verschiedene $k$-Kombinationen mit Wiederholungen von $n$~Elementen ohne Beachtung der Reihenfolge.)}%
+\item<8-> Jede Beziehung hat zwei Enden, also gibt es $10=\frac{\factorial{(4+2-1)}}{\factorial{2}*\factorial{(4-1)}}$ mögliche binäre Beziehungen.\uncover<9->{~(Es gibt $\frac{\factorial{(m+k-1)}}{\factorial{k}*\factorial{(n-1)}}$ verschiedene $k$-Kombinationen mit Wiederholungen von $n$~Elementen ohne Beachtung der Reihenfolge.)}%
 \end{itemize}%
 \end{frame}%
 %

@@ -53,7 +53,7 @@
 \begin{frame}[t]%
 \frametitle{Klassen von Entitätstypen}%
 \begin{definition*}[Starke Entität]%
-Eine \emph{starke Entität}~\inEN{strong Entity} existiert unabhängig von anderen Entitäten und hat ihren eigenen Primätschlüssel.%
+Eine \emph{starke Entität}~\inEN{strong Entity} existiert unabhängig von anderen Entitäten und hat ihren eigenen Primärschlüssel.%
 \end{definition*}%
 %
 \uncover<2->{%
@@ -121,7 +121,7 @@ Eine \emph{identifizierende Beziehung}~\inEN{identifying relationship} verbindet
 }\only<-10>{%
 \item<9-> Eine Person kann verschiedene Visa haben, welche verschiedene Kennzahlen haben.%
 }\only<-11>{%
-\item<10-> Nun haben wir wirklich die kommunikationsbezogenen identifikationsbezogenen IDs einheitlich modelliert.%
+\item<10-> Nun haben wir wirklich die kommunikationsbezogenen und identifikationsbezogenen IDs einheitlich modelliert.%
 }%
 %
 \item<11-> Und wir können neue ID-Formen kreieren, wann immer wir wollen.%
@@ -142,15 +142,15 @@ Eine \emph{assoziative Entität}~\inEN{associative entity} ist eine Entität die
 \begin{itemize}%
 \item In einem \glsShort{ERD} sind assoziative Entitäten durch Rechtecke mit Rauten innen dargestellt.%
 %
-\item<2-> Sie werden hauptsächlich verwendet, um viele-zu-vielen Beziehungen zu normalisieren und zu vereinfachen.%
+\item<3-> Sie werden hauptsächlich verwendet, um viele-zu-vielen Beziehungen zu normalisieren und zu vereinfachen.%
 %
-\item<3-> Sie verbinden oftmals Entitäten, die mehrere Interaktionen miteinander haben können.%
+\item<4-> Sie verbinden oftmals Entitäten, die mehrere Interaktionen miteinander haben können.%
 %
-\item<4-> Wir gehen nicht weiter darauf ein.%
+\item<5-> Wir gehen nicht weiter darauf ein.%
 %
-\item<5-> Ich verstehe sie eher als Möglichkeit, relationale Datenstrukturen darzustellen.%
+\item<6-> Ich verstehe sie eher als Möglichkeit, relationale Datenstrukturen darzustellen.%
 %
-\item<6-> Auf der konzeptuellen Ebene wollen wir das aber noch vermeiden {\dots} das kommt dann erst auf der logischen Ebene.%
+\item<7-> Auf der konzeptuellen Ebene wollen wir das aber noch vermeiden {\dots} das kommt dann erst auf der logischen Ebene.%
 \end{itemize}}%
 \end{frame}%
 %
@@ -164,7 +164,7 @@ Eine \emph{assoziative Entität}~\inEN{associative entity} ist eine Entität die
 \item<3-> Als Beispiel hatten wir die \inQuotes{has ID}-Beziehung.%
 \item<4-> Durch das Ersetzen dieser Beziehung mit schwachen Entitäten kann eine Personen nun mehrere IDs vom selben Typ haben.%
 \item<5-> Da wir auch Emailadressen und Mobiltelefonnummern als IDs modellieren, ist das sehr wichtig.%
-\item<6-> Ein anderer Kandidat für schwache Entitäten wäre die Beziehung zwischen Professoren, Studenten und Module.%
+\item<6-> Ein anderer Kandidat für schwache Entitäten wäre die Beziehung zwischen Professoren, Studenten und Modulen.%
 \item<7-> Damit könnten wir sauberer modellieren, dass ein Student sich in das selbe Module vom selben Professor in verschiedenen Semestern einschreibt.%
 \end{itemize}%
 \end{frame}%

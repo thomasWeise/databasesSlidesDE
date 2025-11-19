@@ -68,7 +68,7 @@ Der Grad~\inEN{degree} einer Beziehung (oder eines Beziehungstyps) entspricht de
 %
 \uncover<2->{%
 \begin{itemize}%
-\item Es kann binäre Beziehungen gegebn, also solche, wo zwei Entitäten teilnehmen.\uncover<3->{ %
+\item Es kann binäre Beziehungen geben, also solche, wo zwei Entitäten teilnehmen.\uncover<3->{ %
 \DEZB~ist die die Student-Modul Beziehung binär, also \emph{Student schreibt sich in Modul ein}.}%
 %
 \item<4-> Es kann auch ternäre Beziehungen geben, wo drei Entitäten teilnehmen.\uncover<5->{ %
@@ -120,7 +120,7 @@ Ein Beziehungstyp kann Attribute haben, die die Eigenschaften der Beziehungen, d
 \item Modellieren wir ein paar Beziehungen.%
 \item<2-> Beginnen wir damit, dass sich ein Student in ein Modul einschreiben kann.%
 \item<3-> In einem \glsShort{ERD} werden Beziehungen als Rauten~\inEN{diamonds} gemalt, die mit den in-Beziehung-stehenden Entitätstypen verbunden sind.%
-\item<5-> In dem \glsShort{ERD} hier sehen, dass der Entitätstyp \emph{Student} mit dem Entitätstyp \emph{Modul} über die Beziehung \emph{enrolls into}~(also \emph{schreibt sich ein}) verbunden ist.%
+\item<5-> In dem \glsShort{ERD} hier sehen wir, dass der Entitätstyp \emph{Student} mit dem Entitätstyp \emph{Modul} über die Beziehung \emph{enrolls into}~(also \emph{schreibt sich ein}) verbunden ist.%
 \item<6-> Das ist eine binäre Beziehung, weil immer zwei Entitäten teilnehmen.%
 \item<7-> Entitäten des Types \emph{Student} können sich also in Entitäten des Types \emph{Modul} einschreiben.%
 \end{itemize}%
@@ -137,7 +137,7 @@ Ein Beziehungstyp kann Attribute haben, die die Eigenschaften der Beziehungen, d
 \item<2-> Module werden von Professoren unterrichtet.%
 }%
 \only<-9>{%
-\item<3-> Das taucht hier nicht auf\only<-3>{.}\uncover<4->{ Das Diagramm sagt gar nichts über die Beziehung von Student, Professor, und Modul aus.}%
+\item<3-> Das taucht hier nicht auf.\uncover<4->{ Das Diagramm sagt gar nichts über die Beziehung von Student, Professor, und Modul aus.}%
 }%
 \only<-10>{%
 \item<5-> Wir fügen die Beziehung \inQuotes{Professor teaches Module} hinzu.%
@@ -205,7 +205,7 @@ Ein Beziehungstyp kann Attribute haben, die die Eigenschaften der Beziehungen, d
 }\only<-16>{%
 \item<4-> Es gibt Probleme mit Namen.%
 }\only<-17>{%
-\item<5-> Leute können nähmlich mehrere Namane haben.%
+\item<5-> Leute können nähmlich mehrere Namen haben.%
 }\only<-17>{%
 \item<6-> Ausländische Austauschstudenten haben \DEzB\ ihren originalen Namen.%
 }\only<-18>{%
@@ -225,7 +225,7 @@ Ein Beziehungstyp kann Attribute haben, die die Eigenschaften der Beziehungen, d
 }\only<-23>{%
 \item<14-> Sie kann ihren Namen unverändert lassen.%
 }%
-\item<15-> Sie kann den Familiennamen ihres Ehemannes annehmen und zu\emph{Mrs.~Elizabeth Prudence von G{\"o}rlitz-Zittau} werden.%
+\item<15-> Sie kann den Familiennamen ihres Ehemannes annehmen und zu \emph{Mrs.~Elizabeth Prudence von G{\"o}rlitz-Zittau} werden.%
 \item<16-> Oder ihr Ehemann kann ihren Familiennamen annehmen.%
 \item<17-> Oder das neue Ehepaar entscheidet sich für einen zusammengesetzten Familiennamen.%
 \item<18-> Vielleicht heißt sie dann \emph{Frau Elizabeth Prudence von G{\"o}rlitz-Zittau-McDouglas} der vielleicht \emph{Frau Elizabeth Prudence McDouglas-von-G{\"o}rlitz-Zittau}.
@@ -266,7 +266,7 @@ Ein Beziehungstyp kann Attribute haben, die die Eigenschaften der Beziehungen, d
 }%
 %
 \only<-20>{%
-\item<16-> Wir führen den neuen Entitätstype \emph{Person} ein.%
+\item<16-> Wir führen den neuen Entitätstyp \emph{Person} ein.%
 }\only<-21>{%
 \item<18-> Später hängen wir alle gemeinsamen Attribute (wie die Namen) an diesen Entitätstyp.%
 }\only<-22>{%
@@ -293,9 +293,9 @@ Ein Beziehungstyp kann Attribute haben, die die Eigenschaften der Beziehungen, d
 \frametitle{Namen und Personen}%
 %
 \begin{itemize}%
-\only<-5>{%
+\only<-4>{%
 \item Wir kopieren nun die Attribute aus dem alten Entitätstyp für Studenten in den neuen Entitätstyp für Personen.%
-}\only<-6>{%
+}\only<-5>{%
 \item<2-> Natürlich nicht die Student~ID.%
 }\only<-6>{%
 \item<3-> Wir lösen auch das Problem mit dem Attribut \emph{Name}.%
@@ -378,7 +378,7 @@ Ein Beziehungstyp kann Attribute haben, die die Eigenschaften der Beziehungen, d
 %
 \item<9-> Ein Reisepass ist oftmals 10 Jahre gültig, danach bekommt die Person einen neuen Pass mit einer neuen Nummer.%
 %
-\item<10-> Wenn ein Ausländer China betritt, dann braucht sie Visum, welches wiederum eine einmalige Nummer hat und eine Gültigkeitsdauer\cite{CMOFA2019ITCV}.%
+\item<10-> Wenn eine Ausländerin China betritt, dann braucht sie Visum, welches wiederum eine einmalige Nummer hat und eine Gültigkeitsdauer\cite{CMOFA2019ITCV}.%
 %
 \item<11-> Es gibt viele verschiedene Typen für Visa für verschiedene Tätigkeiten, \DEzB\ sind X1-\ und X2-Visa zum Studieren und Z-Visa zum Arbeiten.%
 %
@@ -395,7 +395,7 @@ Ein Beziehungstyp kann Attribute haben, die die Eigenschaften der Beziehungen, d
 \item Wie wäre es damit: Wir erstellen einen Entitätstyp für \emph{ID Type}s.%
 }%
 %
-\item<2-> Eine Entät dieses Typs speichert den Name des ID-Typs, welcher der Primärschlüssel ist.%
+\item<2-> Eine Entität dieses Typs speichert den Name des ID-Typs, welcher der Primärschlüssel ist.%
 %
 \item<3-> Das könnte \DEzB\ \inQuotes{Mobile Phone~(China)}, \inQuotes{Mobile Phone~(Intl)}, \inQuotes{ID~(中华人民共和国居民身份证)}, \inQuotes{Passport~(护照),} \inQuotes{Work Permit~(中华人民共和国外国人工作许可证)}, \inQuotes{X1-Visa}, \inQuotes{X2-Visa}, \inQuotes{Z-Visa}, \inQuotes{Email Address}, \inQuotes{\pgls{wechat} User Name}, usw.\ sein.%
 %
