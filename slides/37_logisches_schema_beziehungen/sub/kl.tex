@@ -1,0 +1,144 @@
+%
+\section{\crowsFoot{K}{M1}{L}{OM}}%
+%
+\begin{frame}[t]%
+\frametitle{\crowsFoot{K}{M1}{L}{OM}}%
+\begin{itemize}%
+\item Es gibt zwei Entitätstypen~L und~M.%
+\item<2-> Jede Entität vom Typ~K kann mit keiner, einer, oder mehreren Entitäten vom Typ~L verbunden sein.%
+\item<3-> Jede Entität vom Typ~L ist mit genau einer Entität vom Typ~K verbunden.
+\item<4-> Beispiel:\uncover<5->{%
+\begin{itemize}%
+%
+\item Wir erinnern uns, dass es in unserem System viele verschiedene Arten von IDs gibt, \DEzB\ chinesische Ausweisnummern~(中国公民身份号码), Reisepässe, Visas, oder sogar Mobiltelefonnummern.\uncover<6->{ %
+Für jeden solchen ID-Typ, können keine, eine, oder viele persönliche ID-Datensätze in der Datenbank gespeichert sein.\uncover<7->{ Jede persönliche ID gehört jedoch immer zu genau einem ID-Typ.}}%
+\end{itemize}%
+}%
+\end{itemize}%
+%
+\locateGraphic{4-}{width=0.67\paperwidth}{graphics/KL}{0.3}{0.61}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Lösung}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Wir brauchen eine Tabelle~\sqlil{k} für die Entitäten vom Typ~K und eine Tabelle~\sqlil{l} für die Entitäten vom Typ~L.%
+}%
+%
+\only<-6>{%
+\item<2-> Wir nennen den Primärschlüssel von Tabelle~\sqlil{k} \sqlil{kid} und wir fügen wieder unser Beispielattribut~\sqlil{x} hinzu.%
+}%
+%
+\only<-6>{%
+\item<3-> Der Primärschlüssel der Tabelle~\sqlil{l} ist~\sqlil{lid} und es gibt hier das Beispielattribut~\sqlil{y}.%
+}%
+%
+\only<-8>{%
+\item<4-> Jede Zeile in Tabelle~\sqlil{l} muss mit genau einer Zeile in Tabelle~\sqlil{k} in Verbindung stehen.%
+}%
+%
+\only<-8>{%
+\item<5-> Die Drei-Tabellen-Lösung vom \crowsFoot{E}{O1}{F}{OM}-Szenario würde hier keinen Sinn ergeben.%
+}%
+%
+\only<-9>{%
+\item<6-> Die dritte Tabelle könnte niemals wenige Zeilen haben -- sie würde immer genauso viele Zeilen wie Tabelle~\sqlil{l} haben.%
+}%
+%
+\item<7-> Die vernünftige Lösung ist also, eine Fremdschlüssel-Spalte an Tabelle~\sqlil{l} anhängen, die den Primärschlüssel von Tabelle~\sqlil{k} referenziert.%
+%
+\item<8-> Weil die Beziehung zwingend ist, muss die Spalte~\sqlil{NOT NULL} sein.%
+%
+\item<9-> Sie muss nicht \sqlil{UNIQUE} sein, denn jede Zeile in Tabelle~\sqlil{k} kann mit beliebig vielen Zeilen in Tabelle~\sqlil{l} verbunden sein.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{KL_tables}{}{conceptualToRelational}{KL_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{}{KL_tables}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Befüllen mit Daten}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Fügen wir nun Daten in die Tabellen ein.%
+}%
+%
+\only<-6>{%
+\item<2-> Wir erstellen zuerst die Zeilen für die Tabelle~\sqlil{k}, denn deren Beziehung zu den Zeilen in Tabelle~\sqlil{l} ist optional.%
+}%
+%
+\only<-7>{%
+\item<3-> Danach können wir Zeilen in Tabelle~\sqlil{l} einfügen.%
+}%
+%
+\only<-8>{%
+\item<4-> Für jede von ihnen müssen wir einen gültigen Wert für die Spalte~\sqlil{fkkid} liefern, also einen Fremdschlüssel zur Tabelle~\sqlil{k}.%
+}%
+%
+\only<-8>{%
+\item<5-> Dieser Wert muss genau zu einem existierenden Wert in Spalte~\sqlil{kid} der Tabelle~\sqlil{k} passen.%
+}%
+%
+\only<-9>{%
+\item<6-> Der Grund ist, dass jede Zeile in Tabelle~\sqlil{l} mit genau einer Zeile in Tabelle~\sqlil{k} in Beziehung stehen muss.%
+}%
+%
+\only<-10>{%
+\item<7-> \sqlil{NULL} für \sqlil{fkkid} anzugeben geht daher nicht.%
+}%
+%
+\only<-11>{%
+\item<8-> Es ist unmöglich, eine Zeile in Tabelle~\sqlil{l} ohne einen existierenden Wert des Primärschlüssels~\sqlil{kid} von Tabelle~\sqlil{k} als Fremdschlüssel~\sqlil{fkkid} anzugeben.%
+}%
+%
+\only<-12>{%
+\item<9-> In anderen Worten, wegen den \sqlil{REFERENCES}- und \sqlil{NOT NULL}-Einschränkungen, muss jede Zeile in Tabelle~\sqlil{l} genau eine Zeile in Tabelle~\sqlil{k} referenzieren.%
+}%
+%
+\item<10-> Sie kann nicht mehr als eine Zeile referenzieren, denn das Attribut~\sqlil{fkkid} kann nur einen einzelnen Wert annehmen.%
+%
+\item<11-> Die Zeilen der Tabelle~\sqlil{k} können von beliebig vielen Zeilen der Tabelle~\sqlil{l} referenziert werden\only<-11>{.}\uncover<12->{: vielleicht von keiner Zeile, vielleicht von einer Zeile, oder vielleicht von hunderten.}
+%
+\item<13-> Das ist genau die Bedeutung der \inQuotes{optional-viele}-Beziehung, die auf den Entitätstyp~L zeigt.%
+%
+\item<14-> Wir können die Daten wieder mit einem einzelnen \sqlilIdx{INNER JOIN} zusammenziehen.%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{KL_insert_and_select}{}{conceptualToRelational}{KL_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{}{KL_insert_and_select}{}{0.47}{0.2}{0.529}{0.995}
+\end{frame}%
+
+\begin{frame}[t]%
+\frametitle{Der Inhalt der Zwei Tabellen}%
+%
+%
+\gitExec{cdtrmTableK}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships k kid;x}%
+\gitExec{cdtrmTableL}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships l lid;fkkid;y}%
+%
+%
+\vfill%
+%
+\begin{itemize}%
+\item Dies sind die Daten in den zwei Tabellen.%
+\end{itemize}%
+\vfill%
+%
+\begin{center}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableK}}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableL}}%
+\strut\hfill\strut%
+\end{center}%
+%
+\hfill%
+\end{frame}%
+%

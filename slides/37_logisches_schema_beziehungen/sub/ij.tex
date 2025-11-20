@@ -1,0 +1,42 @@
+%
+\section{\crowsFoot{I}{M1}{J}{M1}}%
+%
+\begin{frame}[t]%
+\frametitle{\crowsFoot{I}{M1}{J}{M1}}%
+\begin{itemize}%
+\item Es gibt zwei Entitätstypen~I und~J.%
+\item<2-> Jede Entität vom Typ~I ist mit genau einer Entität vom Typ~J verbunden.
+\item<3-> Jede Entität vom Typ~J ist mit genau einer Entität vom Typ~I verbunden.
+\item<4-> Beispiel:\uncover<5->{%
+\begin{itemize}%
+%
+\item In klassischen Polizeifilmen gibt es immer Paare von zwei Polizisten, die zusammen auf Streife gehen.%
+\item<6-> Wir können uns auch Paare von eine Busfahrer und einem Fahrscheinkontrolleur vorstellen, die zusammen auf einer Buslinie arbeiten.
+\end{itemize}%
+}%
+\end{itemize}%
+%
+\locateGraphic{4-}{width=0.8\paperwidth}{graphics/IJ}{0.1}{0.6}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Lösung}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item In diesem Szenario brauchen wir nur eine einzige Tabelle\cite{S2024D:MEDTRDM}.%
+%
+\item<2-> Wir fügen die Attribute der beiden Entitätstypen zusammen und tun sie alle in eine gemeinsame Tabelle.%
+%
+\item<3-> Wenn jedes in Beziehung stehende Paar von I- und J-Entitäten in einer Zeile zusammensteht, dann kann es niemals Probleme mit der referentiellen Integrität geben.%
+%
+\item<4-> Wir können niemals eine Zeile ohne I-Entität oder eine Zeile ohne J-Entität haben.%
+%
+\item<5-> Weil das so einfach ist, üben wir diesmal nicht das Einfügen von Daten.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{IJ_tables}{}{conceptualToRelational}{IJ_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{}{IJ_tables}{}{0.47}{0.1}{0.529}{0.87}
+\end{frame}%
+%

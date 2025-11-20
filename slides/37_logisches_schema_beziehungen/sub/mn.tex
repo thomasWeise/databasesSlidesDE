@@ -1,0 +1,398 @@
+%
+\section{\crowsFoot{M}{M1}{N}{MM}}%
+%
+\begin{frame}[t]%
+\frametitle{\crowsFoot{M}{M1}{N}{MM}}%
+\begin{itemize}%
+\item Es gibt zwei Entitätstypen~M und~N.%
+\item<2-> Jede Entität vom Typ~M muss mit mindestens einer aber vielleicht vielen Entitäten vom Typ~N verbunden sein.%
+\item<3-> Jede Entität vom Typ~N ist immer mit genau einer Entität vom Typ~M verbunden.
+\item<4-> Beispiel:\uncover<5->{%
+\begin{itemize}%
+%
+\item Jede Person hat mindestens eine persönliche ID.
+\uncover<6->{ %
+Jede persönliche ID gehört zu genau einer Person.}%
+\end{itemize}%
+}%
+\end{itemize}%
+%
+\locateGraphic{4-}{width=0.7\paperwidth}{graphics/MN}{0.15}{0.55}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Lösung}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Die Einschränkungen für die referentielle Integrität in diesem Szenario zu implementieren ist tricky.%
+}%
+%
+\only<-6>{%
+\item<2-> Aber machbar.%
+}%
+%
+\only<-7>{%
+\item<3-> Ich hatte mit \crowsFoot{G}{O1}{H}{MM}-Szenario zuerst Probleme, aber am Ende haben wir es hinbekommen.%
+}%
+%
+\only<-8>{%
+\item<4-> Jetzt können wir ähnlich vorgehen.%
+}%
+%
+\only<-9>{%
+\item<5-> Wir haben eine zusätzliche Einschränkung: Alle Entitäten vom Typ~N müssen jeweils mit einer Entität vom Typ~M verbunden sein.%
+}%
+%
+\only<-10>{%
+\item<6->  Diese zusätzliche Einschränkung ist die selbe, die wir damals verwendet haben {\dots} nur \inQuotes{andersherum}.%
+}%
+%
+\only<-11>{%
+\item<7-> Wenn wir das \crowsFoot{G}{O1}{H}{MM}-Szenario verstehen, dann verstehen wir auch die Tabellenstruktur hier.%
+}%
+%
+\only<-12>{%
+\item<8-> Naja, fast.%
+}%
+%
+\only<-13>{%
+\item<9-> Wir erstellen eine Tabelle~\sqlil{m} für die Entitäten vom Typ~M.%
+}%
+%
+\only<-14>{%
+\item<10-> Sie hat den Primärschlüssel~\sqlil{mid} und eine zusätzliche Datenspalte~\sqlil{x}.%
+}%
+%
+\only<-14>{%
+\item<11-> Wir brauchen auch das Attribute~\sqlil{fknid}, welches wir später zum Referenzieren einer Zeile in Tabelle~\sqlil{n} verwenden.%
+}%
+%
+\only<-16>{%
+\item<12-> Weil jede Entität vom Typ~M mit mindestens einer Entität vom Typ~N verbunden sein muss, ist diese Spalte~\sqlil{NOT NULL}.%
+}%
+%
+\only<-17>{%
+\item<13-> Weil jede Entität vom Typ~N mit genau einer Entität vom Typ~M (und nicht mehr als einer) verbunden sein muss, machen wir die Spalte auch~\sqlil{UNIQUE}.%
+}%
+%
+\only<-18>{%
+\item<14-> Jetzt machen wir die Tabelle~\sqlil{n} zum Speichern der Entitäten vom Typ~N.%
+}%
+%
+\only<-19>{%
+\item<15-> Der Primärschlüssel ist~\sqlil{nid} und die zusätzliche Datenspalte ist~\sqlil{y}.%
+}%
+%
+\only<-19>{%
+\item<15-> Weil jede Zeile in Tabelle~\sqlil{n} mit genau einer Zeile in Tabelle~\sqlil{m} verbunden sein muss, fügen wir auch eine Spalte \sqlil{fkmid} an diese Tabelle an.%
+}%
+%
+\only<-20>{%
+\item<17-> Diese Spalte \sqlil{REFERENCES} den Primärschlüssel~\sqlil{mid} der Tabelle~\sqlil{m}.%
+}%
+%
+\item<18-> Der Unterschied zum \crowsFoot{G}{O1}{H}{MM}-Szenario ist, dass \sqlil{fkmid} der Tabelle~\sqlil{n} nun \sqlil{NOT NULL} sein muss.%
+%
+\item<19-> Damals konnte der Fremdschlüssel \sqlil{fkgid} der Tabelle~\sqlil{h} noch \sqlil{NULL} sein.%
+%
+\item<20-> Diese Änderung ist notwendig, weil jede Entität vom Typ~N mit einer Entität vom Typ~M verbunden sein \emph{muss}, wohingegen damals jede Entität vom Typ~H mit keiner oder einer Entität vom Typ~G verbunden seien \emph{konnte}.
+%
+\item<21-> Davon abgesehen können wir nun die Einschränkung \sqlil{m_fknid_mid_fk} zur Tabelle~\sqlil{m} hinzufügen, die genauso funktioniert wie damals \sqlil{g_fkhid_gid_fk}.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{MN_tables}{}{conceptualToRelational}{MN_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{}{MN_tables}{}{0.47}{0.1}{0.529}{0.87}
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Befüllen mit Daten}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item OK, füllen wir Daten in die Tabellen.%
+}%
+%
+\only<-5>{%
+\item<2-> Es stellt sich heraus, dass dieses einzelne neue \sqlil{NOT NULL}, das wir auf Spalte~\sqlil{fkmid} von Tabelle~\sqlil{n} definieren, das Einfügen der Daten viel schwieriger macht.%
+}%
+%
+\only<-7>{%
+\item<3-> Gut, es war auch im \crowsFoot{G}{O1}{H}{MM}-Szenario schon schwierig {\dots} aber jetzt ist es noch ärgerlicher geworden.%
+}%
+%
+\only<-8>{%
+\item<4-> Das \inQuotes{G-Ende} der Beziehung war damals optional.%
+}%
+%
+\only<-9>{%
+\item<5-> Nachdem wir die Tabellen und Einschränkungen erstellt hatten, konnten wir Daten erstmal in die Tabelle für den Entitätstyp~H speichern.%
+}%
+%
+\only<-9>{%
+\item<6-> Dann konnten wir die Datensätze für die Tabelle mit den Entitäten vom Typ~G erstellen und die referentielle Integrität in Ordnung bringen.%
+}%
+%
+\only<-10>{%
+\item<7-> Egal wie wir uns das jetzt angucken: Wir haben kein Glück.%
+}%
+%
+\only<-11>{%
+\item<8-> Jede Entität vom Typ~N \emph{muss} mit genau einer existierenden Entität vom Typ~M verbunden sein.%
+}%
+%
+\only<-13>{%
+\item<9-> Jede Entität vom Typ~M \emph{muss} mit wenigstens einer existierenden Entität vom Typ~N verbunden sein.%
+}%
+%
+\only<-13>{%
+\item<10-> Das ist ein viel schlimmeres Problem, denn wir müssen den Primärschlüssel \sqlil{nid} einer Zeile der Tabelle~\sqlil{n} kennen, umd eine neue Zeile in Tabelle~\sqlil{m} anzulegen.%
+}%
+%
+\only<-14>{%
+\item<11-> Und wir müssen den Primärschlüssel~\sqlil{mid} einer Zeile in Tabelle~\sqlil{m} kennen, um eine neue Zeile in Tabelle~\sqlil{n} zu speichern.%
+}%
+%
+\only<-16>{%
+\item<12-> Es ist klar, dass wir wieder \glsShort{CTE}s brauchen werden.%
+}%
+%
+\only<-16>{%
+\item<13-> Die einzige Lösung, die ich mir überlegen konnte, ist folgende Idee:%
+}%
+%
+\only<-17>{%
+\item<14-> Wir müssen, irgendwie, den Wert des Primärschlüssels, der für die nächste Zeile in Tabelle~\sqlil{m} verwendet werden wird herausfinden, \emph{bevor} die Zeile erzeugt wird.%
+}%
+%
+\only<-19>{%
+\item<15-> Wenn wir den Primärschlüsselwert kennen, dann können wir ihn als \sqlil{fkmid} verwenden, wenn wir eine Zeile in Tabelle~\sqlil{n} einfügen.%
+}%
+%
+\only<-20>{%
+\item<16-> So bekommen wir den Primärschlüsselwert dieser neuen Zeile in Tabelle~\sqlil{n}.
+}%
+%
+\only<-21>{%
+\item<17-> Dann verwenden wir diesen Primärschlüsselwert als \sqlil{fknid} und fügen die Zeile in Tabelle~\sqlil{m} ein.%
+}%
+%
+\only<-21>{%
+\item<18-> Das kann man machen, wenn wir den Primärschlüssel für Tabelle~\sqlil{m} expliziter erstellen als früher.%
+}%
+%
+\only<-22>{%
+\item<19-> Bisher haben wir immer sowas wie \sqlil{mid INT} \sqlil{GENERATED BY DEFAULT} \sqlil{AS IDENTITY} \sqlil{PRIMARY KEY}.%
+}%
+%
+\only<-23>{%
+\item<20-> Das bedeutet, dass die Spalte ein Primärschlüssel vom Typ~\sqlil{INT} ist.%
+}%
+%
+\only<-24>{%
+\item<21-> Sie wird \sqlil{GENERATED BY DEFAULT}, was bedeutet, dass ihre Werte automatisch generiert werden \emph{es sei denn, wir geben sie explizit an}\cite{PGDG:PD:GC}.%
+}%
+%
+\only<-25>{%
+\item<22-> Wenn wir eine Zeile in die Tabelle einfügen, dann könnten wir tatsächlich einen Wert für \sqlil{mid} angeben, welcher dann verwendet wird, oder wir geben keinen Wert an, dann wird einer automatisch erzeugt.%
+}%
+%
+\only<-27>{%
+\item<23-> Das \sqlil{AS IDENTITY} bedeutet, dass wenn ein Wert erzeugt wird, dann von einer impliziten Sequenz\cite{PGDG:PD:IC}.%
+}%
+%
+\only<-28>{%
+\item<24-> Anstatt eine implizite Sequenz ohne Name zu verwenden, können wir auch eine Sequenz selbst erzeugen.%
+}%
+%
+\only<-29>{%
+\item<25-> Das geht mit dem Kommando \sqlil{CREATE SEQUENCE}\cite{PGDG:PD:CS}.%
+}%
+%
+\only<-29>{%
+\item<26-> Wir erstellen also die Sequenz~\sqlil{sqmid} um die Primärschlüsselwerte für Tabelle~\sqlil{m} zu erzeugen mit \sqlil{CREATE SEQUENCE} \sqlil{sqmid AS INT;}.%
+}%
+%
+\only<-31>{%
+\item<27-> Diese Sequenz produziert streng monoton ansteigende Werte.%
+}%
+%
+\only<-32>{%
+\item<28-> Der nächste Wert von \sqlil{sqmid} kann atomisch mit \sqlil{NEXTVAL('sqmid')} erzeugt werden\cite{PGDG:PD:SMF}.%
+}%
+%
+\only<-33>{%
+\item<29-> Wir definieren nun den Primärschlüssel der Tabelle~\sqlil{m} als \sqlil{mid INT} \sqlil{DEFAULT NEXTVAL('sqmid')} \sqlil{PRIMARY KEY}.%
+}%
+%
+\only<-34>{%
+\item<30-> Diese Definition besagt, dass der Wert des Primärschlüssels \sqlil{mid} beim Erstellen einer Zeile in Tabelle~\sqlil{m} angegeben werden \emph{kann}.%
+}%
+%
+\only<-35>{%
+\item<31-> Wenn er \emph{nicht} angegegen wird, dann wird ein \sqlilIdx{DEFAULT}-Wert benutzt\cite{PGDG:PD:DV2}.%
+}%
+%
+\only<-35>{%
+\item<32-> Der Default-Wert wird berechnet, in dem der Ausdruck \sqlil{NEXTVAL('sqmid')} ausgerechnet wird.%
+}%
+%
+\only<-36>{%
+\item<33-> Er wird eine der immer-ansteigenden Ausgaben der Sequenz~\sqlil{sqmid} sein.%
+}%
+%
+\only<-37>{%
+\item<34-> Aus mechanischer Sicht funktioniert das im Grunde genauso wie \sqlil{mid INT} \sqlil{GENERATED BY DEFAULT} \sqlil{AS IDENTITY} \sqlil{PRIMARY KEY}.%
+}%
+%
+\only<-38>{%
+\item<35-> Der Unterschied ist, dass wir jetzt auch selber Werte für~\sqlil{mid} erzeugen können, \emph{ohne} dass dafür eine neue Zeile in Tabelle~\sqlil{m} erstellt werden muss.%
+}%
+%
+\only<-38>{%
+\item<36-> Natürlich können wir dann \sqlil{NEXTVAL('sqmid')} in jeden \glsShort{SQL}-Anfrage verwenden -- \sqlil{SELECT}, \sqlil{INSERT}, \sqlil{UPDATE} -- was immer wir wollen.%
+}%
+%
+\only<-40>{%
+\item<37-> Und wann immer \sqlil{NEXTVAL('sqmid')} aufgerufen wird, macht die Sequenz \sqlil{sqmid} einen Schritt.%
+}%
+%
+\only<-40>{%
+\item<38-> Sie wird niemals den selben Wert zweimal liefern~(naja, es sei denn, wir rufen das $2^{64}$~Mal auf\dots).%
+}%
+%
+\only<-41>{%
+\item<39-> Wir können also gülte Primärschlüsselwerte für Tabelle~\sqlil{m} erzeugen, mit diesen als Fremdschlüssel eine Zeile in Tabelle~\sqlil{n} generieren, und den Wert dann für den Primärschlüssel in einer neuen Zeile in Tabelle~\sqlil{m} verwenden.%
+}%
+%
+\only<-42>{%
+\item<40-> Wir fügen ein Paar Zeilen in Tabellen~\sqlil{m} und~\sqlil{n} wie folgt ein:%
+}%
+%
+\only<-42>{%
+\item<41-> Zuerst erstellen wir den Primärschlüsselwert für die Zeile, die wir in Tabelle~\sqlil{m} einfügen wollen als \glsShort{CTE} der nur \sqlil{NEXTVAL('sqmid')} aufruft und sich das Ergebnis merkt, also via \sqlil{m_id AS} \sqlil{(SELECT NEXTVAL('sqmid')} \sqlil{AS new_mid)}.%
+}%
+%
+\only<-43>{%
+\item<42-> Dann fügen wir eine Zeile in Tabelle~\sqlil{n} ein -- auch als \glsShort{CTE} -- in dem wir \sqlil{new_n AS} \sqlil{(INSERT INTO n} \sqlil{(y, fkmid) SELECT} \sqlil{'AB', new_mid FROM} \sqlil{m_id RETURNING nid, fkmid)}.%
+}%
+%
+\only<-45>{%
+\item<43-> Dieser \glsShort{CTE} gibt uns den Primärschlüsselwert~\sqlil{nid} der neuen Zeile in Tabelle~\sqlil{n} und auch den vorhin erstellten Wert \sqlil{new_mid} für den Primärschlüssel der neuen Zeile die wir in Tabelle~\sqlil{m} einfügen wollen~(als \sqlil{fkmid}).%
+}%
+%
+\only<-47>{%
+\item<44-> Wir benutzen beide Werte um letztendlich die Zeile in Tabelle~\sqlil{m} einzufügen, in dem wir \sqlil{INSERT INTO m} \sqlil{(mid, x, fknid)} \sqlil{SELECT fkmid, '123', nid} \sqlil{FROM new_n;} aufrufen.%
+}%
+%
+\only<-48>{%
+\item<45-> Danach können wir eine weitere Zeile an Tabele~\sqlil{n} anhängen und diese mit einer existierenden Zeile in Tabelle~\sqlil{m} verbinden.%
+}%
+%
+\only<-50>{%
+\item<46-> Das ist dann einfach, über \sqlil{INSERT INTO n} \sqlil{(y, fkmid) VALUES} \sqlil{('CD', 1);}.%
+}%
+%
+\item<47-> Wenn wir neue Zeilen in Tabelle~\sqlil{m} einfügen wollen, brauchen wir aber immer zwei \glsShort{CTE}s.%
+%
+\item<48-> Dieser Ansatz beruht auf mehreren \postgresql-spezifischen Kommandos, \sqlilIdx{RETURNING}, \sqlilIdx{NEXTVAL}, und das Erstellen von Sequenzen.%
+%
+\item<49-> Auf anderen \glsShort{dbms}en geht es dann wohl etwas anders, aber bestimmt ähnlich.%
+%
+\item<50-> Die Daten lassen sich einfach über ein \sqlil{INNER JOIN} wieder zusammensetzen.%
+%
+\end{itemize}%
+}%
+%
+\listingSQLandOutput{-39}{MN_tables}{}{0.47}{0.1}{0.529}{0.87}
+\gitLoadAndExecSQL{MN_insert_and_select}{}{conceptualToRelational}{MN_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{40-}{MN_insert_and_select}{}{0.47}{0.01}{0.529}{0.995}
+\end{frame}%
+
+\begin{frame}[t]%
+\frametitle{Der Inhalt der Zwei Tabellen}%
+%
+%
+\gitExec{cdtrmTableM}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships m mid;fknid;x}%
+\gitExec{cdtrmTableN}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships n nid;fkmid;y}%
+%
+\vfill%
+%
+\begin{itemize}%
+\item Dies sind die Daten in den zwei Tabellen.%
+\end{itemize}%
+\vfill%
+%
+\begin{center}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableM}}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableN}}%
+\strut\hfill\strut%
+\end{center}%
+%
+\hfill%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Testen der Einschränkungen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-6>{%
+\item Probieren wir die Einschränkungen aus.%
+}%
+%
+\only<-7>{%
+\item<2-> Können wir eine Zeile in Tabelle~\sqlil{m} erstellen, die mit keiner Zeile in Tabelle~\sqlil{n} verbunden ist?%
+}%
+%
+\only<-7>{%
+\item<3-> Nein.%
+}%
+%
+\only<-8>{%
+\item<4-> Können wir eine Zeile in Tabelle~\sqlil{n} erstellen, die mit keiner Zeile in Tabelle~\sqlil{m} verbunden ist?%
+}%
+%
+\only<-9>{%
+\item<5-> Nein.%
+}%
+%
+\only<-10>{%
+\item<6-> Können wir eine Zeile in Tabelle~\sqlil{m} erstellen, die mit keiner Zeile in Tabelle~\sqlil{n} verbunden ist, die bereits mit einer anderen Zeile in Tabelle~\sqlil{m} als \inQuotes{erstes~M} verbunden ist?%
+}%
+%
+\item<7-> Nein.%
+%
+\item<8-> Können wir eine Zeile in Tabelle~\sqlil{m} erstellen, die mit keiner Zeile in Tabelle~\sqlil{n} verbunden ist, die bereits mit einer anderen Zeile in Tabelle~\sqlil{m} als \inQuotes{sekundäres~M} verbunden ist?%
+%
+\item<9-> Nein.%
+%
+\item<10-> Können wir eine Zeile in Tabelle~\sqlil{n} mit einer anderen Zeile in Tabelle~\sqlil{m} verbinden, in dem wir ihr \inQuotes{erstes M} umhängen?%
+%
+\item<11-> Nein.%
+%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{MN_insert_error_1}{}{conceptualToRelational}{MN_insert_error_1.sql}{relationships}{}{}%
+\listingSQLandOutput{2-5}{MN_insert_error_1}{}{0.47}{0.1}{0.529}{0.87}%
+%
+\gitLoadAndExecSQL{MN_insert_error_2}{}{conceptualToRelational}{MN_insert_error_2.sql}{relationships}{}{}%
+\listingSQLandOutput{4-5}{MN_insert_error_2}{}{0.47}{0.5}{0.529}{0.87}%
+%
+\gitLoadAndExecSQL{MN_insert_error_3}{}{conceptualToRelational}{MN_insert_error_3.sql}{relationships}{}{}%
+\listingSQLandOutput{6-9}{MN_insert_error_3}{}{0.47}{0.01}{0.529}{0.47}%
+%
+\gitLoadAndExecSQL{MN_insert_error_4}{}{conceptualToRelational}{MN_insert_error_4.sql}{relationships}{}{}%
+\listingSQLandOutput{8-9}{MN_insert_error_4}{}{0.47}{0.49}{0.529}{0.51}%
+%
+\gitLoadAndExecSQL{MN_insert_error_5}{}{conceptualToRelational}{MN_insert_error_5.sql}{relationships}{}{}%
+\listingSQLandOutput{10-11}{MN_insert_error_5}{}{0.47}{0.3}{0.529}{0.87}%
+\end{frame}%
