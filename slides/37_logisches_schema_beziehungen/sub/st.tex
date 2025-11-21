@@ -1,0 +1,369 @@
+%
+\section{\crowsFoot{S}{MM}{T}{MM}}%
+%
+\begin{frame}[t]%
+\frametitle{\crowsFoot{S}{MM}{T}{MM}}%
+\begin{itemize}%
+\item Es gibt zwei Entitätstypen~S und~T.%
+\item<2-> Jede Entität vom Typ~S muss mit mindestens einer Entität vom Typ~T verbunden sein, kann aber auch mit mehreren verbunden sein.
+\item<3-> Jede Entität vom Typ~T muss mit mindestens einer Entität vom Typ~S verbunden sein, kann aber auch mit mehreren verbunden sein.
+\item<4-> Beispiel:\uncover<5->{%
+\begin{itemize}%
+%
+\item Wir kennen das aus der Beziehung von Personen und Adressen.\uncover<6->{ %
+Jede Person muss mindestens eine Adresse haben, kann aber auch mehrere haben.\uncover<7->{ %
+Jede Adresse muss mit mindestens einer Person in Verbindung stehen~(sonst würden wir sie ja nicht speichern), kann aber auch mit mehreren Personen in Verbindung stehen.%
+}}%%
+\end{itemize}%
+}%
+\end{itemize}%
+%
+\locateGraphic{4-}{width=0.65\paperwidth}{graphics/ST}{0.325}{0.63}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Lösung}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Fangen wir also zuerst wieder mit den grundlegenden Tabellen an.%
+}%
+%
+\only<-6>{%
+\item<2-> Wir brauchen eine Tabelle~\sqlil{s} für die Entitäten vom Typ~S.%
+}%
+%
+\only<-7>{%
+\item<3-> Der Primärschlüssel ist diesmal \sqlil{sid} und es gibt wieder ein Beispielattribut~\sqlil{x}.%
+}%
+%
+\only<-8>{%
+\item<4-> Wir brauchen auch eine Tabelle~\sqlil{t} für die Entitäten vom Typ~T.%
+}%
+%
+\only<-9>{%
+\item<5-> Sie bekommt Primärschlüssel~\sqlil{tid} und Beispielattribut~\sqlil{y}.%
+}%
+%
+\only<-10>{%
+\item<6-> Wir brauchen auch eine dritte Tabelle um die Beziehungen zu speichern.%
+}%
+%
+\only<-11>{%
+\item<7-> Wir nennen sie \sqlil{relate_s_and_t}.%
+}%
+%
+\only<-12>{%
+\item<8-> Diese Tabelle die zwei Spalten \sqlil{fksid} und \sqlil{fktid} die Fremdschlüssel auf die Primärschlüssel \sqlil{sid} und \sqlil{tid} der Tabellen~\sqlil{s} und~\sqlil{t} sind.%
+}%
+%
+\only<-13>{%
+\item<9-> Das sichern wir wieder über entsprechende \sqlil{REFERENCES}-Einschränkungen ab.%
+}%
+%
+\only<-14>{%
+\item<10-> Beide Spalten sind als \sqlil{NOT NULL} markiert, denn keiner der Werte kann weggelassen werden.%
+}%
+%
+\only<-15>{%
+\item<11-> Wie im Fall von \crowsFoot{O}{OM}{P}{OM}, darf jedes Paar \sqlil{(fksid, fktid)} nur einmal in der Tabelle auftauchen.%
+}%
+%
+\only<-16>{%
+\item<12-> Zwei Zeilen der Tabellen~\sqlil{s} und~\sqlil{t} können ja nur einmal verbunden sein.%
+}%
+%
+\only<-17>{%
+\item<13-> Das implementieren wir über die Einschränkung \sqlil{PRIMARY KEY (fksid, fktid)}.%
+}%
+%
+\only<-18>{%
+\item<14-> Wie beim Beziehungstyp \crowsFoot{M}{M1}{N}{MM} sind beide Beziehungsenden zwingend.%
+}%
+%
+\only<-18>{%
+\item<15-> Wir können keine Zeile in Tabelle~\sqlil{s} erstellen, ohne diese mit einer Zeile in Tabelle~\sqlil{t} zu verbinden.%
+}%
+%
+\only<-19>{%
+\item<16-> Wir können auch keine Zeile in Tabelle~\sqlil{t} erstellen, ohne diese mit einer Zeile in Tabelle~\sqlil{s} zu verbinden.%
+}%
+%
+\only<-20>{%
+\item<17-> Bei \crowsFoot{M}{M1}{N}{MM} haben wir dieses Henne-Ei-Problem so gelöst, dass wir eine Sequenz erstellt haben, von der wir die Primärschlüsselwerte für Tabelle~\sqlil{m} errechnet haben.%
+}%
+%
+\only<-22>{%
+\item<18-> Wir benutzten diese Sequenz um zuerst immer einen Primärschlüsselwert für Tabelle~\sqlil{m} zu erzeugen.%
+}%
+%
+\only<-23>{%
+\item<19-> Dann benutzen wir diesen Primärschlüsselwert als Fremdschlüsselwert fpr Tabelle~\sqlil{n}.%
+}%
+%
+\only<-24>{%
+\item<20-> Danach benutzten wir den Primärschlüsselwert dieser neuen Zeile zusammen mit dem für Tabelle~\sqlil{m} um letztendlich die Zeile in Tabelle~\sqlil{m} einzufügen.%
+}%
+%
+\only<-25>{%
+\item<21-> Wir machen das diesmal ähnlich.%
+}%
+%
+\only<-26>{%
+\item<22-> Wir führen also erstmal \sqlil{CREATE SEQUENCE sqsid AS INT;} aus.%
+}%
+%
+\only<-27>{%
+\item<23-> Der Primärschlüssel für Tabelle~\sqlil{s} wird dann definiert als \sqlil{sid INT DEFAULT} \sqlil{NEXTVAL('sqsid')} \sqlil{PRIMARY KEY}.%
+}%
+%
+\only<-28>{%
+\item<24-> Beide Tabellen~\sqlil{s} und~\sqlil{t} brauchen eine Spalte um einen Primärschlüsselwert der jeweils anderen Tabelle zu referenzieren.%
+}%
+%
+\only<-29>{%
+\item<25-> Für Tabelle~\sqlil{s}, ist das die Spalte~\sqlil{fktid}.%
+}%
+%
+\only<-30>{%
+\item<26-> Für Tabelle~\sqlil{t}, ist das die Spalte~\sqlil{fksid}.%
+}%
+%
+\only<-31>{%
+\item<27-> Diese sind dazu da, um sicherzustellen, dass jede Zeile in Tabelle~\sqlil{s} definitiv mit mindestens einer Zeile in Tabelle~\sqlil{t} verbunden ist.%
+}%
+%
+\only<-32>{%
+\item<28-> Und umgekehrt.%
+}%
+%
+\only<-32>{%
+\item<29-> Natürlich können die Zeilen mit mehreren Zeilen in Verbindung stehen.%
+}%
+%
+\only<-33>{%
+\item<30-> Dafür haben wir ja Tabelle~\sqlil{relate_s_and_t}.%
+}%
+%
+\only<-33>{%
+\item<31-> Jetzt müssen wir sicherstellen, dass es für jede Zeile in Tabelle~\sqlil{s} mit den Werten \sqlil{(sid, fktid)} eine entsprechende Zeile \sqlil{(fksid, fktid)} in Tabelle~\sqlil{relate_s_and_t} gibt.%
+}%
+%
+\only<-35>{%
+\item<32-> Das geht mit der Einschränkung \sqlil{s_sid_fktid_fk}, die wir in Tabelle~\sqlil{s} als \sqlil{FOREIGN KEY} \sqlil{(sid, fktid)} definieren, der \sqlil{REFERENCES relate_s_and_t} \sqlil{(fksid, fktid)} macht.%
+}%
+%
+\item<33-> Das ist der gleiche Ansatz, den wir damals für \crowsFoot{Q}{OM}{R}{MM} verwendet haben.%
+%
+\item<34-> Der Unterschied ist, dass wir das diesmal auch genauso für Tabelle~\sqlil{t} machen müssen, denn beide Beziehungsenden sind zwingend.%
+%
+\item<35-> Mit anderen Worten, wir fügen die Einschränkung \sqlil{t_fksid_tid_fk} zur Tabelle~\sqlil{t} hinzu.%
+%
+\item<36-> Diese stellt sicher, dass es für jedes Tupel \sqlil{(fksid, tid)} in dieser Tabelle auch ein passendes Tupel \sqlil{(fksid, fktid)} in \sqlil{relate_s_and_t} gibt.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{ST_tables}{}{conceptualToRelational}{ST_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{}{ST_tables}{}{0.47}{0.01}{0.529}{0.99}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Befüllen mit Daten}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Fügen wir nun Daten in die Tabellen ein.%
+}%
+%
+\only<-6>{%
+\item<2-> Anfänglich sind beide Tabellen leer.%
+}%
+%
+\only<-7>{%
+\item<3-> Wir müssen also \alert{drei} Zeilen auf einmal erstellen.%
+}%
+%
+\only<-8>{%
+\item<4-> Wir müssen eine Zeile in Tabelle~\sqlil{s} erstellen.
+}%
+%
+\only<-9>{%
+\item<5-> Wir müssen diese sofort mit einer neuen Zeile in Tabelle~\sqlil{t} verbinden.%
+}%
+%
+\only<-10>{%
+\item<6-> \emph{Und} diese Beziehung muss auch gleich als neue Zeile in Tabelle \sqlil{relate_s_and_t} auftauchen.%
+}%
+%
+\only<-11>{%
+\item<7-> Dank \glsShort{CTE}s geht das.%
+}%
+%
+\only<-12>{%
+\item<8-> Zuerst erstellen wir einen Primärschlüsselwert für Tabelle~\sqlil{s} über den \glsShort{CTE}~\sqlil{s_id}.%
+}%
+%
+\only<-12>{%
+\item<9-> Dieser \glsShort{CTE} macht corresponding to \sqlil{SELECT NEXTVAL('sqsid') AS new_sid}.%
+}%
+%
+\only<-14>{%
+\item<10-> Wir benutzen diesen neuen Primärschlüsselwert um eine Zeile in Tabelle~\sqlil{t} einzufügen.%
+}%
+%
+\only<-14>{%
+\item<11-> Dafür machen wir \sqlil{INSERT INTO t} \sqlil{(y, fksid)} \sqlil{SELECT 'AB', new_sid} \sqlil{FROM s_id}.%
+}%
+%
+\only<-16>{%
+\item<12-> Natürlich wird das wieder ein \glsShort{CTE}, den wir \sqlil{new_t} nennen und der auch noch \sqlil{RETURNING tid, fksid} macht.%
+}%
+%
+\only<-17>{%
+\item<13-> Dieser \glsShort{CTE} gibt uns den Primärschlüsselwert der neuen Zeile in~\sqlil{t} und den Primärschlüsselwert~\sqlil{fksid}, den wir für die neue Zeile in Table~\sqlil{s} allokiert haben.%
+}%
+%
+\only<-18>{%
+\item<14-> Und jetzt erstellen wir diese Zeile.%
+}%
+%
+\only<-19>{%
+\item<15-> Wir führen \sqlil{INSERT INTO s} \sqlil{(sid, x, fktid)} \sqlil{SELECT fksid, '123', tid} \sqlil{FROM new_t} aus.%
+}%
+%
+\only<-20>{%
+\item<16-> Wir benutzen also den vorher erstellten Primärschlüsselwert.%
+}%
+%
+\only<-21>{%
+\item<17-> Wir benutzen auch den Primärschlüsselwert der neuen Zeile in Tabelle~\sqlil{t} als Fremdschlüsselwert.%
+}%
+%
+\only<-22>{%
+\item<18-> Das ist dann unser dritter \glsShort{CTE}, den wir \sqlil{new_s} nennen.%
+}%
+%
+\only<-23>{%
+\item<19-> Er liefert beide Schlüsselwerte über \sqlil{RETURNING sid, fktid} zurück.%
+}%
+%
+\only<-24>{%
+\item<20-> Zuletzt können wir nun eine Zeile in \sqlil{relate_s_and_t} mit \sqlil{INSERT INTO relate_s_and_t} \sqlil{(fksid, fktid)} \sqlil{SELECT sid, fktid FROM new_s} einfügen.%
+}%
+%
+\only<-25>{%
+\item<21-> Dank der \glsShort{CTE}s konnten wir also jeweils eine Zeile in jede der drei Tabellen einfügen.%
+}%
+%
+\only<-26>{%
+\item<22-> All das war ein einziges \glsShort{SQL}-Kommando.%
+}%
+%
+\only<-27>{%
+\item<23-> Die referentielle Interität wird an dessen Ende geprüft~(und ist OK).%
+}%
+%
+\only<-28>{%
+\item<24-> Nun gibt es existierende Datensätze in den Tabellen~\sqlil{s} und~\sqlil{t}.%
+}%
+%
+\only<-28>{%
+\item<25-> Es ist dann einfacher, eine neue Zeile in Tabelle~\sqlil{s} zu erstellen, die mit einer existierenden Zeile in Tabelle~\sqlil{t} verbunden ist.%
+}%
+%
+\only<-29>{%
+\item<26-> Alles was wir machen müssen ist eine Zeile in Tabelle~\sqlil{s} einzufügen und gleichzeitig eine Zeile in \sqlil{relate_s_and_t}.%
+}%
+%
+\only<-30>{%
+\item<27-> Wir brauchen nur einen \glsShort{CTE}, den wir \sqlil{new_s} nennen.%
+}%
+%
+\only<-31>{%
+\item<28-> Der macht \sqlil{INSERT INTO s} \sqlil{(x, fktid)} \sqlil{VALUES ('456', 1)} \sqlil{RETURNING sid, fktid}.%
+}%
+%
+\only<-32>{%
+\item<29-> Als Ergebnis bekommen wir den Primärschlüsselwert \sqlil{sid} der neuen Zeile in Tabelle~\sqlil{s} und den Fremdschlüsselwert \sqlil{fktid} zur Zeile in Tabelle~\sqlil{t}.%
+}%
+%
+\only<-34>{%
+\item<30-> \sqlil{fktid} ist der Wert, den wir angegeben haben, als wir die Zeile in Tabelle~\sqlil{s} erstellt haben -- also~\sqlil{1}.%
+}%
+%
+\only<-35>{%
+\item<31-> Damit können wir dann \sqlil{INSERT INTO relate_s_and_t} \sqlil{(fksid, fktid)} \sqlil{SELECT sid, fktid} \sqlil{FROM new_s} machen und sind fertig.%
+}%
+%
+\only<-36>{%
+\item<32-> Da der Beziehungstyp symmetrisch ist, können wir genau das gleiche mit Tabelle~\sqlil{t} machen.%
+}%
+%
+\only<-37>{%
+\item<33-> Wir können eine Zeile in Tabelle~\sqlil{t} einfügen, und diese auf eine existierende Zeile in Tabelle~\sqlil{s} zeigen lassen.%
+}%
+%
+\only<-38>{%
+\item<34-> Wir würden genauso vorgehen und einen \glsShort{CTE} benutzen.%
+}%
+%
+\item<35-> Zu guter Letzt können wir auch einfach zwei existierende Zeilen der Tabellen~\sqlil{s} und~\sqlil{t} in Beziehung setzen.%
+%
+\item<36-> Dafür müssen wir nur eine neue Zeile in Tabelle~\sqlil{relate_s_and_t} erstellen.%
+%
+\item<37-> Das geht in etwa so: \sqlil{INSERT INTO relate_s_and_t} \sqlil{VALUES (1, 3);}.%
+%
+\item<38-> Die Daten können wir wieder über zwei \sqlil{INNER JOIN}s zusammenführen.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{ST_insert_and_select}{}{conceptualToRelational}{ST_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{}{ST_insert_and_select}{}{0.47}{0.01}{0.529}{0.99}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Der Inhalt der Drei Tabellen}%
+%
+\gitExec{cdtrmTableS}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships s sid;fktid;x}%
+\gitExec{cdtrmTableT}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships t tid;fksid;y}%
+\gitExec{cdtrmTableRST}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_s_and_t fksid;fktid}%
+%
+\vfill%
+%
+\begin{itemize}%
+\item Dies sind die Daten in den drei Tabellen.%
+\end{itemize}%
+\vfill%
+%
+\begin{center}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableS}}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableT}}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableRST}}%
+\strut\hfill\strut%
+\end{center}%
+%
+\hfill%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Testen der Einschränkungen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Es ist unmöglich, Zeilen in Tabelle~\sqlil{s} (oder~\sqlil{t}) einzufügen, die nicht mit Zeilen in \sqlil{t} (oder~\sqlil{s}) verbunden sind.%
+%
+\item<2-> Wir müssen auch die Tabelle \sqlil{relate_s_and_t} immer mit updaten.%
+%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{ST_insert_error_1}{}{conceptualToRelational}{ST_insert_error_1.sql}{relationships}{}{}%
+\listingSQLandOutput{2}{ST_insert_error_1}{}{0.47}{0.2}{0.529}{0.87}%
+\gitLoadAndExecSQL{ST_insert_error_2}{}{conceptualToRelational}{ST_insert_error_2.sql}{relationships}{}{}%
+\listingSQLandOutput{3-}{ST_insert_error_2}{}{0.47}{0.2}{0.529}{0.87}%
+\end{frame}%

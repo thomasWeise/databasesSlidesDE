@@ -37,6 +37,30 @@
 \end{frame}%
 %
 \begin{frame}%
+\frametitle{Realisierung}%
+\begin{itemize}%
+%
+\item In der Vorbereitung auf diese Vorlesung habe ich mir einige andere Vorlesungen anguckt.%
+%
+\item<2-> In vielen werden konzeptuelle Beziehungstypen wie \crowsFoot{G}{O1}{H}{MM} erklärt.%
+%
+\item<3-> Es wird aber nicht erklärt, wie man das dann mit \glsShort{SQL} machen kann.%
+%
+\item<4-> Man sagt vielleicht \inQuotes{Da braucht man 2 oder 3 Tabellen dafür.}%
+%
+\item<5-> Aber wie macht man es, dass jede Entität vom Typ~G dann mit mindestens einer Entität vom Typ~H verbunden ist?%
+%
+\item<6-> Das kommt dann nicht vor.%
+%
+\item<7-> Hier kommt es vor.%
+%
+\item<8-> Achtung:~\alert{Das wird die hardcore-ste Einheit in der Vorlesung!}%
+%
+\item<9-> \alert{Schnallen Sie sich an!}%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
 \frametitle{Referentielle Integrität}%
 %
 \begin{definition*}[Referentielle Integrität]%
@@ -109,16 +133,98 @@ Eine \glslink{db}{Datenbank} wo die Beziehungseinschränkungen korrekt implement
 \hinput{sub}{ij.tex}%
 \hinput{sub}{kl.tex}%
 \hinput{sub}{mn.tex}%
+\hinput{sub}{op.tex}%
+\hinput{sub}{qr.tex}%
+\hinput{sub}{st.tex}%
 %
 \section{Zusammenfassung}%
 %
 \begin{frame}%
 \frametitle{Zusammenfassung}%
 \begin{itemize}%
-\item Fertig
+%
+\only<-8>{%
+\item Das hat Spaß gemacht.%
+}%
+%
+\only<-9>{%
+\item<2-> Wir haben uns jedes einzelne mögliche binäre Beziehungsschema angeschaut, dass mit der Krähenfußnotation ausgedrückt werden kann.%
+}%
+%
+\only<-9>{%
+\item<3-> Wir haben herausgefunden, dass jedes davon wirklich im relationalen Datenmodell implementiert werden kann.%
+}%
+%
+\only<-11>{%
+\item<4-> Und mit \emph{implemented}, wir meinen sowohl die Modalität als auch die Kardinalität der Beziehungsenden.%
+}%
+%
+\only<-12>{%
+\item<5-> Wenn wir \DEzB\ die Beziehungsform \crowsFoot{K}{M1}{L}{OM} implementieren wollen, dann können wir as tun.%
+}%
+%
+\only<-13>{%
+\item<6-> Wir können eine Tabelle~\sqlil{k} für die Entitäten vom Type~K und eine Tabelle~\sqlil{l} für die Entitäten vom Typ~L.%
+}%
+%
+\only<-14>{%
+\item<7-> Dann können wir Einschränkungen erstellen, die erzwingen das jede Zeile in Tabelle~\sqlil{l} mit genau einer Zeile in Tabelle~\sqlil{k} verbunden ist.%
+}%
+%
+\only<-15>{%
+\item<8-> Wir können erzwingen, dass es niemals eine Zeile in Tabelle~\sqlil{l} gibt, die nicht mit genau einer Zeile in Tabelle~\sqlil{k} verbunden ist.%
+}%
+%
+\only<-16>{%
+\item<9-> Gleichzeitig können wir sichersteillen, dass die Zeilen in Tabelle~\sqlil{k} mit beliebig vielen Zeilen in Tabelle~\sqlil{l} verbunden sein können.%
+}%
+%
+\only<-17>{%
+\item<10-> Wir erzwingen auch, dass wenn eine Zeile in Tabelle~\sqlil{l} mit einer Zeile in Tabelle~\sqlil{k} verbunden ist, dass dann auch die entsprechende Zeile in Tabelle~\sqlil{k} mit einer Zeile in Tabelle~\sqlil{l} verbunden ist, und umgekehrt.%
+}%
+%
+\only<-18>{%
+\item<11-> Wenn wir diese Bedingungen erfüllen, dann hat unsere Datenbank \emph{referentielle Integrität}.%
+}%
+%
+\only<-19>{%
+\item<12-> Wir haben auch gelernt, dass das nicht immer einfach ist.%
+}%
+%
+\only<-20>{%
+\item<13-> Besonders wenn Beziehungsenden zwingend sind, und dann besonders wenn beide Enden zwingend sind {\dots} dann wird es schwer.%
+}%
+%
+\item<14-> Wir haben es mit zusätzlichen \glsShort{SQL}-Kommandos wie \glsShort{CTE}s hinbekommen.%
+%
+\item<15-> Manchmal brauchten wir \postgresql-spezifische Werkzeuge, wie \sqlil{RETURNING}\cite{PGDG:PD:RDFMR}~(das aber auch bei \mariadb\cite{M:MSD:IR} und \sqlite\cite{HWACIS:R} funktioniert).%
+%
+\item<16-> Ein anderers solches Werkzeug waren Sequenzen und die \sqlil{NEXTVAL}-Funktion~\cite{PGDG:PD:CS,PGDG:PD:SMF}.%
+%
+\item<17-> Es ist also oftmals schwer.%
+%
+\item<18-> Und wir haben immer nur zwei Entitätstypen angeguckt.%
+%
+\item<19-> Stellen Sie sich vor, wir haben die Beziehung \crowsFoot{M}{M1}{N}{MM} und gleichzeitig \crowsFoot{N}{MM}{X}{MM}\dots%
+%
+\item<20-> Deshalb ändert man manchmal die Beziehungstypen eben doch, wenn man vom konzeptuellen zum logischen Schema übergeht.%
+%
+\item<21-> Oder man nimmt komplexere Werkzeuge, wie Stored Procedures und Transaktionen~(über die wir hier nicht sprechen).%
+%
 \end{itemize}%
 \end{frame}%
 %
+\begin{frame}[t]%
+\frametitle{Aufräumen}%
+\begin{itemize}%
+\item Das hat trotzdem alles viel Spaß gemacht.%
+\item<2-> Räumen wir nun auf.
+\end{itemize}%
+%
+\gitLoadAndExecSQL{conceptualToRelational:cleanup}{}{conceptualToRelational}{cleanup.sql}{}{}{}%
+\listingSQLandOutput{}{conceptualToRelational:cleanup}{}{0.05}{0.3}{0.9}{0.7}%
+\end{frame}%
+
 \endPresentation%
 \end{document}%%
 \endinput%

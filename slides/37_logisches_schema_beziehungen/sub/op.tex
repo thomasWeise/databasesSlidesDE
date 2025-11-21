@@ -1,0 +1,204 @@
+%
+\section{\crowsFoot{O}{OM}{P}{OM}}%
+%
+\begin{frame}[t]%
+\frametitle{\crowsFoot{O}{OM}{P}{OM}}%
+\begin{itemize}%
+\item Es gibt zwei Entitätstypen~O und~P.%
+\item<2-> Jede Entität vom Typ~O kann mit keiner, einer, oder mehreren Entitäten vom Typ~P verbunden sein.
+\item<3-> Jede Entität vom Typ~P kann mit keiner, einer, oder mehreren Entitäten vom Typ~O verbunden sein.
+\item<4-> Beispiel:\uncover<5->{%
+\begin{itemize}%
+%
+\item Wir hatten das, als wir die Beziehung zwischen Modul-Typ und Position diskutiert hatten.\uncover<5->{ %
+Jede Position gibt einem Mitarbeiter die Berechtigung, keinen, einen, oder mehrere Modultypen anzuleiten.\uncover<6->{ %
+Jeder Modultyp kann von Mitarbeitern keiner, einer, oder mehrerer Positionen geleitet werden.\uncover<7->{ %
+Pflichtmodule erfordern vielleicht einen Full Professor als Leiter, wohingegen Wahlmodule von Full Professoren, Assistenzprofessoren, und Lecturern geleitet werden können.\uncover<8->{ %
+OK, eine Situation wo ein Modultyp von niemandem geleitet werden kann ist sicherlich komisch {\dots} vielleicht sollten wir unser Modell ändern{\dots}%
+}}}}%
+\item<9-> Aber wir hatten ja auch noch mehr Beispiele in Einheit~\unitRelationshipCardinalities\dots%
+\end{itemize}%
+}%
+\end{itemize}%
+%
+\locateGraphic{4}{width=0.6\paperwidth}{graphics/OP}{0.37}{0.4}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Lösung}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Wir brauchen wieder eine Tabelle~\sqlil{o} für die Entitäten vom Typ~O.%
+}%
+%
+\only<-6>{%
+\item<2-> Der Primärschlüssel wird~\sqlil{oid} und es gibt wieder ein Beispielattribut~\sqlil{x}.%
+}%
+%
+\only<-7>{%
+\item<3-> Wir brauchen auch eine Tabelle~\sqlil{p} für die Entitäten vom Typ~P.%
+}%
+%
+\only<-7>{%
+\item<4-> Diese bekommt den Primärschlüssel~\sqlil{pid} und das Beispielattribut~\sqlil{y}.%
+}%
+%
+\only<-8>{%
+\item<5-> Weil jede Zeile in Tabelle~\sqlil{o} mit mehreren Zeilen in Tabelle~\sqlil{p} verbunden sein kann \alert{und} andersherum, können wir das Problem \alert{nicht} mehr mit zwei Tabellen lösen.%
+}%
+%
+\only<-10>{%
+\item<6-> Es geht nicht anders: Diesmal brauchen wir drei Tabellen.%
+}%
+%
+\only<-11>{%
+\item<7-> Der Drei-Tabellen-Ansatz wird sehr ähnlich zu dem in \crowsFoot{A}{O1}{B}{O1} aussehen, nur mit anderen \sqlil{UNIQUE}-Einschränkungen.%
+}%
+%
+\only<-12>{%
+\item<8-> Wir erstellen also auch eine Tabelle \sqlil{relate_o_and_p} mit zwei Spalten, \sqlil{fkoid} und \sqlil{fkpid}.%
+}%
+%
+\only<-13>{%
+\item<9-> Diese sind Fremdschlüssel, die jeweils auf die Primärschlüssel \sqlil{oid} und \sqlil{pid} der Tabellen~\sqlil{o} und~\sqlil{p} zeigen.%
+}%
+%
+\only<-14>{%
+\item<10-> Das sichern wir mit \sqlil{REFERENCES}-Einschränkungen ab.%
+}%
+%
+\only<-14>{%
+\item<11-> Beide Spalten sind~\sqlil{NOT NULL}, weil wir nur gültige O\nobreakdashes-P-Paare speichern.%
+}%
+%
+\only<-16>{%
+\item<12-> Keine der Spalten ist~\sqlil{UNIQUE}, denn jede Zeile in Tabelle~\sqlil{o} kann mit mehreren Zeilen in Tabelle~\sqlil{p} verbunden sein und umgekehrt.%
+}%
+%
+\only<-16>{%
+\item<13-> In den vorherigen Drei-Tabellen-Lösungen hatten wir immer mindestens eine der Fremdschlüssel-Spalten als \sqlil{UNIQUE} festgelegt.%
+}%
+%
+\only<-18>{%
+\item<14-> Dadurch war sichergestellt, das jedes Paar von Fremdschlüsselwerten nur höchstens einmal auftreten kann.%
+}%
+%
+\only<-19>{%
+\item<15-> Weil wir dieses Mal keine \sqlil{UNIQUE}-Spalte mehr haben können, wäre es möglich, dass das selbe Paar von \sqlil{(fkoid, fkpid)} mehrfach auftreten können.%
+}%
+%
+\only<-20>{%
+\item<16-> Das können wir natürlich nicht erlauben.%
+}%
+%
+\only<-21>{%
+\item<17-> Wir müssen sicherstellen, dass jedes Paar \sqlil{(fkoid, fkpid)} höchstens einmal in der Tabelle auftauchen kann.%
+}%
+%
+\only<-22>{%
+\item<18-> Zwei Zeilen in den Tabellen~\sqlil{o} und~\sqlil{p} dürfen, natürlich, höchstens einmal miteinander in Beziehung stehen.%
+}%
+%
+\item<19-> Wir könnten das mit der Einschränkung \sqlil{UNIQUE (fkoid, fkpid)} erzwingen.%
+%
+\item<20-> Die richtige Lösung hier wäre es wahrscheinlich, direkt \sqlil{PRIMARY KEY (fkoid, fkpid)} zu benutzen.%
+%
+\item<21-> Unsere Tabelle braucht einen Primärschlüssel und der einzig mögliche Primärschlüssel sind ja Paare von~\sqlil{(fkoid, fkpid)}.%
+%
+\item<22-> Primärschlüssel sind sowieso einzigartig, also deckt diese Lösung die Einzigartigkeit gleich mit ab.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{OP_tables}{}{conceptualToRelational}{OP_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{}{OP_tables}{}{0.47}{0.1}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Befüllen mit Daten}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+\item Weil beide Beziehungsenden optional sind, können wir Datensätze in die beiden Datentabellen in beliebiger Reihenfolge eingeben.%
+%
+\item<2-> Dann erstellen wir die Beziehungen zwischen ihnen.%
+%
+\item<3-> Wir fügen also erstmal Zeilen in die Tabellen~\sqlil{o} und~\sqlil{p} ein.%
+%
+\item<4-> Danach erstellen wir die Beziehungen, in dem wir Zeilen in Tabelle \sqlil{relate_o_and_p} einfügen.%
+%
+\item<5-> Um die Daten wieder zusammenzuführen brauchen wir zwei \sqlil{INNER JOIN}s.
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{OP_insert_and_select}{}{conceptualToRelational}{OP_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{}{OP_insert_and_select}{}{0.47}{0.1}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Der Inhalt der Drei Tabellen}%
+%
+\gitExec{cdtrmTableO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships o oid;x}%
+\gitExec{cdtrmTableP}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships p pid;y}%
+\gitExec{cdtrmTableROP}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_o_and_p fkoid;fkpid}%
+%
+\vfill%
+%
+\begin{itemize}%
+\item Dies sind die Daten in den drei Tabellen.%
+\end{itemize}%
+\vfill%
+%
+\begin{center}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableO}}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableP}}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableROP}}%
+\strut\hfill\strut%
+\end{center}%
+%
+\hfill%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Testen der Einschränkungen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-4>{%
+\item Vorhin haben wir die Zeile \sqlil{(1, 1)} in die Tabelle \sqlil{relate_o_and_p} eingefügt.%
+}%
+%
+\only<-5>{%
+\item<2-> Das legt fest, dass die Zeile mit Primärschlüssel \sqlil{oid = 1} in Tabelle \sqlil{o} mit der Zeile mit Primärschlüssel \sqlil{pid = 1} in Tabelle~\sqlil{p} in Beziehung steht.%
+}%
+%
+\only<-7>{%
+\item<3-> Wir versuchen nun, die selbe Zeile nochmal in \sqlil{relate_o_and_p} einzugfügen.%
+}%
+%
+\only<-9>{%
+\item<4-> Das sollte natürlich nicht gehen, weil zwei Zeilen nicht zweimal miteinander in Beziehung stehen dürfen.%
+}%
+%
+\only<-9>{%
+\item<5-> Natürlich würde es keinen Sinn ergeben, der selben Person die selbe Addresse zweimal gleichzeitig zuzuweisen.%
+}%
+%
+\item<6-> Das würde auch verletzen, das Zeilen einmalig sein müssen -- eine grundlegende Anforderung des relationalen Datenmodells.%
+%
+\item<7-> Und dann würden die Zeilen ja auch doppelt als Ergebnis der \sqlil{INNER JOIN}s von vorhin auftauchen.%
+%
+\item<8-> Das sollte also nicht gehen.%
+%
+\item<9-> Und es geht auch nicht.%
+%
+\item<10-> Dank der \sqlil{PRIMARY KEY}-Einschränkung, die wir für Tabelle \sqlil{relate_o_and_p} definiert hatten, schlägt die Einfügung fehl.%
+%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{OP_insert_error}{}{conceptualToRelational}{OP_insert_error.sql}{relationships}{}{}%
+\listingSQLandOutput{3-}{OP_insert_error}{}{0.47}{0.1}{0.529}{0.87}%
+\end{frame}%

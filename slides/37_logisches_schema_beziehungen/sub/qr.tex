@@ -1,0 +1,247 @@
+%
+\section{\crowsFoot{Q}{OM}{R}{MM}}%
+%
+\begin{frame}[t]%
+\frametitle{\crowsFoot{Q}{OM}{R}{MM}}%
+\begin{itemize}%
+\item Es gibt zwei Entitätstypen~Q und~R.%
+\item<2-> Jede Entität vom Typ~Q kann mit keiner, einer, oder mehreren Entitäten vom Typ~R verbunden sein.
+\item<3-> Jede Entität vom Typ~R muss mit mindestens einer Entität vom Typ~Q verbunden sein, kann aber auch mit mehreren verbunden sein.
+\item<4-> Beispiel:\uncover<5->{%
+\begin{itemize}%
+%
+\item Eine Nachricht muss mindestens einen Empfänger haben, könnte aber auch an mehrere Empfänger versendet werden.\uncover<6->{ %
+Jede Person kann keine, eine, oder viele Nachrichten empfangen.}%
+\end{itemize}%
+}%
+\end{itemize}%
+%
+\locateGraphic{4-}{width=0.8\paperwidth}{graphics/QR}{0.1}{0.63}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Lösung}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Bauen wir zuerst die Tabellen, die wir brauchen.%
+}%
+%
+\only<-6>{%
+\item<2-> Dann kümmern wir uns darum, die referentielle Integrität mit passenden Einschränkungen zu sichern.%
+}%
+%
+\only<-7>{%
+\item<3-> Wir brauchen eine Tabelle~\sqlil{q} für die Entitäten vom Typ~Q.%
+}%
+%
+\only<-8>{%
+\item<4-> Der Primärschlüssel für diese Tabelle soll~\sqlil{qid} sein und es gibt wieder ein Beispielattribut~\sqlil{x}.%
+}%
+%
+\only<-8>{%
+\item<5-> Wir brauchen auch eine Tabelle~\sqlil{r} für die Entitäten vom Typ~R.%
+}%
+%
+\only<-9>{%
+\item<6-> Diese bekommt den Primärschlüssel~\sqlil{rid} und das Beispielattribut~\sqlil{y}.%
+}%
+%
+\only<-11>{%
+\item<7-> Weil beide Enden der Beziehung es erlauben, dass eine Zeile mit mehreren Zeilen in der jeweils anderen Tabelle verbunden ist, brauchen wir definitiv wieder drei Tabellen.%
+}%
+%
+\only<-12>{%
+\item<8-> Wir erstellen also die Tabelle \sqlil{relate_q_and_r} um die Beziehungen zu managen.%
+}%
+%
+\only<-13>{%
+\item<9-> Diese Tabelle hat zwei Spalten, \sqlil{fkqid} und \sqlil{fkrid}, die Fremdschlüssel sind und jeweils auf die Primärschlüssel \sqlil{qid} und \sqlil{rid} der Tabellen \sqlil{q} und \sqlil{r} zeigen.%
+}%
+%
+\only<-14>{%
+\item<10-> Das sichern wir durch \sqlil{REFERENCES}-Einschränkungen ab.%
+}%
+%
+\only<-15>{%
+\item<11-> Beide Spalten sind \sqlil{NOT NULL}.%
+}%
+%
+\only<-15>{%
+\item<12-> Genau wie im vorigen Szenario kann jedes Paar \sqlil{(fkqid, fkrid)} nur einmal in der Tabelle auftauchen.%
+}%
+%
+\only<-16>{%
+\item<13-> Das ist weil zwei Zeilen in den Tabellen~\sqlil{q} und~\sqlil{r} natürlich nur jeweils einmal miteinander in Beziehung stehen können.%
+}%
+%
+\only<-17>{%
+\item<14-> Das sichern wir also wieder über die Einschränkung \sqlil{PRIMARY KEY (fkqid, fkrid)} ab.%
+}%
+%
+\only<-18>{%
+\item<15-> Im Vergleich zu \crowsFoot{O}{OM}{P}{OM} müssen wir das Problem lösen, dass wir erzwingen müssen, das jede Zeile in Tabelle~\sqlil{q} mit mindestens einer Zeile in Tabelle~\sqlil{r} verbunden seien \emph{muss}.%
+}%
+%
+\only<-18>{%
+\item<16-> Als wir \crowsFoot{G}{O1}{H}{MM} behandelt haben, hatten wir ein ähnliches Problem.%
+}%
+%
+\only<-19>{%
+\item<17-> \emph{\inQuotes{Wie können wir erzwingen, dass jede Entität vom Typ~G mit mindestens einer Entität vom Typ~H verbunden ist?}}%
+}%
+%
+\only<-20>{%
+\item<18-> Das Hauptproblem war nicht, zu erzwinden, dass eine neue Zeile~\sqlil{g} eine Zeile in Tabelle~\sqlil{h} referenziert {\dots} sondern sicherzustellen, dass die Zeile in Tabelle~\sqlil{h} die selbe, neue Zeile in Tabelle~\sqlil{g} zurückreferenziert.%
+}%
+%
+\only<-21>{%
+\item<19-> Wir haben das gelöst, in dem wir eine Einschränkung erstellt hatten, die erzwingt dass der Primärschlüssel dieser Zeile in Tabelle~\sqlil{h} zusammen mit dem Fremdschüssel in Tabelle~\sqlil{g} gleich dem Fremdschlüssel in Tabelle~\sqlil{g} mit ihrem Primärschlüssel waren.%
+}%
+%
+\only<-23>{%
+\item<20-> Nun wird unsere Beziehung aber in Tabelle \sqlil{relate_q_and_r} gemanaged.%
+}%
+%
+\item<21-> Was wir machen müssen ist also, sicherzustellen, dass wenn wir eine Zeile in Tabelle~\sqlil{q} einfügen, gleichzeitig eine Zeile in Tabelle \sqlil{relate_q_and_r} eingefügt wird, die diese Zeile mit einer Zeile in Tabelle~\sqlil{r} verbindet.%
+%
+\item<22-> Wir speichern daher den \inQuotes{ersten~R}-Fremdschlüssel auf eine Zeile in Tabelle~\sqlil{r} als Spalte~\sqlil{fkrid} in Tabelle~\sqlil{q}.%
+%
+\item<23-> Dann fügen wir die Einschränkung \sqlil{q_qid_fkrid_fk} zur Tabelle~\sqlil{q} hinzu.%
+%
+\item<24-> Diese erzwingt dass \sqlil{FOREIGN KEY (qid, fkrid)} \sqlil{REFERENCES relate_q_and_r} \sqlil{(fkqid, fkrid)}.
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{QR_tables}{}{conceptualToRelational}{QR_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{}{QR_tables}{}{0.47}{0.1}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Befüllen mit Daten}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+\only<-5>{%
+\item Fügen wir nun Daten in die Tabellen ein.%
+}%
+%
+\only<-6>{%
+\item<2-> Für die Entitäten vom Typ~R ist die Verbindung zu Entiten vom Typ~Q optional.%
+}%
+%
+\only<-7>{%
+\item<3-> Befüllen wir also zuerst Tabelle~\sqlil{r}.%
+}%
+%
+\only<-7>{%
+\item<4-> Wenn wir nun Zeilen in Tabelle~\sqlil{q} einfügen wollen, müssen wir gleichzeitig Zeilen in Tabelle~\sqlil{relate_q_and_r} einfügen.%
+}%
+%
+\only<-8>{%
+\item<5-> Wenn wir das machen, dann müssen wir den Primärschlüsselwert der neuen Zeile für Tabelle~\sqlil{q} als Fremdschlüssel angeben.%
+}%
+%
+\only<-9>{%
+\item<6-> Wir benutzen also wieder eine \glsShort{CTE}, die wir \sqlil{q_new} nennen.%
+}%
+%
+\only<-9>{%
+\item<7-> Wir definieren ihn als \sqlil{INSERT INTO q} \sqlil{(x, fkrid)} V\sqlil{ALUES ('123', 1)} \sqlil{RETURNING qid, fkrid}.%
+}%
+%
+\only<-10>{%
+\item<8-> Wir wollen also eine Zeile in Tabelle~\sqlil{q} einfügen, deren \sqlil{x}~Attribut den Wert~\sqlil{'123'} hat und die in Beziehung steht mit der Zeile in Tabelle~\sqlil{r}, die den Primärschlüsselwert~\sqlil{1} hat.%
+}%
+%
+\only<-12>{%
+\item<9-> Wenn diese Einfügung ausgeführt wird, gibt sie uns den Primärschlüsselwert der neuen Zeile als \sqlil{qid} und den Fremdschlüsselwert auf die Zeile in Tabelle~\sqlil{r} als \sqlil{fkrid} (mit Wert~\sqlil{1}) zurück.%
+}%
+%
+\only<-14>{%
+\item<10-> Diesen \glsShort{CTE} benutzen wir dann, um eine neue Zeile in Tabelle \sqlil{relate_q_and_r} einzufügen.%
+}%
+%
+\only<-15>{%
+\item<11-> Wir schreiben \sqlil{INSERT INTO} \sqlil{relate_q_and_r (fkqid, fkrid)} \sqlil{SELECT qid, fkrid FROM q_new;}.%
+}%
+%
+\only<-16>{%
+\item<12-> Das ist recht einfach.%
+}%
+%
+\only<-17>{%
+\item<13-> Die neue Zeile in Tabelle~\sqlil{relate_o_and_p} bekommt den Primärschlüsselwert, der auf die neue Zeile in Tabelle~\sqlil{q} zeigt.
+}%
+%
+\only<-18>{%
+\item<14-> Zusätzlich bekommt sie den Primärschlüsselwert der Zeile in Tabelle~\sqlil{r}, die diese referenziert.%
+}%
+%
+\only<-19>{%
+\item<15-> Beide Einfügungen werden zusammen als ein Kommando ausgeführt und die referentielle Integrität wird an dessen Ende überprüft.%
+}%
+%
+\item<16-> Und die passt natürlich.%
+%
+\item<17-> Wir fügen ein paar Zeilen in die Tabellen~\sqlil{q} und \sqlil{relate_q_and_r} auf diese Art ein.%%
+%
+\item<18-> Danach können wir weitere Verbindungen als Zeilen in Tabelle \sqlil{relate_q_and_r} einfügen.%
+%
+\item<19-> Die Daten können wir wieder mit zwei \sqlil{INNER JOIN}s zusammensetzen.
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{QR_insert_and_select}{}{conceptualToRelational}{QR_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{}{QR_insert_and_select}{}{0.47}{0.01}{0.529}{0.99}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Der Inhalt der Drei Tabellen}%
+%
+\gitExec{cdtrmTableQ}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships q qid;fkrid;x}%
+\gitExec{cdtrmTableR}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships r rid;y}%
+\gitExec{cdtrmTableRQR}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_q_and_r fkqid;fkrid}%
+%
+\vfill%
+%
+\begin{itemize}%
+\item Dies sind die Daten in den drei Tabellen.%
+\end{itemize}%
+\vfill%
+%
+\begin{center}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableQ}}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableR}}%
+\strut\hfill\strut%
+\centering\input{\gitFile{cdtrmTableRQR}}%
+\strut\hfill\strut%
+\end{center}%
+%
+\hfill%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Testen der Einschränkungen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Wir können keine Zeile in Tabelle~\sqlil{q} einfügen, die nicht einen Fremdschlüssel auf eine Zeile in Tabelle~\sqlil{r} hat.%
+%
+\item<2-> Wir können auch keine Zeile in Tabelle~\sqlil{q} einfügen, die so einen Fremdschlüssel bereitstellt, für den es aber keine passende Zeile Tabelle \sqlil{relate_q_and_r} gibt.%
+%
+\item<3-> Wir können auch nicht zuerst eine Zeile Tabelle \sqlil{relate_q_and_r} einfügen und danach die passende Zeile in Tabelle \sqlil{q} erzeugen, selbst wenn wir den Primärschlüssel dieser zweiten Zeile vorher kennen würden.%
+%
+\item<4-> Die Einschränungen beschützen die referentielle Integrität also sehr gut.%
+%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{QR_insert_error_1}{}{conceptualToRelational}{QR_insert_error_1.sql}{relationships}{}{}%
+\listingSQLandOutput{1-2}{QR_insert_error_1}{}{0.47}{0.02}{0.529}{0.87}%
+\gitLoadAndExecSQL{QR_insert_error_2}{}{conceptualToRelational}{QR_insert_error_2.sql}{relationships}{}{}%
+\listingSQLandOutput{2-}{QR_insert_error_2}{}{0.47}{0.5}{0.529}{0.87}%
+\gitLoadAndExecSQL{QR_insert_error_3}{}{conceptualToRelational}{QR_insert_error_3.sql}{relationships}{}{}%
+\listingSQLandOutput{3-}{QR_insert_error_3}{}{0.47}{0.02}{0.529}{0.87}%
+\end{frame}%
