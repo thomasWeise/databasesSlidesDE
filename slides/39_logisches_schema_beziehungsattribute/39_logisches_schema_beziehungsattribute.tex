@@ -1,0 +1,457 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{39.~Logisches Schema:~Beziehungsattribute}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+%
+\item Beziehungen in konzeptuellen Modellen können Attribute haben, wie wir in Einheit~\unitConceptualRelationships\ gelernt haben.%
+%
+\item<2-> Weil es Beziehungen im relationalen Datenmodell nicht als einzelne Objekte gibt, müssen wir diese Attribute also irgendwo anders hintun.%
+%
+\item<3-> Im relationalen Modell gibt es nur Relationen, die als Tabellen implementiert werden.%
+%
+\item<4-> Also müssen die Attribute von Beziehungen Tabellenspalten werden.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Beispiel}%
+%
+\begin{frame}[t]%
+\frametitle{Beispiel: Konzeptuelle Ebene}%
+\begin{itemize}%
+%
+\item In welche Tabelle die Beziehungsattribute kommen hängt von der Situation ab.%
+%
+\item<2-> Erinnern wir uns zurück an ein frühes Modell unserer \emph{Person}-Entität.%
+%
+\item<3-> Hier gibt es eine Beziehung \emph{has~ID}, die die \emph{Person}-Entitäten mit dem Entitätstyp \emph{ID~Type} verbindet.%
+%
+\item<4-> Wir hatten damals keine Kardinalitäten modelliert, weil wir damals noch nicht so weit waren.%
+%
+\item<5-> Es ist aber ziemlich klar, dass das entweder eine \crowsFoot{\emph{Person}}{OM}{\emph{ID Type}}{OM}- oder eine \crowsFoot{\emph{Person}}{MM}{\emph{ID Type}}{OM}-Beziehung wäre.%
+%
+\item<6-> Wir können beliebig viele (Arten von) IDs für jede Person speichern.%
+%
+\item<7-> Jede Art von ID kann von beliebig vielen Personen verwendet werden.%
+%
+\item<8-> In den letzten Slides hatten wir die schwere Variante einer Beziehung modelliert{\dots} {\dots}nahmen wir diesmal die leichte.%
+%
+\item<9-> Wir wählen \crowsFoot{\emph{Person}}{OM}{\emph{ID Type}}{OM}.%
+%
+\item<10-> Wir folgen also dem Schema \crowsFoot{O}{OM}{P}{OM}.%
+\end{itemize}%
+\locateGraphic{2-3}{width=0.65\paperwidth}{graphics/erdPerson2}{0.175}{0.4}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Beispiel: Logische Ebene}%
+\begin{itemize}%
+\only<-3>{%
+\item Im logischen Schema brauchen wir für diese Beziehungsform eine zusätzliche Tabelle.%
+}%
+%
+\only<-4>{%
+\item<2-> Wir folgen der selben Methode wie damals bei \crowsFoot{O}{OM}{P}{OM}, benutzen aber natürlich andere Namen.%
+}%
+%
+\only<-5>{%
+\item<3-> Wir benutzen wieder den \pgmodeler.%
+}%
+%
+\only<-6>{%
+\item<4-> Wir nennen die zusätzliche Tabelle \sqlil{has_id}.%
+}%
+%
+\only<-7>{%
+\item<5-> Die Beziehungsattribute werden in diese Tabelle gehen.%
+}%
+%
+\only<-8>{%
+\item<6-> Und wieder bekommen wir eine neue Perspektive auf Beziehungen\only<-6>{.}\uncover<7->{:}%
+}%
+%
+\only<-9>{%
+\item<7-> Seinerzeit hatten wir \crowsFoot{O}{OM}{P}{OM} mit der zusätzlichen Tabelle \sqlil{relate_o_and_p} implementiert.%
+}%
+%
+\only<-10>{%
+\item<8-> Eine andere Perspektive wäre, das wir eigentlich zwei Beziehungen implementiert haben\only<-8>{.}\uncover<9->{:}%
+}%
+%
+\only<-11>{%
+\item<9-> \crowsFoot{\sqlil{o}}{M1}{\sqlil{relate_o_and_p}}{OM} und \crowsFoot{\sqlil{p}}{M1}{\sqlil{relate_o_and_p}}{OM}.%
+}%
+%
+\only<-11>{%
+\item<10-> Jede Zeile in Tabelle \sqlil{relate_o_and_p} muss mit einer Zeile in Tabelle~\sqlil{o} in Beziehung stehen \emph{und} mit einer Zeile in Tabele~\sqlil{p}.%
+}%
+%
+\only<-12>{%
+\item<11-> Jede Zeile in Tabelle~\sqlil{o} kann mit beliebig vielen Zeilen in Tabelle \sqlil{relate_o_and_p} in Beziehung stehen.%
+}%
+%
+\only<-14>{%
+\item<12-> Jede Zeile in Tabelle~\sqlil{p} kann mit beliebig vielen Zeilen in Tabelle \sqlil{relate_o_and_p} in Beziehung stehen.%
+}%
+%
+\only<-15>{%
+\item<13-> Fürwahr, das erzeugt eine \crowsFoot{O}{OM}{P}{OM}-Beziehung.%
+}%
+%
+\only<-16>{%
+\item<14-> Und das ist auch in dem Diagramm für das logische Modell hier reflektiert.%
+}%
+%
+\item<15-> Auch begegnen uns hier wieder mehrwertige Attribute: \emph{Name} und \emph{Address}.%
+%
+\item<16-> Wie wir schon wissen, gehen die in zusätzliche Tabellen, die wir hier \sqlil{name} und \sqlil{address} nennen.%
+%
+\item<17-> Natürlich erzeugen wir wieder passende Fremdschlüssel-\sqlilIdx{REFERENCES}-Einschränkungen.
+\end{itemize}%
+\locateGraphic{2-}{width=0.7\paperwidth}{graphics/logicalPerson2}{0.15}{0.4}%
+\end{frame}%
+%
+%
+\section{Ausprobieren}%
+%
+\begin{frame}[t]%
+\frametitle{Datenbank erstellen}%
+\begin{itemize}%
+\item Erstellen wir nun die Datenbank und Tabellen mit den Skripten, die der \pgmodeler\ für uns generiert hat.%
+%
+\item<2-> Fangen wir mit der Datenbank an.
+\end{itemize}%
+%
+\gitLoadAndExecSQL{person_2:01_person_database_database_2001}{}{teachingManagement/logical/person_database_2/generated_sql}{01_person_database_database_2001.sql}{}{}{}%
+\listingSQLandOutput{2-}{person_2:01_person_database_database_2001}{}{0.05}{0.4}{0.9}{0.6}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle person}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier sehen wir das auto-generierte Skript, um die Tabelle \sqlil{person} zu erstellen.%
+%
+\item<2-> Wir verwenden einen Ersatz-Primärschlüssel.%
+%
+\item<3-> Dazu gibt es ein Attribut \sqlil{date_of_birth} für das Gebursdatum.%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_2:03_public_person_table_5071}{}{teachingManagement/logical/person_database_2/generated_sql}{03_public_person_table_5071.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_2:03_public_person_table_5071}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle name}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Hier sehen wir das auto-generierte Skript, um die Tabelle \sqlil{name} zu erstellen.%
+}%
+%
+\only<-6>{%
+\item<2-> Sie ist für das zusammengesetzte, mehrwertige Attribut \emph{Name}.%
+}%
+%
+\only<-7>{%
+\item<3-> Jede Zeile speichert einen Fremdschlüssel \sqlil{person} der mit der Tabelle \sqlil{person} über eine \sqlilIdx{REFERENCES}-Einschränkung verbunden ist.%
+}%
+%
+\only<-8>{%
+\item<4-> Diese wird ein paar Slides weiter über \sqlil{ALTER TABLE} erstellt.%
+}%
+%
+\only<-9>{%
+\item<5-> Davon abgesehen fügen wir einen kleinen Gimmick aus Spaß ein\only<-5>{.}\uncover<6->{:}%
+}%
+%
+\only<-9>{%
+\item<6-> Die Spalte \sqlil{start_date} wird generiert als \sqlil{NOT NULL} \sqlil{DEFAULT CURRENT_DATE}.%
+}%
+%
+\item<7-> Das bedeutet, das für jede Zeile in Tabelle \sqlil{name} ein vernünftiges Start-Datum gespeichert werden muss~(wegen dem \sqlilIdx{NOT NULL}).%
+%
+\item<8-> Wenn wir es beim Erstellen der Zeile nicht angeben, dann wird stattdessen ein \sqlilIdx{DEFAULT}-Wert gespeichert.%
+%
+\item<9-> Dieses \sqlilIdx{DEFAULT} ist \sqlil{CURRENT_DATE}, welches, wie der Name schon erklärt, das aktuelle Datum in genau dem Moment ist, wo wir die Zeile erstellen\cite{PGDG:PD:DTFAO}.%
+%
+\item<10-> Es git noch ähnliche Funktionen wie \sqlil{CURRENT_TIME} und, besonders wichtig, \sqlil{CURRENT_TIMESTAMP}\cite{PGDG:PD:DTFAO}, der oft für \glslink{timestamping}{Timestamping} verwendet wird.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_2:04_public_name_table_5075}{}{teachingManagement/logical/person_database_2/generated_sql}{04_public_name_table_5075.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_2:04_public_name_table_5075}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle address}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier sehen wir das auto-generierte Skript, um die Tabelle \sqlil{address} zu erstellen.%
+%
+\item<2-> Da gibt es nicht viel Besonderes zu sehen.%
+%
+\item<3-> Wir verwenden \sqlilIdx{DEAULT}-Werte auch für \sqlil{country} und \sqlil{province}.%
+%
+\item<4-> Wenn man diese beim Eingeben der Daten nicht angibt, werden sie auf~\sqlil{\'CN\'} und~\sqlil{\'AH\'}, gesetzt.%
+%
+\item<5-> Der Fremdschlüssel \sqlil{person} zeigt auf Tabelle~\sqlil{person} über eine \sqlilIdx{REFERENCES}-Einschränkung, die wir in paar Slides später zeigen.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_2:05_public_address_table_5084}{}{teachingManagement/logical/person_database_2/generated_sql}{05_public_address_table_5084.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_2:05_public_address_table_5084}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle id\_type}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier sehen wir das auto-generierte Skript, um die Tabelle \sqlil{id_type} zu erstellen.%
+%
+\item<2-> Das machen wir im Grunde genauso wie in der letzten Einheit.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_2:06_public_id_type_table_5094}{}{teachingManagement/logical/person_database_2/generated_sql}{06_public_id_type_table_5094.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_2:06_public_id_type_table_5094}{}{0.47}{0.2}{0.529}{0.87}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle has\_id}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier sehen wir das auto-generierte Skript, um die Tabelle \sqlil{has_id} zu erstellen.%
+%
+\item<2-> Sie folgt im Grunde dem selben Design als Tabelle \sqlil{personal_id} in der vorigen Einheit.%
+%
+\item<3-> Sie beinhaltet die Beziehungsattribute, die wir im konzeptuellen Modell definiert haben.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_2:07_public_has_id_table_5100}{}{teachingManagement/logical/person_database_2/generated_sql}{07_public_has_id_table_5100.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_2:07_public_has_id_table_5100}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Einschränkung~(1)}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier sehen wir das auto-generierte Skript, um dir Fremdschlüssel-Einschränkung zu erstellen, die sicherstellt, dass jede Zeile in Tabelle \sqlil{name} mit einer Zeile in Tabelle \sqlil{person} verbunden ist.
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_2:08_public_name_name_person_fk_constraint_5108}{}{teachingManagement/logical/person_database_2/generated_sql}{08_public_name_name_person_fk_constraint_5108.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_2:08_public_name_name_person_fk_constraint_5108}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Einschränkung~(2)}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier sehen wir das auto-generierte Skript, um dir Fremdschlüssel-Einschränkung zu erstellen, die sicherstellt, dass jede Zeile in Tabelle \sqlil{address} mit einer Zeile in Tabelle \sqlil{person} verbunden ist.
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_2:09_public_address_address_person_fk_constraint_5109}{}{teachingManagement/logical/person_database_2/generated_sql}{09_public_address_address_person_fk_constraint_5109.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_2:09_public_address_address_person_fk_constraint_5109}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Einschränkung~(3)}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier sehen wir das auto-generierte Skript, um dir Fremdschlüssel-Einschränkung zu erstellen, die sicherstellt, dass jede Zeile in Tabelle \sqlil{has_id} mit einer Zeile in Tabelle \sqlil{id_type} verbunden ist.
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_2:10_public_has_id_has_id_id_type_fk_constraint_5110}{}{teachingManagement/logical/person_database_2/generated_sql}{10_public_has_id_has_id_id_type_fk_constraint_5110.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_2:10_public_has_id_has_id_id_type_fk_constraint_5110}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Einschränkung~(4)}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier sehen wir das auto-generierte Skript, um dir Fremdschlüssel-Einschränkung zu erstellen, die sicherstellt, dass jede Zeile in Tabelle \sqlil{has_id} mit einer Zeile in Tabelle \sqlil{person} verbunden ist.
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_2:11_public_has_id_has_id_person_fk_constraint_5111}{}{teachingManagement/logical/person_database_2/generated_sql}{11_public_has_id_has_id_person_fk_constraint_5111.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_2:11_public_has_id_has_id_person_fk_constraint_5111}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten Einfügen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Fügen wir nun Daten in die Tabellen ein.%
+}%
+%
+\only<-6>{%
+\item<2-> Wir fangen mit drei Datensätzen für Tabelle~\sqlil{person} an.%
+}%
+%
+\only<-7>{%
+\item<3-> Dabei müssen wir nur jeweils das \glslink{dateOfBirth}{Gebursdatum} angeben.%
+}%
+%
+\only<-8>{%
+\item<4-> Danach speichern wir die Namen der drei Leute in Tabelle \sqlil{name}.%
+}%
+%
+\only<-8>{%
+\item<5-> Interessanterweise speichern wir vier Namenseinträge.%
+}%
+%
+\only<-9>{%
+\item<6-> Der Grund ist, dass am 2.~February 1989 die 26-jährige \emph{Ms.~Bibbi} geheiratet hat und sich entschlossen hat, den Namen ihres Ehemannes zu übernehmen.%
+}%
+%
+\only<-11>{%
+\item<7-> Ihr Name hat sich also zu \emph{Mrs.~Bebba} geändert.%
+}%
+%
+\only<-12>{%
+\item<8-> Das sehen wir an den letzten beiden Zeilen, die in Tabelle \sqlil{name} eingefügt wurden.%
+}%
+%
+\only<-13>{%
+\item<9-> Die selben beiden ID-Typen wie in den vergangenen Beispielen -- chinesische Ausweisnummer und Mobiltelefonnummer -- werden in Tabelle \sqlil{id_type} erstellt.%
+}%
+%
+\item<10-> Für jeden ID-Typ und jede Person speichern wir dann einen Wert in Tabelle~\sqlil{has_id}.%
+%
+\item<11-> Wir benutzen dabei die Beziehungsattribute, die dort gespeichert werden.%
+%
+\item<12-> Wir geben dann noch für jede Person einen \sqlil{address}-Datensatz ein.%
+%
+\item<13-> Damit haben wir alle Daten eingegeben.%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_database_2:insert}{}{teachingManagement/logical/person_database_2}{insert.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_database_2:insert}{}{0.47}{0.01}{0.529}{0.99}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Daten Auslesen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Und jetzt lesen wir die Daten wieder aus.
+}%
+%
+\only<-5>{%
+\item<2-> Wir verwenden dafür das vielleicht größte \sqlilIdx{INNER JOIN}, das wir bisher verwendet haben.%
+}%
+%
+\only<-6>{%
+\item<3-> Wir wollen die Namen der Personen mit ihren Addressen und Mobiltelefonnummern kombinieren.%
+}%
+%
+\only<-7>{%
+\item<4-> Das geht, in dem wir den Zeichenketten-Verbinden-Operator \sqlil{||} verwenden.%
+}%
+%
+\only<-8>{%
+\item<5-> Um die benötigten Daten zu bekommen, gehen wir zeilenweise durch die Tabelle \sqlil{name}.%
+}%
+%
+\only<-8>{%
+\item<6-> Später, in der \sqlilIdx{WHERE}-Klausel, stellen wir sicher, das wir nur die aktuell gültigen Namen verwenden, in dem wir mit \sqlil{name.is_official = TRUE} selektieren.%
+}%
+%
+\only<-10>{%
+\item<7-> Für jede solche Zeile in Tabelle \sqlil{name} holen wir uns die passende Zeile in Tabelle \sqlil{person} über den Fremdschlüssel.%
+}%
+%
+\only<-12>{%
+\item<8-> Mit dem Primärschlüssel dieses Datensatzes können wir uns dann die passenden Zeilen aus den Tabellen \sqlil{address} und \sqlil{has_id} holen.%
+}%
+%
+\only<-13>{%
+\item<9-> Wir behalten nur die IDs vom Typ \sqlil{2} über \sqlil{has_id.id_type = 2} in der \sqlilIdx{WHERE}-Klausel, also die Mobiltelefonnummern.%
+}%
+%
+\only<-14>{%
+\item<10-> Wenn eine Person keine Mobiltelefonnummer oder Adresse hätte, dann würde sie nicht in der Liste auftauchen.%
+}%
+%
+\only<-15>{%
+\item<11-> Was würde passieren, wenn eine Person mehrere Mobiltelefonnummern und/oder Adressen hat?%
+}%
+%
+\item<12-> Probieren Sie es doch selbst aus.%
+%
+\item<13-> Egal. Wir sortieren die Zeilen im Ergebnis nach dem Gebursdatum.%
+%
+\item<14-> Die älteste Person kommt also zuerst.%
+%
+\item<15-> Wir bekommen das erwartete Ergebnis.%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_database_2:select}{}{teachingManagement/logical/person_database_2}{select.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_database_2:select}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Aufräumen}%
+\begin{itemize}%
+\item Räumen wir nun auf.
+\end{itemize}%
+%
+\gitLoadAndExecSQL{person_database_2:cleanup}{}{teachingManagement/logical/person_database_2}{cleanup.sql}{}{}{}%
+\listingSQLandOutput{}{person_database_2:cleanup}{}{0.05}{0.3}{0.9}{0.7}%
+\end{frame}%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Was haben wir also gelernt?%
+%
+\item<2-> Auf der konzeptuellen Ebene gibt es Beziehungsattribute.%
+%
+\item<3-> In logischen Schemas basierend auf dem relationalen Datenmodell gibt es Beziehungen nicht als eigenständige Objekte.%
+%
+\item<4-> Deshalb haben sie auch keine Attribute.%
+%
+\item<5-> Deshalb werden die Beziehungsattribute von der konzeptuellen Ebene zu Spalten in Tabellen im logischen Schema.%
+%
+\item<6-> Und diese Spalten tun wir dann in die Tabellen, die die jeweiligen Beziehungen repräsentieren.%
+\end{itemize}%
+\end{frame}%
+%%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
