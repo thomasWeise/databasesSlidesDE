@@ -1,0 +1,497 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{37.~Logisches Schema:~Schwache Entitäten}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+\item Wenn wir eine Anwendung bauen, dann fangen wir mit dem konzeptuellen Modell an.%
+%
+\item<2-> Dafür können wir \glsShort{ERD}s verwenden.%
+%
+\item<3-> \glsShort{ERD}s geben uns sehr viel Freiheit darin, wie wir die reale Welt modellieren.%
+%
+\item<4-> Wir können starke und schwache Entitäten verwenden oder Beziehungen -- und alle drei dieser Elemente können Attribute haben.%
+%
+\item<5-> Attribute können einwertig, mehrwertig, einfach, oder zusammengesetzt sein.%
+%
+\item<6-> Dann benutzen wir das relationale Datenmodell als logisches Modell für unsere Anwendung.%
+%
+\item<7-> Im Kern bietet das genau nur eine Modellierungskomponente an: Relationen.%
+%
+\item<8-> Relationen haben Attribute, die immer einwertig und einfach sind.%
+%
+\item<9-> Tabellen sind praktische Implementierungen von Relationen in einem \glsShort{dbms} und Spalten repräsentieren Attribute.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Konzeptuelle und Logische Ebene}%
+\begin{itemize}%
+\item Das relationale Datenmodell fühlt sich sehr natürlich an.%
+\item<2-> Viele Komponenten des konzeptuellen Modells können direkt in das logische Modell übertragen werden.%
+\item<3-> \DEZB~Entitäten werden Tabellen.
+%
+\item<4-> Beziehungen auf der konzeptuellen Ebene existieren nicht als Obkjete im relationalen Model.
+\item<5-> Stattdessen werden sie zu Tabellen und Einschränkungen.%
+\item<6-> Mehrwertige Attribute von der konzeptuellen Ebene werden ebenso zu Tabellen in der logischen Ebene.%
+\item<7-> Zusammengesetzt Attribute werden auseinandergebrochen und ihre Komponenten werden zu Spalten.%
+\item<8-> Das haben wir alles schon besprochen.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Was noch fehlt}%
+\begin{itemize}%
+\item Einige Objekte der konzeptuellen Ebene sind aber noch übrig\only<-1>{.}\uncover<2->{:%
+\begin{enumerate}%
+%
+\item Wir habe starke Entitäten diskutiert, aber nicht schwache Entitäten~(Einheit~\unitWeakEntities).%
+%
+\item<3-> Wir haben Beziehungen diskutiert, aber nicht Beziehungsattribute.%
+%
+\item<4-> Wir haben auch abgeleitete Attribute nicht diskutiert.%
+%
+\item<5-> Und während wir alle binären Beziehungen komplette durchgespielt haben, haben wir Beziehungen höheren Grades~(zwischen drei und mehr Entitäten) nicht besprochen.%
+%
+\end{enumerate}}%
+%
+\item<6-> Da müssen wir uns also noch drum kümmern.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\section{Schwache Entitäten}%
+%
+\begin{frame}[t]%
+\frametitle{Schwache Entitäten zum Logischen Modell}%
+\begin{itemize}%
+%
+\item Schwache Entitätstypen sind immer mit mindestens einer identifizierenden Beziehung mit einem starken Entoitätstyp verbunden\cite{S2024D:MEDTRDM}~(oder mit einem anderen schwachen Entitätstyp der identifiziert werden kann).%
+%
+\item<2-> Wir erinnern uns, dass wir damals die Beziehung von \emph{Person}, \emph{Personal~ID} -- einem schwachen Entitätstype -- und \emph{ID~Type} so modelliert hatten.%
+%
+\item<3-> Jede \emph{Personal~ID} ist in einer identifizierenden Beziehung mit einer Entität vom Type~\emph{Person} und in einer identifizierenden Beziehung mit einer Entität vom Typ~\emph{ID~Type}.
+%
+\item<4-> Wenn wir solche identifizierenden Beziehungen nach \glsShort{SQL} übersetzen, müssen wir diese mit zwingenden Enden gegenüberliegend vom schwachen Entitätstyp definieren.%
+%
+\item<5-> Die Beziehung muss also so sein, dass jede schwache Entität mit den starken Entitäten verbunden sein muss, sonst darf sie nicht existieren.%
+%
+\item<6-> In unserem Fall müssten wir also zwei Beziehungen modellieren\only<-6>{.}\uncover<7->{:%
+%
+\begin{enumerate}%
+\item \crowsFoot{Person}{M1}{Personal~ID}{MM}, die also auf dem \crowsFoot{M}{M1}{N}{MM}-Schema beruht\only<-7>{.}\uncover<8->{ und}%
+\item<8-> \crowsFoot{Personal~ID}{OM}{ID~Type}{M1}, also, \crowsFoot{ID~Type}{M1}{Personal~ID}{OM}, also nach Schema \crowsFoot{K}{M1}{L}{OM}.%
+\end{enumerate}}%
+\end{itemize}%
+%
+\locateGraphic{2-3}{width=0.65\paperwidth}{graphics/erdPerson4}{0.175}{0.55}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Modellieren mit PgModeler~(1)}%
+\begin{itemize}%
+%
+\item Wir benutzen den \pgmodeler, um das zu modellieren.%
+%
+\item<2-> Wir haben die selben Einschränkungen und Tabellen-Formate wie wir sie auch in \glsShort{SQL} verwenden würden, allerdings unter einer komfortablen~\glsShort{GUI}.%
+%
+\item<3-> Als wir \crowsFoot{M}{M1}{N}{MM} bearbeitet hatten, brauchten wir zwei Fremdschlüssel-\sqlil{REFERENCES}-Einschränkungen.%
+%
+\item<4-> Auf der einen Seite hatten wir Tabelle~\sqlil{M} von Tabelle~\sqlil{N} mit einem einzelenen Fremdschlüssel referenziert, der \sqlil{NOT NULL} war.%
+%
+\item<5-> So haben wir sichergestellt, dass es immer mindestens eine Zeile in Tabelle \sqlil{M} für jede Zeile in Tabelle~\sqlil{N} gibt.%
+%
+\item<6-> Auf der anderen Seite hatten wir Tabelle~\sqlil{N} von Tabelle~\sqlil{M} mit einem zusammengesetzten Fremdschlüssel referenziert.%
+%
+\item<7-> Das hat erzwungen, dass jede Zeile in Tabelle~\sqlil{M} mit einer Zeile in Tabelle~\sqlil{N} verbunden war, ohne zu verhindern, dass es mehr Zeile in Tabelle~\sqlil{N} gibt, die mit ihr verbunden sind.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Modellieren mit PgModeler~(2)}%
+%
+\begin{itemize}%
+\item Bis auf ein Feature, was wir nach dieser Slide gleich diskutieren, wissen Sie schon alles, was sie Brauchen, um diese Situation mit dem \pgmodeler\ zu modellieren.%
+%
+\item<2-> Wir bekommen dieses Modell.
+
+\item<3-> Beachten Sie, dass die Einschränkungen separat angezeigt werden.%
+%
+\item<4-> Das gibt uns eine andere Perspektive darauf, wie wir die \crowsFoot{M}{M1}{N}{MM} Beziehungen in \glsShort{SQL} dargestellt haben\only<-4>{.}\uncover<5->{: als eine Kombination aus einer \crowsFoot{M}{O1}{N}{M1} und einer \crowsFoot{M}{M1}{N}{OM} Beziehung\only<-5>{.}\uncover<6->{\\%
+\hspace*{-3em}\parbox{0.62\paperwidth}{\small%
+\begin{enumerate}%
+%
+\item die braune \crowsFoot{\sqlil{person}}{OM}{\sqlil{personal_id}}{M1}-Beziehung \emph{enforce\_at\_least\_one} benutzt den zusammengesetzten Fremdschlüssel und erzwingt, dass für jede Zeile in Tabelle~\sqlil{person} eine verbundene Zeile in Tabelle \sqlil{personal_id} existiert.\uncover<7->{ %
+Sie ist auf Tabelle \sqlil{person} definiert.%
+}%
+%
+\item<8-> Die grüne \crowsFoot{\sqlil{person}}{M1}{\sqlil{personal_id}}{OM}-Beziehung  \emph{has\_id} benutzt einen einfachen Fremdschlüssel und erzwingt, dass jede Zeile in Tabelle~\sqlil{personal_id} mit genau einer Zeile in Tabelle \sqlil{person} verbunden ist.\uncover<9->{ %
+Sie wird in Tabelle \sqlil{personal_id} definiert.}%
+\end{enumerate}}}}%
+\end{itemize}%
+\locateGraphic{2-3}{width=0.7\paperwidth}{graphics/logicalErdPerson4}{0.15}{0.4}%
+\locateGraphic{4-}{width=0.43\paperwidth}{graphics/logicalErdPerson4}{0.57}{0.56}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Sequenz in PgModeler Erstellen}%
+\parbox{0.45\paperwidth}{%
+\begin{itemize}%
+\only<-6>{%
+\item Wir erinnern uns an die vorige Einheit.%
+}%
+%
+\only<-7>{%
+\item<2-> Für \crowsFoot{M}{M1}{N}{MM}-Beziehungen mussten wir explizit eine Sequenz in \postgresql\ für die Primärschlüssel der Tabelle~\sqlil{m} erstellen.%
+}%
+%
+\only<-8>{%
+\item<3-> Das haben wir noch nicht in \pgmodeler\ gemacht.%
+}%
+%
+\only<-9>{%
+\item<4-> Aber das geht auch da und das lernen wir jetzt.%
+}%
+%
+\only<-10>{%
+\item<5-> In der Designansicht im \pgmodeler\ rechts-klicken wir und wählen \menu{New > Schema Object > Sequence}.%
+}%
+%
+\only<-11>{%
+\item<6-> In dem Dialog, der sich öffnet, geben wir einen vernünftigen Namen für unsere Sequenz ein.%
+}%
+%
+\only<-12>{%
+\item<7-> Wir wählen hier \sqlil{person_id_counter}.%
+}%
+%
+\only<-12>{%
+\item<8-> Dann klicken wir auf \menu{Apply}.%
+}%
+%
+\item<9-> Wir benutzen diese Sequenz später, wenn wir Spalten in eine Tabelle einfügen.
+%
+\item<10-> Dann wählen wir \emph{Sequence} als \menu{Default Value} für die Spalte und klicken in die Textbox rechts von \emph{Sequence}.%
+%
+\item<11-> In dem Dialog, der sich öffnet, klicken wir durch den Objektbaum, finden unsere neue \sqlil{Sequence}, und klicken dann den Häkchen-Button unten.%
+%
+\item<12-> Die neue Sequenz ist nun ausgewählt und die Spalte wird ihre Default-Werte von dort beziehen.%
+%
+\item<13-> Damit können wir nun das Modell fertig malen.%
+\end{itemize}%
+}%
+%
+\locateGraphic{5}{width=0.48\paperwidth}{graphics/pgmodelerSequence1new}{0.5}{0.17}%
+\locateGraphic{6-8}{width=0.48\paperwidth}{graphics/pgmodelerSequence2apply}{0.5}{0.17}%
+\locateGraphic{9-10}{width=0.48\paperwidth}{graphics/pgmodelerSequence3sequence}{0.5}{0.17}%
+\locateGraphic{11}{width=0.48\paperwidth}{graphics/pgmodelerSequence4selectSequence}{0.5}{0.17}%
+\locateGraphic{12-}{width=0.48\paperwidth}{graphics/pgmodelerSequence5selected}{0.5}{0.17}%
+\end{frame}%
+%
+\section{Ausprobieren}%
+
+%
+\begin{frame}[t]%
+\frametitle{Datenbank erstellen}%
+\begin{itemize}%
+\item Erstellen wir nun die Datenbank und Tabellen mit den Skripten, die der \pgmodeler\ für uns generiert hat.%
+%
+\item<2-> Fangen wir mit der Datenbank an.
+\end{itemize}%
+%
+\gitLoadAndExecSQL{person_1:01_person_database_database_2001}{}{teachingManagement/logical/person_database_1/generated_sql}{01_person_database_database_2001.sql}{}{}{}%
+\listingSQLandOutput{2-}{person_1:01_person_database_database_2001}{}{0.05}{0.4}{0.9}{0.6}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Sequenz person\_id\_counter}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier sehen wir das auto-generierte Skript, um die Sequenz zu erstellen.%
+%
+\item<2-> Wir werden diese Sequenz verwenden, um die Primärschlüsselwerte \sqlil{id} für die Tabelle \sqlil{person} zu generieren.%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_1:03_public_person_id_counter_sequence_5071}{}{teachingManagement/logical/person_database_1/generated_sql}{03_public_person_id_counter_sequence_5071.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_1:03_public_person_id_counter_sequence_5071}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle id\_type}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-4>{%
+\item Hier sehen wir das auto-generierte Skript, um die Tabelle \sqlil{id_type} zu erstellen.%
+}%
+%
+\item<2-> Die Tabelle hat den Primärschlüssel \sqlil{id} und ein Attribut \sqlil{name}, was \sqlilIdx{UNIQUE} sein muss.%
+%
+\item<3-> Es hat auch eine Spalte \sqlil{validation_regex}, in der wir einen \glslink{regex}{regulären Ausdruck} speichern, den eine Anwendung verwenden kann, um die entsprechenden ID-Werte zu prüfen.%
+%
+\item<4-> Diese Spalte muss \sqlilIdx{NOT NULL} sein und hat den Default-Wert \sqlil{\'.+\'}, also einen \glsShort{regex} für~\inQuotes{mindestens ein Zeichen}.%
+%
+\item<5-> Wenn der \glsShort{dba} keinen besseren \glsShort{regex} angibt, dann werden Anwendungen nur verlangen, dass eine ID mindestens ein Zeichen hat.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_1:04_public_id_type_table_5072}{}{teachingManagement/logical/person_database_1/generated_sql}{04_public_id_type_table_5072.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_1:04_public_id_type_table_5072}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle personal\_id}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Hier sehen wir das auto-generierte Skript, um die Tabelle \sqlil{personal_id} zu erstellen.%
+}%
+%
+\only<-6>{%
+\item<2-> In dieser Tabelle speichern wir die \emph{Personal ID}-Entitäten.%
+}%
+%
+\only<-7>{%
+\item<3-> Wie alle unsere Tabellen hat sie den Ersatz-Primärschlüssel~\sqlil{id}.%
+}%
+%
+\only<-8>{%
+\item<4-> Die \emph{Personal~ID}-Entitäten sind schwache Entitäten.%
+}%
+%
+\only<-9>{%
+\item<5-> Sie können nicht ohne identifizierende Beziehungen zu einer \emph{Person}- und zu einer \emph{ID~Type}-Entität existieren.%
+}%
+%
+\item<6-> Deshalb speichert diese Tabelle zwei Fremdschlüssel: \sqlil{id_type} und \sqlil{person}.%
+%
+\item<7-> Die entsprechenden Einschränkungen werden ein paar Slides weiter mit \sqlil{ALTER TABLE} hinzugefügt.%
+%
+\item<8-> Die Tabelle hat eine \sqlilIdx{UNIQUE}-Einschränkung auf die Tupel aus Ersatzschlüssel~\sqlil{id} und Fremdschlüssel~\sqlil{person}.%
+%
+\item<9-> Wir brauchen das später, weil die Tabelle \sqlil{person} diese Tupel als Fremdschlüssel verwenden wird.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_1:05_public_personal_id_table_5078}{}{teachingManagement/logical/person_database_1/generated_sql}{05_public_personal_id_table_5078.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_1:05_public_personal_id_table_5078}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle person}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier sehen wir das auto-generierte Skript, um die Tabelle \sqlil{person} zu erstellen.%
+%
+\item<2-> In diesem Teil unseres Beispiels modellieren wir keine weiteren Informationen über \emph{Person}-Entitäten.%
+%
+\item<3-> Deshalb hat diese Tabelle nur den Primärschlüssel~\sqlil{id}.%
+%
+\item<4-> Wir definieren aber die Anforderung, dass unser System eine Form von ID für jeden Eintrag vom Typ \emph{Person} speichern muss.%
+%
+\item<5-> Daher gibt es auch den Fremdschlüssel \sqlil{person_id} auf Tabelle \sqlil{personal_id} mit den schwachen Entitäten vom Typ \emph{Personal ID}.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_1:06_public_person_table_5087}{}{teachingManagement/logical/person_database_1/generated_sql}{06_public_person_table_5087.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_1:06_public_person_table_5087}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Einschränkungen~(1)}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Das auto-generierte Skript um die Einschränkung für die Beziehungen zwischen den Zeilen in den Tabellen \sqlil{personal_id} und \sqlil{id_type} zu erstellen.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_1:07_public_personal_id_personal_id_id_type_fk_constraint_5093}{}{teachingManagement/logical/person_database_1/generated_sql}{07_public_personal_id_personal_id_id_type_fk_constraint_5093.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_1:07_public_personal_id_personal_id_id_type_fk_constraint_5093}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}
+%
+\begin{frame}[t]%
+\frametitle{Einschränkungen~(2)}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Das erste auto-generierte Skript um die Einschränkung für die Beziehungen zwischen den Zeilen in den Tabellen \sqlil{personal_id} und \sqlil{person} zu erstellen: Jede Zeile in Tabelle \sqlil{personal_id} ist verbunden mit genau einer Zeile in Tabelle \sqlil{person}.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_1:08_public_personal_id_personal_id_person_fk_constraint_5094}{}{teachingManagement/logical/person_database_1/generated_sql}{08_public_personal_id_personal_id_person_fk_constraint_5094.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_1:08_public_personal_id_personal_id_person_fk_constraint_5094}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}
+%
+\begin{frame}[t]%
+\frametitle{Einschränkungen~(3)}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Das zweite auto-generierte Skript um die Einschränkung für die Beziehungen zwischen den Zeilen in den Tabellen \sqlil{personal_id} und \sqlil{person} zu erstellen: Für jede Zeile in Tabelle \sqlil{person} muss es mindestens eine zugehörige Zeile in Tabelle \sqlil{personal_id} geben.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_1:09_public_person_person_id_person_id_fk_constraint_5092}{}{teachingManagement/logical/person_database_1/generated_sql}{09_public_person_person_id_person_id_fk_constraint_5092.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_1:09_public_person_person_id_person_id_fk_constraint_5092}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}
+%
+%
+\begin{frame}[t]%
+\frametitle{Tabellen Befüllen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Nun fügen wir Daten ein.%
+}%
+%
+\only<-6>{%
+\item<2-> Wir fangen damit an, dass wir zwei Zeilen in die Tabelle \sqlil{id_type} einfügen: eine für chinesesische Ausweisnummern(中国公民身份号码) und eine für chinesische Mobiltelefonnummern.%
+}%
+%
+\only<-7>{%
+\item<3-> Wir speichern die selben \glsShort{regex}es die wir schon in Einheit~\unitEntitiesToTables\ verwendet hatten.%
+}%
+%
+\only<-8>{%
+\item<4-> Natürlich arbeiten wir nur mit einem Teil des Systems.%
+}%
+%
+\only<-9>{%
+\item<5-> Es gibt also keine Anwendung, die diese \glsShort{regex}es wirklich verwendet\dots%
+}%
+%
+\only<-10>{%
+\item<6-> Aber wir können es uns zumindest vorstellen\dots%
+}%
+%
+\only<-10>{%
+\item<7-> Dann schreiben wir den selben Kode, den wir damals für das Einfügen von Daten nach dem \crowsFoot{M}{M1}{N}{MM}-Schema verwendet hatten. um die Tabellen \sqlil{person} und \sqlil{personal_id} zu befüllen.%
+}%
+%
+\only<-12>{%
+\item<8-> Zuerst erstellen wir einen \sqlil{person}-Datensatz mit passender chinesischer Ausweisnummer.%
+}%
+%
+\only<-13>{%
+\item<9-> Dann hängen wir noch eine Mobiltelefonnummer an diesen Datensatz an.%
+}%
+%
+\only<-14>{%
+\item<10-> Dann erstellen wir einen zweiten Datensatz, wieder mit chinesischer Ausweisnummer.%
+}%
+%
+\only<-15>{%
+\item<11-> Zu guter Letzt kombinieren wir die Informationen wieder zusammen mit einem \sqlilIdx{INNER JOIN}.%
+}%
+%
+\only<-15>{%
+\item<12-> Man kann jetzt fragen, ob es sich wirklich lohnt, sicherzustellen, dass jede \emph{Person} immer mindestens eine passende \emph{Personal ID}-Entität haben muss.%
+}%
+%
+\only<-16>{%
+\item<13-> Das ist eine vernünftige Frage.%
+}%
+%
+\only<-17>{%
+\item<14-> Die Einschränkungen zu erstellen, damit unser logisches das konzeptuelle Modell voll repräsentiert erfordert ja viel Arbeit.%
+}%
+%
+\only<-18>{%
+\item<15-> Es zwingt uns \DEzB, die \sqlilIdx{SEQUENCE}- und \sqlilIdx{RETURNING}-Features von \postgresql\ zu verwenden, die nicht alle \glsShort{dbms}e unterstützen.%
+}%
+%
+\only<-19>{%
+\item<16-> Es könnte viel einfacher sein, stattdessen einfach eine \crowsFoot{Person}{M1}{Personal~ID}{OM}-Beziehungsstruktur zu implementieren~(anstatt des \crowsFoot{Person}{M1}{Personal~ID}{MM}-Schemas).%
+}%
+%
+\only<-21>{%
+\item<17-> Dadurch könnten wir viel einfaches \glsShort{SQL} verwenden.%
+}%
+%
+\only<-22>{%
+\item<18-> Wir würden uns darauf verlassen, dass die Person, die die Daten eingibt, schon alles richtig macht.%
+}%
+%
+\only<-23>{%
+\item<19-> Wir würden aber auch von unserem konzeptuellen Modell abweichen.%
+}%
+%
+\only<-24>{%
+\item<20-> Und wir würden von der Idee der \inQuotes{defense in depth} abweichen, also der Idee, so oft und auf so vielen Ebenen wie möglich die Daten zu prüfen.%
+}%
+%
+\only<-25>{%
+\item<21-> Wir bekämen aber einfacheren Kode.%
+}%
+%
+\only<-26>{%
+\item<22-> Was ist besser?%
+}%
+%
+\only<-27>{%
+\item<23-> Man kann diese Frage nicht einfach beantworten.%
+}%
+%
+\item<24-> Es hängt von der Situation ab.%
+%
+\item<25-> Wir wählen hier die schwierigere Variante.%
+%
+\item<26-> Erstens wollen wir sehen, ob wir das hinbekommen~(tun wir).%
+%
+\item<27-> Zweitens lernt man mehr {\dots} wir müssen schwierigeres \glsShort{SQL} verstehen\dots%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{person_database_1:insert_and_select}{}{teachingManagement/logical/person_database_1}{insert_and_select.sql}{person_database}{}{}%
+\listingSQLandOutput{}{person_database_1:insert_and_select}{}{0.47}{0.01}{0.529}{0.99}%
+\end{frame}
+%
+\begin{frame}[t]%
+\frametitle{Aufräumen}%
+\begin{itemize}%
+\item Räumen wir nun auf.
+\end{itemize}%
+%
+\gitLoadAndExecSQL{person_database_1:cleanup}{}{teachingManagement/logical/person_database_1}{cleanup.sql}{}{}{}%
+\listingSQLandOutput{}{person_database_1:cleanup}{}{0.05}{0.3}{0.9}{0.7}%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Was haben wir also gelernt?%
+\item<2-> Das schwache Entitäten im Grunde genauso wie starke Entitäten implementiert werden können.%
+\item<3-> Der Hauptunterschied ist, dass die zugehörigen Enden ihrer identifizierenden Beziehungen zwingend seien müssen.%
+\item<4-> Was sie ja auch im konzeptuellen Modell sowieso schon seien müssten.%
+\item<5-> Also haben wir gelernt, das es auf logischer Ebene im Grunde fast Wurscht ist, ob eine konzeptuelle Entität stark oder schwach ist.%
+\end{itemize}%
+\end{frame}%
+%%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
