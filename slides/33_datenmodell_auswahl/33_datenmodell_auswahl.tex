@@ -65,7 +65,7 @@ Das \emph{Datenmodell}~\inEN{data model} spezifiziert die Notation und Sprache z
 %
 \item<4-> Sie sind auch nicht gut geeignet, wenn mehrere Benutzer gleichzeitig an den selben Daten arbeiten.%
 %
-\item<5-> Es gibt aber \glsShort{OSS} software wie \href{https://basex.org}{BaseX}\cite{GHS2010B,G2006PXMMDTTL} die Datenbankfunktionalität in dieses Gebiet bring.%
+\item<5-> Es gibt aber \glsShort{OSS} Software wie \href{https://basex.org}{BaseX}\cite{GHS2010B,G2006PXMMDTTL} die Datenbankfunktionalität in dieses Gebiet bring.%
 %
 \item<6-> Trotzdem sind solche Formate für unser System ungeeignet.%
 \end{itemize}%
@@ -74,7 +74,7 @@ Das \emph{Datenmodell}~\inEN{data model} spezifiziert die Notation und Sprache z
 \begin{frame}%
 \frametitle{Hierarchische Datenbanken}%
 \begin{itemize}%
-\item In der frühen Entwicklung des Gebiets der Datenbanken entstanden hierarchische Datenbanken wie IMS\cite{KLBGNLWBS2012ITIYCGTIIMS,BBP2007TBOI,KC2024DS:ITD}.%
+\item In der frühen Entwicklung des Gebiets der Datenbanken entstanden hierarchische Datenbanken wie \glsShort{softIMS}\cite{KLBGNLWBS2012ITIYCGTIIMS,BBP2007TBOI,KC2024DS:ITD}.%
 %
 \item<2-> Diese bieten die Vorteile der hierarchischen Dokumente mit der Fähigkeit von gleichzeitigem Zugriff.%
 %
@@ -94,7 +94,7 @@ Das \emph{Datenmodell}~\inEN{data model} spezifiziert die Notation und Sprache z
 \begin{frame}%
 \frametitle{Netzwerkdatenmodell}%
 \begin{itemize}%
-\item Ein weiterer historischer Ansatz ist das Netzwerkdatenmodell, das aus IDS\cite{B2009TOOTIDSITFDAD,B1965SFRAP,H2016HCBITDAFOODW} und CODASYL\cite{TF1976CDBMS} entstand.%
+\item Ein weiterer historischer Ansatz ist das Netzwerkdatenmodell, das aus \glsShort{softIDS}\cite{B2009TOOTIDSITFDAD,B1965SFRAP,H2016HCBITDAFOODW} und CODASYL\cite{TF1976CDBMS} entstand.%
 %
 \item<2-> Auch heute gibt es noch CODASYL-\ und COBOL-basierte \glsShort{dbms}e\cite{O2022OCDDARM}.%
 %
@@ -120,7 +120,9 @@ Das \emph{Datenmodell}~\inEN{data model} spezifiziert die Notation und Sprache z
 \begin{frame}%
 \frametitle{Relationales Datenmodell}%
 \begin{itemize}%
-\item Der Fokus unseres Kurses ist auf dem \glslink{rdb}{relationalen} Datenmodell, das \citeauthor{C1970ARMODFLSDB}\cite{C1970ARMODFLSDB} erfunden hat, und der Sprache \sql.%
+\only<-8>{%
+\item Der Fokus unseres Kurses ist auf dem \glslink{rdb}{relationalen} Datenmodell, das \citeauthor{C1970ARMODFLSDB}\cite{C1970ARMODFLSDB} erfunden hat, und der Sprache \glsShort{SQL}.%
+}%
 %
 \item<2-> Dieses Modell passt zu sehr vielen Anwendungsfällen.%
 %

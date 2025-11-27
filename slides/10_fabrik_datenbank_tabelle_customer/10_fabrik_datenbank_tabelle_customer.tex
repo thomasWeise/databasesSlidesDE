@@ -257,7 +257,7 @@ Wir müssen die Spalte also \emph{nicht} mit \sqlil{UNIQUE} annotieren.%
 \item<2-> Holen wir sie wieder heraus!%
 }%
 \item<3-> Zuersteinmal wählen wir alle Kunden aus, die in Frankreich wohnen.%
-\item<4-> \sqlil{...WHERE address LIKE '\%France\%'} limitiert die Ausgabe von \sqlil{SELECT} auf Zeilen, in denen das Wort \inQuotes{France} -- genauso geschrieben -- irgendwo im Wert von \sqlil{address} vorkommt.%
+\item<4-> \sqlil{...WHERE address LIKE '\%France\%'} limitiert die Ausgabe von \sqlil{SELECT} auf Zeilen, in denen das Wort \inQuotes{France} -- genauso geschrieben -- irgendwo im Wert von \sqlil{address} vorkommt\cite{PGDG:PD:PM}.%
 \end{itemize}%
 %
 \gitLoadAndExecSQL{factory:select_from_table_customer_1}{}{factory}{select_from_table_customer_1.sql}{factory}{boss}{superboss123}%
@@ -272,7 +272,7 @@ Wir müssen die Spalte also \emph{nicht} mit \sqlil{UNIQUE} annotieren.%
 }%
 \item<2-> Zuerst erstellen wir ein synthetisches Attribute \sqlil{domestic}~\inDE{inländisch}, dass wahr~(\sqlil{TRUE}) ist, wenn ein Kunde in China wohnt und sonst falsch~(\sqlil{FALSE}).%
 \only<-6>{%
-\item<3-> Das können wir mit \sqlil{address LIKE '\%China\%' AS domestic} machen.%
+\item<3-> Das können wir mit \sqlil{address LIKE '\%China\%' AS domestic} machen\cite{PGDG:PD:PM}.%
 \item<4-> Wir wollen aber diesmal lieber \sqlil{ILIKE} nehmen: \sqlil{LIKE} beachtet Groß- und Kleinschreibung, \sqlil{ILIKE} nicht.%
 \item<5-> Für \sqlil{LIKE} sind \sqlil{'china'} und \sqlil{'China'} verschieden.%
 \item<6-> Für \sqlil{ILIKE} sind \sqlil{'china'}, \sqlil{'China'}, und \sqlil{'CHINA'} das selbe.%

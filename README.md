@@ -78,6 +78,8 @@ Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.gith
 37. [Logisches Schema: Beziehungen](https://thomasweise.github.io/databasesSlidesDE/37_logisches_schema_beziehungen.pdf)
 38. [Logisches Schema: Schwache Entitäten](https://thomasweise.github.io/databasesSlidesDE/38_logisches_schema_schwache_entitäten.pdf)
 39. [Logisches Schema: Beziehungsattribute](https://thomasweise.github.io/databasesSlidesDE/39_logisches_schema_beziehungsattribute.pdf)
+40. [Logisches Schema: Beziehungen höheren Grades](https://thomasweise.github.io/databasesSlidesDE/40_logisches_schema_beziehungen_höheren_grades.pdf)
+41. [Logisches Schema: 1.&nbsp;Normalform](https://thomasweise.github.io/databasesSlidesDE/41_logisches_schema_1nf.pdf)
 
 
 ### 2.4. Die Beispiele

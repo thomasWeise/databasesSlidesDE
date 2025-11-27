@@ -1,0 +1,1002 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{41.~Logisches Schema:~1.~Normalform}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+%
+\item Das logische Schema einer Datenbank zu entwerfen bedeutet nicht nur, das wir ein konzeptuelles Schema nach \glsShort{SQL} transformieren.%
+%
+\item<2-> Wir können nun zwar alle Elemente eines konzeptuellen \glsShort{ERD}s in ein logisches Modell übersetzen\dots\uncover<3->{ %
+{\dots}das heißt aber noch nicht, dass dieses logische Modell dann auch \emph{gut} ist.}%
+%
+\item<3-> Um das zu schaffen, sollten wir mehrere Richtlinien und Best Practices befolgen.%
+%
+\item<4-> Einige der wichtigsten davon betreffen \emph{Normalisierung}~\inEN{normalization}\cite{D2003AITDS,EN2015FODS}.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Normalisierung}%
+\begin{itemize}%
+\item Normalisierung ist ein Prozess, der darauf abziehlt, Redundanz zu verringern und Inkonsistenzen sowie Anomalitäten zu vermeiden\cite{S2024D:N,S2024D:RNDAFDNF}.%
+%
+\item<2-> Normalisierung tauscht dafür langsame Auslesegeschwindigkeit ein\only<-2>{.}\uncover<3->{:}%
+%
+\item<3-> Daten, die un-normalisiert in einer einzigen Tabelle gespeichert werden könnten müssen stattdessen über \sqlilIdx{INNER JOIN}s und ähnliche Konstrukte aus mehreren Tabellen (in normalisierter Form) zusammengesetzt werden\cite{K1983ASGTFNFIRDT}.%
+%
+\item<4-> Die Frage, welche Daten normalisiert werden sollten und zu welchem Grad muss also immer unter Berücksichtigung der Performanz beantwortet werden\cite{K1983ASGTFNFIRDT}.%
+%
+\item<5-> Es gibt mehrere \emph{Normalformen}~\inEN{normal forms}~(\glsShort{NF}).%
+%
+\item<6-> Wir betrachten hier die \glsShort{1NF}, die \glsShort{2NF} und die \glsShort{3NF}.%
+%
+\item<7-> Höhere Normalformen sind immer mehr restriktiv als niedrige Normalformen.%
+%
+\item<8-> Wenn ein Teil eines logischen Modells in einer höheren Normalform ist, dann ist es automatisch auch in allen niedrigeren Normalformen.%
+\end{itemize}%
+%
+\end{frame}%
+%
+\section{1. Normalform}%
+%
+\begin{frame}%
+\frametitle{1. Normalform}%
+\begin{itemize}%
+%
+\item Die 1.~Normalform~(\glsShort{1NF}) geht zurück bis auf \citeauthor{C1970ARMODFLSDB}'s Paper~\bracketCite{C1970ARMODFLSDB} in dem er \citeyear{C1970ARMODFLSDB} das relationale Datenmodell präsentierte.%
+%
+\item<2-> In Grunde verlangt sie nur, dass das Design der Tabellen dem relationalen Datenmodell ordentlich folgen soll.%
+%
+\end{itemize}%
+%
+\uncover<3->{%
+\begin{definition*}[1.~Normalform]%
+Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spalten haben und alle Spalten müssen unteilbar sein.%
+\end{definition*}%
+}%
+%
+\uncover<4->{%
+\begin{itemize}%
+\item Das schließt also mehrwertige und zusammengesetzte Attribute aus.%
+%
+\item<5-> Wie wir bereits gesagt haben, werden diese im relationalen Modell sowieso nicht unterstützt.%
+%
+\item<6-> Warum gibt es dann diese Normalform überhaupt?%
+%
+\item<7-> Wenn sie von allen Tabellen sowieso erfüllt wird, dann brauchen wir sie auch nicht diskutieren.%
+%
+\end{itemize}}%
+%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{1. Normalform kann verletzt werden}%
+\begin{itemize}%
+%
+\item Wir haben ja bereits gelernt, wie man Entitätstypen des konzeptuellen Schemas in Tabellen im logischen Schema übersetzt.%
+%
+\item<2-> Wir haben gesagt, dass mehrwertge Attribute eigentständige Tabellen werden.%
+%
+\item<3-> Zusammengesetzte Attribute rekursiv in ihre unteilbaren Komponenten heruntergebrochen, die dann zu Spalten werden.%
+%
+\item<4-> Wenn wir das relationale Datenmodell verwenden, dann produzieren wir ganz natürlich logische Schemas in der \glsShort{1NF}.%
+%
+\item<5-> Das stimmt aber nur, wenn wir mehrwertige und zusammengesetzte Attribute auch als solche \emph{erkennen}.%
+%
+\item<6-> Wenn eine Tabelle Attribute hat, die von ihrer Bedeutung her zusammengesetzt sind, wir diese aber als einzelne Attribute implementieren, dann verletzen wir die \glsShort{1NF}.%
+%
+\item<7-> Wenn ein Attribut mehrwertig ist, wir aber versuchen, es durch mehrere Spalten zu speichern anstatt es in eine separate Tabelle zu tun, dann verletzen wir die \glsShort{1NF}.%
+%
+\item<8-> Schauen wir uns mal an, was dann passiert.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Zusammengesetzte Attribute: Problem}%
+%
+\begin{frame}[t]%
+\frametitle{Verletzung der 1. Normalform durch Zusammengesetze Attribute}%
+\begin{itemize}%
+%
+\item Hier zeigen wir einen Tail eines logischen Modells, dass Studenten- und Addressdatensätze verbindet.%
+%
+\item<2-> Im Modell hat jeder Student genau eine Adresse und einen Namen.%
+%
+\item<3-> Die Adressen sind als Text in einer eigenständigen Tabelle gespeichert.%
+\end{itemize}%
+\locateGraphic{}{width=0.6\paperwidth}{graphics/anomalyComposite}{0.2}{0.42}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle address}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier sehen wir das vom \pgmodeler\ generierte Skript zum Erstellen der Tabelle \sqlil{address}.%
+%
+\item<2-> Die Tabelle hat zwei Spalten, nämlich den Ersatz-Primärschlüssel \sqlil{id} und die Spalte \sqlil{full_address}, welche variabel-langen Text von bis zu 255~Zeichen beinhaltet.%
+%
+\item<3-> Wie der Name schon sagt speichert diese Tabelle die Adressen der Studenten.%
+%
+\end{itemize}%
+}%
+\gitExecSQLraw{}{}{normalization/1nf/anomaly_composite/generated_sql}{01_anomalies_database_2001.sql}{}{}{}%
+%
+\gitLoadAndExecSQL{1nf:anomaly_composite:03_public_address_table_5071}{}{normalization/1nf/anomaly_composite/generated_sql}{03_public_address_table_5071.sql}{anomalies}{}{}%
+\listingSQLandOutput{}{1nf:anomaly_composite:03_public_address_table_5071}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle student}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier sehen wir das vom \pgmodeler\ generierte Skript zum Erstellen der Tabelle \sqlil{student}.%
+%
+\item<2-> Auch sie hat einen Ersatz-Primärschlüssel \sqlil{id}.%
+%
+\item<3-> Sie hat auch die Spalte \sqlil{name} um die Namen der Studenten zu speichern.%
+%
+\item<4-> Die Spalte \sqlil{address} hat einen Fremdschlüssel auf die Spalte \sqlil{id} der Tabelle \sqlil{address}.%
+%
+\item<5-> Dieser wird über eine \sqlil{REFERENCES}-Einschränkung gesichert.%
+%
+\item<6-> Die Skripte dafür und zum Erstellen bzw.\ später zum Löschen der Datenbank lassen wir hier aber weg.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{1nf:anomaly_composite:04_public_student_table_5075}{}{normalization/1nf/anomaly_composite/generated_sql}{04_public_student_table_5075.sql}{anomalies}{}{}%
+\listingSQLandOutput{}{1nf:anomaly_composite:04_public_student_table_5075}{}{0.47}{0.2}{0.529}{0.87}
+%
+\gitExecSQLraw{}{}{normalization/1nf/anomaly_composite/generated_sql}{05_public_student_student_address_fk_constraint_5080.sql}{anomalies}{}{}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten Einfügen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Jetzt fügen wir Daten in die Datenbank ein.%
+%
+\item<2-> Erstmal erstellen wir vier Addresse\only<-2,7->{.}\only<3-6>{:%
+\begin{enumerate}%
+\item eine in unserer Universität Hefei~(合肥大学) in der schönen Stadt Hefei~(合肥市) in China\only<-3>{.}\uncover<4->{,}%
+\item<4-> eine in meiner Heimatstadt Chemnitz in Deutschland\only<-4>{.}\uncover<5->{,}%
+\item<5-> eine in der Chinatown von New York, USA\only<-5>{.}\uncover<6->{ und}%
+\item<6-> eine in der Stadt Quanzhou~(泉州市), China.
+\end{enumerate}%
+}%
+\item<7-> Dann erstellen wir vier \sqlil{student}-Datensätze, für Herrn Bibbo, Herrn Bebbo, Frau Bibbi und Herrn Bebbo.%
+%
+\item<8-> Diese sind über ihre Fremdschlüssel mit genau den Adressen oben verbunden.%
+%
+\item<9-> Das sieht erstmal gut aus.
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{1nf:anomaly_composite:insert}{}{normalization/1nf/anomaly_composite}{insert.sql}{anomalies}{}{}%
+\listingSQLandOutput{}{1nf:anomaly_composite:insert}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Das Problem}%
+\begin{itemize}%
+\item Das sieht erstmal gut aus.%
+%
+\item<2-> Und alles könnte auch gut sein.%
+%
+\item<3-> Wenn wir die Adressen immer als einzelne, unstrukturierte Zeichenketten verwenden würden.%
+%
+\item<4-> Aber das ist nicht unbedingt so, besonders in unserem Lehre-Management-System.%
+%
+\item<5-> In unserem Beispiel wohnt Herr Bibbo in unserer Uni und Herr Babbo kommt aus Quanzhou.%
+%
+\item<6-> Herr Bebbo und Frau Bibbi sind aber ausländische Austauschstudenten~(留学生) aus Deutschland bzw.\ den USA.%
+%
+\item<7-> Stellen Sie sich vor, die Tabellen wären viel größer?%
+%
+\item<8-> Was wäre, wenn wir fragen würden, welche unserer Studenten denn eine chinesische Adresse haben?%
+%
+\item<9-> Wir würden wir das tun?%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Daten auslesen~(1)}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Nun, wir haben genau sowas schonmal im Kontext unseres Fabrikbeispiels gemacht.%
+}%
+%
+\only<-6>{%
+\item<2-> Damals haben wir einen \sqlilIdx{ILIKE}-Ausdruck\cite{PGDG:PD:PM} geschrieben und das machen wir jetzt auch.%
+}%
+%
+\only<-7>{%
+\item<3-> Wir kombinieren die Tabellen \sqlil{student} und \sqlil{address} mit einem \sqlilIdx{INNER JOIN}.%
+}%
+%
+\only<-8>{%
+\item<4-> Dann behalten wir nur die Zeilen mit \sqlil{full_address ILIKE '\%china\%'}.%
+}%
+%
+\only<-9>{%
+\item<5-> In anderen Worten, wir behalten die Zeilen, wo das Wort \inQuotes{china} irgendwo in der Spalte \sqlil{full_address}, gleichgültig ob es groß- oder klein geschrieben ist.%
+}%
+%
+\item<6-> Wir bekommen zwei Studenten heraus, Herrn Bibbo und Frau Bibbi.%
+%
+\item<7-> Frau Bibbi ist aber eine ausländische Studentin.%
+%
+\item<8-> Sie wohnt in \emph{China}town, New York.%
+%
+\item<9-> Herr Babbo wurde gar nicht gelistet, denn er hat in seiner Adresse \inQuotes{PRC} als Land angegeben, also die Volksrepublik China~(中华人民共和国).%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{1nf:anomaly_composite:select_1}{}{normalization/1nf/anomaly_composite}{select_1.sql}{anomalies}{}{}%
+\listingSQLandOutput{}{1nf:anomaly_composite:select_1}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Die Probleme}%
+\begin{itemize}%
+%
+\item Wir haben zwei Probleme\only<-1>{.}\uncover<2->{:%
+%
+\begin{enumerate}%
+\item Wir haben keine Möglichkeit, zu entscheiden welcher Teil von \sqlil{full_address} das Land ist und welcher nicht.%
+%
+\item<3-> Es gibt viele verschiedene Möglichkeiten, den Name eines Landes wie China anzugeben.%
+%
+\end{enumerate}}%
+%
+\item<4-> Das erste Problem resultiert direkt aus der Verletzung der \glsShort{1NF}.%
+%
+\item<5-> Wir haben das Adress-Attribut \emph{nicht} als zusammengesetztes Attribut modelliert.%
+%
+\item<6-> Wir haben es als unteilbares Attribut modelliert, was falsch war, weil wir eben doch auf seine Komponenten zugreifen wollten.%
+%
+\item<7-> Ein unteilbares Attribut hat aber keine Komponenten.%
+%
+\item<8-> Der Fehler lag also wahrscheinlich schon im konzeptuellen Modell~(was wir hier nicht diskutiert haben).%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten auslesen~(2)}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Unsere Datenbank kann trotzdem funktionieren.%
+}%
+%
+\only<-6>{%
+\item<2-> Wir können die Anfrage nach dem Land umbauen um mit den Spezialfällen von oben umzugehen.%
+}%
+%
+\item<3-> Wir können Adressen aussortieren, die sowohl China als auch Chinatown beinhalten.%
+%
+\item<4-> Und wir können Adressen dazunehmen, die PRC oder P.R.C.\ beinhalten.%
+%
+\item<5-> Das sind aber nur Krücken und keine wirklichen Lösngen.%
+%
+\item<6-> Wir können immer noch leicht Adressen finden, die falsch klassifiziert werden würden.%
+%
+\item<7-> \DEZB\ was machen wir mit der \inQuotes{Embassy of China in Berlin, Germany}?%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{1nf:anomaly_composite:select_2}{}{normalization/1nf/anomaly_composite}{select_2.sql}{anomalies}{}{}%
+\listingSQLandOutput{}{1nf:anomaly_composite:select_2}{}{0.47}{0.2}{0.529}{0.87}
+\gitExecSQLraw{}{}{normalization/1nf/anomaly_composite}{cleanup.sql}{}{}{}%
+\end{frame}%
+%
+\section{Zusammengesetzte Attribute: Lösung}%
+%
+\begin{frame}[t]%
+\frametitle{Zusammengesetzte Attribute: Lösung}%
+\begin{itemize}%
+%
+\item Lösen wir das Problem.%
+%
+\item<2-> Eine vernünftige Lösung muss sein, die Adresse als zusammengesetztes Attribut zu modellieren.%
+%
+\item<3-> Wenigstens das Land muss abgeteilt werden.%
+%
+\item<4-> Vielleicht könnte man auch noch die Provinz als Komponente modellieren.%
+%
+\item<5-> Und weil wir schon dabei sind, teilen wir auch noch Stadt und Postleitzahl ab.%
+%
+\end{itemize}%
+\locateGraphic{}{width=0.6\paperwidth}{graphics/fixedComposite}{0.2}{0.55}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle address}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Hier sehen wir das vom \pgmodeler\ generierte Skript zum Erstellen der Tabelle \sqlil{address}.%
+}%
+%
+\item<2-> Jetzt haben wir die Spalten \sqlil{country}, \sqlil{province}, \sqlil{city}, \sqlil{postal_code} und~\sqlil{street_address}.%
+%
+\item<3-> Alle von ihnen sind \sqlilIdx{VARCHAR}s passender Länge.%
+%
+\item<4-> Wir erlauben, dass \sqlil{province} \sqlilIdx{NULL} sein darf, weil manche Länder keine Provinzen haben.%
+%
+\item<5-> Alle anderen Felder müssen \sqlilIdx{NOT NULL} sein.%
+%
+\item<6-> An der Tabelle \sqlil{student} ändert sich nichts, also schauen wir sie uns nicht nochmal an.%
+%
+\end{itemize}%
+}%
+\gitExecSQLraw{}{}{ normalization/1nf/fixed_composite/generated_sql}{01_fixed_database_2001.sql}{}{}{}%
+%
+\gitLoadAndExecSQL{1nf:fixed_composite:03_public_address_table_5071}{}{normalization/1nf/fixed_composite/generated_sql}{03_public_address_table_5071.sql}{fixed}{}{}%
+\listingSQLandOutput{}{1nf:fixed_composite:03_public_address_table_5071}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten Einfügen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Jetzt fügen wir Daten in die Datenbank ein.%
+%
+\item<2-> Wir haben wieder Datensätze Herrn Bibbo, Herrn Bebbo, Frau Bibbi und Herrn Bebbo.%
+%
+\item<3-> Neu dazu kommt Frau~Bebbe.%
+%
+\item<4-> Die Adressen von den ersten vier Studenten bleiben gleich, müssen jedoch in ihre Komponenten zerlegt werden.%
+%
+\item<5-> Frau Bebbe wohnt in Beijing~(北京).%
+%
+\end{itemize}%
+}%
+%
+\gitExecSQLraw{}{}{normalization/1nf/fixed_composite/generated_sql}{04_public_student_table_5079.sql}{fixed}{}{}%
+\gitExecSQLraw{}{}{normalization/1nf/fixed_composite/generated_sql}{05_public_student_student_address_fk_constraint_5084.sql}{fixed}{}{}%%
+%
+\gitLoadAndExecSQL{1nf:fixed_composite:insert}{}{normalization/1nf/fixed_composite}{insert.sql}{fixed}{}{}%
+\listingSQLandOutput{}{1nf:fixed_composite:insert}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Nachteil der 1. Normalform}%
+\begin{itemize}%
+%
+\item Auf der vorigen Slide haben wir auch gleich den (kleinen) Nachteil der Normalformen kennengelernt.%
+%
+\item<2-> Sie brechen zusammenhängende Daten auf ihre unabhängigen Einzelteile herunter.%
+%
+\item<3-> Wenn wir später wieder die zusammenhängend Daten \inQuotes{am Stück} brauchen, dann müssen wir sie wieder zusammensetzen.%
+%
+\item<4-> Wenn wir also den gesamten Adress-String brauchen, dann müssen wir ihn wieder zusammenbauen, wahrscheinlich mit Hilfe des String-Konkatenations-Operators~\sqlil{||}\cite{PGDG:PD:SFAO}.%
+%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten auslesen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-4>{%
+\item Wie Sie sehen können, können wir nun eine Liste von allen Studenten mit einer Adresse in China viel einfacher bekommen.%
+}%
+%
+\only<-5>{%
+\item<2-> Wir müssen natürlich noch mit dem Problem umgehen, dass Leute den Ländernamen verschieden schreiben können.%
+}%
+%
+\only<-6>{%
+\item<3-> Aber wir können nicht aus Versehen jemanden aus Chinatown in San Francisco als jemanden der in China wohnt misklassifizieren.%
+}%
+%
+\only<-8>{%
+\item<4-> Und wenn wir sowieso dabei sind, lernen wir noch etwas mehr \glsShort{SQL} -- was aber mit der \glsShort{1NF} nichts zu tun hat.%
+}%
+%
+\only<-9>{%
+\item<5-> Wenn Sie die Anfrage lesen, dann sehen Sie, dass das Zusammenbauen der vollen Adresse doch schwieriger war, als einfach \sqlil{||} zu verwenden.%
+}%
+%
+\only<-10>{%
+\item<6-> Das ist weil die Spalte \sqlil{province} \sqlil{NULL} sein kann.%
+}%
+%
+\only<-11>{%
+\item<7-> Wir haben sogar so einen Fall in unserer Tabelle.%
+}%
+%
+\only<-12>{%
+\item<8-> Frau~Bebbe ist aus Beijing~(北京市).%
+}%
+%
+\only<-13>{%
+\item<9-> Beijing gehört zu keiner Provinz, sondern ist eine Stadt unter der direkten Kontrolle der Zentralregierung von China.%
+}%
+%
+\only<-14>{%
+\item<10-> Deshalb hatten wir ihre \sqlil{province}-Spalte auf \sqlil{NULL} gelassen.%
+}%
+%
+\only<-14>{%
+\item<11-> Wenn Sie in \postgresql\ strings mit \sqlilIdx{NULL} zusammenfügen, dann bekommen Sie \sqlilIdx{NULL} als Ergebnis.%
+}%
+%
+\only<-14>{%
+\item<12-> Wenn wir also einfach alle Adressfelder mit \sqlil{||} zusammenfügen, dann bekommen wir \sqlilIdx{NULL} als die Adresse von Frau Bebbe.%
+}%
+%
+\only<-15>{%
+\item<13-> Um mit dem \sqlil{NULL} in der \sqlil{province} umzugehen, benutzen wir die Funktion \sqlilIdx{COALESCE}\cite{PGDG:PD:CE}.%
+}%
+%
+\only<-15>{%
+\item<13-> Diese akzeptiert beliebig veiele Argumente und liefert das erste Argument zurück, das nicht \sqlilIdx{NULL} ist~(oder \sqlilIdx{NULL} wenn \sqlilIdx{NULL} sind).%
+}%
+%
+\only<-17>{%
+\item<14-> Wenn Sie die Anfrage lesen, dann finden Sie noch eine weitere Veränderung.%
+}%
+%
+\only<-17>{%
+\item<15-> Wir könnten \sqlilIdx{OR} verwenden, um die drei Bedingungen \sqlil{country ILIKE '\%china\%'}, \sqlil{country ILIKE '\%PRC\%'} und \sqlil{country ILIKE '\%P.R.C.\%'} zu verbinden.%
+}%
+%
+\only<-19>{%
+\item<16-> Stattdessen habe ich geschrieben \sqlil{country ILIKE ANY(ARRAY[} \sqlil{'\%china\%', '\%PRC\%', '\%P.R.C.\%'])}, was das gleiche bedeutet\cite{PGDG:PD:RAAC,PGDG:PD:A}:%
+}%
+%
+\only<-20>{%
+\item<17-> Wir können einen Array der Werte \sqlil{a}, \sqlil{b}, \sqlil{c} und~\sqlil{d} über \sqlil{ARRAY[a, b, c, d]} deklarieren.%
+}%
+%
+\only<-21>{%
+\item<18-> Der Ausdruck \sqlil{XXX operator ANY(ARRAY[...])} wird dann \sqlil{TRUE}, wenn \sqlil{XXX operator YYY} auch \sqlil{TRUE} für irgendein -- also mindestens ein -- \sqlil{YYY} im Array gilt\cite{PGDG:PD:RAAC}.%
+}%
+%
+\item<19-> In unserem Fall ist \sqlil{XXX} is \sqlil{country} und \sqlil{operator} ist \sqlilIdx{ILIKE}.%
+%
+\item<20-> Ähnliche Ausdrücke können mit \sqlil{ALL} statt \sqlil{ANY} gebaut werden, wobei der Operator dann für \emph{alle} elemente des Arrays \sqlil{TRUE} liefern müss\cite{PGDG:PD:RAAC}.%
+%
+\item<21-> Mit diesem Konstrukt können wir also etwas Platz sparen.
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{1nf:fixed_composite:select}{}{normalization/1nf/fixed_composite}{select.sql}{fixed}{}{}%
+\listingSQLandOutput{}{1nf:fixed_composite:select}{}{0.47}{0.2}{0.529}{0.87}
+\gitExecSQLraw{}{}{normalization/1nf/fixed_composite}{cleanup.sql}{}{}{}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\item Wir haben nun eine Anomalie gesehen, die auftreten kann, wenn wir logische Schemas konstruieren.%
+%
+\item<2-> Wenn wir zusammengesetzte Attribute fälschlicherweise als unteilbare Attribute modellieren, dann können wir schnelle in einer Hölle aus Spezielfällen und Krücken landen.%
+%
+\item<3-> Die Natur von Attributen richtig zu erkennen und der \glsShort{1NF} string zu folgen kann also die Menge möglicher Fehler stark verringern.%
+%
+\item<4-> Wir bezahlen dafür mit etwas komplizierteren Anfragen, die die Daten dann wieder zusammensetzen müssen.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Mehrwertige Attribute: Problem}%
+%
+\begin{frame}[t]%
+\frametitle{Verletzung der 1. Normalform durch Mehrwertige Attribute}%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Setzen wir unser Beispiel von vorhin fort.%
+}%
+%
+\only<-6>{%
+\item<2-> Wir hatten eine Tabellenstruktur zum Speichern von Adressen von Studenten entwickelt.%
+}%
+%
+\only<-7>{%
+\item<3-> Jeder Student hatte genau eine Adresse.%
+}%
+%
+\only<-8>{%
+\item<4-> In der realen Welt ist das aber nicht so {\dots} dort können Studenten mehrere Adressen haben.%
+}%
+%
+\only<-9>{%
+\item<5-> Vielleicht haben sie ein Zimmer im Wohnheim der Uni und als zweite Adresse die Wohnung ihrer Eltern.%
+}%
+%
+\item<6-> Das kann mit unserem Modell nicht implementiert werden.%
+%
+\item<7-> Jemand hatte deshalb die Idee, einfach \alert{zwei} Spalten für Adressen zu machen.%
+%
+\item<8-> Die Tabelle \sqlil{student} hat nun die Spalten \sqlil{address_1} and \sqlil{address_2}.%
+%
+\item<9-> Und sie verletzte die \glsShort{1NF}.%
+\end{itemize}%
+\locateGraphic{-6}{width=0.6\paperwidth}{graphics/fixedComposite}{0.2}{0.6}%
+\locateGraphic{7-}{width=0.6\paperwidth}{graphics/anomalyMultivalued}{0.2}{0.6}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle student}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Hier sehen wir das vom \pgmodeler\ generierte Skript zum Erstellen der neuen Variante der Tabelle \sqlil{student}.%
+}%
+%
+\only<-6>{%
+\item<2-> Sie hat nochimer Ersatz-Primärschlüssel \sqlil{id}.%
+}%
+%
+\item<3-> Sie hat nach wie vor auch die Spalte \sqlil{name} um die Namen der Studenten zu speichern.%
+%
+\item<4-> Wir haben jetzt \alert{zwei} Fremdschlüssel, die auf die Tabelle \sqlil{address} zeigen.%
+%
+\item<5-> Diese werden über zwei \sqlil{REFERENCES}-Einschränkungen gesichert.%
+%
+\item<6-> Die Skripte dafür und zum Erstellen bzw.\ später zum Löschen der Datenbank lassen wir hier aber weg.%
+%
+\item<7-> Die Tabelle \sqlil{address} lassen wir unverändert, weshalb wir auch das Skript dafür nicht nochmal angucken.%
+%
+\end{itemize}%
+}%
+%
+\gitExecSQLraw{}{}{normalization/1nf/anomaly_multivalued/generated_sql}{01_anomalies_database_2001.sql}{}{}{}%
+%
+\gitExecSQLraw{}{}{normalization/1nf/anomaly_multivalued/generated_sql}{03_public_address_table_5071.sql}{anomalies}{}{}%
+%
+\gitLoadAndExecSQL{1nf:anomaly_multivalued:04_public_student_table_5079}{}{normalization/1nf/anomaly_multivalued/generated_sql}{04_public_student_table_5079.sql}{anomalies}{}{}%
+%
+\gitLoadAndExecSQL{1nf:anomaly_composite:04_public_student_table_5075}{}{normalization/1nf/anomaly_composite/generated_sql}{04_public_student_table_5075.sql}{anomalies}{}{}%
+\listingSQLandOutput{}{1nf:anomaly_composite:04_public_student_table_5075}{}{0.47}{0.2}{0.529}{0.87}
+%
+\gitExecSQLraw{}{}{normalization/1nf/anomaly_multivalued/generated_sql}{05_public_student_student_address_1_fk_constraint_5085.sql}{anomalies}{}{}%
+%
+\gitExecSQLraw{}{}{normalization/1nf/anomaly_multivalued/generated_sql}{ 06_public_student_student_address_2_fk_constraint_5086.sql}{anomalies}{}{}%
+%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Probleme~(1)}%
+\begin{itemize}%
+%
+\item Diese Verletzung der \glsShort{1NF} kann verschiedene Probleme auslösen.%
+%
+\item<2-> Zuest gibt es da Probleme auf der Ebene des Entwurfs.%
+%
+\item<3-> Was machen wir \DEzB, wenn ein Student eine dritte Adresse braucht?%
+%
+\item<4-> Vielleicht hat ein Student ja getrennt lebende Eltern und eine eigene Adresse, also insgesamt drei Adressen.%
+%
+\item<5-> Wenn wir die \inQuotes{wiederholende Gruppe}~\inEN{repeating group}-Methode weitermachen, würden wir einfach eine weitere Spalte \sqlil{address_3} hinzufügen.%
+%
+\item<6-> Was passiert, wenn eine Person vier Adressen hat?%
+%
+\item<7-> Werden wir immer mehr Spalten hinzufügen, wenn weitere Spezialfälle auftreten?%
+%
+\item<8-> Solche Veränderungen sind ja nicht nur einfach einzelne, isolierte Änderungen.%
+%
+\item<9-> Wir können ja viele Anfragen und Anwendungen haben, die die Adressen verwenden.%
+%
+\item<10-> Wir würden also jede von ihnen updaten müssen.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Probleme~(2)}%
+\begin{itemize}%
+%
+\item Ein weiteres Problem ist, wie wir dann wissen können, wie viele Adressen ein Student hat?%%
+%
+\item<2-> In unserem logischen Modell haben wir gesagt, dass \sqlil{address_1} \sqlilIdx{NOT NULL} sein muss.%
+%
+\item<3-> Die Spalte \sqlil{address_2} muss natürlich \sqlil{NULL} sein dürfen.%
+%
+\item<4-> Ein Student hat also eine oder zwei Adressen.%
+%
+\item<5-> Sagen wir, dass wir jetzt eine dritte Adressspalte hinzufügen.%
+%
+\item<6-> Dann könnten wir eine Zeile bekommen, wo die zweite Addressspalte \sqlil{NULL} ist aber die dritte nicht, oder andersherum.%
+%
+\item<7-> Wir müssten also die Anfragen komplizerter aufbauen.%
+%
+\item<8-> Weil wir mehrere Adressspalten haben werden sie ja sowieso komplizierter.%
+%
+\item<9-> Was machen wir, wenn wir eine Liste von Studenten mit mindestens einer Adresse in China brauchen?%
+%
+\item<10-> Ugh\dots%
+\end{itemize}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten Einfügen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Herr Bibbo hat nun zwei Adressen in Hefei, eine an unserer Hefei University~(合肥大学) und eine bei der University of Science and Technology of China~(中国科学技术大学, USTC).%
+}%
+%
+\only<-6>{%
+\item<2-> Herr Bebbo hat immer noch nur eine Adresse, in Chemnitz, Deutschland.%
+}%
+%
+\only<-7>{%
+\item<3-> Frau Bibbi lebt nur in Chinatown, New York, USA.%
+}%
+%
+\only<-8>{%
+\item<4-> Herr Babbo hat auch eine Adresse in Chemnitz, Deutschland, aber eben auch eine in Quanzhou~(福建省泉州市), China.%
+}%
+%
+\item<5-> Die erste Adresse von  Frau Bebbe ist in Beijing~(北京), aber sie hat noch eine Zweitadresse in Spanien.%
+%
+\item<6-> Das Beispiel deckt also alle möglichen Kombinationen ab.%
+%
+\item<7-> Manche Leute haben keine Adresse in China, bei anderen ist nur die erste oder zweite Adresse in China, und manche haben zwei chinesische Adressen.%
+%
+\item<8-> Von den fünf Studenten haben die Herren bibbo und Babbo sowie Frau Bebbe eine Adresse in China.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{1nf:anomaly_multivalued:insert}{}{normalization/1nf/anomaly_multivalued}{insert.sql}{anomalies}{}{}%
+\listingSQLandOutput{}{1nf:anomaly_multivalued:insert}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Daten auslesen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-4>{%
+\item Wie bekommen wir nun eine Liste mit diesen drei Studenten?%
+}%
+%
+\only<-5>{%
+\item<2-> Egal wie wir das Problem angehen, wir müssen irgendwie den selben Ausdruck auf beide Adressspalten anwenden.%
+}%
+%
+\only<-5>{%
+\item<3-> Zuerst wollen wir daher versuchen, die Daten irgendwie in eine Form zu bringen dass wir pro Zeile den Namen eines Studenten und einen zugehörigen Fremdschlüsselwert auf die Adresstabelle haben.%
+}%
+%
+\only<-8>{%
+\item<4-> Das können wir mit einer \sqlilIdx{UNION}-Anfrage machen.%
+}%
+%
+\only<-9>{%
+\item<5-> Im ersten Schritt machen wir eine Anfrage, die den Studenname \sqlil{name} und die erste Addressspalte \sqlil{address_1} (die wir mit \sqlil{AS} in \sqlil{adr} umbennen) auswählt.%
+}%
+%
+\only<-10>{%
+\item<6-> Dann hängen wir das Ergebnis einer zweiten Anfrage an, die fast das selbe macht aber \sqlil{address_2} als \sqlil{adr} auswählt.%
+}%
+%
+\only<-11>{%
+\item<7-> Die beiden Anfragen werden über \sqlilIdx{UNION} kombiniert.%
+}%
+%
+\only<-12>{%
+\item<8-> Wir bekommen acht Zeilen {\dots} und diese Relation ist in der \glsShort{1NF}.%
+}%
+%
+\only<-13>{%
+\item<9-> Mit der wiederhergestellten \glsShort{1NF} können wir nun die Leute mit einer Adresse in China herausfiltern.%
+}%
+%
+\only<-14>{%
+\item<10-> Wir können das fast genauso machen, wie vorhin, nämlich mit einem \sqlilIdx{INNER JOIN} und dem Array-basierten~\sqlilIdx{ILIKE}.%
+}%
+%
+\only<-15>{%
+\item<11-> Wir können nur nicht die Tabelle \sqlil{student} als Datenquelle nehmen.%
+}%
+%
+\only<-16>{%
+\item<12-> Stattdessen verwenden wir die \sqlilIdx{UNION}-Anfrage als \emph{Unteranfrage}.%
+}%
+%
+\only<-17>{%
+\item<13-> In \glsShort{SQL} kann man auch die Ergebnisse eines \sqlil{SELECT...FROM}\sqlIdx{SELECT{\idxdots}FROM} als Quelle für eine weitere Anfrage nehmen.%
+}%
+%
+\only<-18>{%
+\item<14-> Alles, was dafür notwendig ist, ist die Unteranfrage in Klammern \sqlil{(...)}\sqlIdx{(\idxdots)} zu schreiben!%
+}%
+%
+\only<-19>{%
+\item<15-> Die zweite Anfrage sieht also unserer alten Anfrage von der Bedingung her recht ähnlich.%
+}%
+%
+\only<-20>{%
+\item<16-> Wir haben nur die Datenquelle~(damals die Tabelle \sqlil{student}) mit unserer \sqlilIdx{UNION}-Anfrage in Klammern ersetzt~(und ein paar Spaltennamen geändert).%
+}%
+%
+\only<-21>{%
+\item<17-> Das funktioniert gut, mit einer Ausnahme.%
+}%
+%
+\only<-21>{%
+\item<18-> Herr Bibbo taucht zweimal auf, weil er zwei Adressen in China hat.%
+}%
+%
+\only<-23>{%
+\item<19-> Zum Glück gibt es das Schlüsselwort \sqlilIdx{DISTINCT}\cite{PGDG:PD:SC:S}.%
+}%
+%
+\only<-23>{%
+\item<20-> \sqlil{SELECT DISTINCT} löscht alle doppelten Zeilen aus der Anfrage.%
+}%
+%
+\only<-24>{%
+\item<21-> Mit anderen Worten, wenn zwei Ergebniszeilen einer Anfrage komplett gleiche Werte haben, dann wird nur eine davon zurückgegeben und die andere weggeworfen.%
+}%
+%
+\only<-26>{%
+\item<22-> \sqlil{SELECT DISTINCT} \sqlil{ON (col1, col2, ...)} benutzt nur eine Untermenge der Spalten~(hier \sqlil{col1}, \sqlil{col2}, \dots) um zu entscheiden, welche Zeile ein Duplikat ist und welche nicht.%
+}%
+%
+\only<-26>{%
+\item<23-> Nun, Namen könnten mehrdeutig sein.%
+}%
+%
+\item<24-> Wir verändern also unsere Unteranfragen so, dass sie auch die Studenten-IDs~(umbenannt zu~\sqlil{sid}) mit zurückliefern.%
+%
+\item<25-> Mit dem \sqlil{DISTINCT ON (sid)} am Anfang unserer Anfrage können wir sicherstellen, dass jeder Student nur einmal auftaucht.%
+%
+\item<26-> Das Ergebnis stimmt nun.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{1nf:anomaly_multivalued:select}{}{normalization/1nf/anomaly_multivalued}{select.sql}{anomalies}{}{}%
+\gitLoadAndExecSQL{1nf:anomaly_multivalued:select_1}{}{normalization/1nf/anomaly_multivalued}{select_1.sql}{anomalies}{}{}%
+\gitLoadAndExecSQL{1nf:anomaly_multivalued:select_2}{}{normalization/1nf/anomaly_multivalued}{select_2.sql}{anomalies}{}{}%
+\gitLoadAndExecSQL{1nf:anomaly_multivalued:select_3}{}{normalization/1nf/anomaly_multivalued}{select_3.sql}{anomalies}{}{}%
+%
+\listingSQLandOutput{-9}{1nf:anomaly_multivalued:select_1}{}{0.47}{0.2}{0.529}{0.87}
+\listingSQLandOutput{10-18}{1nf:anomaly_multivalued:select_2}{}{0.47}{0.2}{0.529}{0.87}
+\listingSQLandOutput{19-26}{1nf:anomaly_multivalued:select_3}{}{0.47}{0.2}{0.529}{0.87}
+\listingSQLandOutput{27-}{1nf:anomaly_multivalued:select}{}{0.47}{0.01}{0.529}{0.99}
+%
+\gitExecSQLraw{}{}{normalization/1nf/anomaly_multivalued}{cleanup.sql}{}{}{}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Lehre}%
+\begin{itemize}%
+\item Wir haben gelernt: Wenn man irgendetwas Sinnvolles mit mehrwertigen Attributen, die als \inQuotes{wiederholte Gruppe} dargestellt sind, machen will {\dots} dann muss man sie in die \glsShort{1NF} bringen.%
+%
+\item<2-> Das bedeutet, dass wir sie als separate Relation darstellen müssen.%
+%
+\item<3-> Also genau in der Form, die wir beim Übersetzen von Entitätstypen in Tabellen genannt hatten.%
+%
+\item<4-> Warum speichern wir sie also nicht gleich so?%
+%
+\item<5-> Das Modell von vorhin ist einfach nur eine falsche Darstellung einer \crowsFoot{\sqlil{student}}{OM}{\sqlil{address}}{MM}-Beziehung.%
+%
+\item<6-> Wir hatten diese korrekt als \crowsFoot{Q}{OM}{R}{MM}-Beziehung kennengelernt.%
+\end{itemize}%
+\end{frame}%
+%
+\section{Mehrwertige Attribute: Lösung}%
+%
+\begin{frame}[t]%
+\frametitle{Mehrwertige Attribute: Lösung}%
+\begin{itemize}%
+%
+\only<-6>{%
+\item Lösen wir das Problem.%
+}%
+%
+\only<-7>{%
+\item<2-> Wir extrahieren das mehrwertige Attribut in eine weitere Tabelle.%
+}%
+%
+\only<-8>{%
+\item<3-> Um es einfacher zu machen, erzwingen wir nicht, dass jeder Student \emph{mindestens} eine Adresse haben muss.%
+}%
+%
+\only<-9>{%
+\item<4-> Wir implementieren die einfachere Beziehung \crowsFoot{\sqlil{student}}{OM}{\sqlil{address}}{OM}.%
+}%
+%
+\only<-10>{%
+\item<5-> Sie haben ja gelernt, wie es hardcore gehen würden {\dots} also denke ich, das ist OK hier.%
+}%
+%
+\item<6-> Wir brauchen nun eine dritte Tabelle, die wir \sqlil{student_address} nennen.%
+%
+\item<7-> Die Tabelle hat einen zusammengesetzten Primärschlüssel aus einem Fremdschlüssel auf Tabelle \sqlil{student} und einem auf  Tabelle \sqlil{address}.%
+%
+\item<8-> Die Adressspalten verschwinden aus Tabelle \sqlil{student}.%
+%
+\item<9-> Sie hat jetzt nur noch den Primärschlüssel und das Attribut \sqlil{name} überig.%
+%
+\item<10-> Die Tabelle \sqlil{address} verändert sich nicht.%
+%
+\end{itemize}%
+\locateGraphic{}{width=0.9\paperwidth}{graphics/fixedMultivalued}{0.05}{0.6}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle student}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier ist das auto-generierte Skript zum Erstellen der Tabelle \sqlil{student}.%
+%
+\item<2-> Sie hat nur noch die beiden Spalten \sqlil{id} und \sqlil{name}.%
+%
+\end{itemize}%
+}%
+\gitExecSQLraw{}{}{normalization/1nf/fixed_multivalued/generated_sql}{01_fixed_database_2001.sql}{}{}{}%
+%
+\gitExecSQLraw{}{}{normalization/1nf/fixed_multivalued/generated_sql}{03_public_address_table_5071.sql}{fixed}{}{}%
+%
+\gitLoadAndExecSQL{1nf:fixed_multivalued:04_public_student_table_5079}{}{normalization/1nf/fixed_multivalued/generated_sql}{04_public_student_table_5079.sql}{fixed}{}{}%
+%
+\listingSQLandOutput{}{1nf:fixed_multivalued:04_public_student_table_5079}{}{0.47}{0.2}{0.529}{0.87}
+%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle student\_address}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Die Tabelle \sqlil{student_address} verbindet die Studenten-Datensätze mit den Address-Datensätzen.%
+%
+\item<2-> Durch den zusammengesetzten Primärschlüssel stellen wir sicher, dass jeder Student mit jeder Address höchstens einmal verbunden sein kann und umgekehrt.%
+%
+\item<3-> Das ist so, weil \sqlil{PRIMARY KEY}-Einschränkungen \sqlil{UNIQUE} implizieren.
+%
+\item<4-> Wir lassen hier die Skripte für die \sqlil{REFERENCES}-Einschränkungen aus Platzgründen weg.%
+%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{1nf:fixed_multivalued:05_public_student_address_table_5083}{}{normalization/1nf/fixed_multivalued/generated_sql}{05_public_student_address_table_5083.sql}{fixed}{}{}%
+\listingSQLandOutput{}{1nf:fixed_multivalued:05_public_student_address_table_5083}{}{0.47}{0.2}{0.529}{0.87}
+%
+\gitExecSQLraw{}{}{normalization/1nf/fixed_multivalued/generated_sql}{06_public_student_address_student_fk_constraint_5087.sql}{fixed}{}{}%
+%
+\gitExecSQLraw{}{}{normalization/1nf/fixed_multivalued/generated_sql}{07_public_student_address_address_fk_constraint_5088.sql}{fixed}{}{}%
+%
+\end{frame}%
+%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten Einfügen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-6>{%
+\item Fügen wir nun Daten in unsere normalisierten Tabellen ein.%
+}%
+%
+\only<-6>{%
+\item<2-> Wir benutzen die selben Daten wie vorhin.%
+}%
+%
+\only<-7>{%
+\item<3-> Wir erstellen zuerst die Adress-Datensätze.%
+}%
+%
+\only<-9>{%
+\item<4-> Dann erstellen wir die Studenten-Datensätze.%
+}%
+%
+\only<-9>{%
+\item<5-> Dann fügen wir die Beziehungen zwischen den Studenten- und den Adress-Datensätzen in die Tabelle \sqlil{student_address} ein.%
+}%
+%
+\item<6-> Beachten Sie, dass dieser Schritt jetzt notwendig ist.%
+%
+\item<7-> Als unsere Tabellen nicht in der \glsShort{1NF} waren, konnten wir von den Studenten-Datensätzen aus direkt auf die Adress-Datensätze verweisen.%
+%
+\item<8-> Jetzt müssen wir den Extra-Schritt über eine neue Tabelle gehen.%
+%
+\item<9-> Das sind die Kosten der \glsShort{1NF}.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{1nf:fixed_multivalued:insert}{}{normalization/1nf/fixed_multivalued}{insert.sql}{fixed}{}{}%
+\listingSQLandOutput{}{1nf:fixed_multivalued:insert}{}{0.47}{0.2}{0.529}{0.87}
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Daten auslesen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Die Studenten mit einer Adresse in China zu finden ist nun einfacher.%
+%
+\item<2-> Wir brauchen kein \sqlilIdx{UNION}-Statement mehr.%
+%
+\item<3-> Wir haben die Student-Addresse-Beziehung ja schon in perfekter Tabellenform.%
+%
+\item<4-> Mit nur zwei \sqlilIdx{INNER JOIN}s bauen wir alle Daten zusammen.%
+%
+\item<5-> Die Befehle \sqlilIdx{ILIKE}, \sqlilIdx{ANY}, \sqlilIdx{ARRAY} und \sqlilIdx{DISTINCT ON} können wir unverändert wiederverwenden.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{1nf:fixed_multivalued:select}{}{normalization/1nf/fixed_multivalued}{select.sql}{fixed}{}{}%
+%
+\listingSQLandOutput{}{1nf:fixed_multivalued:select}{}{0.47}{0.25}{0.529}{0.7}
+%
+\gitExecSQLraw{}{}{normalization/1nf/fixed_multivalued}{cleanup.sql}{}{}{}
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+\only<-9>{%
+\item Wenn unsere Daten der \glsShort{1NF} gehorchen, dann bedeutet das, das wir das relationale Datenmodell konsistent auf der logischen Ebene umgesetzt haben.%
+}%
+%
+\item<2-> Oftmals produzieren wir sowieso Modelle, der der \glsShort{1NF} gehorchen, wenn wir das konzeptuelle in das logische Modell übersetzen.%
+%
+\item<3-> So haben wir das ja gelernt.%
+%
+\item<4-> Wenn aber das konzeptuelle Modell nicht zur \glsShort{1NF} passt, dann kann es sein, dass wir wiederholende Gruppen von Attributen bekommen, oder ein Attribut, das eigentlich aus zwei Attributen bestehen sollte.%
+%
+\item<5-> Das kann passieren.%
+%
+\item<6-> Wir haben ja oft gesagt, dass das konzeptuelle Schema technologieunabhängig sein soll.%
+%
+\item<7-> Dann können wir uns nicht beschweren, wenn es nicht zum relationalen Datenmodell passt.%
+%
+\item<8-> Deshalb muss man immer vorsichtig sein während dem Design des logischen Modells.%
+%
+\item<9-> Wenn wir wirklich ein logisches Modell bekommen, das vom konzeptuellen Modell abweicht, um Normalisierung zu erreichen {\dots} dann sollten wir nochmal zurückgehen, und auch das konzeptuelle Modell entsprechend anpassen.%
+%
+\item<10-> Wir wollen ja nicht am Ende verschiedene Designdokumente haben, die sich gegenseitig widersprechen.%
+\end{itemize}%
+\end{frame}%
+%%
+%%
+\endPresentation%
+\end{document}%%
+\endinput%
+%

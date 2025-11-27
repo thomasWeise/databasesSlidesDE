@@ -205,7 +205,7 @@ The \href{https://pgmodeler.io}{\pgmodeler\ logo} is under the copyright of Raph
 %
 \only<-33>{%
 \item<32-> Insgesamt haben wir also geschrieben \bashil{pacman -S mingw64/mingw64-w64-x86_64-pgmodeler}.%
-\item<33-> Wir rücken~\keys{\return}.%
+\item<33-> Wir drücken~\keys{\return}.%
 }%
 %
 \only<-35>{%
@@ -232,23 +232,63 @@ The \href{https://pgmodeler.io}{\pgmodeler\ logo} is under the copyright of Raph
 }%
 %
 \only<-43>{%
-\item<42-> Ich verwende \pgmodeler\ im \inQuotes{Light Mode}.%
-\item<43-> Um den zu aktivieren, klicken wir auf \menu{\pgmodelerMainMenu>Edit>Settings}.%
+\item<42-> Vielleicht läuft er aber auch nicht.%
+\item<43-> Dann müssen wir nochmal in das \pgls{MSYS2} \glslink{terminal}{Terminal} gehen.%
 }%
 %
-\only<44>{%
-\item<44-> Im Menü \menu{Appearance} ändern wir das \inQuotes{Theme} zu \menu{Light}{\dots}%
+\only<-44>{
+\item<44-> Wir schreiben \bashil{nano ~/.bashrc} und drücken \keys{\return}.%
 }%
 %
-\only<45>{%
+\only<-46>{
+\item<45-> Der Texteditor \bashil{nano} öffnet sich.%
+\item<46-> Wir drücken \keys{\ctrl+End}, um bis zum Ende des Textes zu scrollen.%
+}%
+%
+\only<-47>{%
+\item<47-> Wir sind am Ende des Textes angekommen.%
+}%
+%
+\only<-48>{%
+\item<48-> Wir schreiben \textil{export PATH=\$PATH:/mingw64/bin}.%
+}%
+%
+\only<-50>{%
+\item<49-> Wir drücken \keys{\ctrl+O}, um die Datei zu speichern.%
+\item<50-> Wenn wir gefragt werden, ob wir den Text speichern wollen, drücken wir \keys{\enter}.%
+}%
+%
+\only<-52>{%
+\item<51-> Nachdem wir \keys{\enter} gedrückt haben, wird der Text in die Datei geschrieben.%
+\item<52-> Wir drücken nun \keys{\ctrl+X} um den Editor zu verlassen.%
+}%
+%
+\only<-54>{%
+\item<53-> Wir sind wieder im \pgls{MSYS2} Terminal.%
+}%
+\only<-55>{%
+\item<54-> Wir schließen das Terminal und öffnen es erneut.%
+\item<55-> Danach können wir den \pgmodeler\ ausführen.%
+}%
+%
+\only<-47>{%
+\item<56-> Ich verwende \pgmodeler\ im \inQuotes{Light Mode}.%
+\item<57-> Um den zu aktivieren, klicken wir auf \menu{\pgmodelerMainMenu>Edit>Settings}.%
+}%
+%
+\only<58>{%
+\item<58-> Im Menü \menu{Appearance} ändern wir das \inQuotes{Theme} zu \menu{Light}{\dots}%
+}%
+%
+\only<59>{%
 \item Wir klicken auf \menu{Apply}.%
 }%
 %
-\only<46>{%
-\item<16-> Im Register \menu{Relationships} stellen wir sicher, dass der \inQuotes{connection mode} auf \inQuotes{Crow's foot notation} gesetzt ist.%
+\only<60>{%
+\item<60-> Im Register \menu{Relationships} stellen wir sicher, dass der \inQuotes{connection mode} auf \inQuotes{Crow's foot notation} gesetzt ist.%
 }%
 %
-\item<47-> Damit haben wir den \pgmodeler\ installiert.%
+\item<61-> Damit haben wir den \pgmodeler\ installiert.%
 %
 \end{itemize}%
 %
@@ -267,7 +307,7 @@ The \href{https://pgmodeler.io}{\pgmodeler\ logo} is under the copyright of Raph
 \locateGraphicTB{26-28}{width=0.55\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows13pgmodelerPackages}{0.225}{0.29}%
 \locateGraphicTB{29-30}{width=0.55\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows14copyMingwPgmodeler}{0.225}{0.29}%
 \locateGraphicTB{31}{width=0.55\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows15pasteMingwPgmodeler}{0.225}{0.29}%
-\locateGraphicTB{32-33}{width=0.55\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows16installCommand}{0.225}{0.29}%
+\locateGraphicTB{32-33}{width=0.55\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows16installCommand}{0.35}{0.3}%
 \locateGraphicTB{34}{width=0.55\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows17installYesNo}{0.225}{0.29}%
 \locateGraphicTB{35}{width=0.55\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows18installYes}{0.225}{0.29}%
 \locateGraphicTB{36}{width=0.55\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows19download}{0.225}{0.29}%
@@ -276,10 +316,95 @@ The \href{https://pgmodeler.io}{\pgmodeler\ logo} is under the copyright of Raph
 \locateGraphicTB{40}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows22pgmodelerLogo}{0.18}{0.27}%
 \locateGraphicTB{41}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows23pgmodelerMain}{0.18}{0.27}%
 %
-\locateGraphicTB{42-43}{width=0.55\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu09openSettings}{0.225}{0.33}%
-\locateGraphicTB{44}{width=0.48\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu10themeLight}{0.26}{0.25}%
-\locateGraphicTB{45}{width=0.48\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu11themeLightSet}{0.26}{0.25}%
-\locateGraphicTB{46}{width=0.48\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu12connectionMode}{0.26}{0.25}%
+\locateGraphicTB{42-43}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows24msys2terminal}{0.18}{0.27}%
+\locateGraphicTB{44}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows25nanoBashRc}{0.18}{0.27}%
+\locateGraphicTB{45-46}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows26nanoBashRcOpen}{0.18}{0.27}%
+\locateGraphicTB{47}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows27nanoCtrlEnd}{0.18}{0.27}%
+\locateGraphicTB{48}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows28nanoExportPath}{0.18}{0.27}%
+\locateGraphicTB{49-50}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows29nanoCtrlO}{0.18}{0.27}%
+\locateGraphicTB{51-52}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows30enter}{0.18}{0.27}%
+\locateGraphicTB{53-55}{width=0.64\paperwidth}{graphics/installingPgModelerWindows/installingPgModelerWindows31CtrlX}{0.18}{0.27}%
+%
+\locateGraphicTB{56-57}{width=0.55\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu09openSettings}{0.225}{0.33}%
+\locateGraphicTB{58}{width=0.48\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu10themeLight}{0.26}{0.25}%
+\locateGraphicTB{59}{width=0.48\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu11themeLightSet}{0.26}{0.25}%
+\locateGraphicTB{60-}{width=0.48\paperwidth}{graphics/installingPgModelerUbuntu/installingPgmodelerUbuntu12connectionMode}{0.26}{0.25}%
+\end{frame}%
+%
+\section{PgModeler unter MacOS Installieren}%
+%
+\begin{frame}[t]%
+\frametitle{PgModeler unter MacOS Installieren}%
+\begin{itemize}%
+%
+\item Den \pgmodeler\ unter \pgls{macOS} zu installieren funktioniert so ähnlich wie unter \microsoftWindows.%
+%
+\item<2-> Weil ich keinen Apple-Computer habe, gibt es diesmal keine Screenshots.%
+%
+\item<3-> Sie gehen wie folgt vor\only<-3>{.}\uncover<4->{:%
+%
+\begin{enumerate}%
+%
+\setcounter{enumi}{0}%
+\item Gehen sie zu \url{https://www.macports.org} und dann zum Register \emph{\inQuotes{Installing \pgls{macPorts}}} -- oder direkt zu
+\url{https://www.macports.org/install.php}.%
+%
+\setcounter{enumi}{1}%
+\item<5-> Laden Sie die passende \pgls{macPorts}-Version für Ihre Version von \pgls{macOS} herunter\cite{RRJ2008MFUG}.\uncover<6->{ %
+Wenn Sie \DEzB\ \inQuotes{\pgls{macOS} Ventura} haben, dann laden Sie den Installer für \inQuotes{\pgls{macOS} Ventura} herunter.}%
+%
+\setcounter{enumi}{2}%
+\item<7-> Installieren Sie der heruntergeladene Version von \pgls{macPorts}.%
+%
+\setcounter{enumi}{3}%
+\item<8-> Updaten Sie die Paketliste des \pgls{macPorts}-Systems\only<-8,14->{.}\only<9-13>{:%
+\begin{enumerate}%
+%
+\item Öffnen Sie ein neues Terminal.%
+%
+\item<10-> Schreiben Sie \bashil{sudo port -v selfupdate} und drücken Sie~\keys{\enter}.\uncover<11->{ %
+Sie werden nach Ihrem (\pgls{sudo}) Passwort gefragt, also Ihrem Passwort für Ihren Computer.\uncover<12->{ %
+Geben Sie es ein und drücken~\keys{\return}.%
+}}%
+%
+\item<13-> Nachdem das Update fertig ist, schließen Sie das Terminal.%
+\end{enumerate}%
+}%
+%
+\setcounter{enumi}{4}%
+\item<14-> Wir brauchen auch \pgls{xcode}.\only<15-17>{ %
+Wenn Sie es also noch nicht installiert haben, installieren Sie es jetzt\dots%
+\begin{enumerate}%
+\item Öffnen Sie ein \emph{neues} Terminal.%
+%
+\item<16-> Schreiben Sie \bashil{xcode-select --install} und drücken Sie~\keys{\enter}.\uncover<17->{ %
+Wenn Sie Ihr Passwort angeben müssen, dann tun Sie das.}%
+%
+\item<17-> Nachdem die Installation fertig ist, schließen Sie das Terminal.%
+\end{enumerate}%
+}%
+%
+\setcounter{enumi}{5}%
+\item<18-> Jetzt können wir den \pgmodeler\ installieren\only<-18,23->{.}\only<19-22>{:%
+\begin{enumerate}%
+\item Öffnen Sie ein neues Terminal.%
+%
+\item<19-> Schreiben Sie \bashil{sudo port install pgmodeler} und drücken Sie~\keys{\enter}.\uncover<20->{ %
+Sie werden nach Ihrem (\pgls{sudo}) Passwort gefragt, also Ihrem Passwort für Ihren Computer.\uncover<21->{ %
+Geben Sie es ein und drücken~\keys{\return}.%
+}}%
+%
+\item<22-> Nachdem die Installation fertig ist, schlißen Sie das Terminal.%
+\end{enumerate}}%
+%
+\setcounter{enumi}{6}%
+\item<23-> Öffnen Sie ein neues Terminal.%
+%
+\setcounter{enumi}{7}%
+\item<24-> Sie sollten nun den \pgmodeler\ mit dem Kommando \bashil{pgmodeler} + \keys{\enter} ausführen können.%
+%
+\end{enumerate}}%
+\end{itemize}%
 \end{frame}%
 %
 \section{Zusammenfassung}%

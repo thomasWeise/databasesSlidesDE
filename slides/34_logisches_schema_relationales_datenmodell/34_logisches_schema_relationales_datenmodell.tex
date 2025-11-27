@@ -62,11 +62,13 @@ Eine \emph{Relation}~$R$ ist eine Menge von $n$\nobreakdashes-Tupeln $R\subseteq
 %
 \uncover<5->{%
 \begin{itemize}%
-\item Die Definition eines Relationsschemas im relationalen Modell ist daher in etwa Äquivalent zur Definition eines Entitätstypes im Entitätsmodell.%
+\only<-6>{%
+\item Die Definition eines Relationsschemas im relationalen Modell ist daher in etwa Äquivalent zur Definition eines Entitätstyps im konzeptuellen Modell.%
+}%
 %
 \item<6-> Wenn wir unser konzeptuelles Modell in ein logisches, relationales Modell übersetzen, dann wird ein Entitätstyp zu einem Relationsschema.%
 %
-\item<7.> Der Unterschied zum konzeptuellen Modell ist, dass wir Relationen sowohl für Entitäten als auch Beziehungen benutzen.%
+\item<7-> Der Unterschied zum konzeptuellen Modell ist, dass wir Relationen sowohl für Entitäten als auch Beziehungen benutzen.%
 \end{itemize}%
 }}}%
 \end{frame}%
@@ -221,7 +223,7 @@ Eine Menge von Attributen~$K\subseteq\relSchemab{R}$ gegeben als~$K=\{k_i:i\in\i
 Eine Menge von Attributen~$F$ im Schema~\relSchemab{R_1} der Relation~$R_1$ wird Fremdschlüssel~\inEN{foreign key} genannt, wenn%
 \begin{enumerate}%
 \item die Attribute von~$F$ die selben Domänen wie die Attribute des Primärschlüssels~$P$ einer anderen Relation~$R_2$ haben \alert{und}%
-\item jeder Wert~$F$ in einem Tupel~$r_1\in R_1$ entweder als Wert von $P$ für ein Tupel~$r_2\in R_2$ auftaucht oder \sqlilIdx{NULL}~ist.%
+\item jeder Wert von~$F$ in einem Tupel~$r_1\in R_1$ entweder als Wert von $P$ für ein Tupel~$r_2\in R_2$ auftaucht oder \sqlilIdx{NULL}~ist.%
 \end{enumerate}%
 \end{definition*}%
 %
@@ -237,7 +239,7 @@ Eine Menge von Attributen~$F$ im Schema~\relSchemab{R_1} der Relation~$R_1$ wird
 \begin{frame}%
 \frametitle{Relationale Datenbankmanagementsysteme}%
 \begin{itemize}%
-\item In den 1980ern gab es viele Anbieter von \glsShort{dbms}en, die die Definition des relationalen Datenmodelss von \citeauthor{C1985IYDRR} nicht richtig implementiert hatten.%
+\item In den 1980ern gab es viele Anbieter von \glsShort{dbms}en, die die Definition des relationalen Datenmodells von \citeauthor{C1985IYDRR} nicht richtig implementiert hatten.%
 %
 \item<2-> Diese hatten oft Mechaniken eingebaut, mit denen die relationalen Eigenschaften umgehen werden konnten.%
 %
@@ -306,7 +308,7 @@ Eine Menge von Attributen~$F$ im Schema~\relSchemab{R_1} der Relation~$R_1$ wird
 \setcounter{enumi}{4}%
 \item<21-> Ein relationales System muss mindestens eine Sprache unterstützen, deren Statements mit einer wohldefinierten Syntax als Text ausgedrückt werden können\only<-21,30->{.}\only<22-29>{, und die die folgenden Elemente unterstützt:%
 \begin{itemize}%
-\item Daten definieren~(\DEzB\ erstellen von Tabellen),%
+\item Daten definieren~(\DEzB\ Erstellen von Tabellen),%
 \item<23-> Sichten definieren,%
 \item<24-> Daten manipulieren~(\DEzB\ hinzufügen und löschen von Daten),%
 \item<25-> Einschränkungen definieren, um Datenintegrität sicherzustellen~(\DEzB~Grenzen für Wertebereiche, Fremdschlüssen, \dots),%
@@ -315,7 +317,7 @@ Eine Menge von Attributen~$F$ im Schema~\relSchemab{R_1} der Relation~$R_1$ wird
 \end{itemize}%
 %
 \uncover<28->{%
-Im falle unseres Kurses ist die Sprache \glsShort{SQL}.\uncover<29->{ %
+Im Falle unseres Kurses ist die Sprache \glsShort{SQL}.\uncover<29->{ %
 Natürlich könnte man sich aber auch eine andere Sprache ausdenken.}}%
 }}%
 %
@@ -334,7 +336,7 @@ Die Operationen gelten also nicht nur für einzelne Datensätze~(Zeilen), sonder
 \only<-46>{%
 \setcounter{enumi}{7}%
 \item<33-> Anwendungsprogramme und Terminalaktivitäten bleiben logisch unberührt von allen Veränderungen, die auf die physische Speicher- oder Zugrifssmethode angewendet werden.\only<34>{ %
-Die Art wie ein \glsShort{dbms} Daten speichert hat keinen Anfluss darauf, wie Anwendungen auf die Daten mit Hilfe der text-basierten Sprache zugreifen.%
+Die Art wie ein \glsShort{dbms} Daten speichert hat keinen Einfluss darauf, wie Anwendungen auf die Daten mit Hilfe der text-basierten Sprache zugreifen.%
 }}%
 %
 \setcounter{enumi}{8}%
@@ -369,7 +371,7 @@ Ein \glsShort{dbms} muss mindestens eine relationale Sprache unerstützen, aber 
 %
 \end{enumerate}%
 %
-\uncover<49->{%
+\uncover<50->{%
 Diese Regeln werden zum größten Teil von modernen \glsShort{dbms}en implementiert.\uncover<50>{\\%
 Aus ihnen können wir auch bereits die Features lernen, die solche \glsShort{dbms}e unterstützen.%
 }}%
@@ -386,7 +388,7 @@ Aus ihnen können wir auch bereits die Features lernen, die solche \glsShort{dbm
 %
 \item<3-> Wir können diese Definitionen mit den Definitionen, die wir auf der konzeptuellen Ebene diskutiert haben, gut in Einklang bringen.%
 %
-\item<4-> Wir kennen auch die grundlegenden anforderungen an relationale \glsShort{dbms}e.%
+\item<4-> Wir kennen auch die grundlegenden Anforderungen an relationale \glsShort{dbms}e.%
 %
 \item<5-> Wenn wir das mit dem, was wir am Beispiel der Fabrikdatenbank gelernt haben, kombinieren, dann haben wir schon ein recht klares Verständnis davon, was ein relationales \glsShort{dbms} wie \postgresql\ uns bietet.%
 %
