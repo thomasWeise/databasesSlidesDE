@@ -1,0 +1,710 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{43.~Logisches Schema:~3.~Normalform}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\only<-5,8->{%
+\begin{itemize}%
+\only<-4>{%
+\item Die 3.~Normalform~\inEN{third normal form}~(\glsShort{3NF}) behandelt die Beziehungen zwischen nicht-Schlüssel-Attributen\cite{C1971FNOTDBRM,C1971NDBSABT,K1983ASGTFNFIRDT,D2003AITDS,EN2015FODS}.%
+%
+\item<2-> Die \glsShort{3NF} ist verletzt, wenn ein nicht-Schlüssel-Attribut einen Fakt über ein anderes nicht-Schlüssel-Attribut darstellt\cite{K1983ASGTFNFIRDT}.%
+}%
+%
+\item<3-> Eine Relation~$R$ ist in der \glsShort{3NF}, wenn kein nicht-Schlüssel-Attribut \emph{transitiv} von einem Schlüssel-Attribut abhängt.%
+\end{itemize}
+}%
+%
+\uncover<4->{%
+\only<-7>{%
+\begin{definition*}[Transitive Functionale Abhängigkeit]%
+\label{def:transitiveDependency}%
+$A$, $B$, und~$C$ seien drei verschiede Attribute~(oder Mengen von Attributen) der Realtion~$R$, also gelten $A\subseteq\relSchemab{R}$, $B\subseteq\relSchemab{R}$ und~$C\subseteq\relSchemab{R}$. %
+Die funktionale Abhängigkeit $\funcDepb{A}{C}$ ist eine \emph{transitive Abhängigkeit} dann und nur dann wenn \funcDepb{A}{B} und \funcDepb{B}{C} beide wahr sind, aber \funcDepb{B}{A} \emph{nicht} wahr ist.%
+\end{definition*}%
+}%
+%
+\uncover<5->{%
+\only<-6>{%
+\begin{itemize}%
+\item Formal kann die \glsShort{3NF} so definiert werden\cite{SS2005EIDDDFDB:SDWSD2}:%
+\end{itemize}%
+}%
+%
+\uncover<6->{%
+\begin{definition*}[3.~Normalform]%
+\label{def:3nf}%
+Eine Relation~$R$ ist in der \glsShort{3NF} wenn sie in der \glsShort{2NF} ist und jedes Attribute~$a\in\relSchemab{R}$ das transitiv von einem Schlüssel~$X\subseteq\relSchemab{R}$ abhängt -- für das also $\funcDepb{X}{\funcDepb{Y}{a}}$ mit~$Y\subseteq\relSchemab{R}$ gilt -- ist es wahr, das entweder $Y$ einen Schlüssel beinhaltet, $a$~Teil des Primärschlüssels ist, oder~$a\in X$.%
+\end{definition*}%
+%
+\uncover<7->{%
+\begin{itemize}%
+\item Eine Tabelle ist in der \glsShort{3NF}, wenn sie in der \glsShort{2NF} ist und alle Attribute, die nicht Teil eines Schlüsselkandidats sind, direkt vom Primärschlüssel abhängen.%
+%
+\item<8-> Jedes nicht-Primärschlüssel-Attribut ist nicht transitiv von jedem Schlüsselkandidat der Tabelle äbhängig.%
+%
+\end{itemize}}}}}%
+\end{frame}%
+%
+\section{Beispiel}%
+%
+\begin{frame}%
+\frametitle{Beispiel}%
+%
+\begin{itemize}%
+\only<-10>{%
+\item OK, diese Definition ist wieder auf den ersten Blick nicht so klar.%
+}%
+%
+\only<-11>{%
+\item<2-> Schauen wir sie uns mit einem Beispiel an.%
+}%
+%
+\only<-12>{%
+\item<3-> Stellen Sie sich vor, dass wir gerade am Design unserer Lehre-Management-Platform arbeiten.%
+}%
+%
+\only<-13>{%
+\item<4-> Ein Kollege schlägt vor, dass es eine gute Idee wäre, auch die Kontaktinformation der Elten der Studenten zu speichern.%
+}%
+%
+\only<-14>{%
+\item<5-> Es kann ja durchaus Situationen geben, wo man diese Informationen gerne hätte.%
+}%
+%
+\only<-15>{%
+\item<6-> Vielleicht hat ja ein Student einen Unfall.%
+}%
+%
+\only<-16>{%
+\item<7-> Vielleicht kommt ein Student nicht mehr zu Vorlesungen und kann nirgendwo gefunden werden.%
+}%
+%
+\only<-17>{%
+\item<8-> Dann würde man gerne die Eltern anrufen können.%
+}%
+%
+\item<9-> Stellen Sie sich vor, wir speichern die folgenden Informationen für jeden Studenten in unserer Datenbank\only<-9>{.}\uncover<10->{:%
+\begin{itemize}%
+\item die von der Uni zugewiesene Studenten-ID \sqlil{student_id}\only<-10>{.}\uncover<11->{,}%
+\item<11-> den Name \sqlil{student_name}\only<-11>{.}\uncover<12->{,}%
+\item<12-> den Name \sqlil{parent_name} eines der Elternteile\only<-12>{.}\uncover<13->{ und}%
+\item<13-> die Mobiltelefonnummer \sqlil{parent_mobile} dieses Elternteils.%
+\end{itemize}}%
+%
+\item<14-> Wir erkennen sofort folgende funktionalen Abhängigkeiten\only<-14>{.}\uncover<15->{:%
+%
+\begin{itemize}%
+\item \funcDepb{\sqlil{student_id}}{\sqlil{student_name}}\only<-15>{.}\uncover<16->{,}%
+\item<16-> \funcDepb{\sqlil{student_id}}{\sqlil{parent_name}}\only<-16>{.}\uncover<17->{,}%
+\item<17-> \funcDepb{\sqlil{student_id}}{\sqlil{parent_mobile}}\only<-17>{.}\uncover<18->{ und}%
+\item<18-> \funcDepb{\sqlil{parent_mobile}}{\sqlil{parent_name}}.%
+\end{itemize}%
+}%
+%
+\item<19-> Wie gehen wir damit um?%
+\end{itemize}%
+\end{frame}%
+%
+\section{Verletzung der 3.~Normalform}%
+%
+\begin{frame}%
+\frametitle{Verletzung der 3.~Normalform}%
+\parbox{0.69\paperwidth}{%
+\begin{itemize}%
+%
+\only<-10>{%
+\item Unser erster Ansatz ist, alle Daten in eine Tabelle zu tun.%
+}%
+%
+\only<-11>{%
+\item<2-> Die Tabelle \sqlil{student} speichert alle Informationen über die Studenten und ihre Eltern.%
+}%
+%
+\only<-12>{%
+\item<3-> Die Tabelle hat vier Spalten.%
+}%
+%
+\only<-13>{%
+\item<4-> Die erste speichert die Studenten-ID als Primärschlüssel.%
+}%
+%
+\only<-13>{%
+\item<5-> Die zweite speichert den Namen des Studenten.%
+}%
+%
+\only<-13>{%
+\item<6-> Dieser ist kein Schlüssel und auch nicht zwingend einzigartig.%
+}%
+%
+\only<-14>{%
+\item<7-> Dann speichern wir noch den name der Eltern und deren Mobiltelefonnummer.%
+}%
+%
+\only<-15>{%
+\item<8-> Somit haben wir also die Notfallkontaktinformation.%
+}%
+%
+\only<-16>{%
+\item<9-> Diese Tabelle ist in der \glsShort{1NF}, weil es weder zusammengesetzte Attribute noch wiederholte Gruppen gibt.%
+}%
+%
+\only<-17>{%
+\item<10-> Sie ist auch in der \glsShort{2NF}, weil es keinen zusammengesetzten Schlüssel gibt.%
+}%
+%
+\only<-18>{%
+\item<11-> Sie verletzt aber die \glsShort{3NF}.%
+}%
+%
+\only<-19>{%
+\item<12-> Das Attribut \sqlil{parent_name} ist funktional vom Attribut \sqlil{parent_mobile} abhängig.%
+}%
+%
+\only<-21>{%
+\item<13-> Das schreiben wir als \funcDepb{\sqlil{parent_mobile}}{\sqlil{parent_name}}.%
+}%
+%
+\only<-22>{%
+\item<14-> Eine Mobiltelefonnummer gehört zu einer einzelnen Person, deshalb kann es niemals mehr als einen Namen zu einer Mobiltelefonnummer geben.%
+}%
+%
+\item<15-> Die Mobiltelefonnummer des Elternteils hängt funktional vom  Primärschlüssel \sqlil{student_id} ab.%
+%
+\item<16-> Das kann als \funcDepb{\sqlil{student_id}}{\sqlil{parent_mobile}} geschrieben werden.%
+%
+\item<17-> Die Kette \funcDepb{\sqlil{student_id}}{\funcDepb{\sqlil{parent_mobile}}{\sqlil{parent_name}}} existiert.%
+%
+\item<18-> Es gilt natürlich nicht das \funcDepb{\sqlil{parent_mobile}}{\sqlil{student_id}}.%
+%
+\item<19-> Ein Elternteil könnte ja mehrere Kinder haben, die an unserer Uni studieren.%
+%
+\item<20-> Daher ist die Beziehung \funcDepb{\sqlil{student_id}}{\sqlil{parent_name}} transitiv.%
+%
+\item<21-> Und weil sie in Tabelle \sqlil{student} auftaucht, verletzt das die \glsShort{3NF}.%
+%
+\item<22-> Erforschen wir mal, welche Konsequenzen das hat.%
+%
+\end{itemize}}%
+\locateGraphic{}{width=0.3\paperwidth}{graphics/studentViolation3nf}{0.71}{0.3}%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle student}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-4>{%
+\item Hier ist das auto-generierte Skript zum Erstellen der Tabelle \sqlil{student}.%
+}%
+%
+\only<-5>{%
+\item<2-> Der Primärschlüssel \sqlil{student_id} ist eine Zeichenkette, die immer die Länge~11 hat, also ein \sqlil{CHARACTER(11)}, weil die Studenten-IDs in unserer Uni nun mal so sind.%
+}%
+%
+\item<3-> Die Namen der Studenten, gespeichert als \sqlil{student_name}, sind variabel-lange Zeichenketten mit maximal 100~Zeichen, also vom Typ \sqlil{VARCHAR(100)}.%
+%
+\item<4-> Das selbe gilt für die Namen \sqlil{parent_name} der Eltern.%
+%
+\item<5-> Die Mobiltelefonnummer der Eltern, \sqlil{parent_mobile}, wird wieder als Zeichenkette der festen Länge~11 gespeichert.%
+%
+\item<6-> Keine der vier Spalten ist optional, daher sind sie alle mit \sqlilIdx{NOT NULL} markiert.%
+%
+\end{itemize}%
+}%
+%
+\gitExecSQLraw{}{}{normalization/3nf/student/violation/generated_sql}{01_violation_database_2002.sql}{}{}{}%
+%
+\gitLoadAndExecSQL{3nf:student:violation:03_public_student_table_5103}{}{normalization/3nf/student/violation/generated_sql}{03_public_student_table_5103.sql}{violation}{}{}%
+%%
+\listingSQLandOutput{}{3nf:student:violation:03_public_student_table_5103}{}{0.47}{0.2}{0.529}{0.87}
+%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Daten Einfügen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Füllen wir die Tabelle \sqlil{student} mit Daten!%
+}%
+%
+\only<-6>{%
+\item<2-> Wir speichern vier Studentendatensätze.%
+}%
+%
+\only<-7>{%
+\item<3-> Es gibt die vier Studenten Herr Bibbo, Herr Bebbo, Herr Bibboto und Frau Bibboba.%
+}%
+%
+\item<4-> Ihre IDs sind unwichtig.%
+%
+\item<5-> Was wichtig ist, ist das Herr Bibbo, Herr Bibboto und Frau Bibboba Geschwister sind!%
+%
+\item<6-> Ihr stolzer Vater ist Herr B{\"o}dd{\"o}.%
+%
+\item<7-> Nun sind wir aber eben in China und der Sekretär, der die Daten eingeben sollte, wusste nicht, wie er den Buchstabe~\keys{\"o} eingeben kann.%
+%
+\item<8-> Deshalb hat er sich entschlossen, den Vater der drei Studenten kruzerhand \inQuotes{Herr Boddo} zu nennen.%
+%%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{3nf:student:violation:insert}{}{normalization/3nf/student/violation}{insert.sql}{violation}{}{}%
+%
+\listingSQLandOutput{}{3nf:student:violation:insert}{}{0.47}{0.2}{0.529}{0.87}
+%
+\end{frame}%
+%
+\begin{frame}[t]%
+\frametitle{Daten Ändern}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Ein paar Tage später hat er dann herausgefunden, wie man ein~\keys{\"o} eingibt.%
+}%
+%
+\only<-6>{%
+\item<2-> Er hat einen deutschen Kollegen gebeten, ihm den Buchstaben über \glsShort{wechat} zu schicken, so dass er ihn copy-pasten kann.%
+}%
+%
+\only<-7>{%
+\item<3-> Um die Daten zu korrigieren, hat er das Skript rechts geschrieben.%
+}%
+%
+\only<-8>{%
+\item<4-> Es benutzt die Mobiltelefonnummer 555\decSep444\decSep666\decSep77 von Herrn B{\"o}dd{\"o} um ihn in der Tabelle zu finden.%
+}%
+%
+\only<-9>{%
+\item<5-> Das wird erstmal mit einer \sqlilIdx{SELECT}-Anfrage ausprobiert.%
+}%
+%
+\only<-10>{%
+\item<6-> Diese liefert wirklich die drei Student/Eltern-Paare zurück.%
+}%
+%
+\only<-11>{%
+\item<7-> Jetzt können wir also ein \sqlilIdx{UPDATE}-Kommando ausführen.%
+}%
+%
+\only<-12>{%
+\item<8-> Der \sqlil{parent_name} wird auf \sqlil{Böddö} gesetzt, und zwar für jeden DAtensatz mit \sqlil{parent_mobile =} \sqlil{'55544466677'}.%
+}%
+%
+\only<-13>{%
+\item<9-> Die geänderten Datensätze holen wir uns über das \sqlilIdx{RETURNING}-Statement.%
+}%
+%
+\only<-14>{%
+\item<10-> Wir sehen, dass die richtigen drei Zeilen geändert wurden.%
+}%
+%
+\only<-15>{%
+\item<11-> Um eine Information zu ändern, mussten wir drei Zeilen anfassen.%
+}%
+%
+\only<-16>{%
+\item<12-> Das ist ein klassisches Beispiel einer Update-Anomalie.%
+}%
+%
+\only<-17>{%
+\item<13-> Wenn wir die Datensätze von Herr Bibbo, Herr Bibboto und Frau Bibboba löschen würden, dann würden auch die Daten über ihren Vater verschwinden.%
+}%
+%
+\only<-18>{%
+\item<14-> Schlimmer: Wenn wir die Daten eines Elternteils aus der Datenbank löschen wöllten, dann würden wir automatisch alle Daten von dessen Studenten-Kindern mit löschen.%
+}%
+%
+\only<-19>{%
+\item<15-> Das wäre also eine Lösch-Anomalie.%
+}%
+%
+\only<-20>{%
+\item<16-> Andersherum können wir keine Daten eines Studenten eingeben, ohne auch die Daten von einem Elternteil einzugeben, und andersherum.%
+}%
+%
+\only<-21>{%
+\item<17-> Das ist eine Einfüge-Anomalie.%
+}%
+%
+\only<-22>{%
+\item<18-> Und natürlich haben wir wieder Redundanz.%
+}%
+%
+\only<-23>{%
+\item<19-> Die Daten von Herrn Böddö werden dreimal gespeichert.%
+}%
+%
+\only<-24>{%
+\item<20-> Diese Redundanz löst im Grunde die Update-Anomalie aus.%
+}%
+%
+\only<-25>{%
+\item<21-> Und sie zwingt uns dazu, die selbe Information mehrfach einzugeben.%
+}%
+%
+\item<22-> Dadurch steigt die Wahrscheinlichkeit von Fehlern und Inkonsistenzen.%
+%
+\item<23-> Es hätte ja sein können, dass die Daten der Studenten von verschiedenen Lehrern eingegeben werden.%
+%
+\item<24-> Vielleicht weiß ja ein Lehrer, wie man ein \keys{\"o} eingibt, und ein ander weiß es nicht und nimmt stattdessen \keys{o}.%
+%
+\item<25-> Und schon sind unsere Daten inkonsistent, denn wir hätten den selben Elternteil unter zwei verschiedenen Namen im System.%
+%%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{3nf:student:violation:update}{}{normalization/3nf/student/violation}{update.sql}{violation}{}{}%
+%
+\listingSQLandOutput{}{3nf:student:violation:update}{}{0.47}{0.2}{0.529}{0.87}%
+%
+\gitExecSQLraw{}{}{normalization/3nf/student/violation}{cleanup.sql}{}{}{}%
+%
+\end{frame}%
+%
+\section{Lösung: Wiederherstellung der 3.~Normalform}%
+%
+\begin{frame}[t]%
+\frametitle{Lösung}%
+\begin{itemize}%
+%
+\only<-7>{%
+\item Lösen wir das Problem.%
+}%
+%
+\only<-8>{%
+\item<2-> Wir müssen die Daten in die \glsShort{3NF} bringen.%
+}%
+%
+\only<-9>{%
+\item<3-> Dafür müssen wir die transitive funktionale Abhängigkeit \funcDepb{\sqlil{student_id}}{\funcDepb{\sqlil{parent_mobile}}{\sqlil{parent_name}}} weg bekommen.%
+}%
+%
+\only<-10>{%
+\item<4-> Diese Abhängikeit stört, weil \sqlil{parent_mobile} kein Schlüssel der Tabelle \sqlil{student} ist, aber \sqlil{parent_name} von \sqlil{parent_mobile} bestimmt wird.%
+}%
+%
+\only<-11>{%
+\item<5-> So lange diese drei Spalten in der selben Tabelle sind, bleibt die \glsShort{3NF} verletzt.%
+}%
+%
+\only<-12>{%
+\item<6-> Also müssen sie in unterschiedliche Tabellen.%
+}%
+%
+\only<-13>{%
+\item<7-> Hier zeichnen wir ein logisches Modell, dass die \glsShort{3NF} nicht mehr verletzt.%
+}%
+%
+\only<-14>{%
+\item<8-> Anders als in dem ursprünglichen Design benutzen wir zwei Tabellen.%
+}%
+%
+\only<-14>{%
+\item<9-> Der Name der Eltern hängt von deren Mobiltelefonnummer ab.%
+}%
+%
+\only<-14>{%
+\item<10-> Also ziehen wir diese Daten aus der Tabelle \sqlil{student} heraus unt tun sie in die neue Tabelle \sqlil{parent}.%
+}%
+%
+\only<-15>{%
+\item<11-> Als Primärschlüssel verwenden wir \sqlil{parent_mobile}.%
+}%
+%
+\only<-17>{%
+\item<12-> Dieser Wert ist einmalig und identifiziert einen Elternteil.%
+}%
+%
+\only<-18>{%
+\item<13-> Die zweite Spalte dieser Tabelle ist \sqlil{name} -- und die hängt natürlich vom Primärschlüssel ab.%
+}%
+%
+\only<-18>{%
+\item<14-> Die veränderte Tabelle \sqlil{student} benutzt nun das Attribut \sqlil{parent_mobile} als Fremdschlüssel.%
+}%
+%
+\only<-20>{%
+\item<15-> Dieser muss \sqlilIdx{NOT NULL} sein, was heist, dass es jede Zeile der Tabelle \sqlil{student} mit genau einer Zeile in der Tabelle \sqlil{parent} verbunden ist.%
+}%
+%
+\item<16-> Wir speichern den Name der Eltern nicht mehr in der Tabelle \sqlil{student}.%
+%
+\item<18-> Beide Tabellen sind in der \glsShort{1NF}, weil es weder zusammengesetzte Attribute noch wiederholte Gruppen gibt.%
+%
+\item<19-> Sie sind auch in der \glsShort{2NF}, weil es keinen zusammengesetzte Schlüssel gibt und daher kein Attribut von einer echten Teilmenge eines Schlüssels abhängen kann.%
+%
+\item<20-> Sie befolgen auch die \glsShort{3NF}, weil es keine transitiven funktionalen Abhängigkeiten mehr gibt.%
+%
+\end{itemize}%
+%
+\locateGraphic{}{width=0.3\paperwidth}{graphics/studentViolation3nf}{0.033333333}{0.62}%
+\locateGraphic{7-}{width=0.6\paperwidth}{graphics/studentFixed3nf}{0.366666667}{0.65}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle student}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier ist das auto-generierte Skript zum Erstellen der Tabelle \sqlil{student}.%
+%
+\item<2-> Diese Tabelle hat die drei Spalten \sqlil{student_id}, \sqlil{student_name} und \sqlil{parent_mobile} behalten.%
+%
+\item<3-> Die Spalte \sqlil{parent_name} gibt es jetzt nicht mehr.%
+%
+\item<4-> Der Primärschlüssel ist immer noch \sqlil{student_id}.%
+%
+\item<5-> Die Spalte \pythonil{parent_mobile} wird dann ein Fremdschlüssel auf die Tabelle mit den Eltern-Datensätzen.%
+%
+\end{itemize}%
+}%
+%
+\gitExecSQLraw{}{}{normalization/3nf/student/fixed/generated_sql}{01_fixed_database_2001.sql}{}{}{}
+%
+\gitLoadAndExecSQL{3nf:student:fixed:03_public_student_table_5071}{}{normalization/3nf/student/fixed/generated_sql}{03_public_student_table_5071.sql}{fixed}{}{}%
+%%
+\listingSQLandOutput{}{3nf:student:fixed:03_public_student_table_5071}{}{0.47}{0.2}{0.529}{0.87}
+%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle parent}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier ist das auto-generierte Skript zum Erstellen der Tabelle \sqlil{parent}.%
+%
+\item<2-> Diese Tabelle hat nur zwei Spalten.%
+%
+\item<3-> 1.~den Primärschlüssel \pythonil{parent_mobile} und 2.~den Name des Elternteils.%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{3nf:student:fixed:04_public_parent_table_5077}{}{normalization/3nf/student/fixed/generated_sql}{04_public_parent_table_5077.sql}{fixed}{}{}%
+%%
+\listingSQLandOutput{}{3nf:student:fixed:04_public_parent_table_5077}{}{0.47}{0.2}{0.529}{0.87}
+%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Fremdschlüssel-Einschränkung}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier ist das auto-generierte Skript zum Hinzufügen der Fremdschlüssel-Einschränkung zur Tabelle \sqlil{student}, die erzwingt, dass jede Zeile in Tabelle \sqlil{student} mit genau einer Zeile in Tabelle \sqlil{parent} verbunden ist.%
+%
+\item<2-> Dieser Schritt macht aus der Spalte \pythonil{parent_mobile} der Tabelle \sqlil{student} erst einen Fremdschlüssel.%
+%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{3nf:student:fixed:05_public_student_parent_mobile_fk_constraint_5081}{}{normalization/3nf/student/fixed/generated_sql}{05_public_student_parent_mobile_fk_constraint_5081.sql}{fixed}{}{}%
+%%
+\listingSQLandOutput{}{3nf:student:fixed:05_public_student_parent_mobile_fk_constraint_5081}{}{0.47}{0.2}{0.529}{0.87}
+%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten Einfügen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-4>{%
+\item Füllen wir also die Tabellen mit den selben Daten wie vorhin.%
+}%
+%
+\only<-5>{%
+\item<2-> Wir fangen damit an, dass wir die beiden Elterndatensätze in die Tabelle \sqlil{parent} eingeben.%
+}%
+%
+\only<-6>{%
+\item<3-> die Mobiltelefonnummern von Frau Balla, der Mutter von Herrn Bebbo, und von Herrn B{\"o}dd{\"o}, dem Vater der anderen drei Studenten, werden gespeichert.%
+}%
+%
+\only<-7>{%
+\item<4-> Wie letztes mal wusste der Sekretär nicht, wie man ein \keys{ö} schreibt, und nennt daher Herrn Böddö wieder erstmal Herr Boddo.%
+}%
+%
+\item<5-> Dann fügen wir die vier Studentendatensätze für Herrn Bibbo, Herrn Bebbo, Herrn Bibboto and Frau Bibboba ein.%
+%
+\item<6-> Hier geben wir nicht mehr die Namen ihrer Eltern an.%
+%
+\item<7-> Nur die Mobiltelefonnummern, die auf die entsprechenden Datensätze in Tabelle \sqlil{parent} verweisen, werden benötigt.%
+%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{3nf:student:fixed:insert}{}{normalization/3nf/student/fixed}{insert.sql}{fixed}{}{}%
+%%
+\listingSQLandOutput{}{3nf:student:fixed:insert}{}{0.47}{0.2}{0.529}{0.87}
+%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten Auslesen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Auf den ersten Blick sieht das Design komplizierter aus.%
+}%
+%
+\only<-6>{%
+\item<2-> Wir haben nun zwei Tabellen anstatt von einer.%
+}%
+%
+\only<-7>{%
+\item<3-> Wollen wir die Namen der Studenten und Eltern zusammen haben, dann reicht ein einfaches \sqlilIdx{SELECT} nicht mehr aus.%
+}%
+%
+\only<-8>{%
+\item<4-> Stattdessen müssen wir die Daten mit einem \sqlilIdx{INNER JOIN} zusammensetzen.%
+}%
+%
+\only<-9>{%
+\item<5-> Der Vorteil ist die reduzierte Redundanz.%
+}%
+%
+\only<-10>{%
+\item<6-> Die Namen jedes Elternteils müssen nur noch einmal eingegeben werden.%
+}%
+%
+\only<-11>{%
+\item<7-> Sie könnten jetzt sagen: OK, aber wir müssen dafür die Mobiltelefonnummern zweimal eingeben.%
+}%
+%
+\item<8-> Das stimmt in diesem Fall, ist aber auch nur deshalb überhaupt erwähnenswert, weil wir im Grunde nur eine einzige Spalte \inQuotes{aussortiert} haben.%
+%
+\item<9-> Oftmals betrifft das mehr als eine Spalte.%
+%
+\item<10-> Stellen Sie sich vor, dass wir noch die Adresse und Ausweisnummer der Eltern usw.\ gespeichert hätten.%
+%
+\item<11-> Eine Reduzierung der Redundanz ist schon ein gutes Argument.%
+%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{3nf:student:fixed:select}{}{normalization/3nf/student/fixed}{select.sql}{fixed}{}{}%
+%%
+\listingSQLandOutput{}{3nf:student:fixed:select}{}{0.47}{0.2}{0.529}{0.87}%
+%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten Ändern}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Die Nützlichkeit des neuen Designs wird klarer, wenn wir die Daten ändern müssen.%
+}%
+%
+\only<-6>{%
+\item<2-> Wir im ursprünglichen Beispiel hat der Sachbearbeiter nach ein paar Tagen herausgefunden, wie er ein~\keys{ö} machen kann.%
+}%
+%
+\only<-7>{%
+\item<3-> Die Daten können korrigiert werden.%
+}%
+%
+\only<-8>{%
+\item<4-> Das \sqlilIdx{UPDATE}-Kommando wird nun auf die Tabelle \sqlil{parent} angewandt.%
+}%
+%
+\item<5-> Es berührt nur eine Zeile, wie Sie im Ergebnis des \sqlilIdx{RETURNING}-Statements sehen.%
+%
+\item<6-> Wir prüfen nun, ob die Namen des Elternteils von Herrn Bibbo, Herrn Bibboto und Frau Bibboba geändert wurden.%
+%
+\item<7-> Sie wurden.%
+%
+\item<8-> Die Update-Anomalie ist weg.%
+%
+%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{3nf:student:fixed:update}{}{normalization/3nf/student/fixed}{update.sql}{fixed}{}{}%
+%%
+\listingSQLandOutput{}{3nf:student:fixed:update}{}{0.47}{0.2}{0.529}{0.87}%
+\gitExecSQLraw{}{}{normalization/3nf/student/fixed}{cleanup.sql}{}{}{}%
+%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung}%
+\begin{itemize}%
+%
+\only<-10>{%
+\item Die \glsShort{3NF} ist wieder eine Methode, um Redundanz zu vermeiden.%
+}%
+%
+\only<-11>{%
+\item<2-> Diesmal geht es um Redundanz, die entsteht wenn einige Spalten einer Tabelle von anderen Spalten abhängen, die keine Schlüssel sind.%
+}%
+%
+\only<-12>{%
+\item<3-> Normalerweise sollte alle Information in einer Zeile einer Tabelle Information über den Schlüssel~$K$ sein.%
+}%
+%
+\only<-13>{%
+\item<4-> Sagen wir, dass es eine funktionale Abhängigkeit der Spalten~$A$ auf die Spalten~$B$ gibt und das diese transitiv auf den Schlüssel ist, also das wir \funcDepb{$K$}{\funcDepb{$B$}{$A$}} habe.%
+}%
+%
+\only<-13>{%
+\item<5-> Dann gilt für jede Zeile mit dem Wert~$\beta$ von~$B$, der selbe Wert~$\alpha$ von~$A$ gespeichert wird.%
+}%
+%
+\only<-14>{%
+\item<6-> Der Wert von~$B$ bestimmt den Wert von~$A$.%
+}%
+%
+\only<-14>{%
+\item<7-> Wenn der selbe Wert von~$B$ in mehreren Zeilen auftaucht, dann speichern wir auch den selben Wert von~$A$ mehrmals.%
+}%
+%
+\item<8-> Was wir nicht wirklich machen müssen, denn wir wissen den Wert von~$B$, also kennen wir auch den von~$A$.%
+%
+\item<9-> Um also die \glsShort{3NF} wieder herzustellen, können wir die Tabelle in zwei teilen.%
+%
+\item<10-> Wir könnten $B$ als Primärschlüssel der neuen Tabelle benutzen und die entsprechenden Werte von~$A$ darin speichern.%
+%
+\item<11-> Die alten $B$-Spalten in der ursprünglichen Tabelle werden zum Fremdschlüssel.%
+%
+\item<12-> Auf diese Art haben wir die Redundanz der Daten reduziert und die Klarheit und Sauberkeit erhöht.%
+%
+\item<13-> Der Nachteil ist, dass wir ein \sqlil{INNER JOIN} brauchen, wenn wir die Daten wieder zusammensetzen wollen um den Wert von~$A$ für ein bestimmtes~$K$ zu bekommen.%
+%
+\item<14-> Trotzdem ist das oft eine gute Idee.%
+\end{itemize}%
+\end{frame}%
+%%
+\endPresentation%
+\end{document}%%
+\endinput%
+%

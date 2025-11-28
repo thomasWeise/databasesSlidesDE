@@ -1,0 +1,1115 @@
+\pdfminorversion=7%
+\documentclass[aspectratio=169,mathserif,notheorems]{beamer}%
+%
+\xdef\bookbaseDir{../../bookbase}%
+\xdef\sharedDir{../../shared}%
+\RequirePackage{\bookbaseDir/styles/slides}%
+\RequirePackage{\sharedDir/styles/styles}%
+\toggleToGerman%
+%
+\subtitle{42.~Logisches Schema:~2.~Normalform}%
+%
+\begin{document}%
+%
+\startPresentation%
+%
+\section{Einleitung}%
+%
+\begin{frame}%
+\frametitle{Einleitung}%
+\begin{itemize}%
+%
+\item Wir haben schon die \glsShort{1NF} gelernt.%
+%
+\item<2-> Es wird Sie nicht überraschen, dass das nicht die einzige Normalform ist.%
+%
+\item<3-> Die 2.~Normalform~(\glsShort{2NF}) behandelt die Beziehung zwischen Schlüsselattributen und nicht-Schlüssel-Attributen\cite{C1971FNOTDBRM,C1971NDBSABT,K1983ASGTFNFIRDT,D2003AITDS,EN2015FODS}.%
+%
+\item<4-> Sie gilt nur für zusammengesetzte Schlüssel, also Schlüssel, die aus mehreren Spalten bestehen.%
+%
+\item<5-> Wir haben gelernt, dass ein Schlüssel Entitäten eindeutig identifizieren kann.%
+%
+\item<6-> Wenn ein Schlüssel~$X$ ein Entität identifiziert, dann bedeutet dass, das alle anderen Attribute der Entität im Grunde zusätzliche Informationen über den Schlüssel bereitstellen.%
+%
+\item<7-> Im relationalen Modell ist ein Schlüssel der eindeutige Identifikator einer Zeile.%
+%
+\item<8-> Es kann immer höchstens eine Zeile für jeden Wert von~$X$ geben.%
+%
+\item<9-> Alle anderen Spalten stellen weitere Informationen über das von $X$ identifizierte Objekt bereit.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{2NF}%
+\only<-2>{%
+\begin{itemize}%
+\item Rufen wir uns nochmal die Definition von Schlüsseln in Erinnerung.%
+\end{itemize}}%
+%
+\uncover<2->{%
+\begin{definition*}[Schlüssel]\small{\vspace*{-0.1em}%%
+\label{def:key2}%
+Eine Menge von Attributen~$K\subseteq\relSchemab{R}$ gegeben als~$K=\{k_i:i\in\intRange{1}{m} \land k_i\in\relSchemab{R}\}$ einer Relation~$R$ ist ein \emph{Schlüssel}, wenn und nur wenn:%
+%
+\begin{enumerate}%
+%
+\item $K$~identifizierend~\inEN{identifying} wirkt\only<-2>{: Definieren wir $v_{1,i}$ und~$v_{2,i}$ für alle~$i\in\intRange{1}{m}$ als die Werte der Attribute~$k_i$ für zwei Zeilen~$r_1$ und~$r_2$~in~$R$. Wenn gilt das~$r_1\neq r_2$, dann gibt es mindestens ein~$j\in\intRange{1}{m}$ mit~$v_{1,j}\neq v_{2,j}$} \alert{UND}%
+%
+\item Es gibt keine Untermenge~$\{k_1, \dots, k_m\}$ mit diese Eigenschaft, also der Schlüssel ist minimal
+%
+\end{enumerate}}%
+\end{definition*}%
+%
+\uncover<3->{%
+%
+\begin{itemize}%
+%
+\item Die \glsShort{2NF} ist verletzt, wenn ein nicht-Schlüssel-Attribut Informationen über eine \alert{echte Untermenge} eines beliebigen Schlüssels darstellt\cite{K1983ASGTFNFIRDT}.%
+%
+\item<4-> Eine echte Untermenge kann nur existieren, wenn eine Menge aus mehr als einem Element besteht.%
+%
+\item<5-> Die \glsShort{2NF} ist nur für Tabellen mit zusammengesetzten Schlüsseln relevant, also Schlüsseln, die aus mehr als einer Spalte bestehen.%
+%
+\item<6-> Eine Tabelle ist in er \glsShort{2NF} wenn sie in der \glsShort{1NF} ist \emph{und} wenn alle Spalten, die nicht Teil eines Schlüssels sind, nur Informationen über die vollständigen Schlüssel bereitstellen.%
+\end{itemize}%
+}}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Funktionale Abhängigkeiten}%
+\begin{itemize}%
+\item Eine andere Perspektive auf die \glsShort{2NF} bieten \emph{fuktionale Abhängigkeiten}~\inEN{functional dependencies}~(\glsShort{funcDep}).%
+\end{itemize}%
+%
+\uncover<2->{%
+\begin{definition*}[Funktionale Abhängigkeit]%
+\label{def:functionalDependency}%
+Eine funktionale Abhängigkeit~(\glsShort{funcDep}) ist eine Beziehung zwischen zwei Gruppen von Attributen~$X$ und $Y$, wobei gilt, dass für jede Instanz von~$X$ der Wert von~$X$ den Wert von~$Y$ bestimmt\cite{S2024D:RNDAFDNF}. %
+Das schreibt man als~$\funcDepb{X}{Y}$.%
+\end{definition*}%
+%
+\uncover<3->{%
+\begin{itemize}%
+\item Mit anderen Worten, wenn $\funcDepb{X}{Y}$ gilt und $X$~ein Schlüssel ist, dann gibt es keine zwei Datensätze mit dem selben Wert für~$X$ aber anderen Werten von~$Y$\cite{K1983ASGTFNFIRDT}.%
+%
+\item<4-> Jeder Wert von~$X$ taucht immer mit dem selben dazugehörigem Wert von~$Y$ auf.%
+%
+\item<5-> Wenn $X$ ein Schlüssel ist, dann hängen alle anderen Spalten per Definition von~$X$ ab, denn es gibt niemals zwei Zeilen mit dem selben Wert von~$X$.
+\end{itemize}}}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{2NF~(unvollständig)}%
+\begin{itemize}%
+%
+\item Das relationale Scheme einer Relation~$R$ sei~\relSchemab{R} und $X\subseteq\relSchemab{R}$ is ein Schlüssel.%
+%
+\item<2-> Natürlich hängen dann alle Attribute~$a$ in~\relSchemab{R} von den Schlüsselattributen~$X$ (funktional) ab, also es gilt immer~$\funcDepb{X}{a}$.%
+%
+\item<3-> Betrachten wir die Definition der \glsShort{2NF} mit Hilfe von funktionalen Abhängigkeiten.%
+%
+\item<4-> Wenn die \glsShort{2NF} eingehalten wird, dann gilt für alle Attribute~$a\in\relSchemab{R}$ die nicht Teil des Schlüssels~$X$ sind~(also~$a \not\in X$), dass es \alert{keine echte Untermenge}~$X'\subset X$ mit $X'\neq X$ gibt, so dass~$a$ funktional von~$X'$ abhängt~(also~$\funcDepb{X'}{a}$).%
+%
+\item<5-> Unter der \glsShort{2NF} hängen alle Attribute vom vollständigen Schlüssel~$X$ ab.%
+%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{2NF}%
+\begin{itemize}%
+\only<-6>{%
+\item Diese Definition wäre aber nicht ganz korrekt.%
+}%
+%
+\only<-7>{%
+\item<2-> Wie wir bereits diskutiert haben, kann es mehrere Schlüssel, also mehrere Mengen von Attributen geben, die die Zeilen in der Relation~$R$ identifizieren.%
+}%
+%
+\item<3-> Ja, wir wählen eine davon als Primärschlüssel aus {\dots} das ändert aber nichts daran, dass es mehrere Schlüssel geben kann.%
+%
+\item<4-> Das ist besonders dann wahr, wenn wir einen Ersatzschlüssel verwenden, weil die anderen Schlüsselkandidaten zu groß sind.%
+%
+\item<5-> Alle nicht-Schlüssel-Attribute müssen von allen diesen Schlüsseln vollständig abhängen.%
+%
+\item<6-> Unter der \glsShort{2NF} ist es nicht zulässig, dass sie von einer Untermenge eines beliebigen Schlüssels abhängen.%
+%
+\item<7-> Die korrekte Definition der \glsShort{2NF} ist also\cite{SS2005EIDDDFDB:SDWSD2}:%
+\end{itemize}%
+\uncover<8->{%
+\begin{definition*}[2.~Normalform]%
+\label{def:2nf}%
+Eine Relation~$R$ mit dem Primärschlüssel~$P\subseteq\relSchema{R}$ ist in der 2.~Normalform~(\glsShort{2NF}) wenn und nur wenn sie in der \glsShort{1NF} ist und für alle Mengen von Attributen~$X\subseteq\relSchemab{R}$ und alle Attribute~$a\in\relSchemab{R}$ mit~$a\not\in X$, $a\not\in P$ und~$\funcDepb{X}{a}$, gilt, dass $X$ entweder ein Schlüssel oder Superschlüssel ist, aber keine echte Untermenge eines Schlüssels von~$R$.%
+\end{definition*}%
+}%
+\end{frame}%
+%
+\section{Beispiel}%
+%
+\begin{frame}[t]%
+\frametitle{Raum-Management System}%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Wenn eine Tabelle nach der \glsShort{2NF} normalisiert ist, dann hängen alle Attribute vom gesamten Primärschlüssel ab.%
+%
+\item<2-> Es ist egal, ob der einfach oder zusammengesetzt ist~(also aus mehreren Spalten besteht).%
+%
+\item<3-> Nehmen wir der Einfachheit halber an, der Primärschlüssel wäre der einzige Schlüssel.%
+%
+\item<4-> Wenn eine Tabelle die \glsShort{2NF} verletzt, dann sind einige der Spalten funktional nur von einem Teil (aber nicht dem ganzen) Primärschlüssel abhängig.%
+}%
+%
+\item<5-> Schauen wir uns an, warum das schlecht ist.%
+%
+\item<6-> Wir hatten vor einer Weile mal ein \glsShort{ERD} für ein Raum-Management System als Teil unserer Lehre-Management-Plattform gezeichnet.%
+%
+\item<7-> Wir werden das zweimal implementieren.%
+%
+\item<8-> Die erste Implementierung wird die \glsShort{2NF} verletzen, die zweite nicht.%
+\end{itemize}%
+%
+\locateGraphic{6-}{width=0.6\paperwidth}{graphics/roomsErdRoom2}{0.2}{0.5}%
+\end{frame}%
+%
+\section{Verletzung der 2.~Normalform}%
+%
+\begin{frame}[t]%
+\frametitle{Konzeptuelles und Logisches Modell}
+\begin{itemize}%
+%
+\only<-5>{%
+\item In dem \glsShort{ERD} sehen wir einen Teil des Raum-Management Systems.%
+}%
+%
+\only<-6>{%
+\item<2-> Wir haben nur zwei Entitätstypen dargestellt, \emph{Room} und \emph{Building}.%
+}%
+%
+\only<-7>{%
+\item<3-> Wie Sie sehen können, sind die beiden mit einer \crowsFoot{Room}{OM}{Building}{M1}-Beziehung verbunden.%
+}%
+%
+\only<-8>{%
+\item<4-> Wir hatten dieses Muster als \crowsFoot{K}{OM}{L}{M1} diskutiert.%
+}%
+%
+\only<-9>{%
+\item<5-> Nehmen wir an, der Datenbankdesigner hat sich für eine einfachere Implementierung entschieden.%
+}%
+%
+\only<-10>{%
+\item<6-> Er wird alle Raume- und Gebäudedaten in eine einzelne Tabelle tun.%
+}%
+%
+\only<-11>{%
+\item<7-> Das Ergebnis sehen wir unten rechts.%
+}%
+%
+\only<-11>{%
+\item<8-> Die Tabelle \sqlil{building_room} wurde entworfen.%
+}%
+%
+\only<-12>{%
+\item<9-> Sie hat die Spalten \sqlil{building_number}, \sqlil{room_number}, \sqlil{building_name}, \sqlil{room_name}, \sqlil{capacity} und \sqlil{address}.
+}%
+%
+\only<-13>{%
+\item<10-> Die Gebäudenummer und die Raumnummer sind beises \sqlilIdx{VARCHAR} mit Maximallänge~4.%
+}%
+%
+\only<-14>{%
+\item<11-> Sie sind nicht notwendigerweise Nummern, sondern könnten auch so etwas wie~\sqlil{'105b'} sein.%
+}%
+%
+\only<-15>{%
+\item<12-> Zusammen formen diese beiden Spalten den Primärschlüssel.%
+}%
+%
+\only<-16>{%
+\item<13-> Jeder Raum in unserer Uni wird eindeutig durch die Gebäude- und Raumnummer identifiziert.%
+}%
+%
+\only<-17>{%
+\item<14-> Es kann nie zwei verschiedene Räume mit der selben Gebäude- und Raumnummer geben.%
+}%
+%
+\item<15-> Dieses Design verletzt die \glsShort{2NF}, denn es gibt einige Spalten, die nur von einem Teil des Primärschlüssels abhängen.%
+%
+\item<16-> Die Spalten \sqlil{building_name} und \sqlil{address} repräsentieren Fakten \emph{nur} über \sqlil{building_number}.%
+%
+\item<17-> Sie sind nicht funktional von \sqlil{room_number} abhängig.%
+\end{itemize}%
+%
+\locateGraphic{-6}{width=0.5\paperwidth}{graphics/roomsErdRoom2}{0.25}{0.55}%
+\locateGraphic{7-}{width=0.5\paperwidth}{graphics/roomsErdRoom2}{0.066666667}{0.55}%
+\locateGraphic{7-}{width=0.3\paperwidth}{graphics/roomsViolation2nf}{0.633333334}{0.55}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle building\_room}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier ist das auto-generierte Skript zum Erstellen der Tabelle \sqlil{building_room}.%
+%
+\item<2-> \sqlil{building_number} und \sqlil{room_number} bilden zusammen den Primärschlüssel.%
+%
+\item<3-> Zusätzlich gibt es Spalten für die Raum- und Gebäudenamen sowie die Adresse als \sqlilIdx{VARCHAR}s mit der Maximallänge~100.%
+%
+\item<4-> Die Kapazität für Studenten eines Raumes ist eine \sqlilIdx{INTEGER}-Zahl.%
+%%
+\end{itemize}%
+}%
+%
+\gitExecSQLraw{}{}{normalization/2nf/rooms/violation/generated_sql}{01_violation_database_2001.sql}{}{}{}%
+%
+\gitLoadAndExecSQL{2nf:rooms:violation:03_public_building_room_table_5071}{}{normalization/2nf/rooms/violation/generated_sql}{03_public_building_room_table_5071.sql}{violation}{}{}%
+%%
+\listingSQLandOutput{}{2nf:rooms:violation:03_public_building_room_table_5071}{}{0.47}{0.2}{0.529}{0.87}
+%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten Einfügen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-4>{%
+\item Befüllen wir die Tabelle mit Daten.%
+}%
+%
+\only<-5>{%
+\item<2-> \DEZB\ speichern wir den Meeting-Room~(Room~305) des Building~36, also des \emph{Computer Science Teaching Building}, in South Campus~2.%
+}%
+%
+\only<-6>{%
+\item<3-> Wir speichern auch einen Vorlesungsraum im selben Gebäude.%
+}%
+%
+\only<-7>{%
+\item<4-> Wir speichern Informationen über zwei Vorlesungsräume des \emph{Language Teaching Building} in South Campus~1, über ein paar Büros in Gebäude~53 vom South Campus~2, und ein paar andere Räume.%
+}%
+%
+\item<5-> Wenn wir uns diese \sqlil{INSERT}-Anweisungen angucken wir eins klar: Diese Struktur erzeugt eine Menge Redundanz.%
+%
+\item<6-> Die Adresse von Gebäude~36 wird dreimal gespeichert.%
+%
+\item<7-> Genaugenommen wird auch der Name von Gebäude~36 dreimal gespeichert.%
+%
+\item<8-> Das fühlt sich falsch an.%
+%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{2nf:rooms:violation:insert}{}{normalization/2nf/rooms/violation}{insert.sql}{violation}{}{}%
+%%
+\listingSQLandOutput{}{2nf:rooms:violation:insert}{}{0.47}{0.2}{0.529}{0.87}
+%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten Löschen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Neben der Redundanz hat diese Struktur aber noch weitere Probleme.%
+}%
+%
+\only<-6>{%
+\item<2-> Diese werden sichtbar, wenn wir die Daten ändern.%
+}%
+%
+\only<-7>{%
+\item<3-> Mit der ersten Anfrage rechts wollen wir uns zuerst eine Liste der Gebäude aus unserer Datenbank holen.%
+}%
+%
+\only<-8>{%
+\item<4-> Wir machen ein \sqlilIdx{SELECT} der Gebäudenummer und des Gebäudenamens aus der Tabelle \sqlil{building_rooms}.%
+}%
+%
+\only<-9>{%
+\item<5-> Weil diese mehrfach auftreten könnten, machen ein \sqlilIdx{SELECT DISTINCT}\sqlIdx{DISTINCT} anstatt nur eines~\sqlilIdx{SELECT}.%
+}%
+%
+\only<-10>{%
+\item<6-> So bekommen wir jede Zeile nur einmal.%
+}%
+%
+\only<-10>{%
+\item<7-> Das Ergebnis zeigt, dass wir vier Gebäude gespeichert haben.%
+}%
+%
+\only<-11>{%
+\item<8-> Stellen Sie sich vor, dass einige Zeit vergangen ist und wir uns entschieden haben, dass wir die Räume 904a und 904b nicht mehr für die Lehre verwenden wollen.%
+}%
+%
+\only<-13>{%
+\item<9-> Mit der zweiten Anfrage rechts löschen wir sie aus unserer Datenbank.%
+}%
+%
+\only<-13>{%
+\item<10-> Das geht mit \sqlilIdx{DELETE FORM}, wobei das~\sqlilIdx{WHERE} erzwingt, dass die Gebäudenummer 53 ist und dass die zu löschenden Zimmer mit 904 anfangen~(\sqlil{LIKE '904\%'}).%
+}%
+%
+\only<-14>{%
+\item<11-> \postgresql\ erlaubt es uns, die gelöschten Zeilen über das \sqlilIdx{RETURNING}-Statement\cite{PGDG:PD:RDFMR} zurückzuliefern.%
+}%
+%
+\only<-16>{%
+\item<12-> Die Ausgabe zeigt die Gebäudenummer und Raumnummern der gelöschten Zimmer.%
+}%
+%
+\only<-17>{%
+\item<13-> Wir haben wirklich Räume~904a und 904b von Gebäude~53 gelöscht.%
+}%
+%
+\only<-18>{%
+\item<14-> Wir führen nun die selbe Anfrage für die Liste der Gebäude noch einmal (als dritte Anfrage) aus.%
+}%
+%
+\only<-18>{%
+\item<15-> Wir stellen fest, dass wir durch das Löschen der beiden Zimmer von Gebäude~53 auch gleich alle Informationen über das Gebäude selber mit gelöscht haben.%
+}%
+%
+\only<-19>{%
+\item<16-> Seine Gebäudenummer, Gebäudename, und Adresse sind alle verloren.%
+}%
+%
+\only<-21>{%
+\item<17-> Sie waren ja zusammen mit den Zimmer-Daten gespeichert.%
+}%
+%
+\only<-22>{%
+\item<18-> Das nennt man Löschanomalie.%
+}%
+%
+\only<20->{%
+\item<20-> Na gut, Sie könnten ja argumentieren, dass das so gewünscht war.%
+%
+\item<21-> Im Originalmodell war die Beziehung zwischen Raum und Gebäude ja als \crowsFoot{Room}{MM}{Building}{M1} angegeben.%
+%
+\item<22-> In dieser Beziehungsart wäre es ja sowieso \emph{erforderlich} die Gebäude zu löschen, wenn alle ihre Räume gelöscht werden.%
+%
+\item<23-> Diese Anomalie tritt aber auch dann auf, wenn wir dem \crowsFoot{K}{M1}{L}{OM} Schema folgen, wo so eine Löschung nicht notwendig ist.%
+}%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{2nf:rooms:violation:delete}{}{normalization/2nf/rooms/violation}{delete.sql}{violation}{}{}%
+%%
+\listingSQLandOutput{-18,20-}{2nf:rooms:violation:delete}{}{0.47}{0.01}{0.529}{0.99}%
+%
+\uncover<19>{%
+\begin{definition*}[Löschanomalie]%
+\label{def:deletionAnomaly}%
+Eine Situation wo das Löschen von unbenötigten Daten auch das Löschen von noch benötigten Daten bewirkt, nennt man \emph{Löschanomalie}~\inEN{deletion anomaly}\cite{S2024D:RNDAFDNF}.%
+\end{definition*}%
+}%
+%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten Ändern~(1)}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Das Verletzen der \glsShort{2NF} macht es auch leichter, inkonsistente Daten zu produzieren.%
+}%
+%
+\only<-6>{%
+\item<2-> Nehmen Sie an, wir wollten eine Liste von allen Räumen in South Campus~2 erstellen.%
+}%
+%
+\only<-7>{%
+\item<3-> Dazu führen wir die Anfrage rechts aus.%
+}%
+%
+\only<-8>{%
+\item<4-> Wir könnten einfach \sqlilIdx{SELECT} auf die Gebäude- und Raumnummer machen für alle Zeilen mit \sqlil{address = 'South Campus 2'}.%
+}%
+%
+\only<-9>{%
+\item<5-> Diese Anfrage produziert nur genau ein Ergebnis, nämlich Room~106 in Building~36.%
+}%
+%
+\only<-10>{%
+\item<6-> Wir wissen, dass das falsch ist.%
+}%
+%
+\only<-11>{%
+\item<7-> Wir haben definitiv mehr als einen Raum für Building~36 gespeichert.%
+}%
+%
+\only<-12>{%
+\item<8-> Schauen wir uns nochmal unser \sqlil{INSERT}-Statement von vorhin an.%
+}%
+%
+\only<-13>{%
+\item<9-> Ah. Wir haben manchmal \sqlil{'South Campus II'} anstatt von \sqlil{'South Campus 2'} geschrieben.%
+}%
+%
+\only<-14>{%
+\item<10-> Für einen Computer sind das natürlich zwei verschiedene Dinge.%
+}%
+%
+\only<-15>{%
+\item<11-> Dadurch, dass wir die selben Daten wieder und wieder eingeben müssen, werden solche Fehler wahrscheinlicher.%
+}%
+%
+\only<-16>{%
+\item<12-> Immer wenn jemand Daten eingeben muss gibt es eine gewisse Wahrscheinlichkeit, dass die Person einen Fehler macht.%
+}%
+%
+\only<-17>{%
+\item<13-> Je öfter wir Daten eingeben müssen, dest größer die Chance, Fehler zu machen.%
+}%
+%
+\only<-18>{%
+\item<14-> Die Verletzung der \glsShort{2NF} zwingt uns, die selben Informationen öfter einzugeben.%
+}%
+%
+\only<-19>{%
+\item<15-> Dadurch erhöht sie die Chance, Fehler zu machen.%
+}%
+%
+\only<-20>{%
+\item<16-> Die Verletzung der \glsShort{2NF} hat den Fehler nicht ausgelöst, aber ihn wahrscheinlicher gemacht.%
+}%
+%
+\only<-21>{%
+\item<17-> Wir können das Problem auf zwei Arten lösen.%
+}%
+%
+\only<-22>{%
+\item<18-> Wir können die Zeilen auswählen, für die \sqlil{address = \'South Campus 2\'} \emph{oder} \sqlil{address = \'South Campus II\'} gilt.%
+}%
+%
+\item<19-> Oder wir reparieren die falschen Daten mit einem \sqlilIdx{UPDATE}.%
+%
+\item<20-> Wir würden die Gebäudeadresse auf \sqlil{\'South Campus 2\'} setzen, wenn ein Gebäude in \sqlil{\'South Campus II\'} liegt.%
+%
+\item<21-> Natürlich schreiben wir auch wieder ein \sqlilIdx{RETURNING}-Statement\cite{PGDG:PD:RDFMR}, um die veränderten Zeilen anzuzeigen.%
+%
+\item<22-> Nun funktioniert auch die erste Anfrage richtig.%
+%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{2nf:rooms:violation:select_a_1}{}{normalization/2nf/rooms/violation}{select_a_1.sql}{violation}{}{}%
+\gitLoadAndExecSQL{2nf:rooms:violation:select_a_2}{}{normalization/2nf/rooms/violation}{select_a_2.sql}{violation}{}{}%
+\gitLoadAndExecSQL{2nf:rooms:violation:update_a}{}{normalization/2nf/rooms/violation}{update_a.sql}{violation}{}{}%
+%%
+\listingSQLandOutput{-7}{2nf:rooms:violation:select_a_1}{}{0.47}{0.2}{0.529}{0.87}
+\listingSQLandOutput{8-17}{2nf:rooms:violation:insert}{}{0.47}{0.2}{0.529}{0.87}
+\listingSQLandOutput{18}{2nf:rooms:violation:select_a_2}{}{0.47}{0.2}{0.529}{0.87}
+\listingSQLandOutput{19-}{2nf:rooms:violation:update_a}{}{0.47}{0.01}{0.529}{0.99}
+%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten Ändern~(2)}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Ändern wir nun den Namen des Building~36 von \inQuotes{CS Teaching Building} zu \inQuotes{Computer Science Building}.%
+}%
+%
+\only<-6>{%
+\item<2-> Das kann mit der Anfrage rechts gemacht werden.%
+}%
+%
+\only<-7>{%
+\item<3-> Wir benutzen ein \sqlilIdx{UPDATE}-Statement auf die Tabelle \sqlil{building_room}.%
+}%
+%
+\only<-8>{%
+\item<4-> Dieses Mal wollen wir alle Zeilen bearbeiten, bei denen \sqlil{address = 'South Campus 2'} und \sqlil{building_number = '36'} gilt.%
+}%
+%
+\only<-9>{%
+\item<5-> Für alle diese Zeilen setzen wir \sqlil{building_name =} \sqlil{'Computer Science Building'}.%
+}%
+%
+\only<-10>{%
+\item<6-> Wir benutzen wieder ein \sqlilIdx{RETURNING}-Statement\cite{PGDG:PD:RDFMR}, um die geänderten Zeilen auszugeben.%
+}%
+%
+\only<-10>{%
+\item<7-> Wie Sie sehen, sind das drei Zeilen.%
+}%
+%
+\only<-13>{%
+\item<8-> Beachten Sie aber, dass wir nur \alert{ein einziges} Datum geändert haben.%
+}%
+%
+\only<-14>{%
+\item<9-> Aber wir mussten \alert{drei} Zeilen verändern.%
+}%
+%
+\only<11->{%
+%
+\only<-15>{%
+\item<11-> Diese Update-Anomalie wird direkt durch die Verletzung der \glsShort{2NF} ausgelöst.%
+}%
+%
+\only<-16>{%
+\item<12-> Das selbe gilt für eine weitere Anomalie:%
+}%
+%
+\only<14->{%
+%
+\only<-17>{%
+\item<14-> \DEZB\ ist es nicht möglich, die Information über einen Raum einzufügen, ohne Informationen über ein Gebäude einzufügen~(und andersherum).
+}%
+%
+\only<-19>{%
+\item<15-> In unserem Spezielfall hier ist das sowieso nicht möglich und nicht sinnvoll.%
+}%
+%
+\only<-19>{%
+\item<16-> Aber es kann viele andere Situationen geben, wo die Verletzung der \glsShort{2NF} dieses als Problem auslöst.%
+}%
+%
+\only<-20>{%
+\item<17-> In~\bracketCite{K1983ASGTFNFIRDT} \DEzB, wird ein interessanter Fall aus dem Gebiet der Warenhaltung vorgestellt.%
+}%
+%
+\item<18-> Die Namen und Adressen von Lagerhäusern werden zusammen mit den Namen und Mengen der Produkte in ihnen \emph{in einer Tabelle} gespeichert.%
+%
+\item<19-> Dieses Design einer einzelnen Tabelle verletzt die \glsShort{2NF}.%
+%
+\item<20-> Die Daten waren genau in vier Spalten gespeichert~(Name des Lagerhauses, Adresse des Lagerhauses, Name des Produkts, Menge des Produkts).%
+%
+\item<21-> Dadurch ist es nicht möglich, einen Datensatz für ein Lagerhaus zu erstellen, in dem noch keine Produkte gespeichert sind.%
+%
+}}%
+\end{itemize}%
+}%
+\gitLoadAndExecSQL{2nf:rooms:violation:update_b}{}{normalization/2nf/rooms/violation}{update_b.sql}{violation}{}{}%
+%%
+\listingSQLandOutput{-9,11-12,14-}{2nf:rooms:violation:update_b}{}{0.47}{0.2}{0.529}{0.87}%
+\listingSQLandOutput{10,13}{2nf:rooms:violation:update_b}{}{0.47}{0.06}{0.529}{0.87}%
+%
+\only<10>{%
+\begin{definition*}[Update-Anomalie]%
+\label{def:updateAnomaly}%
+Eine Situation, wo das Verändern von einer Information das Ändern von mehreren Zeilen erfordert nennt man \emph{Update-Anomalie}~\inEN{update anomaly}.%
+\end{definition*}%
+}%
+%
+\only<13>{
+\begin{definition*}[Einfüge-Anomalie]%
+Ein Situation wo das Einfügen von Daten in die Datenbank unmöglich wird, weil andere Daten noch nicht da sind, nennt man \emph{Einfüge-Anomalie}~\inEN{insertion anomaly}\cite{S2024D:RNDAFDNF}.%
+\end{definition*}%
+}%
+%
+\end{frame}%
+%
+\section{Lösung: Wiederherstellung der 2.~Normalform}%
+%
+\begin{frame}[t]%
+\frametitle{Lösung}%
+%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Die Verletzung der \glsShort{2NF} kann -- direkt oder indirekt -- mehrere Probleme und Anomalien auslösen.%
+}%
+%
+\only<-6>{%
+\item<2-> Normalisieren wir also die Datenbank von vorhin nach der \glsShort{2NF}.%
+}%
+%
+\only<-7>{%
+\item<3-> In unserem ursprünglichen Design hatten wir eine einzige Tabelle: \sqlil{building_room}.%
+}%
+%
+\only<-8>{%
+\item<4-> Diese Tabelle hatte einen zusammengsetzten Primärschlüssel bestehend aus den Spalten \sqlil{building_number} und \sqlil{room_number}.%
+}%
+%
+\only<-9>{%
+\item<5-> Die Spalten \sqlil{building_name} und \sqlil{address} hängen aber nur von \sqlil{building_number} ab.%
+}%
+%
+\only<-10>{%
+\item<6-> Das führte dann zu den Anomalien, zu Redundanz, und erhöhte die Wahrscheinlichkeit, Fehler zu machen.%
+}%
+%
+\only<-11>{%
+\item<7-> Um Normalisierung unter der \glsShort{2NF} zu erreichen, müssen wir die Spalten \sqlil{building_name} und \sqlil{address} in eine eigene Tabelle tun.%
+}%
+%
+\only<-12>{%
+\item<8-> Wir nennen diese Tabelle~\sqlil{building}.%
+}%
+%
+\only<-13>{%
+\item<9-> Natürlich braucht diese einen Primärschlüssel.%
+}%
+%
+\only<-14>{%
+\item<10-> Dafür nehmen wir \sqlil{building_number}.%
+}%
+%
+\only<-15>{%
+\item<11-> Wir können \sqlil{building_number} nehmen, denn in unserer Universität gibt es die Regel, dass keine zwei Gebäude die selbe Nummer haben dürfen.%
+}%
+%
+\only<-16>{%
+\item<12-> Dann benennen wir die Tabelle \sqlil{building_room} zu \sqlil{room} um.%
+}%
+%
+\only<-17>{%
+\item<13-> Jede Zeile repräsentiert nun einen einzelnen Raum in einem Gebäude.%
+}%
+%
+\only<-18>{%
+\item<14-> Diese Tabelle hat immer noch den zusammengesetzten Primärschlüssel aus den Spalten \sqlil{building_number} und \sqlil{room_number}.%
+}%
+%
+\only<-19>{%
+\item<15-> Es gibt keinen Grund, das zu ändern.%
+}%
+%
+\only<-20>{%
+\item<16-> Genau genommen ist das sogar besser, als einen Ersatzschlüssel zu verwenden.%
+}%
+%
+\only<-20>{%
+\item<17-> Es erzwingt, dass wir Räume nur speichern können \emph{nachdem} wir die entsprechenden Gebäudedatensätze angelegt haben.%
+}%
+%
+\item<18-> In der Tabelle gibt es noch die zwei Spalten \sqlil{room_name} und \sqlil{capacity}.%
+%
+\item<19-> Diese beiden nicht-Schlüssel-Attribute sind funktional vom Primärschlüssel abhängig -- und zwar vom \emph{kompletten} Primärschlüssel.%
+%
+\item<20-> Dieses logische Modell repräsentiert unser konzeptuelles Modell auch viel besser.%
+\end{itemize}%
+%
+\locateGraphic{-7}{width=0.5\paperwidth}{graphics/roomsErdRoom2}{0.066666667}{0.55}%
+\locateGraphic{-7}{width=0.3\paperwidth}{graphics/roomsViolation2nf}{0.633333334}{0.55}%
+%
+\locateGraphic{8-}{width=0.4\paperwidth}{graphics/roomsErdRoom2}{0.03333333333333}{0.57}%
+\locateGraphic{8-}{width=0.5\paperwidth}{graphics/roomsFixed2nf}{0.46666666666}{0.61}%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle building}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier ist das auto-generierte Skript zum Erstellen der Tabelle \sqlil{building}.%
+%
+\item<2-> Sie bekommt die Spalten \sqlil{building_number}, \sqlil{building_name} und \sqlil{address}.%
+%
+\item<3-> \sqlil{building_number} ist der Primärschlüssel.%
+%
+\item<4-> Wir hätten noch eine \sqlil{UNIQUE}-Einschränkung auf \sqlil{building_name} machen können, um zu verhindern, dass zwei Gebäude den selben Namen bekommen können {\dots} aber das lasse ich Ihnen als Übung.%
+%%
+\end{itemize}%
+}%
+%
+\gitExecSQLraw{}{}{normalization/2nf/rooms/fixed/generated_sql}{01_fixed_database_2001.sql}{}{}{}%
+%
+\gitLoadAndExecSQL{2nf:rooms:fixed:04_public_building_table_5080}{}{normalization/2nf/rooms/fixed/generated_sql}{04_public_building_table_5080.sql}{fixed}{}{}%
+%%
+\listingSQLandOutput{}{2nf:rooms:fixed:04_public_building_table_5080}{}{0.47}{0.2}{0.529}{0.87}
+%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Tabelle room}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier ist das auto-generierte Skript zum Erstellen der Tabelle \sqlil{room}.%
+%
+\item<2-> Ihre ersten beiden Spalten, \sqlil{building_number} und \sqlil{room_number}, bilden den zusammengesetzten Primärschlüssel.%
+%
+\item<3-> Die anderen beiden Spalten (\sqlil{room_name} und \sqlil{capacity}) hängen funktional vom gesamten Schlüssel ab.%
+%%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{2nf:rooms:fixed:03_public_room_table_5071}{}{normalization/2nf/rooms/fixed/generated_sql}{03_public_room_table_5071.sql}{fixed}{}{}%
+%%
+\listingSQLandOutput{}{2nf:rooms:fixed:03_public_room_table_5071}{}{0.47}{0.2}{0.529}{0.87}
+%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Fremdschlüssel}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Hier ist das auto-generierte Skript zum Erstellen der Fremdschlüssel-Einschränkung, die die Zeilen in Tabelle \sqlil{room} mit denen in Tabelle \sqlil{building} verbindet.%
+%
+\item<2-> Damit wird \sqlil{building_number} erst zum Fremdschlüssel.
+%
+%%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{2nf:rooms:fixed:05_public_room_building_fk_constraint_5099}{}{normalization/2nf/rooms/fixed/generated_sql}{05_public_room_building_fk_constraint_5099.sql}{fixed}{}{}%
+%%
+\listingSQLandOutput{}{2nf:rooms:fixed:05_public_room_building_fk_constraint_5099}{}{0.47}{0.2}{0.529}{0.87}
+%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten Einfügen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Jetzt können wir genau die gleichen Daten wie vorhin einfügen.%
+}%
+%
+\only<-6>{%
+\item<2-> Wir brauchen dafür jetzt zwei~\sqlilIdx{INSERT INTO}-Statements.%
+}%
+%
+\only<-7>{%
+\item<3-> Zuerst speichern wir alle Gebäudedaten in Tabelle \sqlil{building}.%
+}%
+%
+\only<-8>{%
+\item<4-> Dann speichern wir die Raumdaten in Tabelle \sqlil{room}.%
+}%
+%
+\only<-9>{%
+\item<5-> Wir sehen sofort, dass es jetzt viel weniger Redundanz gibt.%
+}%
+%
+\item<6-> Die Daten über jedes Gebäude werden genau einmal gespeichert.%
+%
+\item<7-> Vorher haben wir sie für jeden Raum speichern müssen.%
+%
+\item<8-> Weil wir die Daten weniger oft schreiben müssen, wird auch die Wahrscheinlichkeit, Fehler zu machen, kleiner.%
+%
+\item<9-> Und wenn wir Fehler machen, dann sind sie leichter zu sehen, weil wir weniger Datensätze anschauen müssen.
+%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{2nf:rooms:fixed:insert}{}{normalization/2nf/rooms/fixed}{insert.sql}{fixed}{}{}%
+%%
+\listingSQLandOutput{}{2nf:rooms:fixed:insert}{}{0.47}{0.2}{0.529}{0.87}
+%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten Löschen}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Reproduzieren wir jetzt das erste \inQuotes{Problem} von vorhin.%
+}%
+%
+\only<-6>{%
+\item<2-> Damals hatten wir uns zuerst eine Liste von Gebäuden generiert.%
+}%
+%
+\only<-7>{%
+\item<3-> Wir hatten gesehen, dass es vier Gebäude gab.%
+}%
+%
+\only<-8>{%
+\item<4-> Dann hatten wir die beiden Räume 904a und 904b gelöscht.%
+}%
+%
+\only<-9>{%
+\item<5-> Dadurch war auch Gebäude~53 mit verschwunden, denn dessen Existenz war an die beiden Raum-Datensätze gebunden.%
+}%
+%
+\only<-10>{%
+\item<6-> Wir fangen also wieder damit an, eine Liste aller Gebäude zu erstellen.%
+}%
+%
+\only<-11>{%
+\item<7-> Das geht nun über \sqlil{SELECT building_number,} \sqlil{building_name FROM building;}.%
+}%
+%
+\only<-12>{%
+\item<8-> Im Vergleich zu vorhin brauchen wir das \sqlilIdx{DISTINCT} nicht mehr.%
+}%
+%
+\only<-13>{%
+\item<9-> Damals, in Tabelle \sqlil{building_room}, tauchte jede Gebäudenummer und jeder Gebäudename einmal für jeden Raum auf.%
+}%
+%
+\only<-14>{%
+\item<10-> In Tabelle \sqlil{building} kommen Sie aber immer nur einmal vor.%
+}%
+%
+\only<-15>{%
+\item<11-> Daher ist das Weglassen doppelter Zeilen, das \sqlilIdx{DISTINCT} macht, nicht mehr nötig.%
+}%
+%
+\only<-16>{%
+\item<12-> Wir bekommen wieder eine Liste von vier Gebäuden.%
+}%
+%
+\only<-17>{%
+\item<13-> Wir löschen nun die beiden Räume 904a und 904b von Gebäude~53 mit einer \sqlilIdx{DELETE}-Anfrage.%
+}%
+%
+\only<-18>{%
+\item<14-> Das \sqlilIdx{RETURNING}-Statement gibt uns die beiden gelöschten Räume nochmal zurück.%
+}%
+%
+\only<-19>{%
+\item<15-> Damals hat das Löschen der Räume auch zum Verschwinden des Gebäudes~53 geführt.%
+}%
+%
+\item<16-> Das war das Ergebnis der Verletzung der \glsShort{2NF}.%
+%
+\item<17-> Deshalb gab es damals nach dem Löschen der Räume nur noch drei Gebäude.%
+%
+\item<18-> Das ist jetzt nicht mehr so.%
+%
+\item<19-> Alle vier Gebäude sind noch da.%
+%%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{2nf:rooms:fixed:delete}{}{normalization/2nf/rooms/fixed}{delete.sql}{fixed}{}{}%
+%%
+\listingSQLandOutput{}{2nf:rooms:fixed:delete}{}{0.47}{0.01}{0.529}{0.99}
+%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten Ändern~(1)}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\only<-5>{%
+\item Jetzt reproduzieren wir das \inQuotes{2.~Problem} von vorhin.%
+}%
+%
+\only<-6>{%
+\item<2-> Wir wollen eine Liste aller Räume in South Campus~2.%
+}%
+%
+\only<-7>{%
+\item<3-> Wenn wir uns die notwendigen Schritte anschauen, um diese Informationen zu bekommen, dann sehen wir den Nachteil der \glsShort{2NF}: Wir haben nun eine kompliziertere Anfrage.%
+}%
+%
+\only<-8>{%
+\item<4-> Vorhin war die Gebäudeadresse zusammen mit den Raumnummern in einer Zeile gespeichert.%
+}%
+%
+\only<-9>{%
+\item<5-> Das ist nicht mehr so.%
+}%
+%
+\only<-10>{%
+\item<6-> Die Rauminformation ist in Tabelle \sqlil{room} gespeichert.%
+}%
+%
+\only<-11>{%
+\item<7-> Die Gebäudearesse ist in Tabelle \sqlil{building} gespeichert.%
+}%
+%
+\only<-12>{%
+\item<8-> Wenn wir wissen wollen, ob ein Raum in South Campus~2 ist, dann müssen wir die Daten dieser beiden Tabellen kombinieren.%
+}%
+%
+\only<-13>{%
+\item<9-> Ein \sqlilIdx{INNER JOIN} macht das.%
+}%
+%
+\only<-14>{%
+\item<10-> Der Primärschlüssel von Tabelle \sqlil{building} ist \sqlil{building_number}.%
+}%
+%
+\only<-15>{%
+\item<11-> Die \sqlil{building_number} ist Fremdschlüssel in Tabelle \sqlil{room}~(und auch Teil von deren Primärschlüssel).%
+}%
+%
+\only<-16>{%
+\item<12-> Die \sqlil{JOIN}-Bedingung \sqlil{room.building_number =} \sqlil{building.building_number} erlaubt uns also, die richtige Zeile in Tabelle \sqlil{building} für jede Zeile in Tabelle \sqlil{room} zu finden.%
+}%
+%
+\only<-17>{%
+\item<13-> Wir führen diese etwas komplexere Anfrage aus.%
+}%
+%
+\only<-18>{%
+\item<14-> Überraschender Weise bekommen wir gar kein Ergebnis.%
+}%
+%
+\only<-19>{%
+\item<15-> Es gibt keine Räume in South Campus~2??%
+}%
+%
+\only<-20>{%
+\item<16-> Gut, wir haben die beiden Räume von Gebäude~53 gelöscht, welche ja in South Campus~2 waren.%
+}%
+%
+\only<-21>{%
+\item<17-> Also die sind weg.%
+}%
+%
+\only<-22>{%
+\item<18-> Aber es gibt dort immer noch Gebäude~36 mit seinen drei Räumen.%
+}%
+%
+\only<-23>{%
+\item<19-> Bei genauerer Betrachtung sehen wir, dass wir wieder die Adressen falsch geschrieben haben.%
+}%
+%
+\only<-24>{%
+\item<20-> Gebäude~36 ist in~\emph{South Campus~II} anstatt von~\emph{South Campus~2}.%
+}%
+%
+\only<-25>{%
+\item<21-> Weil wir den Gebäudedatensatz nur einmal gespeichert haben, betrifft das alle Räume darin.%
+}%
+%
+\only<-26>{%
+\item<22-> Dieses Problem kann leicht gelöst werden, genau wie vorhin.%
+}%
+%
+\only<-27>{%
+\item<23-> Wir können unser Auswahlkriterium so ändern, dass auch South Campus~II mit darin ist.%
+}%
+%
+\only<-28>{%
+\item<24-> Aber das ist nicht zufriedenstellend.%
+}%
+%
+\only<-29>{%
+\item<25-> Wir machen ein Update, in dem wir \sqlil{SET address = 'South Campus 2'} auf alle Zeilen in Tabelle \sqlil{building} anwenden, für die \sqlil{address = 'South Campus II'} gilt.%
+}%
+%
+\only<-30>{%
+\item<26-> Wir liefern uns auch die Gebäudenummer der betroffenen Gebäude.%
+}%
+%
+\only<-31>{%
+\item<27-> Wir sehen, dass nur ein Datensatz geändert wurde.%
+}%
+%
+\only<-32>{%
+\item<28-> Vorhin mussten wir zwei Datensätze ändern.%
+}%
+%
+\only<-33>{%
+\item<29-> Das war ein Beispiel einer Update-Anomalie.%
+}%
+%
+\item<30-> Und die ist jetzt weg.%
+%
+\item<31-> Nach dem Update funktioniert die Anfrage wie erwartet.%
+%
+\item<32-> Randnotiz: Der Fakt, dass das Problem mit der Adresse wieder auftauchen konnte, könnte so interpretiert werden, dass wie die Gebäudeadressen vielleicht in eine zusätzliche Tabelle \sqlil{building_address} tun könnten.%
+%
+\item<33-> Das würde das Problem komplett verhindern.%
+%
+%%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{2nf:rooms:fixed:select_a_1}{}{normalization/2nf/rooms/fixed}{select_a_1.sql}{fixed}{}{}%
+\gitLoadAndExecSQL{2nf:rooms:fixed:select_a_2}{}{normalization/2nf/rooms/fixed}{select_a_2.sql}{fixed}{}{}%
+\gitLoadAndExecSQL{2nf:rooms:fixed:update_a}{}{normalization/2nf/rooms/fixed}{update_a.sql}{fixed}{}{}%
+%%
+\listingSQLandOutput{-18}{2nf:rooms:fixed:select_a_1}{}{0.47}{0.2}{0.529}{0.87}%
+\listingSQLandOutput{19-21}{2nf:rooms:fixed:insert}{}{0.47}{0.2}{0.529}{0.87}%
+\listingSQLandOutput{22-24}{2nf:rooms:fixed:select_a_2}{}{0.47}{0.2}{0.529}{0.87}%
+\listingSQLandOutput{25-}{2nf:rooms:fixed:update_a}{}{0.47}{0.01}{0.529}{0.99}%
+%
+\end{frame}%
+%
+%
+\begin{frame}[t]%
+\frametitle{Daten Ändern~(2)}%
+\parbox{0.435\linewidth}{\small%
+\begin{itemize}%
+%
+\item Das \inQuotes{3.~Problem} von vorhin war ein noch klareres Beispiel der Update-Anomalie.%
+%
+\item<2-> Als wir den Name des Gebäudes~36 von \emph{CS Teaching Building} auf \emph{Computer Science Building} ändern wollten, mussten wir drei Zeilen anfassen.%
+%
+\item<3-> Wir wollten eine Information ändern, mussten aber drei Änderungen durchführen.%
+%
+\item<4-> Jetzt, wo wir die \glsShort{2NF} einhalten, müssen wir nur noch genau eine Zeile in Tabelle \sqlil{building} ändern.%
+%
+\item<5-> Die Anomalie ist weg.%
+%
+\end{itemize}%
+}%
+%
+\gitLoadAndExecSQL{2nf:rooms:fixed:update_b}{}{normalization/2nf/rooms/fixed}{update_b.sql}{fixed}{}{}%
+%%
+\listingSQLandOutput{}{2nf:rooms:fixed:update_b}{}{0.47}{0.2}{0.529}{0.87}
+\gitExecSQLraw{}{}{normalization/2nf/rooms/fixed}{cleanup.sql}{}{}{}%
+%
+\end{frame}%
+%
+\section{Zusammenfassung}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung: Generell}%
+\begin{itemize}%
+%
+\item Die \glsShort{2NF} ist eine Regel, die uns dabei hilft, Redundanz zu verhindern.%
+%
+\item<2-> Sie besagt, dass es keine funktionale Abhängigkeit von nicht-Schlüssel-Attributen auf Teile von Schlüsseln geben soll.%
+%
+\item<3-> Als Ergebnis verringert sie die Wahrscheinlichkeit, Fehler bei der Dateneingabe zu machen, weil das Volumen der einzugebenden Daten kleiner wird.%
+%
+\item<4-> Die \glsShort{2NF} verringert auch Probleme, die durch Lösch- und Update-Anomalien auftreten können.%
+%
+\item<5-> Sie macht allerdings unsere Anfragen etwas komplizierter.%
+%
+\item<6-> Die \glsShort{2NF} zu implementieren bedeutet oft, Daten auf mehrere Tabellen zu verteilen.%
+%
+\item<7-> Wenn wir die Daten dann wieder zusammenbauen wollen, dann brauchen wir oft \sqlilIdx{INNER JOIN}s.%
+\end{itemize}%
+\end{frame}%
+%
+\begin{frame}%
+\frametitle{Zusammenfassung: Schlüssel}%
+\begin{itemize}%
+%
+\item Die Definition der \glsShort{2NF} ist etwas kompliziert.%
+%
+\item<2-> Sie gilt für zusammengesetzte Schlüssel, und zwar für \emph{alle} zusammengesetzten Schlüssel, nicht nur für Primärschlüssel.%
+%
+\item<3-> Es ist auch klar, warum das so ist:%
+%
+\item<4-> Wenn sie nur für Primärschlüssel gelten würde, dann hätten wir in unserem Beispiel oben die Tabelle \sqlil{building_room} einfach so ändern können, dass sie einen Ersatzprimärschlüssel verwendet.%
+%
+\item<5-> Da dieser nicht zusammengesetzt wäre, wäre die \glsShort{2NF} automatisch erfüllt.%
+%
+\item<6-> Das wäre aber sinnlos gewesen, da es keines der beschriebenen Probleme gelöst hätte.%
+%
+\item<7-> Deshalb ist die Definition so, wie sie ist.%
+\end{itemize}%
+\end{frame}%
+%%
+%%
+\endPresentation%
+\end{document}%%
+\endinput%
+%
