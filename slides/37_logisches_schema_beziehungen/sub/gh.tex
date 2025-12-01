@@ -21,7 +21,7 @@ Jedes Mitglied kann von einem Trainer trainiert werden oder auch gar nicht train
 \end{frame}%
 %
 \begin{frame}%
-\frametitle{Lösung}%
+\frametitle{\crowsFoot{G}{O1}{H: }{MM}Lösung}%
 \parbox{0.435\linewidth}{\small%
 \begin{itemize}%
 %
@@ -69,11 +69,11 @@ Jedes Mitglied kann von einem Trainer trainiert werden oder auch gar nicht train
 \item<11-> Diese Spalte sollte immer auf die Zeile in Tabelle~\sqlil{h} mit dem selben Wert in~\sqlil{hid} zeigen.%
 }%
 %
-\only<-16>{%
+\only<-15>{%
 \item<12-> Später setzen wir eine passende \sqlil{REFERENCE}-Einschränkung über~\sqlil{ALTER TABLE}~(noch können wir as nicht, es gibt die Tabelle~\sqlil{h} ja noch nicht).%
 }%
 %
-\only<-16>{%
+\only<-15>{%
 \item<13-> Stellen Sie sich erstmal vor, wir hätten das schon gemacht und dass das Attribut immer eine Zeile in Tabelle~\sqlil{h} referenziert.%
 }%
 %
@@ -117,7 +117,7 @@ Jedes Mitglied kann von einem Trainer trainiert werden oder auch gar nicht train
 \item<23-> Jetzt haben wir sichergestellt, dass jede Entität vom Typ~H mit keiner oder genau einer Entität vom Typ~G verbunden ist.%
 }%
 %
-\only<-28>{%
+\only<-27>{%
 \item<24-> Wir könnten jetzt eine Einschränkung~\sqlil{g_fkhid_fk} als~\sqlil{FOREIGN KEY (fkhid)} \sqlil{REFERENCES h (hid)} zur Tabelle~\sqlil{g} mit~\sqlil{ALTER TABLE g} \sqlil{ADD CONSTRAINT...} hinzufügen.%
 }%
 %
@@ -145,7 +145,7 @@ Jedes Mitglied kann von einem Trainer trainiert werden oder auch gar nicht train
 \item<30-> Wir wissen, dass jeder Wert von~\sqlil{gid} nur einmal in Tabelle~\sqlil{g} existiert.%
 }%
 %
-\only<-35>{%
+\only<-34>{%
 \item<31-> Wir wissen auch, dass jeder Wert von~\sqlil{hid} nur einmal in Tabelle~\sqlil{h} existiert.%
 }%
 %
@@ -165,7 +165,7 @@ Jedes Mitglied kann von einem Trainer trainiert werden oder auch gar nicht train
 \item<35-> Weil Fremdschlüssel-\sqlil{REFERENCES}-Einschränkungen nur Spalten referenzieren können, die \sqlil{UNIQUE} sind, müssen wir die Einschränkung~\sqlil{UNIQUE (hid, fkgid)} zur Tabelle~\sqlil{h} hinzufügen.%
 }%
 %
-\only<-39>{%
+\only<-38>{%
 \item<36-> Überlegen wir uns das noch einmal.%
 }%
 %
@@ -211,7 +211,7 @@ Jedes Mitglied kann von einem Trainer trainiert werden oder auch gar nicht train
 %
 %
 \begin{frame}[t]%
-\frametitle{Testen der Einschränkungen}%
+\frametitle{\crowsFoot{G}{O1}{H: }{MM}Testen der Einschränkungen}%
 \parbox{0.435\linewidth}{\small%
 \begin{itemize}%
 %
@@ -248,7 +248,7 @@ Jedes Mitglied kann von einem Trainer trainiert werden oder auch gar nicht train
 \end{frame}%
 %
 \begin{frame}%
-\frametitle{Wie können wir überhaupt Daten einfügen?}%
+\frametitle{\crowsFoot{G}{O1}{H: }{MM}Wie können wir überhaupt Daten einfügen?}%
 \begin{itemize}%
 \item Aber wie können wir überhaupt Zeilen in Tabelle~\sqlil{g} einfügen?%
 %
@@ -272,7 +272,7 @@ Jedes Mitglied kann von einem Trainer trainiert werden oder auch gar nicht train
 %
 %
 \begin{frame}[t]%
-\frametitle{Befüllen mit Daten}%
+\frametitle{\crowsFoot{G}{O1}{H: }{MM}Befüllen mit Daten}%
 \parbox{0.435\linewidth}{\small%
 \begin{itemize}%
 \only<-4>{%
@@ -468,7 +468,7 @@ Checking of constraints that are deferrable can be postponed until the end of th
 \end{frame}%
 
 \begin{frame}[t]%
-\frametitle{Der Inhalt der Zwei Tabellen}%
+\frametitle{\crowsFoot{G}{O1}{H: }{MM}Der Inhalt der Zwei Tabellen}%
 %
 %
 \gitExec{cdtrmTableG}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships g gid;fkhid;x}%
@@ -494,7 +494,7 @@ Checking of constraints that are deferrable can be postponed until the end of th
 %
 %
 \begin{frame}[t]%
-\frametitle{Testen der Einschränkungen}%
+\frametitle{\crowsFoot{G}{O1}{H: }{MM}Testen der Einschränkungen}%
 \parbox{0.435\linewidth}{\small%
 \begin{itemize}%
 %

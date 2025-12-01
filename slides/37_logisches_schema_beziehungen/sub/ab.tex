@@ -10,8 +10,8 @@
 \item<4-> Beispiele:\uncover<5->{%
 \begin{itemize}%
 %
-\item Wir haben eine Pizzaria bei der Kunden online bestellen können.\uncover<6->{ %
-Wir geben Gutscheine heraus, die die Bestellkostem um 20\% reduzieren.\uncover<7->{ %
+\item Wir haben eine Pizzeria bei der Kunden online bestellen können.\uncover<6->{ %
+Wir geben Gutscheine heraus, die die Bestellkosten um 20\% reduzieren.\uncover<7->{ %
 Jeder Gutschein kann für genau eine Bestellung eingelöst werden~(oder auch gar nicht).\uncover<8->{ %
 Für jede Bestellung kann maximal ein Gutschein eingelöst werden~(oder auch keiner).%
 }}}%
@@ -26,7 +26,7 @@ Für jede Bestellung kann maximal ein Gutschein eingelöst werden~(oder auch kei
 %
 %
 \begin{frame}[t]%
-\frametitle{Zwei Realisierungen}%
+\frametitle{\crowsFoot{A}{O1}{B: }{O1}Zwei Realisierungen}%
 \begin{itemize}%
 \item Es gibt zwei Möglichkeiten, das zu realisieren\only<1>{.}\uncover<2->{:%
 \begin{enumerate}%
@@ -61,7 +61,7 @@ Wir geben ihr eine weitere Spalte~\sqlil{y}, in der wir einen Text aus zwei Zeic
 \end{frame}%
 %
 \begin{frame}[t]%
-\frametitle{Mit Drei Tabellen}%
+\frametitle{\crowsFoot{A}{O1}{B: }{O1}Mit Drei Tabellen}%
 \parbox{0.435\linewidth}{\small%
 \begin{itemize}%
 \only<-5>{%
@@ -102,7 +102,7 @@ Wir geben ihr eine weitere Spalte~\sqlil{y}, in der wir einen Text aus zwei Zeic
 \end{frame}%
 %
 \begin{frame}[t]%
-\frametitle{Befüllen mit Daten}%
+\frametitle{\crowsFoot{A}{O1}{B: }{O1}Befüllen mit Daten}%
 \parbox{0.435\linewidth}{\small%
 \begin{itemize}%
 \only<-5>{%
@@ -111,14 +111,15 @@ Wir geben ihr eine weitere Spalte~\sqlil{y}, in der wir einen Text aus zwei Zeic
 \item<2-> Wir können zuerst Daten in die Tabellen~\sqlil{a} und~\sqlil{b} füllen.%
 }\only<-6>{%
 \item<3-> Die Primärschlüsselwerte werden dabei automatisch generiert.
-}\only<-7>{%
+}\only<-6>{%
 \item<4-> Wir geben also nur Werte für die Attribute~\sqlil{x} und~\sqlil{y} an.%
-}\only<-8>{%
+}\only<-7>{%
 \item<5-> Danach können wir die Beziehungen zwischen den Zeilen dieser beiden Tabellen herstellen, in dem wir Einträge in die Tabelle \sqlil{relate_a_and_b} mit den Primärschlüsseln der entsprechenden Zeilen eingeben.%
-}\only<-9>{%
+}\only<-8>{%
 \item<6-> \sqlil{INSERT INTO relate_a_and_b} \sqlil{(fkaid, fkbid)} \sqlil{VALUES (2, 3);}, \DEzB, setzt die Zeile~\sqlil{aid = 2} in Tabelle~\sqlil{a} mit der Zeile mit~\sqlil{bid = 3} in Tabelle~\sqlil{b} in Beziehung.%
-}%
+}\only<-9>{%
 \item<7-> Wenn wir Informationen über eine A~Entität via~\sqlil{SELECT} holen, brauchen aber auch Informationen über die eventuell existierende zugehörige B~Entität.%
+}%
 %
 \item<8-> Wir benutzen ein \sqlil{INNER JOIN} aus Richtung Tabelle~\sqlil{a} auf die dritte Tabelle \sqlil{relate_a_and_b} basierend auf dem Primärschlüssel~\sqlil{aid} von Tabelle~\sqlil{a}.%
 %
@@ -132,7 +133,7 @@ Wir geben ihr eine weitere Spalte~\sqlil{y}, in der wir einen Text aus zwei Zeic
 \end{frame}%
 %
 \begin{frame}[t]%
-\frametitle{Der Inhalt der Drei Tabellen}%
+\frametitle{\crowsFoot{A}{O1}{B: }{O1}Der Inhalt der Drei Tabellen}%
 \gitExec{cdtrmTableAO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships a aid;x}%
 \gitExec{cdtrmTableBO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships b bid;y}%
 \gitExec{cdtrmTableRAB}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_a_and_b fkaid;fkbid}%
@@ -158,7 +159,7 @@ Wir geben ihr eine weitere Spalte~\sqlil{y}, in der wir einen Text aus zwei Zeic
 \end{frame}%
 %
 \begin{frame}[t]%
-\frametitle{Testen der Einschränkungen}%
+\frametitle{\crowsFoot{A}{O1}{B: }{O1}Testen der Einschränkungen}%
 \parbox{0.435\linewidth}{\small%
 \begin{itemize}%
 %
@@ -178,7 +179,7 @@ Wir geben ihr eine weitere Spalte~\sqlil{y}, in der wir einen Text aus zwei Zeic
 \end{frame}%
 %
 \begin{frame}%
-\frametitle{Probleme mit der Drei-Tabellen-Methode}%
+\frametitle{\crowsFoot{A}{O1}{B: }{O1}Probleme mit der Drei-Tabellen-Methode}%
 \begin{itemize}%
 \item Es gibt zwei Probleme mit dieser Drei-Tabellen-Methode\only<-1>{.}\uncover<2->{:%
 \begin{enumerate}
@@ -194,7 +195,7 @@ Wir geben ihr eine weitere Spalte~\sqlil{y}, in der wir einen Text aus zwei Zeic
 \end{frame}%
 %
 \begin{frame}%
-\frametitle{Zwei-Tabellen Lösung}%
+\frametitle{\crowsFoot{A}{O1}{B: }{O1}Zwei-Tabellen Lösung}%
 \parbox{0.435\linewidth}{\small%
 \begin{itemize}%
 \only<-5>{%
@@ -258,7 +259,7 @@ Wir geben ihr eine weitere Spalte~\sqlil{y}, in der wir einen Text aus zwei Zeic
 \end{frame}%
 %
 \begin{frame}[t]%
-\frametitle{Befüllen mit Daten}%
+\frametitle{\crowsFoot{A}{O1}{B: }{O1}Befüllen mit Daten}%
 \parbox{0.435\linewidth}{\small%
 \begin{itemize}%
 \item Wir können nun Daten genauso wie vorher in die Tabellen einfügen.%
@@ -277,7 +278,7 @@ Wir geben ihr eine weitere Spalte~\sqlil{y}, in der wir einen Text aus zwei Zeic
 \end{frame}%
 %
 \begin{frame}[t]%
-\frametitle{Der Inhalt der Zwei Tabellen}%
+\frametitle{\crowsFoot{A}{O1}{B: }{O1}Der Inhalt der Zwei Tabellen}%
 %
 \gitExec{cdtrmTableAT}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships a aid;fkbid;x}%
 \gitExec{cdtrmTableBT}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships b bid;y}%
@@ -301,7 +302,7 @@ Wir geben ihr eine weitere Spalte~\sqlil{y}, in der wir einen Text aus zwei Zeic
 \end{frame}%
 %
 \begin{frame}[t]%
-\frametitle{Testen der Einschränkungen}%
+\frametitle{\crowsFoot{A}{O1}{B: }{O1}Testen der Einschränkungen}%
 \parbox{0.435\linewidth}{\small%
 \begin{itemize}%
 %

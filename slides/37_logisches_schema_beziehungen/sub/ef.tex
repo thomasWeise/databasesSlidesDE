@@ -20,7 +20,7 @@ Es kann keine, eine, oder beliebig viele Antworten auf jede Nachricht geben.}%
 \end{frame}%
 %
 \begin{frame}%
-\frametitle{Lösungen}%
+\frametitle{\crowsFoot{E}{O1}{F: }{OM}Lösungen}%
 \begin{itemize}%
 \item Wir brauchen eine Tabelle~\sqlil{e} für die Entitäten vom Typ~E.%
 %
@@ -43,7 +43,7 @@ Es kann keine, eine, oder beliebig viele Antworten auf jede Nachricht geben.}%
 %
 
 \begin{frame}[t]%
-\frametitle{Mit Drei Tabellen}%
+\frametitle{\crowsFoot{E}{O1}{F: }{OM}Mit Drei Tabellen}%
 \parbox{0.435\linewidth}{\small%
 \begin{itemize}%
 %
@@ -77,7 +77,7 @@ Es kann keine, eine, oder beliebig viele Antworten auf jede Nachricht geben.}%
 \end{frame}%
 %
 \begin{frame}[t]%
-\frametitle{Befüllen mit Daten}%
+\frametitle{\crowsFoot{E}{O1}{F: }{OM}Befüllen mit Daten}%
 \parbox{0.435\linewidth}{\small%
 \begin{itemize}%
 %
@@ -85,7 +85,10 @@ Es kann keine, eine, oder beliebig viele Antworten auf jede Nachricht geben.}%
 %
 \item<2-> Weil beide Enden der Beziehung optional sind, können wir erstmal die Tabellen~\sqlil{e} und~\sqlil{f} befüllen.%
 %
-\item<3-> Dann erstellen wir die Beziehungen, in dem wir Zeilen in die Tabelle~\sqlil{relate_e_and_f} einfügen.
+\item<3-> Dann erstellen wir die Beziehungen, in dem wir Zeilen in die Tabelle~\sqlil{relate_e_and_f} einfügen.%
+%
+\item<4-> Die Daten können dann wieder über zwei \sqlil{JOIN}s zusammengesetzt werden.%
+%
 \end{itemize}%
 }%
 \gitLoadAndExecSQL{EF_1_insert_and_select}{}{conceptualToRelational}{EF_1_insert_and_select.sql}{relationships}{}{}%
@@ -93,7 +96,7 @@ Es kann keine, eine, oder beliebig viele Antworten auf jede Nachricht geben.}%
 \end{frame}%
 %
 \begin{frame}[t]%
-\frametitle{Der Inhalt der Drei Tabellen}%
+\frametitle{\crowsFoot{E}{O1}{F: }{OM}Der Inhalt der Drei Tabellen}%
 %
 \gitExec{cdtrmTableEO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships e eid;x}%
 \gitExec{cdtrmTableFO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships f fid;y}%
@@ -120,7 +123,7 @@ Es kann keine, eine, oder beliebig viele Antworten auf jede Nachricht geben.}%
 \end{frame}%
 %%
 \begin{frame}%
-\frametitle{Probleme mit der Drei-Tabellen-Methode}%
+\frametitle{\crowsFoot{E}{O1}{F: }{OM}Probleme mit der Drei-Tabellen-Methode}%
 \begin{itemize}%
 \item Dieser Ansatz wird \DEzB\ in \bracketCite{S2024D:MEDTRDM} empfohlen.%
 %
@@ -137,7 +140,7 @@ Es kann keine, eine, oder beliebig viele Antworten auf jede Nachricht geben.}%
 \end{frame}%
 %
 \begin{frame}%
-\frametitle{Zwei-Tabellen Lösung}%
+\frametitle{\crowsFoot{E}{O1}{F: }{OM}Zwei-Tabellen Lösung}%
 \parbox{0.435\linewidth}{\small%
 \begin{itemize}%
 %
@@ -153,7 +156,9 @@ Es kann keine, eine, oder beliebig viele Antworten auf jede Nachricht geben.}%
 \item<3-> Diesmal müssen wir eine Fremdschlüssel-Spalte~\sqlil{fkeid} zur Tabelle~\sqlil{f} hinzufügen.%
 }%
 %
+\only<-7>{%
 \item<4-> Diese Spalte bekommt eine \sqlil{REFERENCES}-Einschränkung, die auf Spalte~\sqlil{eid} der Tabelle~\sqlil{e} zeigt.%
+}%
 %
 \item<5-> Ein Wert in dieser Spalte darf \sqlil{NULL} sein, denn nicht alle Zeilen in Tabelle~\sqlil{f} müssen mit Zeilen in Tabelle~\sqlil{e} verbunden sein.%
 %
@@ -172,7 +177,7 @@ Es kann keine, eine, oder beliebig viele Antworten auf jede Nachricht geben.}%
 \end{frame}%
 %
 \begin{frame}[t]%
-\frametitle{Befüllen mit Daten}%
+\frametitle{\crowsFoot{E}{O1}{F: }{OM}Befüllen mit Daten}%
 \parbox{0.435\linewidth}{\small%
 \begin{itemize}%
 \only<-5>{%
@@ -203,7 +208,7 @@ Es kann keine, eine, oder beliebig viele Antworten auf jede Nachricht geben.}%
 \end{frame}%
 %
 \begin{frame}[t]%
-\frametitle{Der Inhalt der Zwei Tabellen}%
+\frametitle{\crowsFoot{E}{O1}{F: }{OM}Der Inhalt der Zwei Tabellen}%
 %
 \gitExec{cdtrmTableET}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships e eid;x}%
 \gitExec{cdtrmTableFT}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships f fid;fkeid;y}%

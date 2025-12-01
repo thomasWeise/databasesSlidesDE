@@ -20,7 +20,7 @@ Jede Entität vom Typ~\emph{Faculty} muss mit genau einer Entität vom Typ~\emph
 \end{frame}%
 %
 \begin{frame}%
-\frametitle{Lösungen}%
+\frametitle{\crowsFoot{C}{O1}{D: }{M1}Lösungen}%
 \begin{itemize}%
 \item Eine Lösung mit drei Tabellen ergibt hier gar keinen Sinn.%
 %
@@ -31,7 +31,7 @@ Jede Entität vom Typ~\emph{Faculty} muss mit genau einer Entität vom Typ~\emph
 \end{frame}%
 %
 \begin{frame}%
-\frametitle{Zwei-Tabellen Lösung}%
+\frametitle{\crowsFoot{C}{O1}{D: }{M1}Zwei-Tabellen Lösung}%
 \parbox{0.435\linewidth}{\small%
 \begin{itemize}%
 %
@@ -43,11 +43,13 @@ Jede Entität vom Typ~\emph{Faculty} muss mit genau einer Entität vom Typ~\emph
 \item<2->  Wir brauchen auch eine Tabelle~\sqlil{d} für die Entitäten vom Typ~D.%
 }%
 %
-\only<-6>{%
+\only<-5>{%
 \item<3-> Beide Tabellen sind wie im vorigen Beispiel strukturiert, mit Ersatz-Primärschlüsseln~\sqlil{cid} und~\sqlil{did} sowie mit den Attributen~\sqlil{x} und~\sqlil{y}.%
 }%
 %
+\only<-6>{%
 \item<4-> Weil jede Entität vom Typ~C mit genau einer Entität vom Typ~D verbunden seien muss, fügen wir die Spalte~\sqlil{fkdid} zur Tabelle~\sqlil{c} hinzu, um Fremdschlüssel von D-Entitäten zu speichern.%
+}%
 %
 \item<5-> Diese Spalte hat daher eine \sqlil{REFERENCES}-Einschränkung zum Fremdschlüsssel, die wir später mit \sqlil{ALTER TABLE} hinzufügen%
 %
@@ -62,7 +64,7 @@ Jede Entität vom Typ~\emph{Faculty} muss mit genau einer Entität vom Typ~\emph
 \end{frame}%
 %
 \begin{frame}[t]%
-\frametitle{Befüllen mit Daten}%
+\frametitle{\crowsFoot{C}{O1}{D: }{M1}Befüllen mit Daten}%
 \parbox{0.435\linewidth}{\small%
 \begin{itemize}%
 \item Wir können nur Zeilen in die Tabelle~\sqlil{c} einfügen, die auf bereits existierende Zeilen in Tabelle~\sqlil{d} verweisen.
@@ -81,7 +83,7 @@ Jede Entität vom Typ~\emph{Faculty} muss mit genau einer Entität vom Typ~\emph
 \end{frame}%
 %
 \begin{frame}[t]%
-\frametitle{Der Inhalt der Zwei Tabellen}%
+\frametitle{\crowsFoot{C}{O1}{D: }{M1}Der Inhalt der Zwei Tabellen}%
 %
 \gitExec{cdtrmTableC}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships c cid;fkdid;x}%
 \gitExec{cdtrmTableD}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships d did;y}%
@@ -105,7 +107,7 @@ Jede Entität vom Typ~\emph{Faculty} muss mit genau einer Entität vom Typ~\emph
 \end{frame}%
 %
 \begin{frame}[t]%
-\frametitle{Testen der Einschränkungen}%
+\frametitle{\crowsFoot{C}{O1}{D: }{M1}Testen der Einschränkungen}%
 \parbox{0.435\linewidth}{\small%
 \begin{itemize}%
 %
