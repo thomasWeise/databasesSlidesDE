@@ -254,7 +254,7 @@ Jedes Mitglied kann von einem Trainer trainiert werden oder auch gar nicht train
 %
 \item<2-> Wie können keine Zeile einfügen, die keine existierende Zeile in Tabelle~\sqlil{h} referenziert.%
 %
-\item<3-> Wir können auch keine Zeile einfügen, die gar eine existierende Zeile in Tabelle~\sqlil{h} referenziert, die noch mit keiner Zeile in Tabelle~\sqlil{g} verbunden ist.%
+\item<3-> Wir können auch keine Zeile einfügen, die keine existierende Zeile in Tabelle~\sqlil{h} referenziert, die noch mit keiner Zeile in Tabelle~\sqlil{g} verbunden ist.%
 %
 \item<4-> Und wenn wir eine Zeile in Tabelle~\sqlil{g} einfügen wollen würden, die eine Zeile in Tabelle~\sqlil{h} referenziert welche bereits eine andere Zeile in Tabelle~\sqlil{q} referenziert {\dots} dann müsste diese andere Zeile in Tabelle~\sqlil{g} erstmal existieren.%
 %
@@ -373,7 +373,7 @@ Jedes Mitglied kann von einem Trainer trainiert werden oder auch gar nicht train
 }%
 %
 \only<-30>{%
-\item<26-> Eine Idee wäre es, zu versuchen eine Anfrage wie folgt zu bauen: \sqlil{UPDATE h} \sqlil{SET gid =} \sqlil{(INSERT INTO g} \sqlil{(fkhid, x)} \sqlil{VALUES (1, '123')} \sqlil{RETURNING gid, fkhid)} \sqlil{WHERE h.hid = fkhid;}.%
+\item<26-> Eine Idee wäre es, zu versuchen eine Anfrage wie folgt zu bauen: \sqlil{UPDATE h} \sqlil{SET fkgid =} \sqlil{(INSERT INTO g} \sqlil{(fkhid, x)} \sqlil{VALUES (1, '123')} \sqlil{RETURNING gid, fkhid)} \sqlil{WHERE h.hid = fkhid;}.%
 }%
 %
 \only<-31>{%
