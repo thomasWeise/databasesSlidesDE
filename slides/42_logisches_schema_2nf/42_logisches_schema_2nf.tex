@@ -29,7 +29,7 @@
 %
 \item<5-> Wir haben gelernt, dass ein Schlüssel Entitäten eindeutig identifizieren kann.%
 %
-\item<6-> Wenn ein Schlüssel~$X$ ein Entität identifiziert, dann bedeutet dass, das alle anderen Attribute der Entität im Grunde zusätzliche Informationen über den Schlüssel bereitstellen.%
+\item<6-> Wenn ein Schlüssel~$X$ eine Entität identifiziert, dann bedeutet dass, das alle anderen Attribute der Entität im Grunde zusätzliche Informationen über den Schlüssel bereitstellen.%
 %
 \item<7-> Im relationalen Modell ist ein Schlüssel der eindeutige Identifikator einer Zeile.%
 %
@@ -79,7 +79,7 @@ Eine Menge von Attributen~$K\subseteq\relSchemab{R}$ gegeben als~$K=\{k_i:i\in\i
 \begin{frame}%
 \frametitle{Funktionale Abhängigkeiten}%
 \begin{itemize}%
-\item Eine andere Perspektive auf die \glsShort{2NF} bieten \emph{fuktionale Abhängigkeiten}~\inEN{functional dependencies}~(\glsShort{funcDep}).%
+\item Eine andere Perspektive auf die \glsShort{2NF} bieten \emph{funktionale Abhängigkeiten}~\inEN{functional dependencies}~(\glsShort{funcDep}).%
 \end{itemize}%
 %
 \uncover<2->{%
@@ -103,7 +103,7 @@ Das schreibt man als~$\funcDepb{X}{Y}$.%
 \frametitle{2NF~(unvollständig)}%
 \begin{itemize}%
 %
-\item Das relationale Scheme einer Relation~$R$ sei~\relSchemab{R} und $X\subseteq\relSchemab{R}$ is ein Schlüssel.%
+\item Das relationale Schema einer Relation~$R$ sei~\relSchemab{R} und $X\subseteq\relSchemab{R}$ is ein Schlüssel.%
 %
 \item<2-> Natürlich hängen dann alle Attribute~$a$ in~\relSchemab{R} von den Schlüsselattributen~$X$ (funktional) ab, also es gilt immer~$\funcDepb{X}{a}$.%
 %
@@ -140,7 +140,7 @@ Das schreibt man als~$\funcDepb{X}{Y}$.%
 \uncover<8->{%
 \begin{definition*}[2.~Normalform]%
 \label{def:2nf}%
-Eine Relation~$R$ mit dem Primärschlüssel~$P\subseteq\relSchema{R}$ ist in der 2.~Normalform~(\glsShort{2NF}) wenn und nur wenn sie in der \glsShort{1NF} ist und für alle Mengen von Attributen~$X\subseteq\relSchemab{R}$ und alle Attribute~$a\in\relSchemab{R}$ mit~$a\not\in X$, $a\not\in P$ und~$\funcDepb{X}{a}$, gilt, dass $X$ entweder ein Schlüssel oder Superschlüssel ist, aber keine echte Untermenge eines Schlüssels von~$R$.%
+Eine Relation~$R$ mit dem Primärschlüssel~$P\subseteq\relSchemab{R}$ ist in der 2.~Normalform~(\glsShort{2NF}) wenn und nur wenn sie in der \glsShort{1NF} ist und für alle Mengen von Attributen~$X\subseteq\relSchemab{R}$ und alle Attribute~$a\in\relSchemab{R}$ mit~$a\not\in X$, $a\not\in P$ und~$\funcDepb{X}{a}$, gilt, dass $X$ entweder ein Schlüssel oder Superschlüssel ist, aber keine echte Untermenge eines Schlüssels von~$R$.%
 \end{definition*}%
 }%
 \end{frame}%
@@ -264,7 +264,7 @@ Eine Relation~$R$ mit dem Primärschlüssel~$P\subseteq\relSchema{R}$ ist in der
 \end{itemize}%
 }%
 %
-\gitExecSQLraw{}{}{normalization/2nf/rooms/violation/generated_sql}{01_violation_database_2001.sql}{}{}{}%
+\gitExecSQLraw{normalization:2nf:rooms:violation:generated_sql:01_violation_database_2001}{}{normalization/2nf/rooms/violation/generated_sql}{01_violation_database_2001.sql}{}{}{}%
 %
 \gitLoadAndExecSQL{2nf:rooms:violation:03_public_building_room_table_5071}{}{normalization/2nf/rooms/violation/generated_sql}{03_public_building_room_table_5071.sql}{violation}{}{}%
 %%
@@ -614,6 +614,8 @@ Ein Situation wo das Einfügen von Daten in die Datenbank unmöglich wird, weil 
 %
 \end{frame}%
 %
+\gitExecSQLraw{normalization:2nf:rooms:violation:cleanup}{}{normalization/2nf/rooms/violation}{cleanup.sql}{}{}{}%
+%
 \section{Lösung: Wiederherstellung der 2.~Normalform}%
 %
 \begin{frame}[t]%
@@ -720,7 +722,7 @@ Ein Situation wo das Einfügen von Daten in die Datenbank unmöglich wird, weil 
 \end{itemize}%
 }%
 %
-\gitExecSQLraw{}{}{normalization/2nf/rooms/fixed/generated_sql}{01_fixed_database_2001.sql}{}{}{}%
+\gitExecSQLraw{normalization:2nf:rooms:fixed:generated_sql:01_fixed_database_2001}{}{normalization/2nf/rooms/fixed/generated_sql}{01_fixed_database_2001.sql}{}{}{}%
 %
 \gitLoadAndExecSQL{2nf:rooms:fixed:04_public_building_table_5080}{}{normalization/2nf/rooms/fixed/generated_sql}{04_public_building_table_5080.sql}{fixed}{}{}%
 %%
@@ -1062,7 +1064,7 @@ Ein Situation wo das Einfügen von Daten in die Datenbank unmöglich wird, weil 
 \gitLoadAndExecSQL{2nf:rooms:fixed:update_b}{}{normalization/2nf/rooms/fixed}{update_b.sql}{fixed}{}{}%
 %%
 \listingSQLandOutput{}{2nf:rooms:fixed:update_b}{}{0.47}{0.2}{0.529}{0.87}
-\gitExecSQLraw{}{}{normalization/2nf/rooms/fixed}{cleanup.sql}{}{}{}%
+\gitExecSQLraw{normalization:2nf:rooms:fixed:cleanup}{}{normalization/2nf/rooms/fixed}{cleanup.sql}{}{}{}%
 %
 \end{frame}%
 %

@@ -227,7 +227,7 @@ Eine Relation~$R$ ist in der \glsShort{3NF} wenn sie in der \glsShort{2NF} ist u
 \end{itemize}%
 }%
 %
-\gitExecSQLraw{}{}{normalization/3nf/student/violation/generated_sql}{01_violation_database_2002.sql}{}{}{}%
+\gitExecSQLraw{normalization:3nf:student:violation:generated_sql:01_violation_database_2002}{}{normalization/3nf/student/violation/generated_sql}{01_violation_database_2002.sql}{}{}{}%
 %
 \gitLoadAndExecSQL{3nf:student:violation:03_public_student_table_5103}{}{normalization/3nf/student/violation/generated_sql}{03_public_student_table_5103.sql}{violation}{}{}%
 %%
@@ -375,7 +375,7 @@ Eine Relation~$R$ ist in der \glsShort{3NF} wenn sie in der \glsShort{2NF} ist u
 %
 \listingSQLandOutput{}{3nf:student:violation:update}{}{0.47}{0.2}{0.529}{0.87}%
 %
-\gitExecSQLraw{}{}{normalization/3nf/student/violation}{cleanup.sql}{}{}{}%
+\gitExecSQLraw{normalization:3nf:student:violation:cleanup}{}{normalization/3nf/student/violation}{cleanup.sql}{}{}{}%
 %
 \end{frame}%
 %
@@ -478,7 +478,7 @@ Eine Relation~$R$ ist in der \glsShort{3NF} wenn sie in der \glsShort{2NF} ist u
 \end{itemize}%
 }%
 %
-\gitExecSQLraw{}{}{normalization/3nf/student/fixed/generated_sql}{01_fixed_database_2001.sql}{}{}{}
+\gitExecSQLraw{normalization:3nf:student:fixed:generated_sql:01_fixed_database_2001}{}{normalization/3nf/student/fixed/generated_sql}{01_fixed_database_2001.sql}{}{}{}
 %
 \gitLoadAndExecSQL{3nf:student:fixed:03_public_student_table_5071}{}{normalization/3nf/student/fixed/generated_sql}{03_public_student_table_5071.sql}{fixed}{}{}%
 %%
@@ -650,7 +650,7 @@ Eine Relation~$R$ ist in der \glsShort{3NF} wenn sie in der \glsShort{2NF} ist u
 \gitLoadAndExecSQL{3nf:student:fixed:update}{}{normalization/3nf/student/fixed}{update.sql}{fixed}{}{}%
 %%
 \listingSQLandOutput{}{3nf:student:fixed:update}{}{0.47}{0.2}{0.529}{0.87}%
-\gitExecSQLraw{}{}{normalization/3nf/student/fixed}{cleanup.sql}{}{}{}%
+\gitExecSQLraw{normalization:3nf:student:fixed:cleanup}{}{normalization/3nf/student/fixed}{cleanup.sql}{}{}{}%
 %
 \end{frame}%
 %

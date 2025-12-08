@@ -24,9 +24,9 @@
 \item<2-> Wir können nun zwar alle Elemente eines konzeptuellen \glsShort{ERD}s in ein logisches Modell übersetzen\dots\uncover<3->{ %
 {\dots}das heißt aber noch nicht, dass dieses logische Modell dann auch \emph{gut} ist.}%
 %
-\item<3-> Um das zu schaffen, sollten wir mehrere Richtlinien und Best Practices befolgen.%
+\item<4-> Um das zu schaffen, sollten wir mehrere Richtlinien und Best Practices befolgen.%
 %
-\item<4-> Einige der wichtigsten davon betreffen \emph{Normalisierung}~\inEN{normalization}\cite{D2003AITDS,EN2015FODS}.%
+\item<5-> Einige der wichtigsten davon betreffen \emph{Normalisierung}~\inEN{normalization}\cite{D2003AITDS,EN2015FODS}.%
 %
 \end{itemize}%
 \end{frame}%
@@ -113,7 +113,7 @@ Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spal
 \frametitle{Verletzung der 1. Normalform durch Zusammengesetze Attribute}%
 \begin{itemize}%
 %
-\item Hier zeigen wir einen Tail eines logischen Modells, dass Studenten- und Addressdatensätze verbindet.%
+\item Hier zeigen wir einen Teil eines logischen Modells, dass Studenten- und Addressdatensätze verbindet.%
 %
 \item<2-> Im Modell hat jeder Student genau eine Adresse und einen Namen.%
 %
@@ -136,7 +136,7 @@ Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spal
 %
 \end{itemize}%
 }%
-\gitExecSQLraw{}{}{normalization/1nf/anomaly_composite/generated_sql}{01_anomalies_database_2001.sql}{}{}{}%
+\gitExecSQLraw{normalization:1nf:anomaly_composite:generated_sql:01_anomalies_database_2001}{}{normalization/1nf/anomaly_composite/generated_sql}{01_anomalies_database_2001.sql}{}{}{}%
 %
 \gitLoadAndExecSQL{1nf:anomaly_composite:03_public_address_table_5071}{}{normalization/1nf/anomaly_composite/generated_sql}{03_public_address_table_5071.sql}{anomalies}{}{}%
 \listingSQLandOutput{}{1nf:anomaly_composite:03_public_address_table_5071}{}{0.47}{0.2}{0.529}{0.87}
@@ -165,7 +165,7 @@ Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spal
 \gitLoadAndExecSQL{1nf:anomaly_composite:04_public_student_table_5075}{}{normalization/1nf/anomaly_composite/generated_sql}{04_public_student_table_5075.sql}{anomalies}{}{}%
 \listingSQLandOutput{}{1nf:anomaly_composite:04_public_student_table_5075}{}{0.47}{0.2}{0.529}{0.87}
 %
-\gitExecSQLraw{}{}{normalization/1nf/anomaly_composite/generated_sql}{05_public_student_student_address_fk_constraint_5080.sql}{anomalies}{}{}%
+\gitExecSQLraw{normalization:1nf:anomaly_composite:generated_sql:05_public_student_student_address_fk_constraint_5080}{}{normalization/1nf/anomaly_composite/generated_sql}{05_public_student_student_address_fk_constraint_5080.sql}{anomalies}{}{}%
 \end{frame}%
 %
 %
@@ -211,7 +211,7 @@ Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spal
 %
 \item<6-> Herr Bebbo und Frau Bibbi sind aber ausländische Austauschstudenten~(留学生) aus Deutschland bzw.\ den USA.%
 %
-\item<7-> Stellen Sie sich vor, die Tabellen wären viel größer?%
+\item<7-> Stellen Sie sich vor, die Tabellen wären viel größer.%
 %
 \item<8-> Was wäre, wenn wir fragen würden, welche unserer Studenten denn eine chinesische Adresse haben?%
 %
@@ -301,7 +301,7 @@ Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spal
 %
 \item<4-> Und wir können Adressen dazunehmen, die PRC oder P.R.C.\ beinhalten.%
 %
-\item<5-> Das sind aber nur Krücken und keine wirklichen Lösngen.%
+\item<5-> Das sind aber nur Krücken und keine wirklichen Lösungen.%
 %
 \item<6-> Wir können immer noch leicht Adressen finden, die falsch klassifiziert werden würden.%
 %
@@ -311,7 +311,7 @@ Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spal
 }%
 \gitLoadAndExecSQL{1nf:anomaly_composite:select_2}{}{normalization/1nf/anomaly_composite}{select_2.sql}{anomalies}{}{}%
 \listingSQLandOutput{}{1nf:anomaly_composite:select_2}{}{0.47}{0.2}{0.529}{0.87}
-\gitExecSQLraw{}{}{normalization/1nf/anomaly_composite}{cleanup.sql}{}{}{}%
+\gitExecSQLraw{normalization:1nf:anomaly_composite:cleanup}{}{normalization/1nf/anomaly_composite}{cleanup.sql}{}{}{}%
 \end{frame}%
 %
 \section{Zusammengesetzte Attribute: Lösung}%
@@ -356,7 +356,7 @@ Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spal
 %
 \end{itemize}%
 }%
-\gitExecSQLraw{}{}{ normalization/1nf/fixed_composite/generated_sql}{01_fixed_database_2001.sql}{}{}{}%
+\gitExecSQLraw{normalization:1nf:fixed_composite:generated_sql:01_fixed_database_2001}{}{normalization/1nf/fixed_composite/generated_sql}{01_fixed_database_2001.sql}{}{}{}%
 %
 \gitLoadAndExecSQL{1nf:fixed_composite:03_public_address_table_5071}{}{normalization/1nf/fixed_composite/generated_sql}{03_public_address_table_5071.sql}{fixed}{}{}%
 \listingSQLandOutput{}{1nf:fixed_composite:03_public_address_table_5071}{}{0.47}{0.2}{0.529}{0.87}
@@ -381,8 +381,8 @@ Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spal
 \end{itemize}%
 }%
 %
-\gitExecSQLraw{}{}{normalization/1nf/fixed_composite/generated_sql}{04_public_student_table_5079.sql}{fixed}{}{}%
-\gitExecSQLraw{}{}{normalization/1nf/fixed_composite/generated_sql}{05_public_student_student_address_fk_constraint_5084.sql}{fixed}{}{}%%
+\gitExecSQLraw{normalization:1nf:fixed_composite:generated_sql:04_public_student_table_5079}{}{normalization/1nf/fixed_composite/generated_sql}{04_public_student_table_5079.sql}{fixed}{}{}%
+\gitExecSQLraw{normalization:1nf:fixed_composite:generated_sql:05_public_student_student_address_fk_constraint_5084}{}{normalization/1nf/fixed_composite/generated_sql}{05_public_student_student_address_fk_constraint_5084.sql}{fixed}{}{}%%
 %
 \gitLoadAndExecSQL{1nf:fixed_composite:insert}{}{normalization/1nf/fixed_composite}{insert.sql}{fixed}{}{}%
 \listingSQLandOutput{}{1nf:fixed_composite:insert}{}{0.47}{0.2}{0.529}{0.87}
@@ -496,7 +496,7 @@ Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spal
 }%
 \gitLoadAndExecSQL{1nf:fixed_composite:select}{}{normalization/1nf/fixed_composite}{select.sql}{fixed}{}{}%
 \listingSQLandOutput{}{1nf:fixed_composite:select}{}{0.47}{0.2}{0.529}{0.87}
-\gitExecSQLraw{}{}{normalization/1nf/fixed_composite}{cleanup.sql}{}{}{}%
+\gitExecSQLraw{normalization:1nf:fixed_composite:cleanup}{}{normalization/1nf/fixed_composite}{cleanup.sql}{}{}{}%
 \end{frame}%
 %
 \begin{frame}%
@@ -506,7 +506,7 @@ Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spal
 %
 \item<2-> Wenn wir zusammengesetzte Attribute fälschlicherweise als unteilbare Attribute modellieren, dann können wir schnelle in einer Hölle aus Spezielfällen und Krücken landen.%
 %
-\item<3-> Die Natur von Attributen richtig zu erkennen und der \glsShort{1NF} string zu folgen kann also die Menge möglicher Fehler stark verringern.%
+\item<3-> Die Natur von Attributen richtig zu erkennen und der \glsShort{1NF} streng zu folgen kann also die Menge möglicher Fehler stark verringern.%
 %
 \item<4-> Wir bezahlen dafür mit etwas komplizierteren Anfragen, die die Daten dann wieder zusammensetzen müssen.%
 \end{itemize}%
@@ -577,18 +577,17 @@ Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spal
 \end{itemize}%
 }%
 %
-\gitExecSQLraw{}{}{normalization/1nf/anomaly_multivalued/generated_sql}{01_anomalies_database_2001.sql}{}{}{}%
+\gitExecSQLraw{normalization:1nf:anomaly_multivalued:generated_sql:01_anomalies_database_2001}{}{normalization/1nf/anomaly_multivalued/generated_sql}{01_anomalies_database_2001.sql}{}{}{}%
 %
-\gitExecSQLraw{}{}{normalization/1nf/anomaly_multivalued/generated_sql}{03_public_address_table_5071.sql}{anomalies}{}{}%
+\gitExecSQLraw{normalization:1nf:anomaly_multivalued:generated_sql:03_public_address_table_5071}{}{normalization/1nf/anomaly_multivalued/generated_sql}{03_public_address_table_5071.sql}{anomalies}{}{}%
 %
 \gitLoadAndExecSQL{1nf:anomaly_multivalued:04_public_student_table_5079}{}{normalization/1nf/anomaly_multivalued/generated_sql}{04_public_student_table_5079.sql}{anomalies}{}{}%
 %
-\gitLoadAndExecSQL{1nf:anomaly_composite:04_public_student_table_5075}{}{normalization/1nf/anomaly_composite/generated_sql}{04_public_student_table_5075.sql}{anomalies}{}{}%
-\listingSQLandOutput{}{1nf:anomaly_composite:04_public_student_table_5075}{}{0.47}{0.2}{0.529}{0.87}
+\listingSQLandOutput{}{1nf:anomaly_multivalued:04_public_student_table_5079}{}{0.47}{0.2}{0.529}{0.87}
 %
-\gitExecSQLraw{}{}{normalization/1nf/anomaly_multivalued/generated_sql}{05_public_student_student_address_1_fk_constraint_5085.sql}{anomalies}{}{}%
+\gitExecSQLraw{normalization:1nf:anomaly_multivalued:generated_sql:05_public_student_student_address_1_fk_constraint_5085}{}{normalization/1nf/anomaly_multivalued/generated_sql}{05_public_student_student_address_1_fk_constraint_5085.sql}{anomalies}{}{}%
 %
-\gitExecSQLraw{}{}{normalization/1nf/anomaly_multivalued/generated_sql}{ 06_public_student_student_address_2_fk_constraint_5086.sql}{anomalies}{}{}%
+\gitExecSQLraw{normalization:1nf:anomaly_multivalued:generated_sql:06_public_student_student_address_2_fk_constraint_5086}{}{normalization/1nf/anomaly_multivalued/generated_sql}{ 06_public_student_student_address_2_fk_constraint_5086.sql}{anomalies}{}{}%
 %
 \end{frame}%
 %
@@ -672,7 +671,7 @@ Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spal
 %
 \item<7-> Manche Leute haben keine Adresse in China, bei anderen ist nur die erste oder zweite Adresse in China, und manche haben zwei chinesische Adressen.%
 %
-\item<8-> Von den fünf Studenten haben die Herren bibbo und Babbo sowie Frau Bebbe eine Adresse in China.%
+\item<8-> Von den fünf Studenten haben die Herren Bibbo und Babbo sowie Frau Bebbe eine Adresse in China.%
 %
 \end{itemize}%
 }%
@@ -795,7 +794,7 @@ Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spal
 \listingSQLandOutput{19-26}{1nf:anomaly_multivalued:select_3}{}{0.47}{0.2}{0.529}{0.87}
 \listingSQLandOutput{27-}{1nf:anomaly_multivalued:select}{}{0.47}{0.01}{0.529}{0.99}
 %
-\gitExecSQLraw{}{}{normalization/1nf/anomaly_multivalued}{cleanup.sql}{}{}{}%
+\gitExecSQLraw{normalization:1nf:anomaly_multivalued:cleanup}{}{normalization/1nf/anomaly_multivalued}{cleanup.sql}{}{}{}%
 \end{frame}%
 %
 \begin{frame}%
@@ -843,7 +842,7 @@ Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spal
 %
 \item<6-> Wir brauchen nun eine dritte Tabelle, die wir \sqlil{student_address} nennen.%
 %
-\item<7-> Die Tabelle hat einen zusammengesetzten Primärschlüssel aus einem Fremdschlüssel auf Tabelle \sqlil{student} und einem auf  Tabelle \sqlil{address}.%
+\item<7-> Die Tabelle hat einen zusammengesetzten Primärschlüssel aus einem Fremdschlüssel auf Tabelle \sqlil{student} und einem auf Tabelle \sqlil{address}.%
 %
 \item<8-> Die Adressspalten verschwinden aus Tabelle \sqlil{student}.%
 %
@@ -866,9 +865,9 @@ Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spal
 %
 \end{itemize}%
 }%
-\gitExecSQLraw{}{}{normalization/1nf/fixed_multivalued/generated_sql}{01_fixed_database_2001.sql}{}{}{}%
+\gitExecSQLraw{normalization:1nf:fixed_multivalued:generated_sql:01_fixed_database_2001}{}{normalization/1nf/fixed_multivalued/generated_sql}{01_fixed_database_2001.sql}{}{}{}%
 %
-\gitExecSQLraw{}{}{normalization/1nf/fixed_multivalued/generated_sql}{03_public_address_table_5071.sql}{fixed}{}{}%
+\gitExecSQLraw{normalization:1nf:fixed_multivalued:generated_sql:03_public_address_table_5071}{}{normalization/1nf/fixed_multivalued/generated_sql}{03_public_address_table_5071.sql}{fixed}{}{}%
 %
 \gitLoadAndExecSQL{1nf:fixed_multivalued:04_public_student_table_5079}{}{normalization/1nf/fixed_multivalued/generated_sql}{04_public_student_table_5079.sql}{fixed}{}{}%
 %
@@ -895,9 +894,9 @@ Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spal
 \gitLoadAndExecSQL{1nf:fixed_multivalued:05_public_student_address_table_5083}{}{normalization/1nf/fixed_multivalued/generated_sql}{05_public_student_address_table_5083.sql}{fixed}{}{}%
 \listingSQLandOutput{}{1nf:fixed_multivalued:05_public_student_address_table_5083}{}{0.47}{0.2}{0.529}{0.87}
 %
-\gitExecSQLraw{}{}{normalization/1nf/fixed_multivalued/generated_sql}{06_public_student_address_student_fk_constraint_5087.sql}{fixed}{}{}%
+\gitExecSQLraw{normalization:1nf:fixed_multivalued:generated_sql:06_public_student_address_student_fk_constraint_5087}{}{normalization/1nf/fixed_multivalued/generated_sql}{06_public_student_address_student_fk_constraint_5087.sql}{fixed}{}{}%
 %
-\gitExecSQLraw{}{}{normalization/1nf/fixed_multivalued/generated_sql}{07_public_student_address_address_fk_constraint_5088.sql}{fixed}{}{}%
+\gitExecSQLraw{normalization:1nf:fixed_multivalued:generated_sql:07_public_student_address_address_fk_constraint_5088}{}{normalization/1nf/fixed_multivalued/generated_sql}{07_public_student_address_address_fk_constraint_5088.sql}{fixed}{}{}%
 %
 \end{frame}%
 %
@@ -963,7 +962,7 @@ Unter der \glsShort{1NF} müssen alle Zeilen einer Tabelle die selbe Anzahl Spal
 %
 \listingSQLandOutput{}{1nf:fixed_multivalued:select}{}{0.47}{0.25}{0.529}{0.7}
 %
-\gitExecSQLraw{}{}{normalization/1nf/fixed_multivalued}{cleanup.sql}{}{}{}
+\gitExecSQLraw{normalization:1nf:fixed_multivalued:cleanup}{}{normalization/1nf/fixed_multivalued}{cleanup.sql}{}{}{}
 \end{frame}%
 %
 \section{Zusammenfassung}%
