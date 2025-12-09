@@ -31,7 +31,7 @@
 %
 \uncover<4->{%
 \only<-7>{%
-\begin{definition*}[Transitive Functionale Abhängigkeit]%
+\begin{definition*}[Transitive Funktionale Abhängigkeit]%
 \label{def:transitiveDependency}%
 $A$, $B$, und~$C$ seien drei verschiede Attribute~(oder Mengen von Attributen) der Realtion~$R$, also gelten $A\subseteq\relSchemab{R}$, $B\subseteq\relSchemab{R}$ und~$C\subseteq\relSchemab{R}$. %
 Die funktionale Abhängigkeit $\funcDepb{A}{C}$ ist eine \emph{transitive Abhängigkeit} dann und nur dann wenn \funcDepb{A}{B} und \funcDepb{B}{C} beide wahr sind, aber \funcDepb{B}{A} \emph{nicht} wahr ist.%
@@ -53,7 +53,7 @@ Eine Relation~$R$ ist in der \glsShort{3NF} wenn sie in der \glsShort{2NF} ist u
 %
 \uncover<7->{%
 \begin{itemize}%
-\item Eine Tabelle ist in der \glsShort{3NF}, wenn sie in der \glsShort{2NF} ist und alle Attribute, die nicht Teil eines Schlüsselkandidats sind, direkt vom Primärschlüssel abhängen.%
+\item Eine Tabelle ist in der \glsShort{3NF}, wenn sie in der \glsShort{2NF} ist und alle Attribute, die nicht Teil eines Schlüsselkandidatens sind, direkt vom Primärschlüssel abhängen.%
 %
 \item<8-> Jedes nicht-Primärschlüssel-Attribut ist nicht transitiv von jedem Schlüsselkandidat der Tabelle äbhängig.%
 %
@@ -79,7 +79,7 @@ Eine Relation~$R$ ist in der \glsShort{3NF} wenn sie in der \glsShort{2NF} ist u
 }%
 %
 \only<-13>{%
-\item<4-> Ein Kollege schlägt vor, dass es eine gute Idee wäre, auch die Kontaktinformation der Elten der Studenten zu speichern.%
+\item<4-> Ein Kollege schlägt vor, dass es eine gute Idee wäre, auch die Kontaktinformation der Eltern der Studenten zu speichern.%
 }%
 %
 \only<-14>{%
@@ -152,7 +152,7 @@ Eine Relation~$R$ ist in der \glsShort{3NF} wenn sie in der \glsShort{2NF} ist u
 }%
 %
 \only<-14>{%
-\item<7-> Dann speichern wir noch den name der Eltern und deren Mobiltelefonnummer.%
+\item<7-> Dann speichern wir noch den Namen der Eltern und deren Mobiltelefonnummer.%
 }%
 %
 \only<-15>{%
@@ -212,7 +212,7 @@ Eine Relation~$R$ ist in der \glsShort{3NF} wenn sie in der \glsShort{2NF} ist u
 \item Hier ist das auto-generierte Skript zum Erstellen der Tabelle \sqlil{student}.%
 }%
 %
-\only<-5>{%
+\only<-4>{%
 \item<2-> Der Primärschlüssel \sqlil{student_id} ist eine Zeichenkette, die immer die Länge~11 hat, also ein \sqlil{CHARACTER(11)}, weil die Studenten-IDs in unserer Uni nun mal so sind.%
 }%
 %
@@ -260,7 +260,7 @@ Eine Relation~$R$ ist in der \glsShort{3NF} wenn sie in der \glsShort{2NF} ist u
 %
 \item<7-> Nun sind wir aber eben in China und der Sekretär, der die Daten eingeben sollte, wusste nicht, wie er den Buchstabe~\keys{\"o} eingeben kann.%
 %
-\item<8-> Deshalb hat er sich entschlossen, den Vater der drei Studenten kruzerhand \inQuotes{Herr Boddo} zu nennen.%
+\item<8-> Deshalb hat er sich entschlossen, den Vater der drei Studenten kurzerhand \inQuotes{Herr Boddo} zu nennen.%
 %%
 \end{itemize}%
 }%
@@ -434,7 +434,7 @@ Eine Relation~$R$ ist in der \glsShort{3NF} wenn sie in der \glsShort{2NF} ist u
 }%
 %
 \only<-18>{%
-\item<13-> Die zweite Spalte dieser Tabelle ist \sqlil{name} -- und die hängt natürlich vom Primärschlüssel ab.%
+\item<13-> Die zweite Spalte dieser Tabelle ist \sqlil{parent_name} -- und die hängt natürlich vom Primärschlüssel ab.%
 }%
 %
 \only<-18>{%
@@ -673,7 +673,7 @@ Eine Relation~$R$ ist in der \glsShort{3NF} wenn sie in der \glsShort{2NF} ist u
 }%
 %
 \only<-13>{%
-\item<4-> Sagen wir, dass es eine funktionale Abhängigkeit der Spalten~$A$ auf die Spalten~$B$ gibt und das diese transitiv auf den Schlüssel ist, also das wir \funcDepb{$K$}{\funcDepb{$B$}{$A$}} habe.%
+\item<4-> Sagen wir, dass es eine funktionale Abhängigkeit der Spalten~$A$ auf die Spalten~$B$ gibt und das diese transitiv auf den Schlüssel ist, also das wir \funcDepb{$K$}{\funcDepb{$B$}{$A$}} haben.%
 }%
 %
 \only<-13>{%
