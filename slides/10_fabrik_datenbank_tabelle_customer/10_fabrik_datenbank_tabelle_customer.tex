@@ -213,7 +213,7 @@ Wir müssen die Spalte also \emph{nicht} mit \sqlil{UNIQUE} annotieren.%
 \item Nun haben wir die Tabelle \sqlil{customer} erstellt, aber sie ist leer.%
 \item<2-> Füllen wir sie mit Daten!%
 \uncover<-8>{%
-\item<3-> Wir haben vier Kunden: Herr~Bibbo, Herr~Bebbo, Frau~Bebba, und Herr~Bobbo\only<-3>{.}\uncover<4->{:%
+\item<3-> Wir haben vier Kunden: Herr~Bibbo, Herr~Bebbo, Frau~Bebba und Herr~Bobbo\only<-3>{.}\uncover<4->{:%
 \begin{itemize}%
 \item Herr~Bibbo lebt im Südcampus unserer Universität Hefei~(合肥大学)\uncover<5->{,}%
 \item<5-> Herr~Bebbo hat seine Geschäftsadresse im Rathaus der Stadt Chemnitz in Deutschland\uncover<6->{,}%
@@ -275,7 +275,7 @@ Wir müssen die Spalte also \emph{nicht} mit \sqlil{UNIQUE} annotieren.%
 \item<3-> Das können wir mit \sqlil{address LIKE '\%China\%' AS domestic} machen\cite{PGDG:PD:PM}.%
 \item<4-> Wir wollen aber diesmal lieber \sqlil{ILIKE} nehmen: \sqlil{LIKE} beachtet Groß- und Kleinschreibung, \sqlil{ILIKE} nicht.%
 \item<5-> Für \sqlil{LIKE} sind \sqlil{'china'} und \sqlil{'China'} verschieden.%
-\item<6-> Für \sqlil{ILIKE} sind \sqlil{'china'}, \sqlil{'China'}, und \sqlil{'CHINA'} das selbe.%
+\item<6-> Für \sqlil{ILIKE} sind \sqlil{'china'}, \sqlil{'China'} und \sqlil{'CHINA'} das selbe.%
 }%
 \item<7-> \sqlil{t} steht für \sqlil{TRUE} und \sqlil{f} für \sqlil{FALSE}.%
 \end{itemize}%

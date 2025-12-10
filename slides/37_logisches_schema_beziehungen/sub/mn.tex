@@ -266,7 +266,7 @@ Jede persönliche ID gehört zu genau einer Person.}%
 }%
 %
 \only<-41>{%
-\item<39-> Wir können also gülte Primärschlüsselwerte für Tabelle~\sqlil{m} erzeugen, mit diesen als Fremdschlüssel eine Zeile in Tabelle~\sqlil{n} generieren, und den Wert dann für den Primärschlüssel in einer neuen Zeile in Tabelle~\sqlil{m} verwenden.%
+\item<39-> Wir können also gülte Primärschlüsselwerte für Tabelle~\sqlil{m} erzeugen, mit diesen als Fremdschlüssel eine Zeile in Tabelle~\sqlil{n} generieren und den Wert dann für den Primärschlüssel in einer neuen Zeile in Tabelle~\sqlil{m} verwenden.%
 }%
 %
 \only<-42>{%
@@ -299,7 +299,7 @@ Jede persönliche ID gehört zu genau einer Person.}%
 %
 \item<47-> Wenn wir neue Zeilen in Tabelle~\sqlil{m} einfügen wollen, brauchen wir aber immer zwei \glsShort{CTE}s.%
 %
-\item<48-> Dieser Ansatz beruht auf mehreren \postgresql-spezifischen Kommandos, \sqlilIdx{RETURNING}, \sqlilIdx{NEXTVAL}, und das Erstellen von Sequenzen.%
+\item<48-> Dieser Ansatz beruht auf mehreren \postgresql-spezifischen Kommandos, \sqlilIdx{RETURNING}, \sqlilIdx{NEXTVAL} und das Erstellen von Sequenzen.%
 %
 \item<49-> Auf anderen \glsShort{dbms}en geht es dann wohl etwas anders, aber bestimmt ähnlich.%
 %

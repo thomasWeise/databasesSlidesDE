@@ -24,7 +24,7 @@
 \item<4-> Das ist schonmal sehr schön.%
 \item<5-> Wir haben auch gelernt, wie wir die Integrität unserer Daten schützen können.%
 \item<6-> Auf der einen Seite kennen wir Datentypen wie \sqlil{DECIMAL} und \sqlil{DATE}, die sicherstellen, das unsere Daten bestimmte Kriterien einhalten.
-\item<7-> Auf der anderen Seite kennen wir Einschränkungen wie \sqlil{NOT NULL}, \sqlil{UNIQUE}, \sqlil{CONSTRAINT}, und \sqlil{REFERENCES}.%
+\item<7-> Auf der anderen Seite kennen wir Einschränkungen wie \sqlil{NOT NULL}, \sqlil{UNIQUE}, \sqlil{CONSTRAINT} und \sqlil{REFERENCES}.%
 \item<8-> Damit sind Datenbanken Spreadsheets, wie wir sie mit \microsoftExcel\ oder \libreofficeCalc\ erstellen können, weit überlegen.%
 \end{itemize}%
 \end{frame}%
@@ -118,10 +118,10 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \frametitle{Verkaufsdaten Zusammenführen}%
 \begin{itemize}%
 \item Wir können nun Daten von verschiedenen Tabellen zusammenführen.%
-\item<2-> Erstellen wir eine Anfrage, die für jede Bestellung den Kundenname, Produktname, Preise, bestellte Anzahl, und Bestelldatum heraussucht.%
+\item<2-> Erstellen wir eine Anfrage, die für jede Bestellung den Kundenname, Produktname, Preise, bestellte Anzahl und Bestelldatum heraussucht.%
 \item<3-> Das Ergebnis dieser Anfrage wäre dann eine klare und lesbare Übersicht unserer Geschäftstransaktionen.%
 \item<4-> Basierend auf unserem vorigen Beispiel können wir erwarten, dass wir nun zwei~\inQuotes{Joins} brauchen.%
-\item<5-> Wir müssen ja Daten aus allen drei Tabellen -- \sqlil{demand}, \sqlil{customer}, und \sqlil{product} -- kombinieren.%
+\item<5-> Wir müssen ja Daten aus allen drei Tabellen -- \sqlil{demand}, \sqlil{customer} und \sqlil{product} -- kombinieren.%
 \item<6-> Die Anfrage wid daher etwas komplizierter werden.%
 \end{itemize}%
 \end{frame}%
@@ -173,8 +173,8 @@ und Tabelle~\sqlil{Table_2} hat eine Spalte~\sqlil{b}, die als Fremdschlüssel a
 \item<4-> Nun fügen wir einfach das nächste \sqlil{INNER JOIN} an, in dem wir direkt danach \sqlil{INNER JOIN product ON (product.id = demand.product)} schreiben.%
 \item<5-> Damit bekommen wir die passende Zeile aus der Tabelle~\sqlil{product}.%
 \item<6-> Da wir diesmal sowohl Kunden- als auch Produktnamen haben, selektieren wir \sqlil{customer.name AS customer_name} und  \sqlil{product.name AS product_name}.%
-\item<7-> Wir selektieren ebenfalls \sqlil{product.price AS price}, \sqlil{demand.amount AS amount}, und \sqlil{demand.ordered as ordered}.%
-\item<8-> Wir sortieren die Ausgabe mit \sqlilIdx{ORDER BY} lexikographisch nach \sqlil{customer_name}, \sqlil{ordered}, und \sqlil{product_name}, \sqlil{price}, und \sqlil{amount}.%
+\item<7-> Wir selektieren ebenfalls \sqlil{product.price AS price}, \sqlil{demand.amount AS amount} und \sqlil{demand.ordered as ordered}.%
+\item<8-> Wir sortieren die Ausgabe mit \sqlilIdx{ORDER BY} lexikographisch nach \sqlil{customer_name}, \sqlil{ordered} und \sqlil{product_name}, \sqlil{price} und \sqlil{amount}.%
 \end{itemize}%
 \end{frame}%
 %

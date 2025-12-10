@@ -50,7 +50,7 @@
 \begin{itemize}%
 \item Ein Feature, das sowohl Lehrer als auch Studenten gerne in unserem System haben wollten, war ein \emph{Messaging System}.%
 %
-\item<2-> Lehrer wollen eine Möglichkeit, Studenten nachweisbar und nachvollziehbar über Anforderungen, Probleme, Aufgaben, und Erinnerungen zu informieren\only<-2>{.}\uncover<3->{:~\emph{\inQuotes{Sie haben Ihre Hausaufgaben jetzt zum zweiten Mal in Folge vergessen. Wenn das wieder vorkommt, muss ich Ihnen 10 Punkte von der Endnote abziehen!}}}%
+\item<2-> Lehrer wollen eine Möglichkeit, Studenten nachweisbar und nachvollziehbar über Anforderungen, Probleme, Aufgaben und Erinnerungen zu informieren\only<-2>{.}\uncover<3->{:~\emph{\inQuotes{Sie haben Ihre Hausaufgaben jetzt zum zweiten Mal in Folge vergessen. Wenn das wieder vorkommt, muss ich Ihnen 10 Punkte von der Endnote abziehen!}}}%
 %
 \item<4-> Studenten wollen es auch, aus genau dem selben Grund -- um Lehrer über Probleme nachweisbar informieren zu können\only<-4>{.}\uncover<5->{~\emph{\inQuotes{Ich will die Hausaufgaben ja gerne machen, aber die \glsShort{formatPDF}-Datei, die Sie zum Download anbieten, ist beschädigt und lässt sich nicht öffnen. Können Sie die nochmal hochladen?}}}%
 %
@@ -183,7 +183,7 @@ Eine \emph{nicht-identifizierende}~(schwache) Beziehung wird nicht benötigt, um
 }%
 %
 \only<-7>{%
-\item<3-> Kurse finden in Räumen statt, also müssen wir wissen, welche Räume existieren, wo sie sind, und welche Features sie haben.%
+\item<3-> Kurse finden in Räumen statt, also müssen wir wissen, welche Räume existieren, wo sie sind und welche Features sie haben.%
 }%
 %
 \only<-8>{%
@@ -409,7 +409,7 @@ Das spielt keine Rolle.}}%
 \begin{itemize}%
 %
 \only<-5>{%
-\item Wir re-designen nun die Interaktionen zwischen Studenten, Studiengängen, Mitarbeitern, und Modulen.%
+\item Wir re-designen nun die Interaktionen zwischen Studenten, Studiengängen, Mitarbeitern und Modulen.%
 }%
 %
 \only<-6>{%
@@ -417,7 +417,7 @@ Das spielt keine Rolle.}}%
 }%
 %
 \only<-8>{%
-\item<3-> Wir hatten gelernt, dass einige der Fähigkeiten der Lehrer an ihre Position gebunden sind, \DEzB\ welche Module sie unterrichten dürfen, und andere an ihre Person, \DEzB\ ob sie Masterarbeiten beaufsichtigen können.%
+\item<3-> Wir hatten gelernt, dass einige der Fähigkeiten der Lehrer an ihre Position gebunden sind, \DEzB\ welche Module sie unterrichten dürfen und andere an ihre Person, \DEzB\ ob sie Masterarbeiten beaufsichtigen können.%
 }%
 %
 \only<-9>{%
@@ -626,7 +626,7 @@ Die Komponente \inQuotes{Wahlfächer} bietet die Module \inQuotes{\postgresql,} 
 }%
 %
 \only<-64>{%
-\item<60-> Module haben auch ein Inhaltsvereichnis, eine Zusammenfassung, und andere Informationen, die wir hier weglassen.%
+\item<60-> Module haben auch ein Inhaltsvereichnis, eine Zusammenfassung und andere Informationen, die wir hier weglassen.%
 }%
 %
 \only<-65>{%
@@ -698,7 +698,7 @@ Die Komponente \inQuotes{Wahlfächer} bietet die Module \inQuotes{\postgresql,} 
 }%
 %
 \only<-82>{%
-\item<78-> Der Einschreibungsdatensatz wird später um Informationen wie die Abschlussnote, ob der Student bestanden hat, und ggf.\ weitere Erklärungen ergänzt.%
+\item<78-> Der Einschreibungsdatensatz wird später um Informationen wie die Abschlussnote, ob der Student bestanden hat und ggf.\ weitere Erklärungen ergänzt.%
 }%
 %
 \only<-83>{%
@@ -711,7 +711,7 @@ Die Komponente \inQuotes{Wahlfächer} bietet die Module \inQuotes{\postgresql,} 
 %
 \item<82-> Unsere Plattform kann nun Studenten automatisch in Kurse einschreiben, die sie nehmen müssen.%
 %
-\item<83-> Es kann ja den Studiengang sehen, zu dem die Studenten gehören, weiß welche Module Pflicht sind, und kann die Studenten dann automatisch eintragen, wenn es keine Auswahlmöglichkeit gibt.%
+\item<83-> Es kann ja den Studiengang sehen, zu dem die Studenten gehören, weiß welche Module Pflicht sind und kann die Studenten dann automatisch eintragen, wenn es keine Auswahlmöglichkeit gibt.%
 %
 \item<84-> Basierend auf den angebotenen Kursen kann es ihnen auch Wahlmöglichkeiten über das Web-Portal anbieten.%
 \end{itemize}%
@@ -733,7 +733,7 @@ Die Komponente \inQuotes{Wahlfächer} bietet die Module \inQuotes{\postgresql,} 
 }%
 %
 \only<-6>{%
-\item<3-> Es gibt verschiedene Arten von Deliverables, \DEZB\ schriftliche Prüfungen, mündliche Prüfungen, Midterm-Prüfungen, Hausaufgaben, Praktikumsberichte, und Abschlussarbeiten.%
+\item<3-> Es gibt verschiedene Arten von Deliverables, \DEZB\ schriftliche Prüfungen, mündliche Prüfungen, Midterm-Prüfungen, Hausaufgaben, Praktikumsberichte und Abschlussarbeiten.%
 }%
 %
 \only<-7>{%
@@ -858,7 +858,7 @@ In vielen Anwendungen wo historische Informationen bewahrt werden müssen, dürf
 \item<18-> Unsere Datenbank wird schrittweise wachsen und Änderungen entsprechen neuen Datensätzen und nicht Veränderungen existierender Datensätze.%
 \item<19-> Wenn ein Modul von einem neuen Professor übernommen wird, dann gibt es neue Class-Datensätze.%
 \item<20-> Aus diesem Grund hat der \emph{Address}-Entitätstyp auch die Attribute \emph{Valid From} und \emph{Valid To}.%
-\item<21-> Wenn sich die Addresse eines Studenten oder Mitarbeiters ändert, dann erstellen wir einen neuen Datensatz, setzen \emph{Valid From} auf jetzt, und \emph{Valid To} auf \sqlil{NULL}.%
+\item<21-> Wenn sich die Addresse eines Studenten oder Mitarbeiters ändert, dann erstellen wir einen neuen Datensatz, setzen \emph{Valid From} auf jetzt und \emph{Valid To} auf \sqlil{NULL}.%
 \item<22-> Wir können dann gestern als \emph{Valid To}-Wert für die alte Addresse speichern.%
 \item<23-> Genauso funktioniert das für die \emph{Personal ID} und \emph{Person Name} Entitätstypen.%
 \item<24-> Unsere Administratoren können daher immer sehen, welche Adresse, ID, oder Namen eine Person zu einem beliebigen Zeitpunkt hatte.%

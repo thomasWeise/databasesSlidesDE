@@ -20,9 +20,9 @@
 \begin{itemize}%
 \item Wir wollen nun unser konzeptuelles Modell des Lehre-Management-Systems als eine relationale \glslink{rdb}{Datenbank} implementieren.%
 %
-\item<2-> Das erfordert, dass wir Entitäten, Beziehungen, und Einschränkungen auf Objekte aus der relationalen Welt abbilden.%
+\item<2-> Das erfordert, dass wir Entitäten, Beziehungen und Einschränkungen auf Objekte aus der relationalen Welt abbilden.%
 %
-\item<3-> Wir werden Sichten, Anfragen, und Einfüge-Regeln für unsere Daten entwerfen müssen.%
+\item<3-> Wir werden Sichten, Anfragen und Einfüge-Regeln für unsere Daten entwerfen müssen.%
 %
 \item<4-> Natürlich wählen wir \postgresql\ als der \glsShort{dbms}.%
 %
@@ -647,8 +647,8 @@ Er ist eine nützliche \glsShort{GUI}, um logische Schemas für Datenbanken zu e
 \uncover<6->{%
 \bestPractice{defenseInDepth}{%
 Daten sollten auf allen Ebenen einer Applikation geprüft werden\only<-6>{.}\uncover<7->{: %
-in den Formularen, wo sie eingegeben werden, in der Datenbank mit Einschränkungen, und in den Applikationen, die sie wieder aus der Datenbank laden.\uncover<8->{ %
-Je mehr Verteidigungslinien wir durch Einschränkungen sowie statische und dynamische Überprüfungen erzeugen, desto größer ist unsere Chance, Fehler früh zu entdecken, ihren Grund zu finden, und zu verhindern, dass sie sich weiter fortpflanzen.\uncover<9->{ %
+in den Formularen, wo sie eingegeben werden, in der Datenbank mit Einschränkungen und in den Applikationen, die sie wieder aus der Datenbank laden.\uncover<8->{ %
+Je mehr Verteidigungslinien wir durch Einschränkungen sowie statische und dynamische Überprüfungen erzeugen, desto größer ist unsere Chance, Fehler früh zu entdecken, ihren Grund zu finden und zu verhindern, dass sie sich weiter fortpflanzen.\uncover<9->{ %
 Dadurch bekommen wir die beste Chance, Fehler zu korrigieren und zu verhindern, dass Fehler andere Daten beschmutzen.\uncover<10->{ %
 Daher sind auch einfache Einschränkungen immer sinnvoll.}}}}%
 }}%
@@ -760,7 +760,7 @@ Daher sind auch einfache Einschränkungen immer sinnvoll.}}}}%
 }%
 %
 \only<-30>{%
-\item<30-> Dann klicken wir auf \menu{Column:}, wählen \sqlil{student_id}, und fügen sie über \pgmodelerAddItem\ hinzu.%
+\item<30-> Dann klicken wir auf \menu{Column:}, wählen \sqlil{student_id} und fügen sie über \pgmodelerAddItem\ hinzu.%
 }%
 %
 \only<-32>{%

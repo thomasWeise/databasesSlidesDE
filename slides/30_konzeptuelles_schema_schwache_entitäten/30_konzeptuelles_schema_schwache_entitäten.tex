@@ -24,7 +24,7 @@
 %
 \item<4-> Und dann erinnern wir uns an etwas\only<-4>{\dots}\uncover<5->{: \emph{Beziehungstypen haben keine Schlüsselattribute.\uncover<6->{ Beziehungen werden durch die Primärschlüssel der teilnehmenden Entitäten identifiziert.}}}%
 \item<5-> Welche Entitäten nehmen denn an unserer \emph{Has ID}-Beziehung teil?%
-\item<6-> \emph{Person}-Entitäten, die durch ihren Ersatzschlüssel identifiziert werden, und \emph{ID Type}-Entitäten, die durch ihren Namen identifiziert werden.%
+\item<6-> \emph{Person}-Entitäten, die durch ihren Ersatzschlüssel identifiziert werden und \emph{ID Type}-Entitäten, die durch ihren Namen identifiziert werden.%
 \item<7-> Wenn wir die Regel von oben anwenden, dann kann jede Person nur eine ID eines bestimmten Typs haben.%
 \item<8-> Nur eine Mobiltelefonnummer.\uncover<9->{ Nur eine Reisepassnummer.\uncover<10->{ Nur eine Email-Adresse.}}%
 %
@@ -115,7 +115,7 @@ Eine \emph{identifizierende Beziehung}~\inEN{identifying relationship} verbindet
 }\only<-7>{%
 \item<6-> Sie ist mit einer identifizierenden Beziehung mit den Entitätstypen \emph{Person} und \emph{ID Type} verbunden.%
 }\only<-8>{%
-\item<7-> Jede \emph{Personal ID}-Entität wird identifiziert durch ihre Attribute \emph{Value}, \emph{Valid From}, und \emph{Valid To}~(die den Teilschlüssel bilden) zusammen mit den Primärschlüsseln \emph{Surrogate Key} der \emph{Person}-Entität und \emph{Name} der \emph{ID Type}-Entität.%
+\item<7-> Jede \emph{Personal ID}-Entität wird identifiziert durch ihre Attribute \emph{Value}, \emph{Valid From} und \emph{Valid To}~(die den Teilschlüssel bilden) zusammen mit den Primärschlüsseln \emph{Surrogate Key} der \emph{Person}-Entität und \emph{Name} der \emph{ID Type}-Entität.%
 }\only<-9>{%
 \item<8-> Jetzt kann eine Person beliebig viele Telefonnummern haben, so lange diese verschieden oder zumindest zu verschiedenen Zeiten gültig sind.%
 }\only<-10>{%

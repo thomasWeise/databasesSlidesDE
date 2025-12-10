@@ -67,7 +67,7 @@
 \end{itemize}%
 \uncover<3->{%
 \bestPractice{tableName}{%
-Tabellennamen sollten (Englische) Nomen im Singular sein, mit Kleinbuchstaben geschrieben, und ohne Prefix~(\DEzB~kein \inQuotes{tbl\_} am Anfange haben)~\cite{B2025DS:SBPASG}.%
+Tabellennamen sollten (Englische) Nomen im Singular sein, mit Kleinbuchstaben geschrieben und ohne Prefix~(\DEzB~kein \inQuotes{tbl\_} am Anfange haben)~\cite{B2025DS:SBPASG}.%
 }%
 \uncover<4->{\begin{itemize}%
 \item Nennen wir unsere Tabelle für Produkte also \textil{product}.%
@@ -88,7 +88,7 @@ Der Name ist im Grunde Text, also brauchen wir eine Spalte für Text.}%
 \item<5-> Jedes Produkt hat einen Preis.\uncover<6->{ %
 Der Preis ist eine Zahl die den Anforderungen an eine Geldmenge entsprechen muss.}%
 \item<7-> Um die Produkte auszuliefern, kommt jedes Produkt in ein Schachtel.\uncover<8->{ %
-Diese Schachteln haben eine Breite, Höhe, und Tiefe, sowie (wenn das Produkt eingepackt ist) ein bestimmtes Gewicht.\uncover<9->{ %
+Diese Schachteln haben eine Breite, Höhe und Tiefe, sowie (wenn das Produkt eingepackt ist) ein bestimmtes Gewicht.\uncover<9->{ %
 Das sind also noch vier Zahlen, die wir speichern müssen.}}%
 \end{itemize}%
 }}%
@@ -104,7 +104,7 @@ Das sind also noch vier Zahlen, die wir speichern müssen.}}%
 \item Diese Struktur ist im Grunde recht einfach.%
 }%
 \item<2-> Nun müssen wir sie in SQL-Kommandos übersetzen.%
-\item<3-> Wir müssen dazu Namen, Datentypen, und Einschränkungen~\inEN{constraints} für die Spalten festlegen.%
+\item<3-> Wir müssen dazu Namen, Datentypen und Einschränkungen~\inEN{constraints} für die Spalten festlegen.%
 \item<4-> Das SQL-Kommando sieht in etwa so aus:%
 \end{itemize}%
 \sqlSyntax{4-}{syntax/create_table_de.sql}{0.05}{0.4}{0.9}{0.6}%
@@ -132,7 +132,7 @@ Das sind also noch vier Zahlen, die wir speichern müssen.}}%
 \begin{itemize}%
 \only<-1>{\item \sqlil{CREATE TABLE} ist das SQL-Kommando um eine Tabelle anzulegen.}%
 \only<2>{\item<2> \sqlil{product} ist der Name der Tabelle, die wir anlegen wollen.}%
-\only<3>{\item<3> Dann folgen die Namen, Datentypen, und Einschränkungen der Spalten unserer Tabelle. %
+\only<3>{\item<3> Dann folgen die Namen, Datentypen und Einschränkungen der Spalten unserer Tabelle. %
 Diese sind von Klammern umrahmt~(\textil{(...)}) und durch Kommas~(\textil{,}) getrennt.}%
 \end{itemize}%
 \locateGraphic{1}{width=0.85\paperwidth}{graphics/createTable1psql}{0.075}{0.275}%
@@ -234,7 +234,7 @@ Geldwerte müssen mit dem Datentyp \sqlilIdx{DECIMAL} gespeicher werden\cite{C20
 %
 %
 \begin{frame}[t]%
-\frametitle{Die Spalten \texttt{weight}, \texttt{width}, \texttt{height}, und \texttt{depth}}%
+\frametitle{Die Spalten \texttt{weight}, \texttt{width}, \texttt{height} und \texttt{depth}}%
 \begin{itemize}%
 %
 \only<-8>{\item Wir legen die Spalten für das Gewicht und die Dimensionen der Boxen für unsere Produkte an.%
@@ -393,10 +393,10 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 %
 \item<8-> Handtaschen\uncover<8->{:%
 \begin{itemize}%
-\item Handtaschen kommen in den Größen klein (\emph{small}), mittel (\emph{medium}), und groß (\emph{large}).%
-\item<9-> Die entsprechenden Preise sind 100元, 120元, und 150元.%
+\item Handtaschen kommen in den Größen klein (\emph{small}), mittel (\emph{medium}) und groß (\emph{large}).%
+\item<9-> Die entsprechenden Preise sind 100元, 120元 und 150元.%
 \item<10-> Die kleinste Handtasche passt in einen Schuhkarton, die größeren erfordern größere Boxen.%
-\item<11-> Die entsprechenden Gewichte sind dann 500g, 750g, und 1500g.%
+\item<11-> Die entsprechenden Gewichte sind dann 500g, 750g und 1500g.%
 \end{itemize}%
 }%
 \end{itemize}%
@@ -554,9 +554,9 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 \frametitle{Die Schönheit der Datenbanktabellen}%
 \begin{itemize}%
 \item Daten in solchen Tabellen zu verwalten ist auf gewisse Weise wunderschön.%
-\item<2-> Wir können neue Daten in die Tabelle anfügen, und doch würden unsere Anfragen funktionieren.%
+\item<2-> Wir können neue Daten in die Tabelle anfügen und doch würden unsere Anfragen funktionieren.%
 \item<3-> Ihr Ergebnis wird immer neu berechnet und ist immer aktuell.%
-\item<4-> Unsere Tabelle könnte hunderte oder zehntausende von Zeilen haben, und dennoch würden unsere Anfragen problemlos funktionieren.%
+\item<4-> Unsere Tabelle könnte hunderte oder zehntausende von Zeilen haben und dennoch würden unsere Anfragen problemlos funktionieren.%
 \end{itemize}%
 \end{frame}%
 %
@@ -573,7 +573,7 @@ Wann immer wir automatisch erhöhte Ganzzahlen als Primärschlüssel für eine T
 \item<5-> Wir haben gelernt, was ein Primärschlüssel~(\sqlil{PRIMARY KEY}) ist, nämlich die Spalte(n), durch deren Wert jede Zeile in einer Tabelle eindeutig identifiziert~(und von anderen Tabellen referenziert) werden kann.%
 \item<5-> Wir haben gelernt, dass man mit \sqlil{INSERT INTO} Zeilen an eine Tabelle anhängen kann.%
 \item<6-> Und wir haben gelernt, wie man mit \sqlil{SELECT FROM} Werte aus einer Tabelle ausliest.%
-\item<7-> Wir wissen nun auch, dass man \sqlil{SELECT FROM} mit weitere Befehle zur Auswahl~(\sqlil{WHERE}, \sqlil{LIKE}, \sqlil{LIMIT}), Benennung~(\sqlil{AS}), und Sortierung~(\sqlil{ORDER BY}) sowie zur Berechnung von Statistiken~(\sqlil{AVG}) kombinieren kann.%
+\item<7-> Wir wissen nun auch, dass man \sqlil{SELECT FROM} mit weitere Befehle zur Auswahl~(\sqlil{WHERE}, \sqlil{LIKE}, \sqlil{LIMIT}), Benennung~(\sqlil{AS}) und Sortierung~(\sqlil{ORDER BY}) sowie zur Berechnung von Statistiken~(\sqlil{AVG}) kombinieren kann.%
 \item<8-> Nicht übel.%
 \end{itemize}%
 \end{frame}%

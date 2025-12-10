@@ -18,7 +18,7 @@ In diesem Kurs werden wir daher auch viele Werkzeuge verwenden.
 
 Nach dem Abschluss des Kurses sollten Sie in der Lage sein, produktiv mit Datenbanken zu arbeiten, zumindest auf einem vernünftigen Anfängerlevel.
 Sie sollten in der Lage sein, einfache Datenbankapplikationen zu entwickeln.
-Sie sollten in der Lage sein, das gewaltige Ökosystem verschiedener Datenbankmanagementsystem, Werkzeuge, und Paradigmen dieses Gebiets zu navigieren und die richtigen Lösungen für die richtigen Probleme auszuwählen.
+Sie sollten in der Lage sein, das gewaltige Ökosystem verschiedener Datenbankmanagementsystem, Werkzeuge und Paradigmen dieses Gebiets zu navigieren und die richtigen Lösungen für die richtigen Probleme auszuwählen.
 
 ## 2. Ressourcen
 Die Webseite mit aktuellen Informationen über den Kurs ist <https://thomasweise.github.io/databases>.
@@ -91,7 +91,7 @@ Sie können diese unter <https://github.com/thomasWeise/databasesCode> finde.
 
 ### 2.5. LaTeX Quelltexte, Grafiken, die Bibliographie, etc.
 Das Buch und die Slides zu diesem Kurs sind in LaTeX geschrieben.
-Sie können die Quelldateien unter <https://github.com/thomasWeise/databases>, <https://github.com/thomasWeise/databasesSlidesDE>, und <https://github.com/thomasWeise/databasesSlides> finden.
+Sie können die Quelldateien unter <https://github.com/thomasWeise/databases>, <https://github.com/thomasWeise/databasesSlidesDE> und <https://github.com/thomasWeise/databasesSlides> finden.
 Sie können diese unter der untenstehenden Lizenz nutzen.
 
 

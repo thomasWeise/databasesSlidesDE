@@ -22,7 +22,7 @@
 %
 \item<2-> Wir haben dafür das relationale Datenmodell ausgewählt.%
 %
-\item<3-> In den \glsShort{ERD}s die wir gemalt haben \emph{bevor} wir die kompakte Notation kennengelernt haben, hatten wir drei visuelle Komponenten\only<-3>{.}\uncover<4->{: Entitätstypen (Rechtecke)\only<-4>{.}}\uncover<5->{, Attribute (Ellipsen)\only<-5>{.}}\uncover<6->{, und Beziehungstypen (Rauten).}%
+\item<3-> In den \glsShort{ERD}s die wir gemalt haben \emph{bevor} wir die kompakte Notation kennengelernt haben, hatten wir drei visuelle Komponenten\only<-3>{.}\uncover<4->{: Entitätstypen (Rechtecke)\only<-4>{.}}\uncover<5->{, Attribute (Ellipsen)\only<-5>{.}}\uncover<6->{ und Beziehungstypen (Rauten).}%
 %
 \item<7-> In der kompaktion Notation verschwanden dann die Beziehungstypen als Elemente und sie wurden zu einfachen geraden Linien.%
 %
@@ -229,7 +229,7 @@ Eine Menge von Attributen~$F$ im Schema~\relSchemab{R_1} der Relation~$R_1$ wird
 %
 \uncover<4->{%
 \begin{itemize}%
-\item Damit haben wir die Definitionen von Schlüssel(kandidaten), Primärschlüsseln, und Fremdschlüsseln aus der konzeptuellen Ebene in die logische Ebene für das relationale Modell gehoben.%
+\item Damit haben wir die Definitionen von Schlüssel(kandidaten), Primärschlüsseln und Fremdschlüsseln aus der konzeptuellen Ebene in die logische Ebene für das relationale Modell gehoben.%
 \end{itemize}}}%
 %
 \end{frame}%
@@ -282,7 +282,7 @@ Eine Menge von Attributen~$F$ im Schema~\relSchemab{R_1} der Relation~$R_1$ wird
 \end{itemize}}%
 %
 \setcounter{enumi}{1}%
-\item<12-> Jedes Datum in einer relationalen Datenbank muss zugreiffbar sein über eine Kombination von Tabellenname, Primärschlüsselwert, und Spaltenname.%
+\item<12-> Jedes Datum in einer relationalen Datenbank muss zugreiffbar sein über eine Kombination von Tabellenname, Primärschlüsselwert und Spaltenname.%
 %
 \setcounter{enumi}{2}%
 \item<13-> \sqlilIdx{NULL}-Werte werden unterstützt, um fehlende und unpassende Information auf eine systematische Art darstellen zu können, unabhängig vom Datentyp.\only<14-19>{%
@@ -306,14 +306,14 @@ Eine Menge von Attributen~$F$ im Schema~\relSchemab{R_1} der Relation~$R_1$ wird
 \item<20-> Die Datenbankbeschreibung wird auf logischer Ebene genau wie normale Daten repräsentiert, so das autorisierte Benutzer mit der selben relationalen Sprache auf sie zugreifen können, die sie auch auf normale Daten anwenden würden.%
 %
 \setcounter{enumi}{4}%
-\item<21-> Ein relationales System muss mindestens eine Sprache unterstützen, deren Statements mit einer wohldefinierten Syntax als Text ausgedrückt werden können\only<-21,30->{.}\only<22-29>{, und die die folgenden Elemente unterstützt:%
+\item<21-> Ein relationales System muss mindestens eine Sprache unterstützen, deren Statements mit einer wohldefinierten Syntax als Text ausgedrückt werden können\only<-21,30->{.}\only<22-29>{ und die die folgenden Elemente unterstützt:%
 \begin{itemize}%
 \item Daten definieren~(\DEzB\ Erstellen von Tabellen),%
 \item<23-> Sichten definieren,%
 \item<24-> Daten manipulieren~(\DEzB\ hinzufügen und löschen von Daten),%
 \item<25-> Einschränkungen definieren, um Datenintegrität sicherzustellen~(\DEzB~Grenzen für Wertebereiche, Fremdschlüssen, \dots),%
 \item<26-> Autorisation~(\DEzB~Benutzermanagement) und%
-\item<27-> Transaktionsgrenzen~(Beginn, Commit, und Rollback).%
+\item<27-> Transaktionsgrenzen~(Beginn, Commit und Rollback).%
 \end{itemize}%
 %
 \uncover<28->{%
@@ -349,7 +349,7 @@ Die Art wie ein \glsShort{dbms} Daten speichert hat keinen Einfluss darauf, wie 
 %
 \setcounter{enumi}{9}%
 \item<39-> Integritäts-Einschränkungen für eine Datenbank müssen in einer Sprache definiert werden können und im Systemkatalog gespeichert werden~(nicht in Anwendungen).\only<40-41>{ %
-Wir haben das mehrmals gemacht, \DEzB\ mit der \sqlilIdx{PRIMARY KEY}-Einschränkung, der \sqlilIdx{REFERENCES}-Einschränkung, und der \sqlilIdx{CHECK}-Einschränkung.\only<41>{ %
+Wir haben das mehrmals gemacht, \DEzB\ mit der \sqlilIdx{PRIMARY KEY}-Einschränkung, der \sqlilIdx{REFERENCES}-Einschränkung und der \sqlilIdx{CHECK}-Einschränkung.\only<41>{ %
 Alle wurden in \glsShort{SQL} definiert.}}%
 %
 \setcounter{enumi}{10}%

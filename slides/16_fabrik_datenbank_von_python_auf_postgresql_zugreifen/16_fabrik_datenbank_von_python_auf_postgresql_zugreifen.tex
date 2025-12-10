@@ -52,7 +52,7 @@ Die Benutzer müssen dann niemals mit \sql\ arbeiten.%
 Dann können die Nutzer auf die Daten über den Web Browser zugrifen. %
 Unser Programm erledigt dann den eigentlichen Datenbankzugriff im Hintergrund.%
 %
-\item<10-> Oder wir benutzen ein generelles Interface, wie es von \libreofficeBase\ angeboten wird, und verbinden uns so auf die Datenbank. %
+\item<10-> Oder wir benutzen ein generelles Interface, wie es von \libreofficeBase\ angeboten wird und verbinden uns so auf die Datenbank. %
 Mit solch einem Werkzeug können wir bequem Formulare zum Eingeben von Daten und Berichte zum Auslesen und Visualisieren erstellen. %
 Benutzer arbeiten dann nur mit dem Interface.%
 %
@@ -73,7 +73,7 @@ Benutzer arbeiten dann nur mit dem Interface.%
 \item<2-> Wir verwenden die Programmiersprache \python, die Sie in der Schwestervorlesung \citetitle{programmingWithPython}\cite{programmingWithPython} lernen.%
 %
 \only<-7>{%
-\item<3-> In \python\ können wir beliebige Programme schreiben und Datentypen wir \pythonilIdx{int}, \pythonilIdx{float}, und \pythonilIdx{str} verwenden.%
+\item<3-> In \python\ können wir beliebige Programme schreiben und Datentypen wir \pythonilIdx{int}, \pythonilIdx{float} und \pythonilIdx{str} verwenden.%
 %
 \item<4-> Wir können Kontrollflussstatements wie~\pythonil{if...then...else}, \pythonilIdx{for}- und \pythonilIdx{while}~Schleifen verwenden.%
 %
@@ -90,7 +90,7 @@ Benutzer arbeiten dann nur mit dem Interface.%
 %
 \item<10-> Zum Glück gibt es das Paket \psycopg, welches eine nach PEP~249\cite{PEP249} standardisierte \glslink{API}{API} zum Zugriff auf \postgresql\ anbietet.%
 %
-\item<11-> Mit \psycopg\ können wir \sql-Anfragen in einem \python-Programm erstellen, an \postgresql\ schicken, und die Antworten auslesen.%
+\item<11-> Mit \psycopg\ können wir \sql-Anfragen in einem \python-Programm erstellen, an \postgresql\ schicken und die Antworten auslesen.%
 %
 \item<12-> Das ist sehr gut, weil wir ja schon einiges an \sql\ kennen.%
 %
@@ -261,11 +261,11 @@ Benutzer arbeiten dann nur mit dem Interface.%
 %
 \only<-23>{%
 \item<22-> Diese werden sich nach \sql\ konvertiert, gleichgültig welchem Datentyp sie angehören.%
-\item<23-> \pythonil{cur.execute(statement, (3, 4, 5, \"2025-03-05\"))} fügt eine neuen Datensatz in die Tabelle \sqlil{demand} ein, bei dem \pythonil{3} der Wert für \sqlil{customer}, \pythonil{4} der Wert für \sqlil{product}, \pythonil{5} der Wert für \sqlil{amount}, und \pythonil{\"2025-03-05\"} der Wert für \sqlil{ordered} sind.%
+\item<23-> \pythonil{cur.execute(statement, (3, 4, 5, \"2025-03-05\"))} fügt eine neuen Datensatz in die Tabelle \sqlil{demand} ein, bei dem \pythonil{3} der Wert für \sqlil{customer}, \pythonil{4} der Wert für \sqlil{product}, \pythonil{5} der Wert für \sqlil{amount} und \pythonil{\"2025-03-05\"} der Wert für \sqlil{ordered} sind.%
 }%
 %
 \only<-24>{%
-\item<24-> Daher ist die customer~ID des Datensatzes~3, die product~ID ist~4, die Produktmenge ist~5, und das Bestelldatum ist der 5.\ März 2025.%
+\item<24-> Daher ist die customer~ID des Datensatzes~3, die product~ID ist~4, die Produktmenge ist~5 und das Bestelldatum ist der 5.\ März 2025.%
 }%
 \item<25-> Und das Program läuft auch problemlos durch.%
 \end{itemize}%
@@ -282,7 +282,7 @@ Benutzer arbeiten dann nur mit dem Interface.%
 \begin{itemize}%
 \item Datenbanken sind einige der wichtigsten Komponenten des \glslink{IT}{IT}\nobreakdashes-Ökosystems von Organisationen.%
 \item<2-> Wir müssen sie vor Angriffen sowohl von außen als auch von innen schützen.%
-\item<3-> Wir müssen den Diebstahl, die Manipulation, und die Zerstörung von unseren Daten verhinden.%
+\item<3-> Wir müssen den Diebstahl, die Manipulation und die Zerstörung von unseren Daten verhinden.%
 \item<4-> Wenn Programme auf unsere Datenbank zugreifen, dann müssen wir verhindern, dass sie zum Angriff auf unser System misbraucht werden.%
 \item<5-> Programme bekommen ihren Input oft entweder von Benutzereingaben, aus Dateien, aus dem Internet, oder von anderen Programmen.%
 \item<6-> Wenn dieser Input ungeprüft an die Datenbank gesendet wird, dann kann das katastrophale Konsequenzen haben.%
@@ -308,7 +308,7 @@ Benutzer arbeiten dann nur mit dem Interface.%
 \item \pythonilIdx{LiteralString} ist ein Sonderfall des Datentyps~\pythonil{str}.%
 \item<2-> Er existiert für String-\glslink{literal}{Literale}, also Strings, die wir \inQuotes{genau so in den Quelltext hingeschrieben haben.}%
 \item<3-> Eine Variable kann diesen Datentyp haben. Dann ist sie immer noch ein String.%
-\item<4-> Aber wir haben explizit gesagt: Dieser String ist \alert{NICHT} das Ergebnis von irgendeiner String-Operation, nicht das Ergebnis von String-Konkatenation~(\pythonil{+}), nicht das Ergebnis von \glslink{strinterpolation}{String Interpolation}, und auch kein \glslink{fstring}{f-String}.%
+\item<4-> Aber wir haben explizit gesagt: Dieser String ist \alert{NICHT} das Ergebnis von irgendeiner String-Operation, nicht das Ergebnis von String-Konkatenation~(\pythonil{+}), nicht das Ergebnis von \glslink{strinterpolation}{String Interpolation} und auch kein \glslink{fstring}{f-String}.%
 \item<5-> Wir benutzen also nicht nur keine \glslink{fstring}{f-Strings} in unserem Programm, wir sagen sogar noch explizit das wir das nicht tun.%
 \item<6-> Warum machen wir das, wo \glslink{fstring}{f-Strings} doch eigentlich so cool sind\cite{programmingWithPython}?%
 \end{itemize}%
@@ -319,7 +319,7 @@ Benutzer arbeiten dann nur mit dem Interface.%
 \begin{itemize}%
 \item \glslink{SQLi}{SQL Injection Attacks}~(SQLi)\cite{ASO2024SIADPP,KDP2024AOSIAITCAIWA,CMCVGHRDCAAFL2023SIADINFD,S2008SI,databases} sind Angriffe auf \sql\ \glslink{server}{Server} die dadurch ermöglicht werden, dass \sql\ Anfragen mit Hilfe von String-Koncatenation~(\python{+}) der \glslink{strinterpolation}{String-Interpolation} zusammengebaut werden.%
 \item<2-> Stellen Sie sich vor, wir würden unsere Anfrage so zusammenbauen: \pythonil{\"INSERT INTO demand (customer, product, amount, ordered) VALUES (\" + s + "\)\"}.%
-\item<3-> Jetzt könnte jemand kommen, und den Wert für \pythonil{s} so setzen: \pythonil{s = "1, 2, 3, '2023-02-02'); DROP TABLE demand;"}.%
+\item<3-> Jetzt könnte jemand kommen und den Wert für \pythonil{s} so setzen: \pythonil{s = "1, 2, 3, '2023-02-02'); DROP TABLE demand;"}.%
 \item<4-> Das \textil{);} in \pythonil{s} würde die Einfügeanfrage beenden.%
 \item<5-> Der Rest von \pythonil{s} wäre dann eine neue \sql-Anfrage.%
 \item<6-> Das \sqlil{DROP TABLE...} würde die gesamte Tabelle \sqlil{demand} löschen~(das Kommado lernen wir später).%
@@ -437,7 +437,7 @@ Verwenden Sie \alert{immer} die entsprechenden Methoden wie Anfrageparameter, di
 \item<4-> Wir haben hier aber nur an der Oberfläche gekratzt.%
 \only<-6>{%
 \item<5-> Wir können nun theoretisch Datenströme in \DEzB\ dem \glsFull{XML} oder dem \glsFull{CSV}-Format einlesen und an die Datenbank schicken.%
-\item<6-> Oder wir können die vielen \gls{ML}, \gls{AI}, und Visualisierungs-Bibliotheken von \python, wie \scikitlearn, \tensorflow, \scipy, \pytorch, oder \matplotlib\ benutzen, um Daten zu verarbeiten.%
+\item<6-> Oder wir können die vielen \gls{ML}, \gls{AI} und Visualisierungs-Bibliotheken von \python, wie \scikitlearn, \tensorflow, \scipy, \pytorch, oder \matplotlib\ benutzen, um Daten zu verarbeiten.%
 }%
 %
 \item<7-> Wir müssen aber immer vorsichtig sein: Es kann sehr schnell passieren, dass wir aus Versehen das Tor für  \DEzB~\glslink{SQLi}{SQLi}-Angriffe öffnen.%

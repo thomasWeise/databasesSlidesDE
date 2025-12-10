@@ -23,7 +23,7 @@
 \item<2-> Lassen Sie uns nun zusammen erforschen, welche Anforderungen Organisationen haben könnten, die mit DBs bzw.\ DBMSes arbeiten.%
 \item<3-> Wir wollen jetzt also eine Vorstellung von den Features entwickeln, die ein DBMS haben soll und welche wir später nutzen werden.\bigskip%
 \item<4-> Stellen wir uns dafür vor, dass wir eine Datenbank für eine Bank entwickeln wollen.%
-\item<5-> Datenbank soll die Informationen über die Kunden, ihre Konten, und Transaktionen speichern, sowie die Daten über die Angestellten der Bank.%
+\item<5-> Datenbank soll die Informationen über die Kunden, ihre Konten und Transaktionen speichern, sowie die Daten über die Angestellten der Bank.%
 \item<6-> Davon ausgehend bauen wir uns eine Wunschliste von Features und Anforderungen zusammen.%
 %
 \end{itemize}%
@@ -55,7 +55,7 @@
 \begin{itemize}%
 \item Für unsere Bank bedeutet dies zum Beispiel\uncover<2->{:%
 \begin{itemize}%
-\item Wir wollen vielleicht eine Tabelle mit Kundeninformationen erstellen, eine Tabelle mit Informationen über Bankangestellte, eine Tabelle für Konten, und eine Tabelle mit Transaktionen.%
+\item Wir wollen vielleicht eine Tabelle mit Kundeninformationen erstellen, eine Tabelle mit Informationen über Bankangestellte, eine Tabelle für Konten und eine Tabelle mit Transaktionen.%
 \item<3-> Wir wollen definieren, welche Informationen wir über Kunden speichern, \DEzB\ ihre Namen, Ausweisnummern, Mobiltelefonnummern, usw.%
 \item<4-> Wir müssen auch Einschränkungen~\inEN{constraints} für die Integrität der Daten defininieren, \DEzB\ daß Ausweisnummern dem Standard für Chinesische Identifikationsnummern~(中国公民身份号码)\cite{GB116431999CIN} entsprechen müssen, usw.%
 \item<5-> Wir wollen auch Beziehungen zwischen den Tabellen spezifizieren, \DEzB\ daß jeder Eintrag in der Tabelle für Bankkonten mit genau einem Eintrag in der Tabelle für Kunden verbunden ist, aber das jeder Kunde mehrere Bankkonten haben darf.
@@ -85,7 +85,7 @@
 \item Das logische und das physische Schema sind zwei verschiedene Dinge.%
 \item<2-> Wenn wir Datenbankapplikationen entwerfen, gibt es mehrere Abstraktionsebenen, die zu einem gewissen Grad unabhängig von einander seien sollen.%
 %
-\item<3-> Das ist wie beim Programmieren mit einer Sprache wie \python\uncover<4->{:~Die Hochsprachenkonstrukte wie Schleifen, Klassen, und Exceptions existieren auf der Ebene von \python, aber letztendlich auf der Ebene der Hardware werden sie durch Maschinenkode repräsentiert, der völlig anders aussehen kann\uncover<5->{{\dots} was der Pythonprogrammierer aber nicht wissen muss.}}%
+\item<3-> Das ist wie beim Programmieren mit einer Sprache wie \python\uncover<4->{:~Die Hochsprachenkonstrukte wie Schleifen, Klassen und Exceptions existieren auf der Ebene von \python, aber letztendlich auf der Ebene der Hardware werden sie durch Maschinenkode repräsentiert, der völlig anders aussehen kann\uncover<5->{{\dots} was der Pythonprogrammierer aber nicht wissen muss.}}%
 %
 \item<6-> Die Programme, die auf der Datenbank \inQuotes{sitzen} greifen auf die Daten gemäß des logischen Schemas zu.%
 \item<7-> Das ist unabhängig vom phyischen Schema, davon, die die Daten auf der Festplatte organisiert sind.%
@@ -121,7 +121,7 @@
 \begin{itemize}%
 \item Ein DBMS stellt den Nutzern und Anwendungen Daten in einem brauchbaren Format und einer akzeptablen Geschwindigkeit zur Verfügung.%
 \item<2-> Wir erwarten, dass die Lese- und Schreibgeschwindikeit hoch sind.%
-\item<3-> Wir erwarten, dass Daten schnell eingefügt, geändert, und gelöscht werden können.%
+\item<3-> Wir erwarten, dass Daten schnell eingefügt, geändert und gelöscht werden können.%
 \item<4-> Eine einfache Programmiersprache für den Datenzugriff sollte existieren.%
 \item<5-> Es sollte weitere Werkzeuge geben, mit denen die Datenmodellierung und der Zugriff weiter vereinfacht werden können.%
 \item<6-> Wir wollen Formulare zum Eingeben und Berichte zum Ausgeben der Daten erstellen können.%

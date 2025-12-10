@@ -19,7 +19,7 @@
 \frametitle{Einleitung}%
 \begin{itemize}%
 \item In vielen Kursen über \emph{Datenbanken} wird das Gebiet in einzelnen Stücken diskutiert.%
-\item<2-> Themen wie der Datenbank-Entwurfsprozess, Datenmodellierung, Entity-Relationship-Diagramme, $\sigma$\nobreakdashes-Algebra, SQL\nobreakdashes-Befehle, und Normalisierung werden besprochen.%
+\item<2-> Themen wie der Datenbank-Entwurfsprozess, Datenmodellierung, Entity-Relationship-Diagramme, $\sigma$\nobreakdashes-Algebra, SQL\nobreakdashes-Befehle und Normalisierung werden besprochen.%
 \item<3-> Praktische Beispiele werden die Übung verlagert.%
 \item<4-> Das ist OK.%
 \item<5-> Als ich Student war, habe ich alles, was ich über Datenbanken wissen musste aber anders gelernt.%
@@ -48,7 +48,7 @@
 \begin{itemize}%
 \item Sie arbeiten für eine kleine Fabrik, die Schuhe und Handtaschen herstellt.%
 \item<3-> Sie wurden als die \glslink{IT}{IT}\nobreakdashes-Abteilung dieser Fabrik angestellt.%
-\item<4-> An Ihrem ersten Arbeitstag kommt ihr Chef und sagt:~\emph{Mache bitte eine Datenbank, um alle unsere Produktvarianten, Kundendaten, und Bestellungen zu speichern.}%
+\item<4-> An Ihrem ersten Arbeitstag kommt ihr Chef und sagt:~\emph{Mache bitte eine Datenbank, um alle unsere Produktvarianten, Kundendaten und Bestellungen zu speichern.}%
 \end{itemize}%
 }%
 %
@@ -58,7 +58,7 @@
 \uncover<7->{%
 \usefulTool{postgresql}{%
 \postgresql\cite{TA2024DDAMWPAM,FP2023LP,OH2017PUAR,B2024PELUYDW} ist ein fortschrittliches relationales DBMS. %
-Es ist kostenfrei, Open Source, und die Grundlage für alle Beispieldatenbanken in diesem Kurse.%
+Es ist kostenfrei, Open Source und die Grundlage für alle Beispieldatenbanken in diesem Kurse.%
 }}%
 \end{frame}%
 %
@@ -72,7 +72,7 @@ Es ist kostenfrei, Open Source, und die Grundlage für alle Beispieldatenbanken 
 \item DBs bestehen aus Tabellen, die ihrerseits aus Zeilen und Spalten bestehen.%
 \item<4-> Die Zeilen sind die in den Tabellen gespeicherten Datensätze.%
 \item<5-> Jeder Datensatz einer Tabelle hat die selben Attribute, die den Spalten entsprechn.%
-\item<6-> Wir lernen, wie wir Tabellen erstellen, Datensätze speichern, und wieder laden können.%
+\item<6-> Wir lernen, wie wir Tabellen erstellen, Datensätze speichern und wieder laden können.%
 \end{itemize}%
 }%
 \item<7-> Wie geht das?\uncover<8->{%
@@ -244,7 +244,7 @@ Von der \psql-Konsole\ können wir SQL-Befehle an den \postgresql-Server schicke
 \end{itemize}%
 \only<3-7>{%
 \bestPractice{codeStyle}{%
-Egal welche Programmiersprache Sie benutzen, es ist wichtig, Kode und Skripte nach nach einem konsistenten Stil zu formattieren, eine konsistentes Namensschema zu verwenden, und den generell akzeptierten Best Practices und Normen für diese Programmiersprache zu folgen.%
+Egal welche Programmiersprache Sie benutzen, es ist wichtig, Kode und Skripte nach nach einem konsistenten Stil zu formattieren, eine konsistentes Namensschema zu verwenden und den generell akzeptierten Best Practices und Normen für diese Programmiersprache zu folgen.%
 }%
 }%
 \only<4->{%
@@ -326,7 +326,7 @@ SQL-Schlüsselworte (wie \sqlil{SELECT}, \sqlil{CREATE}, \dots) sollten immer du
 \item<6-> {\dots}und wir kennen nun zwei Möglichkeiten, mit dem \postgresql\ DBMS via \psql\ zu interagieren\uncover<7->{:%
 \begin{itemize}%
 \item entweder über eine interaktive Session, bei der wir Kommandos in ein Terminal eintippen.%
-\item<8-> oder, indem wir die Kommandos in eine Datei schreiben, und diese direkt an den Server schicken.%
+\item<8-> oder, indem wir die Kommandos in eine Datei schreiben und diese direkt an den Server schicken.%
 \end{itemize}%
 }%
 \end{itemize}%

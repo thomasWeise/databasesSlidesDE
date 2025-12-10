@@ -23,7 +23,7 @@
 \item<3-> Wir wählen dafür ein extrem simplifiziertes Konzept\only<-3>{.}\uncover<4->{ %
 Ein Kunde kann mit einer Bestellung eine Menge von genau einem Produkt ordern.%
 }%
-\item<5-> In echten Online-Shops können Bestellungen aus mehreren Produkten bestehen, Zahlungsoptionen haben, und vielleicht auch Lieferadressen\dots\uncover<6->{ {\dots}wir wollen unser Beispiel aber schön einfach halten.}%
+\item<5-> In echten Online-Shops können Bestellungen aus mehreren Produkten bestehen, Zahlungsoptionen haben und vielleicht auch Lieferadressen\dots\uncover<6->{ {\dots}wir wollen unser Beispiel aber schön einfach halten.}%
 \end{itemize}%
 \end{frame}%
 %
@@ -157,7 +157,7 @@ Never use \sql\ keywords or reserved words as names, e.g., for columns or tables
 \item<5-> Hier verwenden wir den Datentyp~\sqlil{DATE}\only<-5,9->{.}\only<6-8>{, %
 der ein Datum nach unserem (dem Gregorianischen) Kalender darstellt\cite{PGDG:PD:HU,G1582IG}.}%
 \only<-8>{%
-\item<7-> Also Schreibweise wird das ISO-Standardformat~\inQuotes{\textil{YYYY-MM-DD}}\cite{ISO860112019} verwendet, wobei \textil{YYYY}~das Jahr in vier Ziffern, \textil{MM}~den Monat in zwei Ziffern, und \textil{DD}~den Tag in zwei Ziffern darstellen.%
+\item<7-> Also Schreibweise wird das ISO-Standardformat~\inQuotes{\textil{YYYY-MM-DD}}\cite{ISO860112019} verwendet, wobei \textil{YYYY}~das Jahr in vier Ziffern, \textil{MM}~den Monat in zwei Ziffern und \textil{DD}~den Tag in zwei Ziffern darstellen.%
 \item<8-> Als Sicherheitscheck definieren wir ein \sqlil{CONSTRAINT}, dass sicherstellt das nur Bestellungen nach dem 01.10.2024 und vor dem 01.01.3000 eingegeben werden können.}%
 \item<10-> Damit ist unsere Tabelle \sqlil{demand} fertig.%
 \end{itemize}%

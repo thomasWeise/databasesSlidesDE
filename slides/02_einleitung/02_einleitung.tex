@@ -31,7 +31,7 @@
 %
 \item<10-> Nach dem Abschluss des Kurses sollten Sie in der Lage sein, produktiv mit Datenbanken zu arbeiten.%
 \item<11-> Sie sollten in der Lage sein, einfache Datenbankapplikationen zu entwickeln.%
-\item<12-> Sie sollten in der Lage sein, das gewaltige Ökosystem verschiedener Datenbankmanagementsystem, Werkzeuge, und Paradigmen dieses Gebiets zu navigieren und die richtigen Lösungen für die richtigen Probleme auszuwählen.}%
+\item<12-> Sie sollten in der Lage sein, das gewaltige Ökosystem verschiedener Datenbankmanagementsystem, Werkzeuge und Paradigmen dieses Gebiets zu navigieren und die richtigen Lösungen für die richtigen Probleme auszuwählen.}%
 \end{itemize}%
 \end{frame}%
 %
@@ -43,7 +43,7 @@
 \item Daten sind überall.%
 \item<2-> Name, Adressen, Bankkonten und -transaktionen,  Onlineeinkäufe, Zugtickets, Mobiltelefonnummern, \pgls{wechat}-Chats, Webseiten, Bücher, Gebrauchsanleitungen, Programmquelltexte, Karten, Schulnoten, Untersuchungsergebnisse und medizinische Historien, Steuerdaten, berufliche Werdegänge, Spielergebnisse{\dots}\uncover<3->{ Alles sind Daten.}%
 \item<4-> Daten sind vielleicht die wichtigste Ressource unseres digitalen Zeitalters.%
-\item<5-> Daten müssen gespeichert werden, sortiert, wiedergefunden, gesichert, zusammengefasst, erneuert, und verwaltet werden.%
+\item<5-> Daten müssen gespeichert werden, sortiert, wiedergefunden, gesichert, zusammengefasst, erneuert und verwaltet werden.%
 \item<6-> Es gibt ganz verschiedene Arten von Daten.
 \end{itemize}%
 \end{frame}%
@@ -51,9 +51,9 @@
 \begin{frame}[t]%
 \frametitle{Unstrukturierte Daten}%
 \begin{itemize}%
-\item Unstrukturierte Daten wie \DEzB\ Bücher, Bachelor- und Masterarbeiten, Berichte, Bugetpläne, und Forschungsanträge werden oft als einzelne Dokumente gespeichert.%
+\item Unstrukturierte Daten wie \DEzB\ Bücher, Bachelor- und Masterarbeiten, Berichte, Bugetpläne und Forschungsanträge werden oft als einzelne Dokumente gespeichert.%
 \item<3-> Oft gibt es Vorlagen für die Struktur solcher Dokumente, aber darüber hinaus können diese sehr unterschiedlich sein.%
-\item<4-> Sie können in Katalogen organisiert werden, in dem man Metainformationen wie Autoren, Jahrgang, und Stichworte getrennt abspeichert.%
+\item<4-> Sie können in Katalogen organisiert werden, in dem man Metainformationen wie Autoren, Jahrgang und Stichworte getrennt abspeichert.%
 \item<5-> Viel mehr kann man aber nicht tun.%
 \end{itemize}%
 %
@@ -75,7 +75,7 @@
 \frametitle{Hierarchische Daten}%
 \begin{itemize}%
 \item Dann gibt es hierarchische Datenstrukturen.%
-\item<2-> Dafür gibt es Formate wie \glsFull{XML}\cite{BPSMM2008EMLX1FE,K2019ITXJY,CH2013XFCAMLTMC}\uncover<4->{, \glsFull{JSON}\cite{E2017SE4TJDIS,RFC8259}\uncover<5->{, und \glsFull{YAML}\cite{DNMAASBE2021YAMLYV1,K2019ITXJY,CGTYB2022YFFDCAIE}.}}%
+\item<2-> Dafür gibt es Formate wie \glsFull{XML}\cite{BPSMM2008EMLX1FE,K2019ITXJY,CH2013XFCAMLTMC}\uncover<4->{, \glsFull{JSON}\cite{E2017SE4TJDIS,RFC8259}\uncover<5->{ und \glsFull{YAML}\cite{DNMAASBE2021YAMLYV1,K2019ITXJY,CGTYB2022YFFDCAIE}.}}%
 \end{itemize}%
 %
 \locateGraphicTB{3}{width=0.9\paperwidth}{graphics/typesOfData/xmlexample}{0.05}{0.26}%
@@ -93,7 +93,7 @@
 \frametitle{Strukturierte Daten}%
 \begin{itemize}%
 \item Diese tabellarische und hierarchische Datenformate haben gemeinsam, dass sie Informationen in einzelnen Dokumenten speichern.%
-\item<2-> Sie bieten klare und strenge Regeln, wie Daten definiert, strukturiert, gespeichert, und geladen werden kann.%
+\item<2-> Sie bieten klare und strenge Regeln, wie Daten definiert, strukturiert, gespeichert und geladen werden kann.%
 \item<3-> Die Formate sind oft offen und nicht an einzelne Anbieter gebunden.%
 \item<4-> Aber sie sind eben nur nützlich, wenn wir die Daten in einzelnen Dateien speichern können.%
 \item<5-> Sie sind ungeignet, um sehr große Datenmengen zu speichern.%
@@ -105,13 +105,13 @@
 \begin{frame}[t]%
 \frametitle{Relationale Daten}%
 \begin{itemize}%
-\item Sagen wir, Sie wollen Daten über das Personal unserer Universität speichern, über die einzelnen Fakultäten, die Studenten, und die Geräte.%
+\item Sagen wir, Sie wollen Daten über das Personal unserer Universität speichern, über die einzelnen Fakultäten, die Studenten und die Geräte.%
 \item<3-> Ein einzelnes Dokument müsste nicht nur die Informationen speichern, sondern auch wie diese zusammenhängen.%
 \item<4-> Welcher Student besucht welchen Kurs? Welcher Student wird von welchem Lehrer betreut? Welcher Mitarbeiter gehört zu welcher Fakultät?%
 \item<5-> Das kann man durchaus mit \pgls{XML}, \pgls{YAML}, oder \pgls{JSON} machen.%
 \item<6-> Aber das Dokument wäre riesig.%
 \item<7-> Wie findet man etwas in so einem Dokument?%
-\item<8-> Ein Fehler, irgendwo, und das Dokument ist kaput.%
+\item<8-> Ein Fehler, irgendwo und das Dokument ist kaput.%
 \item<9-> Sobald mehrere Leute gleichzeitig mit den Daten arbeiten müssen, fällt alles zusammen.%
 \item<10-> Wir brauchen eine andere Lösung.%
 \end{itemize}%
@@ -129,7 +129,7 @@
 \end{itemize}%
 %
 \uncover<6->{\begin{definition*}[Datenbank]%
-Eine \emph{Datenbank}~(\glsShort{db}) ist eine Kollektion von in gegenseiter Beziehung stehenden Daten, die in einem Computer gespeichert sind, potentiell viele verschiedene Typen haben können, und auf die viele Nutzern und Applikationen gleichzeitig zugreifen können.%
+Eine \emph{Datenbank}~(\glsShort{db}) ist eine Kollektion von in gegenseiter Beziehung stehenden Daten, die in einem Computer gespeichert sind, potentiell viele verschiedene Typen haben können und auf die viele Nutzern und Applikationen gleichzeitig zugreifen können.%
 \end{definition*}}%
 \end{frame}%
 %
@@ -153,7 +153,7 @@ Ein Datensatz~(Record) ist eine Gruppe von zusammenhängenden Datenelementen die
 \begin{frame}%
 \frametitle{Relational Daten}%
 \begin{itemize}%
-\item Ein Studenten-Datensatz könnte \DEzB\ den Namen des Studenten/in speichern, seinen/ihren Geburtstag, die Ausweisnummer, und die Mobiltelefonnummer.%
+\item Ein Studenten-Datensatz könnte \DEzB\ den Namen des Studenten/in speichern, seinen/ihren Geburtstag, die Ausweisnummer und die Mobiltelefonnummer.%
 \item<2-> Datensätze sind die grundlegende Einheit von Daten, die in einer Datenbank gespeichert werden.%
 \item<3-> Das zweite Kernelement sind die Beziehungen der Datensätze untereinander.%
 \item<4-> Diese Beziehungen schützen die Korrektheit und Integrität der Daten.%
@@ -171,7 +171,7 @@ Ein Datensatz~(Record) ist eine Gruppe von zusammenhängenden Datenelementen die
 \uncover<2->{%%
 \begin{definition*}[Datenbankmanagementsystem]%
 Ein Datenbankmanagementsystem~(\glsShort{dbms}) ist ein Softwaresystem um mit Daten arbeiten zu können.
-Es bietet die Möglichkeit, Datenbanken, Tabellen, und Datensätze zu erstellen, zu speichern, zu verändern, und zu löschen.
+Es bietet die Möglichkeit, Datenbanken, Tabellen und Datensätze zu erstellen, zu speichern, zu verändern und zu löschen.
 Es verwaltet auch die Zugriffsrechte auf die Datenbanken und Tabellen.%
 \end{definition*}%
 \uncover<3->{%

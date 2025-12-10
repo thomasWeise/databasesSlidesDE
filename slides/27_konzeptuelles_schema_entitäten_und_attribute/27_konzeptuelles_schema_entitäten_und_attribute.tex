@@ -48,7 +48,7 @@
 \begin{itemize}%
 \item Die erste wichtige Komponente, die wir modellieren müssen, sind die Datenstrukturen, die wir in der Datenbank speichern wollen.%
 %
-\item<2-> Es gibt dafür drei grundlegende Elemente für konzeptuelle Modelle: Entitäten, Attribute, und Entitätstypen.%
+\item<2-> Es gibt dafür drei grundlegende Elemente für konzeptuelle Modelle: Entitäten, Attribute und Entitätstypen.%
 \end{itemize}%
 %
 \uncover<3->{%
@@ -59,7 +59,7 @@ Sie kann von allen anderen Objekten unterschieden werden.}%
 %
 \uncover<5->{%
 \begin{itemize}%
-\item \DEZB\ ist der Student Herr Bibbo eine Entität\only<-5>{.}\uncover<6->{, das Module~\citetitle{programmingWithPython}\cite{programmingWithPython} ist eine Entität\only<-6>{.}\uncover<7->{, die Professorin Frau Bebba~教授 ist eine Entität\only<-7>{.}\uncover<8->{, und der Raum~\#36~202 ist auch eine Entität.}}}%
+\item \DEZB\ ist der Student Herr Bibbo eine Entität\only<-5>{.}\uncover<6->{, das Module~\citetitle{programmingWithPython}\cite{programmingWithPython} ist eine Entität\only<-6>{.}\uncover<7->{, die Professorin Frau Bebba~教授 ist eine Entität\only<-7>{.}\uncover<8->{ und der Raum~\#36~202 ist auch eine Entität.}}}%
 %
 \item<9-> Entitäten können einfach in den Anforderungen oder Interviewnotizen entdeckt werden\only<-9>{.}\uncover<10->{ %
 Sie entsprechen Eigennamen bzw.\ Hauptwörtern~\inEN{proper nouns}\cite{C1997ECAED}, also Wörtern, die eine bestimmte Sache identifizieren\cite{EOWM2025MWAMTD:CAPNWTDLWOGC}.}%
@@ -79,9 +79,9 @@ Ein \emph{Attribut}~\inEN{attribute}~$a$ ist charakterisiert mit einem Namen und
 %
 \item<3-> Die Entitäten in unserem Modell werden durch die Werte ihrer Attribute definiert.%
 %
-\item<4-> Eine Studentin könnte durch ihren Namen, ihre ID, ihre Studenten-ID, ihre Mobiltelefonnummer, ihre Heimatadresse, und durch ihr \glslink{dateOfBirth}{Geburtsdatum} definiert werden.%
+\item<4-> Eine Studentin könnte durch ihren Namen, ihre ID, ihre Studenten-ID, ihre Mobiltelefonnummer, ihre Heimatadresse und durch ihr \glslink{dateOfBirth}{Geburtsdatum} definiert werden.%
 %
-\item<5-> Ein Modul könnte durch seinen Titel, Syllabus, und Zusammenfassung definiert werden.%
+\item<5-> Ein Modul könnte durch seinen Titel, Syllabus und Zusammenfassung definiert werden.%
 %
 \item<6-> Neben solchen Eigenschaften können \emph{Adjektive} in den Anforderungen oft als Attributwerte interpretiert werden\cite{C1997ECAED}, \DEzB\ rot, jung, erfolgreich, schwer, schnell\dots%
 \end{itemize}%
@@ -192,7 +192,7 @@ Sie ist eine Menge von einigen Entitäten eines Entitätstypes, die zu einer Zei
 %
 \uncover<3->{%
 \begin{itemize}%
-\item Herr Bebbo ist eine einzelne Studenten-Entität, die Menge aller möglichen Studenten bildet einen Entitätstyp, und die Studenten Herr Bebbo, Herr Bibbo und Herr Bobbo zusammen sind eine Entitätenmenge.%
+\item Herr Bebbo ist eine einzelne Studenten-Entität, die Menge aller möglichen Studenten bildet einen Entitätstyp und die Studenten Herr Bebbo, Herr Bibbo und Herr Bobbo zusammen sind eine Entitätenmenge.%
 %
 \item<4-> Die Module \citetitle{programmingWithPython}\cite{programmingWithPython} und \citetitle{databases}\cite{databases} zusammen bilden eine Entitätenmenge, welche wiederum eine Untermenge des Entitätstyps für Module ist.%
 %
@@ -218,7 +218,7 @@ Sie ist eine Menge von einigen Entitäten eines Entitätstypes, die zu einer Zei
 \item<2-> Zum Beispiel modellieren wir immer nur ein kleines Fenster zur echten Welt.%
 }%
 %
-\item<3-> Wenn wir über Studenten, Module, und Studiengänge als Entitätstypen sprechen, dann nur im Kontext unserer spezifischen Applikation.%
+\item<3-> Wenn wir über Studenten, Module und Studiengänge als Entitätstypen sprechen, dann nur im Kontext unserer spezifischen Applikation.%
 %
 \item<4-> Natürlich gibt es in unserer realen, großen, weiten Welt Studenten auch an anderen Universitäten in anderen Ländern.%
 %
@@ -353,7 +353,7 @@ Sie sind daher für die Arbeit auf der konzeptuellen Ebene, die eben gerade tech
 %
 \item<3-> Wir wollen nun den Entitätstyp \emph{Student} modellieren.%
 %
-\item<4-> Von der Anforderungsanalyse wissen wir, dass jeder Student einen Namen hat, einen von der Regierung ausgestellten Ausweis~(ID, 中国公民身份号码\cite{GB116431999CIN}), und auch einen Studentenausweis, eine Mobiltelefonnummer, eine Adresse, und ein \glslink{dateOfBirth}{Geburtsdatum}~\inEN{date of birth, \glsShort{dateOfBirth}}.%%
+\item<4-> Von der Anforderungsanalyse wissen wir, dass jeder Student einen Namen hat, einen von der Regierung ausgestellten Ausweis~(ID, 中国公民身份号码\cite{GB116431999CIN}) und auch einen Studentenausweis, eine Mobiltelefonnummer, eine Adresse und ein \glslink{dateOfBirth}{Geburtsdatum}~\inEN{date of birth, \glsShort{dateOfBirth}}.%%
 %
 \item<5-> Das wollen wir nun modellieren.%
 \end{itemize}%
@@ -508,7 +508,7 @@ Sie sind daher für die Arbeit auf der konzeptuellen Ebene, die eben gerade tech
 \only<-7>{%
 \item Namen sind komplizierter als wir dachten.%
 %
-\item<2-> Studenten haben einen Vorname, einen Familienname, und eine Anrede.%
+\item<2-> Studenten haben einen Vorname, einen Familienname und eine Anrede.%
 %
 \item<3-> Zum Beispiele ist der Name von \inQuotes{Herr Bebbo} eigentlich \inQuotes{Herr Fred Bebbo}\only<-3>{.}\uncover<4->{, wobei \inQuotes{Bebbo} der Familienname und \inQuotes{Fred} der Vorname sind.}%
 }%
@@ -752,7 +752,7 @@ Ein abgeleitetes Attribut~\inEN{derived attribute} wird aus den Werten anderer A
 %
 \item<9-> Wir können \glsShort{dateOfBirth} also durchaus als einfaches Attribut modellieren.%
 %
-\item<10-> Wir könnten es aber auch als zusammengesetztes Attribut aus Jahr, Monat, und Tag modellieren.%
+\item<10-> Wir könnten es aber auch als zusammengesetztes Attribut aus Jahr, Monat und Tag modellieren.%
 %
 \item<11-> Das würde allerdings kein vernünftig denkender Mensch machen, denn dann muss man ja auch Dinge wie Zeitzonen und verschiedene Kalender beachten\dots%
 %
