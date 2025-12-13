@@ -84,12 +84,19 @@ Die Slides zum Kurs in deutscher Sprache können unter <https://thomasweise.gith
 43. [Logisches Schema: 3.&nbsp;Normalform](https://thomasweise.github.io/databasesSlidesDE/43_logisches_schema_3nf.pdf)
 
 
-### 2.4. Die Beispiele
+### 2.4. Complete Packages / Komplettpaket
+
+The following complete packages are available:
+
+- [`2025.12.12`](https://github.com/thomasWeise/databases/releases/download/2025.12.12/databases_2025_12_12.tar.xz) provides the end state of the book, slides (in German), questions, and example sources after the lecture period in Winter Semester 2025 at Hefei University (合肥大学).
+
+
+### 2.5. Die Beispiele
 Unser Kurs bietet sehr viele Beispiele.
 Sie können diese unter <https://github.com/thomasWeise/databasesCode> finde.
 
 
-### 2.5. LaTeX Quelltexte, Grafiken, die Bibliographie, etc.
+### 2.6. LaTeX Quelltexte, Grafiken, die Bibliographie, etc.
 Das Buch und die Slides zu diesem Kurs sind in LaTeX geschrieben.
 Sie können die Quelldateien unter <https://github.com/thomasWeise/databases>, <https://github.com/thomasWeise/databasesSlidesDE> und <https://github.com/thomasWeise/databasesSlides> finden.
 Sie können diese unter der untenstehenden Lizenz nutzen.
