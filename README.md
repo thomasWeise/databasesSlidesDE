@@ -6,7 +6,7 @@ Please check the [Databases main website](https://thomasweise.github.io/database
 
 ## 2. Lizenz
 Dieses Repository beinhaltet zwei Arten von Materialien:
-Materialien, die ich (Thomas Weise) selbst erstellt habe und solche, die von anderen erstellt wurden.
+Materialien, die ich ([Thomas Weise](https://thomasweise.github.io)) selbst erstellt habe und solche, die von anderen erstellt wurden.
 
 Die große Mehrzahl des Materials wurde von mir persönlich erstellt.
 Dieses und ausschließlich dieses Material steht unter der Attribution-NonCommercial-ShareAlike 4.0 International Lizenz (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), siehe [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0).
